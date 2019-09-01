@@ -36,22 +36,12 @@ abstract class Composer
         };
 
         try {
-            return cache()->tags($this->tags())->remember($this->key(), static::DURATION, $default);
+            return cache()->remember($this->key(), static::DURATION, $default);
         } catch (Throwable $e) {
             sentry($e);
 
             return $default();
         }
-    }
-
-    /**
-     * Tags for this cache.
-     *
-     * @return string[]
-     */
-    protected function tags()
-    {
-        return ['composer', $this->name()];
     }
 
     /**

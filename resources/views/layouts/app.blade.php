@@ -5,19 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="{{ cdn_link('images/favicon.png') }}" type="image/png" sizes="any">
-    <title>
-    @isset($title)
-        {{ $title }} |
-    @endisset
-        {{ config('app.name', 'Lolibrary') }}
-    </title>
+    <title>{{ $title ?? 'Lolibrary' }}</title>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="search-endpoint" content="{{ route('api.search') }}">
     <meta name="default-image" content="{{ default_asset() }}">
-
-    @include('components.external.font-awesome')
+    
+    <script src="https://kit.fontawesome.com/1a4d8fcd0e.js"></script>
 
     <!-- Styles -->
     <link href="{{ mix('assets/app.css') }}" rel="stylesheet">
@@ -30,7 +25,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img style="height: 14px" src="{{ cdn_link('assets/logo_horizontal.png') }}" alt="Lolibrary logo">
+                    <img style="height: 14px" src="{{ asset('images/logo_horizontal.png') }}" alt="Lolibrary logo">
                 </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,7 +84,7 @@
 
                 <p>
                     Powered by <a href="https://www.fastly.com" title="Fastly" rel="external nofollow">
-                        <img style="height: 1.5rem" src="{{ cdn_link('assets/fastly.svg') }}" alt="Fastly">
+                        <img style="height: 1.5rem" src="{{ asset('images/fastly.svg') }}" alt="Fastly">
                     </a>
                 </p>
 
