@@ -22,7 +22,7 @@
             <div class="card shadow-sm scrollbox-square">
                 <a href="{{ $brand->url }}">
                     <div class="scrollbox-img">
-                        <img src="{{ $brand->image->url }}" alt="" data-original-url="{{ $brand->image->url }}"
+                        <img src="{{ Storage::cloud()->url($brand->image) }}" alt="" data-original-url="{{ Storage::cloud()->url($brand->image) }}"
                             onerror="if (this.src !== '{{ cdn_link('categories/other.svg') }}') this.src = '{{ cdn_link('categories/other.svg') }}'">
                     </div>
                     <div class="scrollbox-text">
@@ -41,7 +41,7 @@
             <div class="card shadow-sm scrollbox-square">
                 <a href="{{ $category->url }}">
                     <div class="scrollbox-img">
-                        <img src="{{ cdn_link("categories/{$category->slug}.svg") }}" alt="">
+                        <img src="{{ Storage::cloud()->url($category->image) }}" alt="">
                     </div>
                     <div class="scrollbox-text">
                         <p class="text-muted small p-0 m-0">{{ $category->name }}</p>

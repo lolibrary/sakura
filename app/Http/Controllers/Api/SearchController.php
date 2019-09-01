@@ -10,6 +10,7 @@ use App\Models\Feature;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Api\SearchRequest;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -57,7 +58,24 @@ class SearchController extends Base
 
         $query->where('status', Item::PUBLISHED);
 
-        return $query->paginate(24);
+        $paginator = $query->paginate(24);
+
+        $paginator->each(function (Item $item) {
+            $item->image = Storage::cloud()->url($item->image);
+            $item->makeVisible('image');
+            
+            if ($item->brand !== null) {
+                $item->brand->image = Storage::cloud()->url($item->brand->image);
+                $item->brand->makeVisible('image');
+            }
+
+            if ($item->category !== null) {
+                $item->category->image = Storage::cloud()->url($item->category->image);
+                $item->category->makeVisible('image');
+            }
+        });
+
+        return $paginator;
     }
 
     /**

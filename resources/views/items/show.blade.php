@@ -11,9 +11,9 @@
 
     <div class="row">
         <div class="col-sm p-2">
-            <img src="{{ $item->image->url ?? default_asset() }}"
+            <img src="{{ $item->image ? Storage::cloud()->url($item->image) : default_asset() }}"
                         onerror="this.src = '{{ default_asset() }}'"
-                        data-original-url="{{ $item->image->url ?? default_asset() }}"
+                        data-original-url="{{ $item->image ? Storage::cloud()->url($item->image) : default_asset() }}"
                         class="rounded mw-100 d-block">
             <div class="row p-0 mx-0 my-3">
                 <div class="col p-1 list-group text-center small">
@@ -155,10 +155,11 @@
         <h4 class="my-4 px-4">{{ __('Images') }}</h4>
         <div class="item-image-columns mb-5">
             @foreach ($item->images as $image)
-                <a class="card m-0 p-0" href="{{ $image->url }}" data-lightbox="show">
-                    <img src="{{ $image->thumbnail_url }}"
+                <a class="card m-0 p-0" href="{{ Storage::cloud()->url($image['attributes']['image']) }}" data-lightbox="show">
+                    <img src="{{ Storage::cloud()->url($image['attributes']['image']) }}"
                         onerror="this.src = '{{ default_asset() }}'"
-                        data-original-url="{{ $image->url }}"
+                        data-original-url="{{  Storage::cloud()->url($image['attributes']['image']) }}"
+                        data-key="{{ $image['key'] ?? '' }}"
                         class="mw-100">
                 </a>
             @endforeach
@@ -175,25 +176,8 @@
             </a>
         </div>
     </div>
-    @junior
-    <div class="row">
-        <div class="col col-sm-4 mx-auto m-0 p-0 list-group text-center">
-            @if ($item->draft())
-                <a onclick="event.preventDefault(); $('#publish-item').submit()" class="list-group-item rounded-0 text-info">Publish Item</a>
-            @endif
-            <a href="{{ route('items.edit', $item) }}" class="list-group-item rounded-0 text-success">Edit Item</a>
-            <a onclick="event.preventDefault(); $('#delete-item').submit()" class="list-group-item text-danger rounded-0">Delete Item</a>
-        </div>
-    </div>
-    @endjunior
 
 </div>
-
-    {{ Form::open(['route' => ['items.publish', $item], 'method' => 'put', 'id' => 'publish-item']) }}
-    {{ Form::close() }}
-
-    {{ Form::open(['route' => ['items.destroy', $item], 'method' => 'delete', 'id' => 'delete-item']) }}
-    {{ Form::close() }}
 
 @endsection
 
@@ -203,6 +187,6 @@
     <meta property="og:url" content="{{ $item->url }}">
     <meta property="og:type" content="product">
     <meta property="og:title" content="{{ $item->english_name }} by {{ $item->brand->name }}">
-    <meta property="og:image" content="{{ $item->image->thumbnail_url ?? default_asset() }}">
+    <meta property="og:image" content="{{ $item->image ? Storage::cloud()->url($item->image) : default_asset() }}">
     <meta property="product:brand" content="{{ $item->brand->name }}">
 @endsection

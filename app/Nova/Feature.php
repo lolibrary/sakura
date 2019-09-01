@@ -47,7 +47,8 @@ class Feature extends Resource
             Text::make('Slug')
                 ->sortable()
                 ->creationRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/u', 'unique:features,slug')
-                ->updateRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/u', 'unique:features,slug,{{resourceId}}'),
+                ->updateRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/u', 'unique:features,slug,{{resourceId}}')
+                ->hideFromIndex(),
             
             Text::make('Name')
                 ->sortable()
