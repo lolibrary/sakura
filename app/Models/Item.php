@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use NumberFormatter;
+use App\Models\Traits\Sluggable;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\ItemRelations;
 
@@ -44,7 +45,7 @@ use App\Models\Traits\ItemRelations;
  */
 class Item extends Model
 {
-    use ItemRelations, Publishable;
+    use ItemRelations, Publishable, Sluggable;
 
     /**
      * A list of supported currencies.
@@ -220,32 +221,5 @@ class Item extends Model
             'local_price' => $this->getFullPrice(),
             'formatted' => $this->price_formatted,
         ];
-    }
-
-    /**
-     * Get a slug for an item.
-     *
-     * @param \App\Models\Item $item
-     * @return string
-     */
-    public static function createSlug(self $item)
-    {
-        $candidate = $item->brand->short_name . '-' . str_slug($item->english_name);
-
-        if (! static::where('slug', $candidate)->exists()) {
-            return $candidate;
-        }
-
-        $attempts = -1;
-
-        do {
-            if ($attempts > 255) {
-                throw new \RuntimeException("Too many items have the slug prefix [{$candidate}]");
-            }
-
-            $try = $candidate . '-' . ++$attempts;
-        } while (static::where('slug', $try)->exists());
-
-        return $try;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\Item as BaseItem;
+use App\Nova\Actions\{PublishItem, UnpublishItem};
 use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -18,6 +19,7 @@ use Laravel\Nova\Fields\Trix;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Whitecube\NovaFlexibleContent\Flexible;
+use NovaAttachMany\AttachMany;
 
 class Item extends Resource
 {
@@ -123,20 +125,34 @@ class Item extends Resource
                     ->hideFromIndex(),
             ]),
 
-            Flexible::make('Images')
-                ->addLayout('Image', 'image', [
-                    Image::make('Image')
-                        ->path('images')
-                        ->disk('s3public')
-                        ->maxWidth(100)
-                        ->disableDownload(),
-                ])
-                ->button('Add images'),
+            new Panel('Additional Images', [
+                Flexible::make('Images')
+                    ->addLayout('Image', 'image', [
+                        Image::make('Image')
+                            ->path('images')
+                            ->disk('s3public')
+                            ->maxWidth(100)
+                            ->disableDownload(),
+                    ])
+                    ->button('Add images'),
+            ]),
 
-            new Panel('Relations', [
-                BelongsToMany::make('Features', 'features', Feature::class)->display('name'),
-                BelongsToMany::make('Tags', 'tags', Tag::class)->searchable(),
-                BelongsToMany::make('Colors', 'colors', Color::class)->display('name'),
+            // this panel is only shown on the creation page.
+            new Panel('Tags and Features', [
+                AttachMany::make('Features', 'features', Feature::class),
+                AttachMany::make('Tags', 'tags', Tag::class),
+                AttachMany::make('Colors', 'colors', Color::class),
+            ]),
+
+            // This panel is only shown on the view and edit page
+            new Panel('Tags, Features and Colors', [
+                BelongsToMany::make('Item Features', 'features', Feature::class)->display('name'),
+                BelongsToMany::make('Item Tags', 'tags', Tag::class)->searchable(),
+                BelongsToMany::make('Item Colors', 'colors', Color::class)->display('name'),
+            ]),
+
+            new Panel('Attributes', [
+                // Need to make a custom attributes panel here to allow it on item creation.
                 BelongsToMany::make('Attributes', 'attributes', Attribute::class)
                     ->fields(function() {
                         return [
@@ -203,6 +219,9 @@ class Item extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new PublishItem,
+            new UnpublishItem,
+        ];
     }
 }

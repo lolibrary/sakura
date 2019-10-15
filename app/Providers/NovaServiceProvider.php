@@ -43,10 +43,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function gate()
     {
+        // Currently just allow developers to use/view nova.
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return $user->developer();
         });
     }
 

@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PublishItem extends Action
+class UnpublishItem extends Action
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
@@ -23,9 +23,9 @@ class PublishItem extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $models->each->publish(auth()->user());
+        $models->each->unpublish();
 
-        return Action::message('Item Published!');
+        return Action::message('Unpublished!');
     }
 
     /**
