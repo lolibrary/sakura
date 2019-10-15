@@ -3,10 +3,23 @@
 namespace App\Models\Traits;
 
 use App\Models\User;
+use App\Models\Item;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 trait Publishable
 {
+    /**
+     * Boot this trait, registering model handlers.
+     * 
+     * @return void
+     */
+    protected static function bootPublishable()
+    {
+        static::creating(function (Item $model) {
+            $model->submitter()->associate(auth()->user());
+        });
+    }
+
     /**
      * Publish this item.
      *
@@ -33,8 +46,6 @@ trait Publishable
     {
         $this->status = static::DRAFT;
         $this->save();
-
-        $this->unsearchable();
     }
 
     /**
