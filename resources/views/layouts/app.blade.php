@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{{ cdn_link('images/favicon.png') }}" type="image/png" sizes="any">
+    <link rel="icon" href="{{ cdn_link('assets/favicon.png') }}" type="image/png" sizes="any">
     <title>{{ $title ?? 'Lolibrary' }}</title>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="search-endpoint" content="{{ route('api.search') }}">
     <meta name="default-image" content="{{ default_asset() }}">
-    
+
     <script src="https://kit.fontawesome.com/1a4d8fcd0e.js"></script>
 
     <!-- Styles -->

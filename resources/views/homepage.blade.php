@@ -4,15 +4,6 @@
 <div class="container">
     @include('components.hero')
 
-    <h2 class="sr-only">{{ __('News') }}</h2>
-    <div class="row">
-        @foreach ($posts as $post)
-            <div class="col-md">
-                @include('blog.card')
-            </div>
-        @endforeach
-    </div>
-
     {{-- todo: put brands in here with their images --}}
     {{-- todo: carousel these! (or scroll left/right) --}}
     <h2 class="mt-5">{{ __('Brands') }}</h2>
