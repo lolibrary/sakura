@@ -1,5 +1,8 @@
 <?php
 
+$_ENV["HTTPS"] = "on";
+$_SERVER["HTTPS"] = "on";
+
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
