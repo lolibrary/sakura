@@ -2,10 +2,11 @@
 
 namespace App\Nova\Filters;
 
+use App\Models\Item as BaseItem;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
-class ItemPublishedFilter extends Filter
+class ItemStatusFilter extends Filter
 {
     /**
      * The filter's component.
@@ -24,7 +25,13 @@ class ItemPublishedFilter extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->drafts(false);
+        if (starts_with($value, 'my-')) {
+            $query->where('user_id', $request->user()->id);
+
+            $value = str_replace($value, 'my-', '');
+        }
+
+        return $query->where('status', $value === 'published' ? BaseItem::PUBLISHED : BaseItem::DRAFT);
     }
 
     /**
@@ -35,6 +42,11 @@ class ItemPublishedFilter extends Filter
      */
     public function options(Request $request)
     {
-        return [];
+        return [
+            'Published' => 'published',
+            'Drafts' => 'drafts',
+            'My Drafts' => 'my-drafts',
+            'My Items' => 'my-published',
+        ];
     }
 }
