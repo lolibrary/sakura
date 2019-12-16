@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Models\Item as BaseItem;
 use App\Nova\Actions\{PublishItem, UnpublishItem};
+use App\Nova\Filters\ItemPublishedFilter;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -197,7 +198,9 @@ class Item extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new ItemPublishedFilter,
+        ];
     }
 
     /**
