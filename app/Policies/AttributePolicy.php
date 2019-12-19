@@ -22,6 +22,17 @@ class AttributePolicy
     }
 
     /**
+     * Can a user view available attributes?
+     * 
+     * @param \App\Models\User $user
+     * @return bool
+     */
+    public function view(User $user, Attribute $attribute)
+    {
+        return $user->junior();
+    }
+
+    /**
      * Can a user create a attribute?
      * 
      * @param \App\Models\User $user

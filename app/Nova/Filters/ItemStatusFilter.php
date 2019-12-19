@@ -54,7 +54,7 @@ class ItemStatusFilter extends Filter
             'My Items' => 'my-published',
         ];
 
-        if ($user->developer()) {
+        if ($request->user()->developer()) {
             $options['(Dev) Shoe Drafts'] = 'shoe-drafts';
         }
 
