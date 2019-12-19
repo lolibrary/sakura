@@ -22,6 +22,18 @@ class FeaturePolicy
     }
 
     /**
+     * Can a user view a feature?
+     * 
+     * @param \App\Models\User $user
+     * @param \App\Models\Feature $feature
+     * @return bool
+     */
+    public function view(User $user, Feature $feature)
+    {
+        return $user->junior();
+    }
+
+    /**
      * Can a user create a feature?
      * 
      * @param \App\Models\User $user

@@ -223,8 +223,12 @@ class Item extends Resource
     public function actions(Request $request)
     {
         return [
-            (new PublishItem)->canSeeWhen('publish', $this),
-            (new UnpublishItem)->canSeeWhen('publish', $this),
+            (new PublishItem)->canSee(function ($request) {
+                return $request->user()->can('publish', $this);
+            }),
+            (new UnpublishItem)->canSee(function ($request) {
+                return $request->user()->can('publish', $this);
+            }),
         ];
     }
 }
