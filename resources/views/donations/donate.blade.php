@@ -9,10 +9,10 @@
           <p>Lolibrary is funded entirely by donations from our users,
             and we're eternally grateful for all the support you give us!</p>
           <p>We're a registered non-profit, and all funds will go towards operating costs for Lolibrary, as well as future development.
-            If you'd prefer to <a href="{{ config('services.donation.patreon') }}" target="_blank" rel="external">support us on Patreon</a>, you can go there, too!</p>
+            If you'd prefer to <a href="https://patreon.com/lolibrary" target="_blank" rel="external">support us on Patreon</a>, you can go there, too!</p>
 
           <p class="my-4">
-            <a title="Support us on patreon" href="{{ config('services.donation.patreon') }}" target="_blank" rel="external">
+            <a title="Support us on patreon" href="https://patreon.com/lolibrary" target="_blank" rel="external">
               <img src="{{ cdn_link('assets/become_a_patron_button@2x.png') }}"
                 style="max-width: 217px; max-height: 51px">
             </a>
@@ -21,7 +21,7 @@
           <p>Alternatively, you can donate using the link below, where you can pay with Card, PayPal or Apple Pay.</p>
 
           <p class="my-4">
-            <a href="{{ config('services.donation.donate') }}" target="_blank" rel="external" class="mx-3 btn btn-lg btn-outline-primary">
+            <a href="https://donorbox.org/lolibrary" target="_blank" rel="external" class="mx-3 btn btn-lg btn-outline-primary">
               Donate
             </a>
           </p>
