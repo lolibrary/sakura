@@ -91,4 +91,27 @@ class ItemPolicy
         // This is just a separate check so it can be changed easily.
         return $user->senior();
     }
+
+    /**
+     * Can a user update an item?
+     * 
+     * @param \App\Models\User $user
+     * @param \App\Models\Item $item
+     * @return bool
+     */
+    public function publish(User $user, Item $item)
+    {
+        if ($item->status === Item::PUBLISHED) {
+            return $user->senior();
+        }
+
+        // otherwise, this is a draft:
+        // users can publish their own drafts if lolibrarian.
+
+        if ($item->user_id === $user->id) {
+            return $user->lolibrarian();
+        }
+
+        return false;
+    }
 }
