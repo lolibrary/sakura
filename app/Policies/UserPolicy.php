@@ -28,7 +28,19 @@ class UserPolicy
      * @param \App\Models\Item $item
      * @return bool
      */
-    public function updateOtherUser(User $user, User $target)
+    public function view(User $user)
+    {
+        return $user->admin();
+    }
+
+    /**
+     * Can a user update an item?
+     * 
+     * @param \App\Models\User $user
+     * @param \App\Models\Item $item
+     * @return bool
+     */
+    public function update(User $user, User $target)
     {
         if ($user->level < $target->level) {
             return false;
@@ -44,8 +56,12 @@ class UserPolicy
      * @param \App\Models\Item $item
      * @return bool
      */
-    public function deleteOtherUser(User $user, User $target)
+    public function delete(User $user, User $target)
     {
+        if ($user->level < $target->level) {
+            return false;
+        }
+        
         return $user->admin() && $user->id !== $target->id;
     }
 }
