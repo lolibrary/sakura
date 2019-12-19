@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Nova\Actions\Actionable;
 
 /**
  * A user of this application.
@@ -34,7 +35,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens, HasUuid, DateHandling, Wishlist, Closet, AccessLevels;
+    use Notifiable, HasApiTokens, HasUuid, DateHandling, Wishlist, Closet, AccessLevels, Actionable;
 
     public const DEVELOPER = 1000;
     public const ADMIN = 500;
