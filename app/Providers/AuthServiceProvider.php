@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -13,7 +14,14 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\Attribute' => 'App\Policies\AttributePolicy',
+        'App\Models\Brand' => 'App\Policies\BrandPolicy',
+        'App\Models\Category' => 'App\Policies\CategoryPolicy',
+        'App\Models\Color' => 'App\Policies\ColorPolicy',
+        'App\Models\Feature' => 'App\Policies\FeaturePolicy',
+        'App\Models\Item' => 'App\Policies\ItemPolicy',
+        'App\Models\User' => 'App\Policies\UserPolicy',
+        'App\Models\Tag' => 'App\Policies\TagPolicy',
     ];
 
     /**
@@ -25,6 +33,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        //
+    }
+
+    protected function registerItemGates()
+    {
         //
     }
 }

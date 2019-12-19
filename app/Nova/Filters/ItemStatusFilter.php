@@ -25,6 +25,11 @@ class ItemStatusFilter extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
+        if ($request->user()->developer() && $value === 'shoe-drafts') {
+            // this is just so shoes can be added and deleted easily during testing.
+            return $query->where('status', 10);
+        }
+
         if (starts_with($value, 'my-')) {
             $query->where('user_id', $request->user()->id);
 
@@ -42,11 +47,17 @@ class ItemStatusFilter extends Filter
      */
     public function options(Request $request)
     {
-        return [
+        $options = [
             'Published' => 'published',
             'Drafts' => 'drafts',
             'My Drafts' => 'my-drafts',
             'My Items' => 'my-published',
         ];
+
+        if ($user->developer()) {
+            $options['(Dev) Shoe Drafts'] = 'shoe-drafts';
+        }
+
+        return $options;
     }
 }
