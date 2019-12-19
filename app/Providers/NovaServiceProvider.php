@@ -43,9 +43,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function gate()
     {
-        // Currently just allow developers to use/view nova.
+        // Currently allow anyone junior or higher to use nova.
         Gate::define('viewNova', function ($user) {
-            return $user->admin();
+            return $user->junior();
         });
     }
 
