@@ -101,17 +101,18 @@ class ItemPolicy
      */
     public function publish(User $user, Item $item)
     {
+        // must be senior to unpublish.
         if ($item->status === Item::PUBLISHED) {
             return $user->senior();
         }
 
         // otherwise, this is a draft:
         // users can publish their own drafts if lolibrarian.
-
         if ($item->user_id === $user->id) {
             return $user->lolibrarian();
         }
 
-        return false;
+        // otherwise senior can publish any draft.
+        return $user->senior();
     }
 }
