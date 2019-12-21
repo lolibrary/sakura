@@ -109,7 +109,7 @@ class Item extends Resource
             Trix::make('Notes')->alwaysShow(),
 
             new Panel('Submission Details', [
-                BelongsTo::make('Submitter', 'submitter', User::class)->readonly()->onlyOnDetail(),
+                BelongsTo::make('Submitter', 'submitter', User::class)->readonly()->sortable(),
                 BelongsTo::make('Publisher', 'publisher', User::class)->readonly()->nullable()->onlyOnDetail(),
 
                 DateTime::make('Created', 'created_at')->onlyOnDetail(),
