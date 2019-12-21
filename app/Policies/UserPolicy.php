@@ -18,7 +18,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->admin();
+        return $user->junior();
     }
 
     /**
@@ -28,9 +28,21 @@ class UserPolicy
      * @param \App\Models\Item $item
      * @return bool
      */
-    public function view(User $user)
+    public function view(User $user, User $target)
     {
-        return $user->admin();
+        return $user->junior();
+    }
+
+    /**
+     * Can a user see an email address?
+     * 
+     * @param \App\Models\User $user
+     * @param \App\Models\Item $item
+     * @return bool
+     */
+    public function viewEmail(User $user, User $target)
+    {
+        return $user->admin() || $user->is($target);
     }
 
     /**
@@ -61,7 +73,7 @@ class UserPolicy
         if ($user->level < $target->level) {
             return false;
         }
-        
+
         return $user->admin() && $user->id !== $target->id;
     }
 }
