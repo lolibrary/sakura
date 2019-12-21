@@ -224,10 +224,26 @@ class Item extends Resource
     {
         return [
             (new PublishItem)->canSee(function ($request) {
-                return $request->user()->can('publish', $this);
+                if (optional($request->findModelQuery()->first())->published()) {
+                    return false;
+                }
+
+                return $request->user()->lolibrarian();
+            })->canRun(function ($request) {
+                $item = $request->findModelQuery()->first();
+                
+                return $request->user()->can('publish', $item);
             }),
             (new UnpublishItem)->canSee(function ($request) {
-                return $request->user()->can('publish', $this);
+                if (optional($request->findModelQuery()->first())->draft()) {
+                    return false;
+                }
+
+                return $request->user()->lolibrarian();
+            })->canRun(function ($request) {
+                $item = $request->findModelQuery()->first();
+                
+                return $request->user()->can('publish', $item);
             }),
         ];
     }
