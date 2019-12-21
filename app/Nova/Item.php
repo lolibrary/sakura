@@ -103,8 +103,8 @@ class Item extends Resource
                 ->rules('required', 'integer', 'min:1990', 'max:' . (date('Y') + 3))
                 ->hideFromIndex(),
 
-            BelongsTo::make('Brand'),
-            BelongsTo::make('Category'),
+            BelongsTo::make('Brand')->sortable(),
+            BelongsTo::make('Category')->sortable(),
             
             Trix::make('Notes')->alwaysShow(),
 
@@ -224,26 +224,22 @@ class Item extends Resource
     {
         return [
             (new PublishItem)->canSee(function ($request) {
-                if (optional($request->findModelQuery()->first())->published()) {
-                    return false;
+                $model = $request->findModelQuery()->first();
+
+                if ($model === null) {
+                    return $request->user()->lolibrarian();
                 }
 
-                return $request->user()->lolibrarian();
-            })->canRun(function ($request) {
-                $item = $request->findModelQuery()->first();
-                
-                return $request->user()->can('publish', $item);
+                return $model->draft() && $request->user()->can('publish', $model);
             }),
             (new UnpublishItem)->canSee(function ($request) {
-                if (optional($request->findModelQuery()->first())->draft()) {
-                    return false;
+                $model = $request->findModelQuery()->first();
+
+                if ($model === null) {
+                    return $request->user()->senior();
                 }
 
-                return $request->user()->lolibrarian();
-            })->canRun(function ($request) {
-                $item = $request->findModelQuery()->first();
-                
-                return $request->user()->can('publish', $item);
+                return $model->published() && $request->user()->can('publish', $model);
             }),
         ];
     }

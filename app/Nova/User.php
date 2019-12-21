@@ -56,7 +56,9 @@ class User extends Resource
                 ->sortable()
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+                ->updateRules('unique:users,email,{{resourceId}}')
+                ->hideFromIndex()
+                ->canSeeWhen('viewEmail', $this),
 
             Text::make('Username')
                 ->sortable()
@@ -77,9 +79,9 @@ class User extends Resource
                     BaseUser::LOLIBRARIAN => 'Lolibrarian',
                     BaseUser::JUNIOR_LOLIBRARIAN => 'Junior Lolibrarian',
                     BaseUser::REGULAR => 'Regular User',
-                ])->displayUsingLabels(),
+                ])->displayUsingLabels()->sortable(),
     
-                Boolean::make('Banned'),
+                Boolean::make('Banned')->canSeeWhen('update', $this),
             ]),
         ];
     }
