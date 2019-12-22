@@ -51,4 +51,3 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::put('items/{item}/closet', 'Items\\ItemController@closet')->name('items.closet');
     Route::put('items/{item}/wishlist', 'Items\\ItemController@wishlist')->name('items.wishlist');
 });
-
