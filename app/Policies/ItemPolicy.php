@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\Item;
-use App\Models\User;
+use App\Models\{
+    Attribute, Color, Feature, Item, User, Tag
+};
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ItemPolicy
@@ -114,5 +115,109 @@ class ItemPolicy
 
         // otherwise senior can publish any draft.
         return $user->senior();
+    }
+
+    /**
+     * Can a user update an item?
+     * 
+     * @param \App\Models\User $user
+     * @param \App\Models\Item $item
+     * @param \App\Models\Tag $tag
+     * @return bool
+     */
+    public function attachAnyTag(User $user, Item $item)
+    {
+        return $this->update($user, $item);
+    }
+
+    /**
+     * Can a user update an item?
+     * 
+     * @param \App\Models\User $user
+     * @param \App\Models\Item $item
+     * @param \App\Models\Tag $tag
+     * @return bool
+     */
+    public function detachTag(User $user, Item $item, Tag $tag)
+    {
+        return $this->update($user, $item);
+    }
+
+    /**
+     * Can a user update an item?
+     * 
+     * @param \App\Models\User $user
+     * @param \App\Models\Item $item
+     * @param \App\Models\Attribute $attribute
+     * @return bool
+     */
+    public function attachAnyAttribute(User $user, Item $item)
+    {
+        return $this->update($user, $item);
+    }
+
+    /**
+     * Can a user update an item?
+     * 
+     * @param \App\Models\User $user
+     * @param \App\Models\Item $item
+     * @param \App\Models\Attribute $attribute
+     * @return bool
+     */
+    public function detachAttribute(User $user, Item $item, Attribute $attribute)
+    {
+        return $this->update($user, $item);
+    }
+
+    /**
+     * Can a user update an item?
+     * 
+     * @param \App\Models\User $user
+     * @param \App\Models\Item $item
+     * @param \App\Models\Color $color
+     * @return bool
+     */
+    public function attachAnyColor(User $user, Item $item)
+    {
+        return $this->update($user, $item);
+    }
+
+    /**
+     * Can a user update an item?
+     * 
+     * @param \App\Models\User $user
+     * @param \App\Models\Item $item
+     * @param \App\Models\Color $color
+     * @return bool
+     */
+    public function detachColor(User $user, Item $item, Color $color)
+    {
+        return $this->update($user, $item);
+    }
+
+    /**
+     * Can a user update an item?
+     * 
+     * @param \App\Models\User $user
+     * @param \App\Models\Item $item
+     * @param \App\Models\Feature $feature
+     * @return bool
+     */
+    public function attachAnyFeature(User $user, Item $item)
+    {
+        return $this->update($user, $item);
+    }
+
+    /**
+     * Can a user update an item?
+     * 
+     * @param \App\Models\User $user
+     * @param \App\Models\Item $item
+     * @param \App\Models\Feature $feature
+     * @return bool
+     */
+    public function detachFeature(User $user, Item $item, Feature $feature)
+    {
+        return $this->update($user, $item);
     }
 }
