@@ -47,12 +47,16 @@ case $1 in
     psql)
         cloudpsql 
         ;;
+    build)
+        cd $GOPATH/src/github.com/lolibrary/build && zsh ./build.zsh ${2:-master}
+        ;;
     *)
         echo "🌸 Usage: sakura [command] ..."
         echo "     - sakura tinker           : opens a tinker shell in k8s"
         echo "     - sakura shell            : opens /bin/sh in k8s"
         echo "     - sakura migrate          : runs php artisan migrate in k8s"
         echo "     - sakura psql [database]  : opens a psql shell in GCP from the cluster"
+        echo "     - sakura build [commit]   : builds the site using the build repo"
         ;;
 esac
 
