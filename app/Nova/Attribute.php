@@ -46,8 +46,8 @@ class Attribute extends Resource
 
             Text::make('Slug')
                 ->sortable()
-                ->creationRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}', 'unique:attributes,slug')
-                ->updateRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}', 'unique:attributes,slug,{{resourceId}}')
+                ->creationRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/', 'unique:attributes,slug')
+                ->updateRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/', 'unique:attributes,slug,{{resourceId}}')
                 ->hideFromIndex(),
             
             Text::make('Name')
