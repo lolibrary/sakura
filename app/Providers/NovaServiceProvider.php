@@ -18,6 +18,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         Nova::ignoreMigrations();
         
+        // report to sentry.
+        Nova::report(function ($exception) {
+            if (app()->bound('sentry')){
+                app('sentry')->captureException($exception);
+            }
+        });
+
         parent::boot();
     }
 
