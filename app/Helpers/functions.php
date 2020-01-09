@@ -150,7 +150,7 @@ if (! function_exists('default_asset')) {
      */
     function default_asset()
     {
-        return Storage::url('images/default.jpeg');
+        return Storage::url('assets/default.png');
     }
 }
 
