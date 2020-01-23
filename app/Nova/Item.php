@@ -100,7 +100,7 @@ class Item extends Resource
                     })
                 )
                 ->displayUsingLabels()
-                ->rules('required', 'integer', 'min:1990', 'max:' . (date('Y') + 3))
+                ->rules('nullable', 'integer', 'min:1990', 'max:' . (date('Y') + 3))
                 ->hideFromIndex(),
 
             BelongsTo::make('Brand')->sortable(),
