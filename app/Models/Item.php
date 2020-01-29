@@ -191,7 +191,7 @@ class Item extends Model
             return (string) round($this->price);
         }
 
-        return (string) round($this->price / 100, 2);
+        return (string) round($this->price, 2);
     }
 
     /**
