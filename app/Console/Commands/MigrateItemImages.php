@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Exception;
 use App\Models\Item;
 use App\Models\Image;
 use Illuminate\Console\Command;
@@ -14,7 +15,7 @@ class MigrateItemImages extends Command
      *
      * @var string
      */
-    protected $signature = 'lolibrary:migrate-images';
+    protected $signature = 'lolibrary:migrate-images {--status=all}';
 
     /**
      * The console command description.
@@ -47,9 +48,11 @@ class MigrateItemImages extends Command
      */
     public function handle()
     {
-        $bar = $this->output->createProgressBar(Item::count());
+        $query = $this->query($this->option('status'));
 
-        foreach (Item::orderBy('id')->cursor() as $item) {
+        $bar = $this->output->createProgressBar($query->count());
+
+        foreach ($query->orderBy('id')->cursor() as $item) {
             if (! $this->mainImageActioned($item)) {
                 $this->actionMainImage($item);
             }
@@ -62,8 +65,27 @@ class MigrateItemImages extends Command
         }
 
         $bar->finish();
+        $this->line('');
 
         $this->table(['Image ID'], $this->missing);
+    }
+
+    protected function query(string $status)
+    {
+        switch ($status) {
+            case "all":
+                return Item::query();
+            case "published":
+                return Item::where('status', Item::PUBLISHED);
+            case "draft":
+                return Item::where('status', Item::DRAFT);
+        }
+
+        if (is_numeric($status)) {
+            return Item::where('status', $status);
+        }
+
+        throw new Exception("Cannot figure out what status was given: {$status}");
     }
 
     protected function mainImageActioned(Item $item): bool
