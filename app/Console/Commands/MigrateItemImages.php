@@ -67,7 +67,9 @@ class MigrateItemImages extends Command
         $bar->finish();
         $this->line('');
 
-        $this->table(['Image ID'], $this->missing);
+        $this->table(['Item ID', 'Image ID'], $this->missing);
+
+        $this->line(count($this->missing) . ' items are missing images');
     }
 
     protected function query(string $status)
@@ -103,7 +105,7 @@ class MigrateItemImages extends Command
         $image = Image::find($item->image_id);
 
         if ($image === null) {
-            $this->missing[] = $item->image_id;
+            $this->missing[] = [$item->id, $item->image_id];
 
             return;
         }
