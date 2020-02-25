@@ -69,6 +69,16 @@ trait Publishable
     }
 
     /**
+     * Return if this item is pending.
+     *
+     * @return bool
+     */
+    public function pending(): bool
+    {
+        return $this->status === static::PENDING;
+    }
+
+    /**
      * Scope to drafts only.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
