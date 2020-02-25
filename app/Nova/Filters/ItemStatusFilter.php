@@ -35,8 +35,15 @@ class ItemStatusFilter extends Filter
 
             $value = str_replace($value, 'my-', '');
         }
+        if ($value === 'published' ) {
+            $value = BaseItem::PUBLISHED;
+        } else if ($value === 'pending') {
+            $value = BaseItem::PENDING;
+        } else {
+            $value = BaseItem::DRAFT;
+        }
 
-        return $query->where('status', $value === 'published' ? BaseItem::PUBLISHED : BaseItem::DRAFT);
+        return $query->where('status', $value);
     }
 
     /**
@@ -50,8 +57,10 @@ class ItemStatusFilter extends Filter
         $options = [
             'Published' => 'published',
             'Drafts' => 'drafts',
+            'Pending Review' => 'pending',
             'My Drafts' => 'my-drafts',
-            'My Items' => 'my-published',
+            'My Published Items' => 'my-published',
+            'My Pending Items' => 'my-pending',
         ];
 
         if ($request->user()->developer()) {

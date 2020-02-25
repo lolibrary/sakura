@@ -84,7 +84,7 @@ class Item extends Resource
 
             Text::make('Foreign Name')
                 ->sortable()
-                ->rules('required', 'max:255')
+                ->rules('max:255')
                 ->hideFromIndex(),
 
             Text::make('Product Number')
@@ -168,12 +168,15 @@ class Item extends Resource
                         return 'published';
                     case BaseItem::DRAFT:
                         return 'draft';
+                    case BaseItem::PENDING:
+                        return 'pending';
                     default:
                         return 'unknown';
                 }
             })->map([
                 'published' => 'success',
                 'draft' => 'danger',
+                'pending' => 'info',
                 'unknown' => 'warning',
             ])->exceptOnForms(),
         ];
@@ -230,7 +233,7 @@ class Item extends Resource
                     return $request->user()->lolibrarian();
                 }
 
-                return $model->draft() && $request->user()->can('publish', $model);
+                return $model->pending() && $request->user()->can('publish', $model);
             }),
             (new UnpublishItem)->canSee(function ($request) {
                 $model = $request->findModelQuery()->first();

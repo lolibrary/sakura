@@ -80,6 +80,13 @@ class Item extends Model
     public const PUBLISHED = 1;
 
     /**
+     * Indicates that an item is ready for review and publishing.
+     *
+     * @var int
+     */
+    public const PENDING = 2;
+
+    /**
      * A shortcut for fully eager loading an item.
      *
      * Use: `Item::with(Item::FULLY_LOAD)`
