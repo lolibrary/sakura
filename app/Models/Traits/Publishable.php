@@ -49,6 +49,17 @@ trait Publishable
     }
 
     /**
+     * Make this item pending.
+     *
+     * @return void
+     */
+    public function pending()
+    {
+        $this->status = static::PENDING;
+        $this->save();
+    }
+
+    /**
      * Return if an item is published or not.
      *
      * @return bool
