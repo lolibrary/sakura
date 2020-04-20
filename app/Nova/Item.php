@@ -3,7 +3,7 @@
 namespace App\Nova;
 
 use App\Models\Item as BaseItem;
-use App\Nova\Actions\{PublishItem, UnpublishItem, PendingItem};
+use App\Nova\Actions\{DeleteItem, PublishItem, UnpublishItem, PendingItem};
 use App\Nova\Filters\ItemStatusFilter;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\ID;
@@ -49,7 +49,7 @@ class Item extends Resource
 
     /**
      * The relations that should always be loaded.
-     * 
+     *
      * @var array
      */
     public static $with = [
@@ -63,7 +63,7 @@ class Item extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function fields(Request $request)
@@ -77,7 +77,7 @@ class Item extends Resource
                 ->path('images')
                 ->nullable()
                 ->maxWidth(200),
-            
+
             Text::make('English Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -95,9 +95,9 @@ class Item extends Resource
             Select::make('Year')
                 ->options(
                     collect(range(1990, (int)date('Y') + 1))
-                    ->mapWithKeys(function ($value) {
-                        return [$value => $value];
-                    })
+                        ->mapWithKeys(function ($value) {
+                            return [$value => $value];
+                        })
                 )
                 ->displayUsingLabels()
                 ->rules('nullable', 'integer', 'min:1990', 'max:' . (date('Y') + 3))
@@ -105,7 +105,7 @@ class Item extends Resource
 
             BelongsTo::make('Brand')->sortable(),
             BelongsTo::make('Category')->sortable(),
-            
+
             Trix::make('Notes')->alwaysShow(),
 
             new Panel('Submission Details', [
@@ -155,7 +155,7 @@ class Item extends Resource
             new Panel('Attributes', [
                 // Need to make a custom attributes panel here to allow it on item creation.
                 BelongsToMany::make('Attributes', 'attributes', Attribute::class)
-                    ->fields(function() {
+                    ->fields(function () {
                         return [
                             Text::make('Value')->nullable(),
                         ];
@@ -185,7 +185,7 @@ class Item extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -196,7 +196,7 @@ class Item extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -209,7 +209,7 @@ class Item extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function lenses(Request $request)
@@ -220,7 +220,7 @@ class Item extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function actions(Request $request)
@@ -244,15 +244,7 @@ class Item extends Resource
 
                 return $model->published() && $request->user()->can('publish', $model);
             }),
-                (new PendingItem)->canSee(function ($request) {
-                $model = $request->findModelQuery()->first();
-
-                if ($model === null) {
-                    return $request->user()->lolibrarian();
-                }
-
-                return $model->draft() && $request->user()->can('update', $model);
-            }),
+            (new DeleteItem)->canSeeWhen('delete'),
         ];
     }
 }
