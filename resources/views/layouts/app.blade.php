@@ -21,7 +21,7 @@
 </head>
 <body>
     <a class="sr-only sr-only-focusable" href="#skip-navigation">{{ __('Skip to content') }}</a>
-    <div id="app" style="margin-top: 5vh">
+    <div id="app" style="margin-top: 55px">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
