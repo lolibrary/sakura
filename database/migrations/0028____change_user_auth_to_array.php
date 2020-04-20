@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
 class ChangeUserAuthToArray extends Migration
 {
@@ -14,6 +15,9 @@ class ChangeUserAuthToArray extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('auth_token');
+        });
+
+        Schema::table('users', function (Blueprint $table) {
             $table->jsonb('auth')->default('{}');
         });
     }
@@ -27,6 +31,9 @@ class ChangeUserAuthToArray extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('auth_token')->nullable();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('auth');
         });
     }
