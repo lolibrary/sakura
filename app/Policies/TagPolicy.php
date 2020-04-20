@@ -12,7 +12,7 @@ class TagPolicy
 
     /**
      * Can a user view available tags?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
@@ -23,7 +23,7 @@ class TagPolicy
 
     /**
      * Can a user view a tag?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Tag $tag
      * @return bool
@@ -35,30 +35,30 @@ class TagPolicy
 
     /**
      * Can a user create a tag?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
     public function create(User $user)
     {
-        return $user->senior();
+        return $user->admin();
     }
 
     /**
      * Can a user update a tag?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Tag $tag
      * @return bool
      */
     public function update(User $user, Tag $tag)
     {
-        return $user->senior();
+        return $user->admin();
     }
 
     /**
      * Can a user delete a tag?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Tag $tag
      * @return bool

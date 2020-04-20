@@ -12,7 +12,7 @@ class AttributePolicy
 
     /**
      * Can a user view available attributes?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
@@ -23,7 +23,7 @@ class AttributePolicy
 
     /**
      * Can a user view available attributes?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
@@ -34,30 +34,30 @@ class AttributePolicy
 
     /**
      * Can a user create a attribute?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
     public function create(User $user)
     {
-        return $user->senior();
+        return $user->admin();
     }
 
     /**
      * Can a user update a attribute?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Attribute $attribute
      * @return bool
      */
     public function update(User $user, Attribute $attribute)
     {
-        return $user->senior();
+        return $user->admin();
     }
 
     /**
      * Can a user delete a attribute?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Attribute $attribute
      * @return bool

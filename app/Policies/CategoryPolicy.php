@@ -12,7 +12,7 @@ class CategoryPolicy
 
     /**
      * Can a user view available categories?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
@@ -23,7 +23,7 @@ class CategoryPolicy
 
     /**
      * Can a user view a category?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Category $category
      * @return bool
@@ -35,30 +35,30 @@ class CategoryPolicy
 
     /**
      * Can a user create a category?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
     public function create(User $user)
     {
-        return $user->senior();
+        return $user->admin();
     }
 
     /**
      * Can a user update a category?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Category $category
      * @return bool
      */
     public function update(User $user, Category $category)
     {
-        return $user->senior();
+        return $user->admin();
     }
 
     /**
      * Can a user delete a category?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Category $category
      * @return bool

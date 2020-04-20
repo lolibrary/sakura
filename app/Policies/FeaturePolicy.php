@@ -12,7 +12,7 @@ class FeaturePolicy
 
     /**
      * Can a user view available features?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
@@ -23,7 +23,7 @@ class FeaturePolicy
 
     /**
      * Can a user view a feature?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Feature $feature
      * @return bool
@@ -35,30 +35,30 @@ class FeaturePolicy
 
     /**
      * Can a user create a feature?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
     public function create(User $user)
     {
-        return $user->senior();
+        return $user->admin();
     }
 
     /**
      * Can a user update a feature?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Feature $feature
      * @return bool
      */
     public function update(User $user, Feature $feature)
     {
-        return $user->senior();
+        return $user->admin();
     }
 
     /**
      * Can a user delete a feature?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Feature $feature
      * @return bool
