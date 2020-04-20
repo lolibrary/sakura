@@ -10,7 +10,7 @@ trait Publishable
 {
     /**
      * Boot this trait, registering model handlers.
-     * 
+     *
      * @return void
      */
     protected static function bootPublishable()
@@ -84,7 +84,7 @@ trait Publishable
      *
      * @return bool
      */
-    public function pending(): bool
+    public function isPending(): bool
     {
         return $this->status === static::PENDING;
     }
