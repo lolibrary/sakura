@@ -13,7 +13,7 @@ class ItemPolicy
 
     /**
      * Can a user view available items?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
@@ -24,7 +24,7 @@ class ItemPolicy
 
     /**
      * Can a user view a item?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @return bool
@@ -36,7 +36,7 @@ class ItemPolicy
 
     /**
      * Can a user create an item draft?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
@@ -47,7 +47,7 @@ class ItemPolicy
 
     /**
      * Can a user update an item?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @return bool
@@ -71,15 +71,20 @@ class ItemPolicy
 
     /**
      * Can a user delete an item?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @return bool
      */
     public function delete(User $user, Item $item)
     {
-        // senior lolibrarians can delete published items.
         if ($item->status === Item::PUBLISHED) {
+            // lolibrarian can delete items they themselves published
+            if ($item->publisher_id === $user->id) {
+                return $user->lolibrarian();
+            }
+
+            // senior lolibrarians can delete published items.
             return $user->senior();
         }
 
@@ -88,6 +93,8 @@ class ItemPolicy
             return $user->junior();
         }
 
+
+
         // only senior can delete drafts from other people.
         // This is just a separate check so it can be changed easily.
         return $user->senior();
@@ -95,7 +102,7 @@ class ItemPolicy
 
     /**
      * Can a user update an item?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @return bool
@@ -119,7 +126,7 @@ class ItemPolicy
 
     /**
      * Can a user update an item?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @param \App\Models\Tag $tag
@@ -132,7 +139,7 @@ class ItemPolicy
 
     /**
      * Can a user update an item?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @param \App\Models\Tag $tag
@@ -145,7 +152,7 @@ class ItemPolicy
 
     /**
      * Can a user update an item?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @param \App\Models\Attribute $attribute
@@ -158,7 +165,7 @@ class ItemPolicy
 
     /**
      * Can a user update an item?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @param \App\Models\Attribute $attribute
@@ -171,7 +178,7 @@ class ItemPolicy
 
     /**
      * Can a user update an item?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @param \App\Models\Color $color
@@ -184,7 +191,7 @@ class ItemPolicy
 
     /**
      * Can a user update an item?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @param \App\Models\Color $color
@@ -197,7 +204,7 @@ class ItemPolicy
 
     /**
      * Can a user update an item?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @param \App\Models\Feature $feature
@@ -210,7 +217,7 @@ class ItemPolicy
 
     /**
      * Can a user update an item?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @param \App\Models\Feature $feature
