@@ -11,33 +11,33 @@ class UserPolicy
 
     /**
      * Can a user update an item?
-     * 
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Item  $item
      * @return bool
      */
     public function viewAny(User $user)
     {
-        return $user->junior();
+        return $user->admin();
     }
 
     /**
-     * Can a user update an item?
-     * 
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
+     * Can a user view an item?
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Item  $item
      * @return bool
      */
     public function view(User $user, User $target)
     {
-        return $user->junior();
+        return $user->admin() || $user->is($target);
     }
 
     /**
      * Can a user see an email address?
-     * 
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Item  $item
      * @return bool
      */
     public function viewEmail(User $user, User $target)
@@ -47,9 +47,9 @@ class UserPolicy
 
     /**
      * Can a user update an item?
-     * 
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Item  $item
      * @return bool
      */
     public function update(User $user, User $target)
@@ -63,9 +63,9 @@ class UserPolicy
 
     /**
      * Can a user delete an item?
-     * 
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Item  $item
      * @return bool
      */
     public function delete(User $user, User $target)
@@ -74,6 +74,6 @@ class UserPolicy
             return false;
         }
 
-        return $user->admin() && $user->id !== $target->id;
+        return $user->admin() && $user->isNot($target);
     }
 }

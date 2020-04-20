@@ -12,7 +12,7 @@ class ColorPolicy
 
     /**
      * Can a user view available colors?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
@@ -23,7 +23,7 @@ class ColorPolicy
 
     /**
      * Can a user view a color?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Color $color
      * @return bool
@@ -35,30 +35,30 @@ class ColorPolicy
 
     /**
      * Can a user create a color?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
     public function create(User $user)
     {
-        return $user->senior();
+        return $user->admin();
     }
 
     /**
      * Can a user update a color?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Color $color
      * @return bool
      */
     public function update(User $user, Color $color)
     {
-        return $user->senior();
+        return $user->admin();
     }
 
     /**
      * Can a user delete a color?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Color $color
      * @return bool

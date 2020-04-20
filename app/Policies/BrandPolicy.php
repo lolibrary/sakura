@@ -12,7 +12,7 @@ class BrandPolicy
 
     /**
      * Can a user view available brands?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
@@ -23,7 +23,7 @@ class BrandPolicy
 
     /**
      * Can a user view a brand?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Brand $brand
      * @return bool
@@ -35,30 +35,30 @@ class BrandPolicy
 
     /**
      * Can a user create a brand?
-     * 
+     *
      * @param \App\Models\User $user
      * @return bool
      */
     public function create(User $user)
     {
-        return $user->senior();
+        return $user->admin();
     }
 
     /**
      * Can a user update a brand?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Brand $brand
      * @return bool
      */
     public function update(User $user, Brand $brand)
     {
-        return $user->senior();
+        return $user->admin();
     }
 
     /**
      * Can a user delete a brand?
-     * 
+     *
      * @param \App\Models\User $user
      * @param \App\Models\Brand $brand
      * @return bool

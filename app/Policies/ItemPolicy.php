@@ -31,6 +31,10 @@ class ItemPolicy
      */
     public function view(User $user, Item $item)
     {
+        if ($item->user_id !== $user->id) {
+            return $user->lolibrarian();
+        }
+
         return $user->junior();
     }
 
@@ -55,6 +59,11 @@ class ItemPolicy
     public function update(User $user, Item $item)
     {
         if ($item->status === Item::PUBLISHED) {
+            // lolibrarians can update items they themselves published
+            if ($item->publisher_id === $user->id) {
+                return $user->lolibrarian();
+            }
+
             return $user->senior();
         }
 
@@ -109,8 +118,12 @@ class ItemPolicy
      */
     public function publish(User $user, Item $item)
     {
-        // must be senior to unpublish.
+        // must be senior to unpublish, or the original publisher
         if ($item->status === Item::PUBLISHED) {
+            if ($item->publisher_id === $user->id) {
+                return $user->lolibrarian();
+            }
+
             return $user->senior();
         }
 
