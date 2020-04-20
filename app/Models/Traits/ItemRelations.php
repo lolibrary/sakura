@@ -2,18 +2,34 @@
 
 namespace App\Models\Traits;
 
+use App\Models\Item;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Brand;
 use App\Models\Color;
-use App\Models\Image;
-use App\Models\Comment;
 use App\Models\Feature;
 use App\Models\Category;
 use App\Models\Attribute;
 
 trait ItemRelations
 {
+    /**
+     * Boot this trait and properly clean up afterwards.
+     *
+     * @return void
+     */
+    protected static function bootItemRelations()
+    {
+        static::deleting(function (Item $item) {
+            $item->tags()->sync([]);
+            $item->attributes()->sync([]);
+            $item->colors()->sync([]);
+            $item->features()->sync([]);
+            $item->stargazers()->sync([]);
+            $item->owners()->sync([]);
+        });
+    }
+
     /**
      * The brand of this item.
      *
@@ -102,16 +118,6 @@ trait ItemRelations
     public function stargazers()
     {
         return $this->belongsToMany(User::class, 'wishlist')->withTimestamps();
-    }
-
-    /**
-     * The comments that have been left on this.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
     }
 
     /**
