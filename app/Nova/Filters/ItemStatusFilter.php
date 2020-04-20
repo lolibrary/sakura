@@ -4,6 +4,7 @@ namespace App\Nova\Filters;
 
 use App\Models\Item as BaseItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Laravel\Nova\Filters\Filter;
 
 class ItemStatusFilter extends Filter
@@ -25,25 +26,45 @@ class ItemStatusFilter extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        if ($request->user()->developer() && $value === 'shoe-drafts') {
-            // this is just so shoes can be added and deleted easily during testing.
-            return $query->where('status', 10);
+        // lock away certain functions behind dev.
+        if ($request->user()->developer()) {
+            switch ($value) {
+                case 'shoe-drafts':
+                    return $query->where('status', BaseItem::SHOE_DRAFTS);
+                case 'pending-items':
+                    return $query->where('status', BaseItem::PENDING);
+                case 'missing-images':
+                    return $query->where('status', BaseItem::MISSING_IMAGES);
+            }
         }
 
-        if (starts_with($value, 'my-')) {
-            $query->where('user_id', $request->user()->id);
+        switch ($value) {
+            case 'published':
+                return $query->where('status', BaseItem::PUBLISHED);
+            case 'my-published':
+                return $this->restrict($request, $query)
+                    ->where('status', BaseItem::PUBLISHED);
 
-            $value = str_replace($value, 'my-', '');
-        }
-        if ($value === 'published' ) {
-            $value = BaseItem::PUBLISHED;
-        } else if ($value === 'pending') {
-            $value = BaseItem::PENDING;
-        } else {
-            $value = BaseItem::DRAFT;
+            case 'drafts':
+                return $query->where('status', BaseItem::DRAFT);
+            case 'my-drafts':
+                return $this->restrict($request, $query)
+                    ->where('status', BaseItem::DRAFT);
+
+            case 'my-items':
+                return $this->restrict($request, $query);
+
+            case 'published-by-me':
+                return $query->where('publisher_id', $request->user()->id)
+                    ->where('status', BaseItem::PUBLISHED);
+
+            case 'published-by-others':
+                return $this->restrict($request, $query)
+                    ->where('publisher_id', '!=', $request->user()->id)
+                    ->where('status', BaseItem::PUBLISHED);
         }
 
-        return $query->where('status', $value);
+        return $query;
     }
 
     /**
@@ -54,19 +75,54 @@ class ItemStatusFilter extends Filter
      */
     public function options(Request $request)
     {
-        $options = [
-            'Published' => 'published',
-            'Drafts' => 'drafts',
-            'Pending Review' => 'pending',
-            'My Drafts' => 'my-drafts',
-            'My Published Items' => 'my-published',
-            'My Pending Items' => 'my-pending',
-        ];
+
 
         if ($request->user()->developer()) {
-            $options['(Dev) Shoe Drafts'] = 'shoe-drafts';
+            return [
+                'My Items' => 'my-items',
+                'My Drafts' => 'my-drafts',
+                'My Items (Published by Me)' => 'published-by-me',
+                'My Items (Published by Others)' => 'published-by-others',
+
+                'Show Drafts (status = 10)' => 'shoe-drafts',
+                'Missing Images (status = 4)' => 'missing-images',
+
+                'Pending Review (status = 2)' => 'pending-items',
+
+                'All Drafts' => 'drafts',
+            ];
         }
 
-        return $options;
+        // TODO: proper moderation queue resource, App\Nova\Queue.
+        if ($request->user()->lolibrarian()) {
+            return [
+                'My Items' => 'my-items',
+                'My Drafts' => 'my-drafts',
+                'My Items (Published)' => 'my-published',
+
+                'All Drafts' => 'drafts',
+                'All Published' => 'published',
+            ];
+        }
+
+        // junior and under.
+
+        return [
+            'My Items' => 'my-items',
+            'My Drafts' => 'my-drafts',
+            'My Items (Published)' => 'my-published',
+        ];
+    }
+
+    /**
+     * Restrict a filter to the logged in user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function restrict(Request $request, $query)
+    {
+        return $query->where('user_id', $request->user()->id);
     }
 }
