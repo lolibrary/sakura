@@ -5,12 +5,10 @@ namespace App\Models\Traits;
 use App\Models\User;
 
 /**
- * User Access Levels.
+ * User Access Levels for {@see \App\Models\User}.
  *
  * @property bool $banned
  * @property int $level
- *
- * {@see \App\User}
  */
 trait AccessLevels
 {
