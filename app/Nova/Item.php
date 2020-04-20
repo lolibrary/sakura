@@ -226,7 +226,7 @@ class Item extends Resource
     public function actions(Request $request)
     {
         return [
-            (new PublishItem)->canSee(function ($request) {
+            (new PublishItem)->canSee(function (Request $request) {
                 $model = $request->findModelQuery()->first();
 
                 if ($model === null) {
@@ -235,7 +235,7 @@ class Item extends Resource
 
                 return $model->pending() && $request->user()->can('publish', $model);
             }),
-            (new UnpublishItem)->canSee(function ($request) {
+            (new UnpublishItem)->canSee(function (Request $request) {
                 $model = $request->findModelQuery()->first();
 
                 if ($model === null) {
@@ -244,7 +244,6 @@ class Item extends Resource
 
                 return $model->published() && $request->user()->can('publish', $model);
             }),
-            (new DeleteItem)->canSeeWhen('delete'),
         ];
     }
 }

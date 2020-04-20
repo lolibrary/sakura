@@ -31,8 +31,7 @@ class AddLevelToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('level');
-            $table->dropColumn('banned');
+            $table->dropColumn(['level', 'banned']);
         });
 
         Schema::table('users', function (Blueprint $table) {
