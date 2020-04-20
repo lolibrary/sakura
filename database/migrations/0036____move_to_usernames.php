@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Database\PostgresConnection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -35,7 +37,9 @@ class MoveToUsernames extends Migration
         });
 
         // now, make the name `not null`
-        DB::statement('alter table users alter column "name" set not null');
+        if (DB::connection() instanceof PostgresConnection) {
+            DB::statement('alter table users alter column "name" set not null');
+        }
     }
 
     /**
@@ -54,6 +58,8 @@ class MoveToUsernames extends Migration
             $table->boolean('developer')->default(false);
         });
 
-        DB::statement('alter table users alter column "name" set null');
+        if (DB::connection() instanceof PostgresConnection) {
+            DB::statement('alter table users alter column "name" set null');
+        }
     }
 }

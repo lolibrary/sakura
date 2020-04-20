@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\PostgresConnection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -18,8 +20,10 @@ class AddStatusToImages extends Migration
             $table->string('uploaded_filename')->nullable();
         });
 
-        DB::statement('alter table images alter column name drop not null');
-        DB::statement('alter table images alter column filename drop not null');
+        if (DB::connection() instanceof PostgresConnection) {
+            DB::statement('alter table images alter column name drop not null');
+            DB::statement('alter table images alter column filename drop not null');
+        }
     }
 
     /**
@@ -33,7 +37,9 @@ class AddStatusToImages extends Migration
             $table->dropColumn('status', 'uploaded_filename');
         });
 
-        DB::statement('alter table images alter column name set not null');
-        DB::statement('alter table images alter column filename set not null');
+        if (DB::connection() instanceof PostgresConnection) {
+            DB::statement('alter table images alter column name set not null');
+            DB::statement('alter table images alter column filename set not null');
+        }
     }
 }

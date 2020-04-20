@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\PostgresConnection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,6 +15,10 @@ class FuzzyTextSearch extends Migration
      */
     public function up()
     {
+        if (! DB::connection() instanceof PostgresConnection) {
+            return;
+        }
+
         Schema::table('items', function (Blueprint $table) {
             $database = DB::getDatabaseName();
 
@@ -34,6 +40,10 @@ class FuzzyTextSearch extends Migration
      */
     public function down()
     {
+        if (! DB::connection() instanceof PostgresConnection) {
+            return;
+        }
+
         Schema::table('items', function (Blueprint $table) {
             $table->dropIndex('english_name_trgm');
             $table->dropIndex('foreign_name_trgm');
