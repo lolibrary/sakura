@@ -87,6 +87,20 @@ class Item extends Model
     public const PENDING = 2;
 
     /**
+     * Test status for missing image imports.
+     *
+     * @var int
+     */
+    public const MISSING_IMAGES = 4;
+
+    /**
+     * Test status for missing shoe drafts.
+     *
+     * @var int
+     */
+    public const SHOE_DRAFTS = 10;
+
+    /**
      * A shortcut for fully eager loading an item.
      *
      * Use: `Item::with(Item::FULLY_LOAD)`
@@ -180,7 +194,7 @@ class Item extends Model
 
     /**
      * An array of column cast values.
-     * 
+     *
      * @var array
      */
     public $casts = [
