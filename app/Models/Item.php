@@ -12,7 +12,7 @@ use App\Models\Traits\ItemRelations;
  *
  * @property string      $slug            The URL slug of an item.
  * @property string      $english_name    The English Title of an Item.
- * @property string      $foreign_name    The 'Japanese Title' of an Item.
+ * @property string|null $foreign_name    The 'Japanese Title' of an Item.
  * @property int|null    $year            The year an Item was released.
  * @property string|null $product_number  An Item's product number.
  * @property int         $status          The status of an item (stored internally as an int).
@@ -20,26 +20,26 @@ use App\Models\Traits\ItemRelations;
  * @property float       $price_formatted The price of this item, formatted to the rules of the given currency (e.g. /100 for gbp/usd)
  * @property string      $currency        The currency of this item, as an ISO code.
  *
- * @property \App\Models\Image    $image     The primary {@link \App\Image} for this Item.
- * @property \App\Models\Category $category  The {@link \App\Category} of this Item (e.g. JSK).
- * @property \App\Models\User     $submitter The {@link \App\User} who originally submitted this Item.
- * @property \App\Models\User     $publisher The {@link \App\User} who published this Item.
- * @property \App\Models\Brand    $brand     The {@link \App\Brand} of this Item (e.g. Angelic Pretty).
+ * @property \App\Models\Image $image     The primary {@link \App\Models\Image} for this Item.
+ * @property \App\Models\Category $category  The {@link \App\Models\Category} of this Item (e.g. JSK).
+ * @property \App\Models\User $submitter The {@link \App\Models\User} who originally submitted this Item.
+ * @property \App\Models\User $publisher The {@link \App\Models\User} who published this Item.
+ * @property \App\Models\Brand $brand     The {@link \App\Models\Brand} of this Item (e.g. Angelic Pretty).
  *
- * @property \App\Models\Image[]|\Illuminate\Database\Eloquent\Collection     $images     The {@link \App\Image images} for this Item.
- * @property \App\Models\Tag[]|\Illuminate\Database\Eloquent\Collection       $tags       The {@link \App\Tag search tags} for this Item.
- * @property \App\Models\Color[]|\Illuminate\Database\Eloquent\Collection     $colors     The {@link \App\Color colorways} this Item comes in (e.g. Black).
- * @property \App\Models\Feature[]|\Illuminate\Database\Eloquent\Collection   $features   The {@link \App\Feature features} of this item (e.g. Back Shirring).
- * @property \App\Models\Attribute[]|\Illuminate\Database\Eloquent\Collection $attributes The {@link \App\Attribute custom attributes} on this Item.
- * @property \App\Models\User[]|\Illuminate\Database\Eloquent\Collection      $stargazers The {@link \App\User users} who want to own this Item.
- * @property \App\Models\User[]|\Illuminate\Database\Eloquent\Collection      $owners     The {@link \App\Attribute users} who own this Item.
+ * @property \App\Models\Image[]|\Illuminate\Database\Eloquent\Collection $images     The {@link \App\Models\Image images} for this Item.
+ * @property \App\Models\Tag[]|\Illuminate\Database\Eloquent\Collection $tags       The {@link \App\Models\Tag search tags} for this Item.
+ * @property \App\Models\Color[]|\Illuminate\Database\Eloquent\Collection $colors     The {@link \App\Models\Color colorways} this Item comes in (e.g. Black).
+ * @property \App\Models\Feature[]|\Illuminate\Database\Eloquent\Collection $features   The {@link \App\Models\Feature features} of this item (e.g. Back Shirring).
+ * @property \App\Models\Attribute[]|\Illuminate\Database\Eloquent\Collection $attributes The {@link \App\Models\Attribute custom attributes} on this Item.
+ * @property \App\Models\User[]|\Illuminate\Database\Eloquent\Collection $stargazers The {@link \App\Models\User users} who want to own this Item.
+ * @property \App\Models\User[]|\Illuminate\Database\Eloquent\Collection $owners     The {@link \App\Models\Attribute users} who own this Item.
  *
- * @property string $image_id The ID of this Item's {@link \App\Image image}.
- * @property string $category_id  The ID of this Item's {@link \App\Category category}.
- * @property string $user_id  The ID of the {@link \App\User user} who submitted this Item.
- * @property string $brand_id The ID of this Item's {@link \App\Brand brand}.
- * @property string $submitter_id The ID of this Item's {@link \App\User submitter}.
- * @property string $publisher_id The ID of this Item's {@link \App\User publisher}.
+ * @property string $image_id The ID of this Item's {@link \App\Models\Image image}.
+ * @property string $category_id  The ID of this Item's {@link \App\Models\Category category}.
+ * @property string $user_id  The ID of the {@link \App\Models\User user} who submitted this Item.
+ * @property string $brand_id The ID of this Item's {@link \App\Models\Brand brand}.
+ * @property string $submitter_id The ID of this Item's {@link \App\Models\User submitter}.
+ * @property string $publisher_id The ID of this Item's {@link \App\Models\User publisher}.
  *
  * @property \Carbon\Carbon $published_at The date this item was published.
  */
