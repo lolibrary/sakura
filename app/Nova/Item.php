@@ -3,10 +3,10 @@
 namespace App\Nova;
 
 use App\Models\Item as BaseItem;
-use App\Nova\Actions\{DeleteItem, PublishItem, UnpublishItem, PendingItem};
+use App\Nova\Actions\{PublishItem, UnpublishItem};
 use App\Nova\Filters\ItemStatusFilter;
+use Illuminate\Support\Str;
 use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Image;
@@ -14,11 +14,9 @@ use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Trix;
 use Illuminate\Http\Request;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Whitecube\NovaFlexibleContent\Flexible;
 use NovaAttachMany\AttachMany;
 
@@ -63,7 +61,7 @@ class Item extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function fields(Request $request)
@@ -80,7 +78,17 @@ class Item extends Resource
 
             Text::make('English Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->onlyOnForms(),
+
+            Text::make('English Name')
+                ->sortable()
+                ->onlyOnIndex()
+                ->displayUsing(function (string $text) {
+                    return Str::limit($text, 40);
+                }),
+
+            Text::make('English Name')->onlyOnDetail(),
 
             Text::make('Foreign Name')
                 ->sortable()
@@ -94,13 +102,14 @@ class Item extends Resource
 
             Select::make('Year')
                 ->options(
-                    collect(range(1990, (int)date('Y') + 1))
+                    collect(range(1990, (int) date('Y') + 1))
+                        ->reverse()
                         ->mapWithKeys(function ($value) {
                             return [$value => $value];
                         })
                 )
                 ->displayUsingLabels()
-                ->rules('nullable', 'integer', 'min:1990', 'max:' . (date('Y') + 3))
+                ->rules('nullable', 'integer', 'min:1990', 'max:'.(date('Y') + 3))
                 ->hideFromIndex(),
 
             BelongsTo::make('Brand')->sortable(),
@@ -109,7 +118,7 @@ class Item extends Resource
             Trix::make('Notes')->alwaysShow(),
 
             new Panel('Submission Details', [
-                BelongsTo::make('Submitter', 'submitter', User::class)->readonly()->sortable(),
+                BelongsTo::make('Submitter', 'submitter', User::class)->readonly()->sortable()->exceptOnForms(),
                 BelongsTo::make('Publisher', 'publisher', User::class)->readonly()->nullable()->onlyOnDetail(),
 
                 DateTime::make('Created', 'created_at')->onlyOnDetail(),
@@ -170,6 +179,9 @@ class Item extends Resource
                         return 'draft';
                     case BaseItem::PENDING:
                         return 'pending';
+                    case BaseItem::MISSING_IMAGES:
+                    case BaseItem::SHOE_DRAFTS:
+                        return 'dev-only';
                     default:
                         return 'unknown';
                 }
@@ -177,6 +189,7 @@ class Item extends Resource
                 'published' => 'success',
                 'draft' => 'danger',
                 'pending' => 'info',
+                'dev-only' => 'warning',
                 'unknown' => 'warning',
             ])->exceptOnForms(),
         ];
@@ -185,7 +198,7 @@ class Item extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function cards(Request $request)
@@ -196,7 +209,7 @@ class Item extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function filters(Request $request)
@@ -209,7 +222,7 @@ class Item extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function lenses(Request $request)
@@ -220,24 +233,29 @@ class Item extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function actions(Request $request)
     {
         return [
             (new PublishItem)->canSee(function (Request $request) {
+                /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
                 $model = $request->findModelQuery()->first();
 
+                /** @var \App\Models\Item $model */
                 if ($model === null) {
                     return $request->user()->lolibrarian();
                 }
 
-                return $model->pending() && $request->user()->can('publish', $model);
+                return $model->draft() && $request->user()->can('publish', $model);
             }),
+
             (new UnpublishItem)->canSee(function (Request $request) {
+                /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
                 $model = $request->findModelQuery()->first();
 
+                /** @var \App\Models\Item $model */
                 if ($model === null) {
                     return $request->user()->senior();
                 }

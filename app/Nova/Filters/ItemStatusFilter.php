@@ -53,6 +53,9 @@ class ItemStatusFilter extends Filter
 
             case 'my-items':
                 return $this->restrict($request, $query);
+            case 'my-pending-items':
+                return $this->restrict($request, $query)
+                    ->where('status', BaseItem::PENDING);
 
             case 'published-by-me':
                 return $query->where('publisher_id', $request->user()->id)
@@ -75,21 +78,19 @@ class ItemStatusFilter extends Filter
      */
     public function options(Request $request)
     {
-
-
         if ($request->user()->developer()) {
             return [
                 'My Items' => 'my-items',
                 'My Drafts' => 'my-drafts',
-                'My Items (Published by Me)' => 'published-by-me',
+                'Published by Me' => 'published-by-me',
                 'My Items (Published by Others)' => 'published-by-others',
 
                 'Show Drafts (status = 10)' => 'shoe-drafts',
                 'Missing Images (status = 4)' => 'missing-images',
 
                 'Pending Review (status = 2)' => 'pending-items',
-
-                'All Drafts' => 'drafts',
+                'All Published (status = 1)' => 'published',
+                'All Drafts (status = 0)' => 'drafts',
             ];
         }
 
@@ -98,7 +99,8 @@ class ItemStatusFilter extends Filter
             return [
                 'My Items' => 'my-items',
                 'My Drafts' => 'my-drafts',
-                'My Items (Published)' => 'my-published',
+                'Published by Me' => 'published-by-me',
+                'My Items (Published by Others)' => 'published-by-others',
 
                 'All Drafts' => 'drafts',
                 'All Published' => 'published',

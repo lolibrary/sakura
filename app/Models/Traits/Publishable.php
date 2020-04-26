@@ -23,7 +23,7 @@ trait Publishable
     /**
      * Publish this item.
      *
-     * @param \App\User|null $user
+     * @param \App\Models\User|null $user
      * @return void
      */
     public function publish(User $user = null)
@@ -53,10 +53,20 @@ trait Publishable
      *
      * @return void
      */
-    public function pending()
+    public function setPending()
     {
         $this->status = static::PENDING;
         $this->save();
+    }
+
+    /**
+     * Return if this item is pending.
+     *
+     * @return bool
+     */
+    public function isPending(): bool
+    {
+        return $this->status === static::PENDING;
     }
 
     /**
@@ -77,16 +87,6 @@ trait Publishable
     public function draft(): bool
     {
         return $this->status === static::DRAFT;
-    }
-
-    /**
-     * Return if this item is pending.
-     *
-     * @return bool
-     */
-    public function isPending(): bool
-    {
-        return $this->status === static::PENDING;
     }
 
     /**
