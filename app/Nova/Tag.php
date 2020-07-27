@@ -15,7 +15,7 @@ class Tag extends Resource
      *
      * @var string
      */
-    public static $model = 'App\Models\Tag';
+    public static $model = \App\Models\Tag::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.

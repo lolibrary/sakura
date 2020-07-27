@@ -15,7 +15,7 @@ class Feature extends Resource
      *
      * @var string
      */
-    public static $model = 'App\Models\Feature';
+    public static $model = \App\Models\Feature::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
