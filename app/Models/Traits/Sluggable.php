@@ -2,6 +2,7 @@
 
 namespace App\Models\Traits;
 
+use Illuminate\Support\Str;
 use App\Models\Item;
 use RuntimeException;
 
@@ -32,7 +33,7 @@ trait Sluggable
      */
     public static function createSlug(Item $item)
     {
-        $candidate = $item->brand->short_name.'-'.str_slug($item->english_name);
+        $candidate = $item->brand->short_name.'-'.Str::slug($item->english_name);
 
         if (! static::where('slug', $candidate)->exists()) {
             return $candidate;

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use App\Models\Brand;
 use App\Models\Image;
 use Illuminate\Database\QueryException;
@@ -65,7 +66,7 @@ class BrandSeeder extends Seeder
     public function run()
     {
         foreach (static::BRANDS as $name => $brand) {
-            $slug = str_slug($brand);
+            $slug = Str::slug($brand);
 
             if (Brand::where('slug', $slug)->exists()) {
                 continue;
@@ -77,7 +78,7 @@ class BrandSeeder extends Seeder
             ]);
 
             Brand::create([
-                'slug' => str_slug($brand),
+                'slug' => Str::slug($brand),
                 'name' => $brand,
                 'short_name' => $name,
                 'image_id' => $image->id,

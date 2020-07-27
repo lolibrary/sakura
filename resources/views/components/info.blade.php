@@ -1,5 +1,5 @@
 <div class="row">
-    <h1 class="col p-2">{{ title_case($name) }} Info</h1>
+    <h1 class="col p-2">{{ Str::title($name) }} Info</h1>
 </div>
 
 <div class="row text-center mb-4">
@@ -30,7 +30,7 @@
             <span class="text-regular">{{ $items->total() }}</span> items found with this {{ $name }}.
         </p>
 
-        <a href="{{ search_route([str_plural($name) => [$model->slug]]) }}"
+        <a href="{{ search_route([Str::plural($name) => [$model->slug]]) }}"
             class="btn text-white btn-secondary py-2">Search using this {{ $name }}</a>
     </div>
 </div>
