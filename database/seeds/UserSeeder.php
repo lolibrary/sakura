@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -31,7 +32,7 @@ class UserSeeder extends Seeder
             'id' => static::UUID,
             'email' => config('site.admin.email') ?? 'admin@example.com',
             'username' => config('site.admin.username') ?? 'admin',
-            'password' => bcrypt($password = str_random(64)),
+            'password' => bcrypt($password = Str::random(64)),
             'name' => config('site.admin.name') ?? 'Admin',
             'level' => User::DEVELOPER,
         ]);

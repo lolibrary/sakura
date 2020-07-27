@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Items;
 
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ItemStoreRequest;
 use App\Http\Requests\Admin\ItemUpdateRequest;
@@ -55,7 +56,7 @@ class ItemController extends Controller
         $attached = $user->updateWishlist($item);
         $status = $attached ? 'added' : 'removed';
 
-        return back()->withStatus(trans("user.wishlist.{$status}", ['item' => str_limit($item->english_name, 28)]));
+        return back()->withStatus(trans("user.wishlist.{$status}", ['item' => Str::limit($item->english_name, 28)]));
     }
 
     /**
@@ -70,7 +71,7 @@ class ItemController extends Controller
         $attached = $user->updateCloset($item);
         $status = $attached ? 'added' : 'removed';
 
-        return back()->withStatus(trans("user.closet.{$status}", ['item' => str_limit($item->english_name, 28)]));
+        return back()->withStatus(trans("user.closet.{$status}", ['item' => Str::limit($item->english_name, 28)]));
     }
 
     /**

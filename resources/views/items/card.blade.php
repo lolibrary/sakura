@@ -35,7 +35,7 @@
             <div class="d-flex small">
                 <p class="p-0 m-0 text-left flex-fill" style="white-space: nowrap; overflow-x: ellipsis;">
                     <a href="{{ $item->brand->url }}" title="{{ $item->brand->name }}">
-                        {{ str_limit($item->brand->name, 21) }}
+                        {{ Str::limit($item->brand->name, 21) }}
                         {{-- deliberately chose 21 as the cutoff since lots of brand names fit on word boundaries. --}}
                     </a>
                 </p>

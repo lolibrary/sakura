@@ -2,6 +2,7 @@
 
 namespace App\Composers;
 
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 abstract class Composer
@@ -61,7 +62,7 @@ abstract class Composer
      */
     protected function name()
     {
-        return snake_case(class_basename(static::class));
+        return Str::snake(class_basename(static::class));
     }
 
     /**
