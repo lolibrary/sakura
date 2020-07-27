@@ -26,7 +26,7 @@ trait Cacheable
     {
         $key = mb_strtolower(class_basename(static::class));
 
-        return 'models:' . $key;
+        return 'models:'.$key;
     }
 
     /**

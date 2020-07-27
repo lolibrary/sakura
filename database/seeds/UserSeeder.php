@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
 
         User::setEventDispatcher($dispatcher);
 
-        echo "Admin email: {$user->email}" . PHP_EOL;
-        echo "Admin password: {$password}" . PHP_EOL;
+        echo "Admin email: {$user->email}".PHP_EOL;
+        echo "Admin password: {$password}".PHP_EOL;
     }
 }

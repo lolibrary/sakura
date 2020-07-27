@@ -2,15 +2,15 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\ID;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
 use App\Models\User as BaseUser;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Panel;
 
 class User extends Resource
 {
@@ -70,7 +70,7 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
-            
+
             new Panel('Authentication', [
                 Select::make('Level')->options([
                     BaseUser::DEVELOPER => 'Developer',
@@ -80,7 +80,7 @@ class User extends Resource
                     BaseUser::JUNIOR_LOLIBRARIAN => 'Junior Lolibrarian',
                     BaseUser::REGULAR => 'Regular User',
                 ])->displayUsingLabels()->sortable(),
-    
+
                 Boolean::make('Banned')->canSeeWhen('update', $this),
             ]),
         ];

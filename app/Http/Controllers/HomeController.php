@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\Item;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Item;
+use App\Models\Post;
 
 class HomeController extends Controller
 {

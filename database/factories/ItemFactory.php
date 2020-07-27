@@ -80,7 +80,7 @@ $factory->define(App\Models\Item::class, function (Faker $faker) {
         'price' => $faker->numberBetween(100, 40000),
         'currency' => $faker->randomElement(array_keys(App\Models\Item::CURRENCIES)),
         'image' => 'images/default.png',
-        'images' => '[{"key": "b11b5722aad69cfb", "layout": "image", "attributes": {"image": "images/default.png"}}]'
+        'images' => '[{"key": "b11b5722aad69cfb", "layout": "image", "attributes": {"image": "images/default.png"}}]',
     ];
 });
 
@@ -99,4 +99,3 @@ $factory->afterMakingState(App\Models\Item::class, 'published', function ($item)
     $item->published_at = now('UTC');
     $item->publisher_id = uuid4();
 });
-
