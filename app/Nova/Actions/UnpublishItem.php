@@ -2,14 +2,14 @@
 
 namespace App\Nova\Actions;
 
-use Illuminate\Http\Request;
 use Illuminate\Bus\Queueable;
-use Laravel\Nova\Actions\Action;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Fields\ActionFields;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
 
 class UnpublishItem extends Action
 {
@@ -39,9 +39,9 @@ class UnpublishItem extends Action
         return [];
     }
 
-        /**
+    /**
      * Check an item is authorized to run.
-     * 
+     *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Item $model
      * @return bool
@@ -51,7 +51,7 @@ class UnpublishItem extends Action
         if ($model->draft()) {
             return false;
         }
-        
+
         return $request->user()->can('publish', $model);
     }
 }

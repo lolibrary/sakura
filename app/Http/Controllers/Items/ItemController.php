@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\Items;
 
-use App\Models\Tag;
-use App\Models\Item;
-use App\Models\User;
-use App\Models\Brand;
-use App\Models\Color;
-use App\Models\Image;
-use App\Models\Feature;
-use App\Models\Category;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ItemStoreRequest;
+use App\Http\Requests\Admin\ItemUpdateRequest;
 use App\Models\Attribute;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Color;
+use App\Models\Feature;
+use App\Models\Image;
+use App\Models\Item;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\{
-    ItemStoreRequest, ItemUpdateRequest
-};
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 
 class ItemController extends Controller
 {
@@ -80,13 +79,12 @@ class ItemController extends Controller
      * @param \App\Models\Item $item
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-
     public function edit(Item $item)
     {
         $this->user = auth()->user();
 
         if ($item->published() && ! $this->user->senior()) {
-            return back()->withErrors("Your level is not allowed to edit items once published!");
+            return back()->withErrors('Your level is not allowed to edit items once published!');
         }
 
         if ($item->submitter && ! $item->submitter->is($this->user) && ! $this->user->senior()) {
@@ -176,7 +174,7 @@ class ItemController extends Controller
                 collect($request->input('attributes'))
                     ->filter()
                     ->map(function ($value, $key) {
-                        return ["attribute_id" => $key, "value" => $value];
+                        return ['attribute_id' => $key, 'value' => $value];
                     }
                     )
             );
@@ -219,6 +217,7 @@ class ItemController extends Controller
         // handle the extra images (can be done async)
         $images = collect($request->images)->map(function (UploadedFile $file) {
             $image = Image::from($file);
+
             return $image->id;
         });
 
@@ -241,7 +240,7 @@ class ItemController extends Controller
             collect($request->input('attributes'))
                 ->filter()
                 ->map(function ($value, $key) {
-                    return ["attribute_id" => $key, "value" => $value];
+                    return ['attribute_id' => $key, 'value' => $value];
                 }
                 )
         );
@@ -272,6 +271,7 @@ class ItemController extends Controller
         }
 
         $item->publish();
+
         return back()->with('status', 'Item Published - It may take a few moments for it to appear in search results!');
     }
 
@@ -292,6 +292,7 @@ class ItemController extends Controller
             return $error;
         }
         $item->delete();
+
         return redirect()
             ->route('items.index')
             ->with('status', 'Item deleted successfully');

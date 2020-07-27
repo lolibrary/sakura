@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasUuid;
 use App\Models\Traits\Collection;
-use Illuminate\Support\Str;
 use App\Models\Traits\DateHandling;
+use App\Models\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Support\Str;
 
 /**
  * A base model for this application.
@@ -98,7 +98,7 @@ abstract class Model extends Eloquent
     {
         $class = class_basename($this);
 
-        return Str::plural(Str::lower($class)) . '.show';
+        return Str::plural(Str::lower($class)).'.show';
     }
 
     /**

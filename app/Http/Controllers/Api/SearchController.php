@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Tag;
-use App\Models\Item;
+use App\Http\Controllers\Controller as Base;
+use App\Http\Requests\Api\SearchRequest;
 use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Color;
 use App\Models\Feature;
-use App\Models\Category;
-use Illuminate\Support\Str;
+use App\Models\Item;
+use App\Models\Tag;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\Api\SearchRequest;
-use Illuminate\Database\Eloquent\Builder;
-
-use App\Http\Controllers\Controller as Base;
+use Illuminate\Support\Str;
 
 class SearchController extends Base
 {
@@ -46,9 +45,9 @@ class SearchController extends Base
 
         if (is_string($request->search) && strlen($request->search) > 0) {
             $search = $request->search;
-            
+
             $query->where(function (Builder $query) use ($search) {
-                $query->whereRaw('english_name %> ?',[$search]);
+                $query->whereRaw('english_name %> ?', [$search]);
                 $query->orWhereRaw('foreign_name %> ?', [$search]);
                 $query->orWhereRaw('product_number %> ?', [$search]);
             });
@@ -63,7 +62,7 @@ class SearchController extends Base
         $paginator->each(function (Item $item) {
             $item->image = Storage::cloud()->url($item->image);
             $item->makeVisible('image');
-            
+
             if ($item->brand !== null) {
                 $item->brand->image = Storage::cloud()->url($item->brand->image);
                 $item->brand->makeVisible('image');

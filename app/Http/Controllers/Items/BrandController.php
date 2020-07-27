@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Items;
 
-use App\Models\Item;
-use App\Models\Brand;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\Item;
 
 class BrandController extends Controller
 {

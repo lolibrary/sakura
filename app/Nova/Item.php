@@ -3,22 +3,23 @@
 namespace App\Nova;
 
 use App\Models\Item as BaseItem;
-use App\Nova\Actions\{PublishItem, UnpublishItem};
+use App\Nova\Actions\PublishItem;
+use App\Nova\Actions\UnpublishItem;
 use App\Nova\Filters\ItemStatusFilter;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Avatar;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
-use Illuminate\Http\Request;
-use Whitecube\NovaFlexibleContent\Flexible;
+use Laravel\Nova\Panel;
 use NovaAttachMany\AttachMany;
+use Whitecube\NovaFlexibleContent\Flexible;
 
 class Item extends Resource
 {

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Items;
 
-use App\Models\Item;
-use App\Models\Color;
 use App\Http\Controllers\Controller;
+use App\Models\Color;
+use App\Models\Item;
 
 class ColorController extends Controller
 {

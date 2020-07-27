@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\Traits\{
-    HasUuid, DateHandling, Wishlist, Closet, AccessLevels
-};
-use Illuminate\Support\Facades\DB;
-use Laravel\Passport\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Traits\AccessLevels;
+use App\Models\Traits\Closet;
+use App\Models\Traits\DateHandling;
+use App\Models\Traits\HasUuid;
+use App\Models\Traits\Wishlist;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Actions\Actionable;
+use Laravel\Passport\HasApiTokens;
 
 /**
  * A user of this application.
@@ -167,5 +169,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $query->where(DB::raw('lower(email)'), mb_strtolower($email));
     }
-
 }
