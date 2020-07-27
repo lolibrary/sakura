@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Items;
 
-use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ItemStoreRequest;
 use App\Http\Requests\Admin\ItemUpdateRequest;
@@ -18,6 +17,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ItemController extends Controller
 {

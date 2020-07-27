@@ -2,9 +2,9 @@
 
 namespace App\Models\Traits;
 
-use Illuminate\Support\Str;
 use App\Models\User;
 use App\Notifications\VerifyEmail;
+use Illuminate\Support\Str;
 
 trait VerifiesEmails
 {
