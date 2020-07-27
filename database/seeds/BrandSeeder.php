@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Str;
 use App\Models\Brand;
 use App\Models\Image;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class BrandSeeder extends Seeder
 {

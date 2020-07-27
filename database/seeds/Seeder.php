@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder as LaravelSeeder;
+use Illuminate\Support\Str;
 
 class Seeder extends LaravelSeeder
 {
