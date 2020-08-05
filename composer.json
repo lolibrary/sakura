@@ -8,8 +8,10 @@
     ],
     "license": "BSD-3-Clause",
     "require": {
-        "php": "^7.3",
+        "php": "^7.4",
         "ext-intl": "*",
+        "ext-pdo": "*",
+        "ext-json": "*",
         "dillingham/nova-attach-many": "^1.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.18",

@@ -33,6 +33,13 @@ abstract class Model extends Eloquent
     public const NAMESPACE_UUID = '56195dda-e864-11e6-98d9-b980ab05cceb';
 
     /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * Remove auto-incrementing ID handling.
      *
      * @var bool
