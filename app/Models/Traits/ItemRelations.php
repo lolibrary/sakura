@@ -2,14 +2,14 @@
 
 namespace App\Models\Traits;
 
+use App\Models\Attribute;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Color;
+use App\Models\Feature;
 use App\Models\Item;
 use App\Models\Tag;
 use App\Models\User;
-use App\Models\Brand;
-use App\Models\Color;
-use App\Models\Feature;
-use App\Models\Category;
-use App\Models\Attribute;
 
 trait ItemRelations
 {

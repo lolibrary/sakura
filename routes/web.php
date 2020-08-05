@@ -29,7 +29,6 @@ Route::get('blog/{post}', 'BlogController@show')->name('posts.show');
 
 // categories/brands/features etc
 Route::group(['namespace' => 'Items\\'], function () {
-
     $options = ['only' => ['show', 'index']];
 
     Route::resource('brands', 'BrandController', $options);

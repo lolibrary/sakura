@@ -2,8 +2,8 @@
 
 namespace App\Models\Traits;
 
-use App\Models\User;
 use App\Models\Item;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 trait Publishable
@@ -34,7 +34,6 @@ trait Publishable
         $this->publisher()->associate($user);
         $this->published_at = now();
         $this->save();
-
     }
 
     /**

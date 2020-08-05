@@ -43,6 +43,6 @@ class DonationController extends Controller
      */
     public function thanks()
     {
-      return view('donations.thanks');
+        return view('donations.thanks');
     }
 }

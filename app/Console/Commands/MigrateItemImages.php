@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Exception;
-use App\Models\Item;
 use App\Models\Image;
+use App\Models\Item;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +26,7 @@ class MigrateItemImages extends Command
 
     /**
      * A list of all missing main images.
-     * 
+     *
      * @var array
      */
     protected $missing = [];
@@ -69,17 +69,17 @@ class MigrateItemImages extends Command
 
         $this->table(['Item ID', 'Image ID'], $this->missing);
 
-        $this->line(count($this->missing) . ' items are missing images');
+        $this->line(count($this->missing).' items are missing images');
     }
 
     protected function query(string $status)
     {
         switch ($status) {
-            case "all":
+            case 'all':
                 return Item::query();
-            case "published":
+            case 'published':
                 return Item::where('status', Item::PUBLISHED);
-            case "draft":
+            case 'draft':
                 return Item::where('status', Item::DRAFT);
         }
 
@@ -97,7 +97,7 @@ class MigrateItemImages extends Command
 
     protected function imagesActioned(Item $item): bool
     {
-        return !empty($item->images);
+        return ! empty($item->images);
     }
 
     protected function actionMainImage(Item $item)

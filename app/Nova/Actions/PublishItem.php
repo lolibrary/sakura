@@ -2,14 +2,14 @@
 
 namespace App\Nova\Actions;
 
-use Illuminate\Http\Request;
 use Illuminate\Bus\Queueable;
-use Laravel\Nova\Actions\Action;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Fields\ActionFields;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
 
 class PublishItem extends Action
 {
@@ -26,7 +26,7 @@ class PublishItem extends Action
     {
         $models->each->publish(auth()->user());
 
-        return Action::message($models->count() . ' Item(s) Published');
+        return Action::message($models->count().' Item(s) Published');
     }
 
     /**
@@ -41,7 +41,7 @@ class PublishItem extends Action
 
     /**
      * Check an item is authorized to run.
-     * 
+     *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Item $model
      * @return bool
@@ -51,7 +51,7 @@ class PublishItem extends Action
         if ($model->published()) {
             return false;
         }
-        
+
         return $request->user()->can('publish', $model);
     }
 }

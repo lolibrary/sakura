@@ -22,7 +22,7 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->user()->junior()) {
                 return redirect('/library');
             }
-            
+
             return redirect('/');
         }
 

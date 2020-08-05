@@ -11,9 +11,9 @@
 
         <div class="row">
             <div class="col-sm p-2">
-                <img src="{{ $item->image ? Storage::cloud()->url($item->image) : default_asset() }}"
+                <img src="{{ $item->image ? cdn_link($item->image) : default_asset() }}"
                      onerror="this.src = '{{ default_asset() }}'"
-                     data-original-url="{{ $item->image ? Storage::cloud()->url($item->image) : default_asset() }}"
+                     data-original-url="{{ $item->image ? cdn_link($item->image) : default_asset() }}"
                      class="rounded mw-100 d-block mx-auto">
                 <div class="row p-0 mx-0 my-3">
                     <div class="col p-1 list-group text-center small">
@@ -161,11 +161,11 @@
             <div class="item-image-columns mb-5">
                 @foreach ($item->images as $image)
                     @isset ($image['attributes']['image'])
-                        <a class="card m-0 p-0" href="{{ Storage::cloud()->url($image['attributes']['image']) }}"
+                        <a class="card m-0 p-0" href="{{ cdn_link($image['attributes']['image']) }}"
                            data-lightbox="show">
-                            <img src="{{ Storage::cloud()->url($image['attributes']['image']) }}"
+                            <img src="{{ cdn_thumbnail($image['attributes']['image']) }}"
                                  onerror="this.src = '{{ default_asset() }}'"
-                                 data-original-url="{{  Storage::cloud()->url($image['attributes']['image']) }}"
+                                 data-original-url="{{  cdn_thumbnail($image['attributes']['image']) }}"
                                  data-key="{{ $image['key'] ?? '' }}"
                                  class="mw-100">
                         </a>
@@ -183,6 +183,6 @@
     <meta property="og:url" content="{{ $item->url }}">
     <meta property="og:type" content="product">
     <meta property="og:title" content="{{ $item->english_name }} by {{ $item->brand->name }}">
-    <meta property="og:image" content="{{ $item->image ? Storage::cloud()->url($item->image) : default_asset() }}">
+    <meta property="og:image" content="{{ $item->image ? cdn_link($item->image) : default_asset() }}">
     <meta property="product:brand" content="{{ $item->brand->name }}">
 @endsection

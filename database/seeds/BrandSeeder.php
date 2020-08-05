@@ -2,8 +2,9 @@
 
 use App\Models\Brand;
 use App\Models\Image;
-use Illuminate\Database\Seeder;
 use Illuminate\Database\QueryException;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class BrandSeeder extends Seeder
 {
@@ -65,19 +66,19 @@ class BrandSeeder extends Seeder
     public function run()
     {
         foreach (static::BRANDS as $name => $brand) {
-            $slug = str_slug($brand);
+            $slug = Str::slug($brand);
 
             if (Brand::where('slug', $slug)->exists()) {
                 continue;
             }
 
             $image = Image::firstOrCreate([
-                'name' => $brand . ' icon picture',
+                'name' => $brand.' icon picture',
                 'filename' => "{$slug}.png",
             ]);
 
             Brand::create([
-                'slug' => str_slug($brand),
+                'slug' => Str::slug($brand),
                 'name' => $brand,
                 'short_name' => $name,
                 'image_id' => $image->id,

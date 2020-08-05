@@ -1,11 +1,16 @@
 <?php
 
-use App\Models\{
-    Brand, Category, Color, Feature, Model, Image, User, Tag
-};
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Color;
+use App\Models\Feature;
+use App\Models\Image;
+use App\Models\Model;
+use App\Models\Tag;
+use App\Models\User;
 use GuzzleHttp\Psr7\Uri;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('uuid')) {
     /**
@@ -115,7 +120,7 @@ if (! function_exists('add_s3_bucket')) {
 
         $uri = (new Uri($url));
 
-        return (string) $uri->withHost("${bucket}." . $uri->getHost());
+        return (string) $uri->withHost("${bucket}.".$uri->getHost());
     }
 }
 
@@ -134,11 +139,11 @@ if (! function_exists('search_route')) {
             $values = (array) $values;
 
             foreach ($values as $value) {
-              $results[] = rawurlencode($key) . "[]=" . rawurlencode($value);
+                $results[] = rawurlencode($key).'[]='.rawurlencode($value);
             }
         }
 
-        return route('search') . '?' . implode('&', $results);
+        return route('search').'?'.implode('&', $results);
     }
 }
 
@@ -226,10 +231,10 @@ if (! function_exists('cdn_path')) {
      * @param string $path
      * @return string
      */
-     function cdn_path(string $path)
-     {
-         return config('cdn.image.url') . '/' . config('cdn.image.folder') . '/' . $path;
-     }
+    function cdn_path(string $path)
+    {
+        return config('cdn.image.url').'/'.config('cdn.image.folder').'/'.$path;
+    }
 }
 
 if (! function_exists('cdn_link')) {
@@ -241,6 +246,20 @@ if (! function_exists('cdn_link')) {
      */
     function cdn_link(string $path)
     {
-        return config('cdn.image.url') . '/' . $path;
+        return config('cdn.image.url').'/'.$path;
+    }
+}
+
+if (! function_exists('cdn_thumbnail')) {
+    function cdn_thumbnail(string $path, array $options = []) {
+        static $defaults = [
+            'width' => '300',
+            'height' => '300',
+            'fit' => 'bounds',
+        ];
+
+        $query = $defaults + $options;
+
+        return cdn_link($path) . '?' . http_build_query($query);
     }
 }

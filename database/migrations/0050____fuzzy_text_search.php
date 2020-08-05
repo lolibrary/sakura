@@ -1,10 +1,10 @@
 <?php
 
+use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\PostgresConnection;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
 
 class FuzzyTextSearch extends Migration
 {
@@ -33,6 +33,7 @@ class FuzzyTextSearch extends Migration
             DB::statement('create index product_number_trgm on items using gist (product_number gist_trgm_ops)');
         });
     }
+
     /**
      * Reverse the migrations.
      *

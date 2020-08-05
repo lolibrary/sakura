@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -31,14 +32,14 @@ class UserSeeder extends Seeder
             'id' => static::UUID,
             'email' => config('site.admin.email') ?? 'admin@example.com',
             'username' => config('site.admin.username') ?? 'admin',
-            'password' => bcrypt($password = str_random(64)),
+            'password' => bcrypt($password = Str::random(64)),
             'name' => config('site.admin.name') ?? 'Admin',
             'level' => User::DEVELOPER,
         ]);
 
         User::setEventDispatcher($dispatcher);
 
-        echo "Admin email: {$user->email}" . PHP_EOL;
-        echo "Admin password: {$password}" . PHP_EOL;
+        echo "Admin email: {$user->email}".PHP_EOL;
+        echo "Admin password: {$password}".PHP_EOL;
     }
 }

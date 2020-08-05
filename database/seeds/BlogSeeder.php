@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Post;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class BlogSeeder extends Seeder
 {
@@ -16,7 +16,7 @@ class BlogSeeder extends Seeder
         $user = '00000000-0000-0000-0000-000000000000';
 
         if (! Post::where('slug', 'lolibrary-open-source')->exists()) {
-            $body = <<<BODY
+            $body = <<<'BODY'
 In order to make it much easier for people to contribute to Lolibrary from a development point of view,
 we've <a href="https://github.com/lolibrary/lolibrary" target="_blank" rel="external nofollow">open-sourced</a> Lolibrary's code on our GitHub.
 <br><br>
@@ -37,7 +37,7 @@ BODY;
         }
 
         if (! Post::where('slug', 'patreon-is-here')->exists()) {
-            $body = <<<BODY
+            $body = <<<'BODY'
 We started a Patreon so that people could donate to Lolibrary much, much easier <i class="far fa-heart"></i>.
 <br>
 If you could <a href="https://patreon.com/lolibrary" rel="external" target="_blank">support us on Patreon</a>, we'd greatly appreciate it - we're a pretty small team and we run entirely on donations!
@@ -56,13 +56,13 @@ BODY;
         }
 
         if (! Post::where('slug', 'new-site')->exists()) {
-            $preview = <<<BODY
+            $preview = <<<'BODY'
 This one has been a long time coming! Lots of delays, as I've been the only one working on Lolibrary for close to 2 years now, and I've recently moved house and changed job.
 <br><br>
 The good news is that the site is now under active development and I can start getting out the features that people have been missing! And you can register for accounts again!
 BODY;
 
-            $body = <<<BODY
+            $body = <<<'BODY'
 This one has been a long time coming! Lots of delays, as I've been the only one working on Lolibrary for close to 2 years now, and I've recently moved house and changed job.
 <br><br>
 The good news is that the site is now under active development and I can start getting out the features that people have been missing! And you can register for accounts again!
@@ -75,7 +75,6 @@ If you want to keep up with our development, you can follow us on <a href="https
 <br><br>
 If you'd like to join as a developer, email me at <a href="mailto:amelia@lolibrary.org">amelia@lolibrary.org</a>.
 BODY;
-
 
             Post::forceCreate([
                 'slug' => 'new-site',
