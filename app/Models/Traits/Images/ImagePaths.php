@@ -43,7 +43,7 @@ trait ImagePaths
      */
     public function getImagePath()
     {
-        return $this->getImagesFolder() . '/' . $this->getRootImagePath();
+        return $this->getImagesFolder().'/'.$this->getRootImagePath();
     }
 
     /**
@@ -53,7 +53,7 @@ trait ImagePaths
      */
     public function getThumbnailPath()
     {
-        return $this->getThumbnailsFolder() . '/' . $this->getRootThumbnailPath();
+        return $this->getThumbnailsFolder().'/'.$this->getRootThumbnailPath();
     }
 
     /**
@@ -63,7 +63,7 @@ trait ImagePaths
      */
     public function getUploadedPath()
     {
-        return $this->getUploadsFolder() . '/' . $this->getRootUploadedPath();
+        return $this->getUploadsFolder().'/'.$this->getRootUploadedPath();
     }
 
     /**
@@ -73,7 +73,7 @@ trait ImagePaths
      */
     public function getImagesFolder()
     {
-        return defined(static::class . '::IMAGES') ? static::IMAGES : 'images';
+        return defined(static::class.'::IMAGES') ? static::IMAGES : 'images';
     }
 
     /**
@@ -83,7 +83,7 @@ trait ImagePaths
      */
     public function getThumbnailsFolder()
     {
-        return defined(static::class . '::THUMBNAILS') ? static::THUMBNAILS : 'thumbnails';
+        return defined(static::class.'::THUMBNAILS') ? static::THUMBNAILS : 'thumbnails';
     }
 
     /**
@@ -93,7 +93,7 @@ trait ImagePaths
      */
     public function getUploadsFolder()
     {
-        return defined(static::class . '::UPLOADS') ? static::UPLOADS : 'uploads';
+        return defined(static::class.'::UPLOADS') ? static::UPLOADS : 'uploads';
     }
 
     /**

@@ -17,7 +17,7 @@ trait HasStatus
             return static::$statuses;
         }
 
-        throw new InvalidArgumentException('static::$statuses not found on ' . static::class);
+        throw new InvalidArgumentException('static::$statuses not found on '.static::class);
     }
 
     /**
@@ -86,7 +86,7 @@ trait HasStatus
     public function getRawStatus(string $status)
     {
         if (! $this->statusExists($status)) {
-            throw new InvalidArgumentException("Tried to get unknown status '$status' on " . static::class);
+            throw new InvalidArgumentException("Tried to get unknown status '$status' on ".static::class);
         }
 
         return $this->getStatusMap()[$status];

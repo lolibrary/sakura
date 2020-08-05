@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use NumberFormatter;
-use App\Models\Traits\Sluggable;
-use App\Models\Traits\Publishable;
 use App\Models\Traits\ItemRelations;
+use App\Models\Traits\Publishable;
+use App\Models\Traits\Sluggable;
+use NumberFormatter;
 
 /**
  * An Item of Apparel.

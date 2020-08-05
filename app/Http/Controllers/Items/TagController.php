@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Items;
 
-use App\Models\Tag;
-use App\Models\Item;
 use App\Http\Controllers\Controller;
+use App\Models\Item;
+use App\Models\Tag;
 
 class TagController extends Controller
 {

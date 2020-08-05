@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder as LaravelSeeder;
+use Illuminate\Support\Str;
 
 class Seeder extends LaravelSeeder
 {
@@ -42,7 +43,7 @@ class Seeder extends LaravelSeeder
         foreach (static::$content as $slug => $value) {
             if (is_numeric($slug)) {
                 // if we have a raw array, slug the value instead.
-                $slug = str_slug($value);
+                $slug = Str::slug($value);
             }
 
             $model = $this->getModel();

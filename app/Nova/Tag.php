@@ -2,10 +2,10 @@
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\DateTime;
-use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Tag extends Resource
@@ -15,7 +15,7 @@ class Tag extends Resource
      *
      * @var string
      */
-    public static $model = 'App\Models\Tag';
+    public static $model = \App\Models\Tag::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -49,11 +49,11 @@ class Tag extends Resource
                 ->creationRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/u', 'unique:tags,slug')
                 ->updateRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/u', 'unique:tags,slug,{{resourceId}}')
                 ->hideFromIndex(),
-            
+
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'string', 'min:2', 'max:255'),
-            
+
             DateTime::make('Created', 'created_at')->onlyOnDetail(),
             DateTime::make('Updated', 'updated_at')->onlyOnDetail(),
         ];

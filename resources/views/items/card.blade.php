@@ -17,7 +17,7 @@
 
         <div style="height: {{ ($type ?? null) === 'small' ? '7rem' : '14rem' }}" class="text-center">
             <a href="{{ $item->url }}">
-                <img src="{{ Storage::cloud()->url($item->image) }}" class="mw-100 mh-100 rounded"
+                <img src="{{ cdn_thumbnail($item->image) }}" class="mw-100 mh-100 rounded"
                     onerror="if (this.src !== '{{ default_asset() }}') this.src = '{{ default_asset() }}'">
             </a>
         </div>
@@ -35,7 +35,7 @@
             <div class="d-flex small">
                 <p class="p-0 m-0 text-left flex-fill" style="white-space: nowrap; overflow-x: ellipsis;">
                     <a href="{{ $item->brand->url }}" title="{{ $item->brand->name }}">
-                        {{ str_limit($item->brand->name, 21) }}
+                        {{ Str::limit($item->brand->name, 21) }}
                         {{-- deliberately chose 21 as the cutoff since lots of brand names fit on word boundaries. --}}
                     </a>
                 </p>

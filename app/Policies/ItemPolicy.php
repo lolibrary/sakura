@@ -2,9 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\{
-    Attribute, Color, Feature, Item, User, Tag
-};
+use App\Models\Attribute;
+use App\Models\Color;
+use App\Models\Feature;
+use App\Models\Item;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ItemPolicy
@@ -101,8 +104,6 @@ class ItemPolicy
         if ($item->user_id === $user->id) {
             return $user->junior();
         }
-
-
 
         // only senior can delete drafts from other people.
         // This is just a separate check so it can be changed easily.

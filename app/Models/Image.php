@@ -53,7 +53,7 @@ class Image extends Model
 
         // if we can't delete the file, don't delete the image from the database.
         static::deleting(function (self $model) {
-            return Storage::disk('cloud')->delete(config('cdn.image.folder') . '/' . $model->filename);
+            return Storage::disk('cloud')->delete(config('cdn.image.folder').'/'.$model->filename);
         });
     }
 
@@ -79,7 +79,7 @@ class Image extends Model
         $model = new static;
 
         $model->id = $id ?? uuid4();
-        $model->filename = $model->id . '.' . $file->extension();
+        $model->filename = $model->id.'.'.$file->extension();
 
         $file->storePubliclyAs(config('cdn.image.folder'), $model->filename);
 
@@ -116,6 +116,6 @@ class Image extends Model
      */
     public function getThumbnailUrlAttribute()
     {
-        return $this->getUrlAttribute() . "?width=300&height=300&fit=bounds";
+        return $this->getUrlAttribute().'?width=300&height=300&fit=bounds';
     }
 }

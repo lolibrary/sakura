@@ -3,9 +3,9 @@
 namespace App\Models\Traits;
 
 use App\Models\Pivot;
-use InvalidArgumentException;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Support\Carbon;
+use InvalidArgumentException;
 
 trait DateHandling
 {

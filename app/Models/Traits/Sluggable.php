@@ -2,13 +2,15 @@
 
 namespace App\Models\Traits;
 
-use RuntimeException;
 use App\Models\Item;
+use Illuminate\Support\Str;
+use RuntimeException;
 
-trait Sluggable {
+trait Sluggable
+{
     /**
      * Boot this trait and register model listeners.
-     * 
+     *
      * @return void
      */
     protected static function bootSluggable()
@@ -31,7 +33,7 @@ trait Sluggable {
      */
     public static function createSlug(Item $item)
     {
-        $candidate = $item->brand->short_name . '-' . str_slug($item->english_name);
+        $candidate = $item->brand->short_name.'-'.Str::slug($item->english_name);
 
         if (! static::where('slug', $candidate)->exists()) {
             return $candidate;
@@ -44,7 +46,7 @@ trait Sluggable {
                 throw new \RuntimeException("Too many items have the slug prefix [{$candidate}]");
             }
 
-            $try = $candidate . '-' . ++$attempts;
+            $try = $candidate.'-'.++$attempts;
         } while (static::where('slug', $try)->exists());
 
         return $try;

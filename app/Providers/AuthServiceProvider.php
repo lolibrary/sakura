@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -14,14 +14,14 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Models\Attribute' => 'App\Policies\AttributePolicy',
-        'App\Models\Brand' => 'App\Policies\BrandPolicy',
-        'App\Models\Category' => 'App\Policies\CategoryPolicy',
-        'App\Models\Color' => 'App\Policies\ColorPolicy',
-        'App\Models\Feature' => 'App\Policies\FeaturePolicy',
-        'App\Models\Item' => 'App\Policies\ItemPolicy',
-        'App\Models\User' => 'App\Policies\UserPolicy',
-        'App\Models\Tag' => 'App\Policies\TagPolicy',
+        \App\Models\Attribute::class => \App\Policies\AttributePolicy::class,
+        \App\Models\Brand::class => \App\Policies\BrandPolicy::class,
+        \App\Models\Category::class => \App\Policies\CategoryPolicy::class,
+        \App\Models\Color::class => \App\Policies\ColorPolicy::class,
+        \App\Models\Feature::class => \App\Policies\FeaturePolicy::class,
+        \App\Models\Item::class => \App\Policies\ItemPolicy::class,
+        \App\Models\User::class => \App\Policies\UserPolicy::class,
+        \App\Models\Tag::class => \App\Policies\TagPolicy::class,
     ];
 
     /**
