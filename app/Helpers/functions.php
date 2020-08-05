@@ -249,3 +249,17 @@ if (! function_exists('cdn_link')) {
         return config('cdn.image.url').'/'.$path;
     }
 }
+
+if (! function_exists('cdn_thumbnail')) {
+    function cdn_thumbnail(string $path, array $options = []) {
+        static $defaults = [
+            'width' => '300',
+            'height' => '300',
+            'fit' => 'bounds',
+        ];
+
+        $query = $defaults + $options;
+
+        return cdn_link($path) . '?' . http_build_query($query);
+    }
+}
