@@ -3,7 +3,7 @@
         {{ auth()->user()->getRoleAttribute() }} <span class="caret"></span>
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{{ url('/library') }}">
+        <a class="dropdown-item" href="{{ url('/library/resources/items') }}">
             <i class="fal fa-fw fa-columns"></i> {{ __('Dashboard') }}
         </a>
     </div>
