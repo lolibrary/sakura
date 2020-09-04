@@ -63,8 +63,8 @@
                     <p class="m-0">
                         @if ($item->published())
                             Published on
-                            <time datetime="{{ $item->created_at->toRfc3339String() }}"
-                                  class="text-regular">{{ $item->created_at->format('jS M Y, H:i') }} UTC
+                            <time datetime="{{ $item->published_at->toRfc3339String() }}"
+                                  class="text-regular">{{ $item->published_at->format('jS M Y, H:i') }} UTC
                             </time>
                         @else
                             <span class="text-danger">This is a Draft Post</span>
