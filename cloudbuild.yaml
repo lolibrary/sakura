@@ -2,7 +2,4 @@ steps:
 - name: 'gcr.io/$PROJECT_ID/lolibrary-builder'
   entrypoint: 'bash'
   args: ['/build-files/build.sh']
-  env:
-    -'PROJECT_ID=$PROJECT_ID'
-    -'COMMIT_SHA=$COMMIT_SHA'
-    -'BRANCH_NAME=$BRANCH_NAME'
+  env: ['PROJECT_ID=$PROJECT_ID', 'COMMIT_SHA=$COMMIT_SHA', 'BRANCH_NAME=$BRANCH_NAME']
