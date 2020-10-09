@@ -2,11 +2,31 @@ name: Build and push Sakura image
 on: [push]
 jobs:
   build-push-sakura:
-    container: gcr.io/lolibrary-180111/lolibrary-builder
+    container: ghcr.io/lolibrary/builder
+    credentials:
+      username: ${{ github.actor }}
+      password: ${{ secrets.GITHUB_TOKEN }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: bash -c /build-files/build.sh
+      - name: Checkout Sakura
+        uses: actions/checkout@v2
+          with:
+            path: sakura
+      - name: Checkout build tools
+        uses: actions/checkout@v2
+        with:
+          repository: lolibrary/build
+          token: ${{ secrets.GitHub_PAT }}
+      - name: GHCR login
+        uses: docker/login@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+      - name: Build image
+      - run: |
+          composer config http-basic.nova.laravel.com $NOVA_USERNAME $NOVA_API_KEY
+          zsh build.zsh
     env:
       NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
       NOVA_API_KEY: ${{ secrets.NOVA_API_KEY }}
