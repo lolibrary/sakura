@@ -24,9 +24,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
       - name: Build image
-      - run: |
+        shell: zsh
+        run: |
           composer config http-basic.nova.laravel.com $NOVA_USERNAME $NOVA_API_KEY
-          zsh build.zsh
+          ./build.zsh
     env:
       NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
       NOVA_API_KEY: ${{ secrets.NOVA_API_KEY }}
