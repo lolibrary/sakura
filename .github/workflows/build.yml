@@ -10,8 +10,8 @@ jobs:
     steps:
       - name: Checkout Sakura
         uses: actions/checkout@v2
-          with:
-            path: sakura
+        with:
+          path: sakura
       - name: Checkout build tools
         uses: actions/checkout@v2
         with:
