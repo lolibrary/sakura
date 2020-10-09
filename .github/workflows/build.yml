@@ -1,0 +1,13 @@
+name: Build and push Sakura image
+on: [push]
+jobs:
+  build-push-sakura:
+    container: gcr.io/lolibrary-180111/lolibrary-builder
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: bash -c /build-files/build.sh
+    env:
+      NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
+      NOVA_API_KEY: ${{ secrets.NOVA_API_KEY }}
+      PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
