@@ -2,7 +2,7 @@ name: Build and push Sakura image
 on: [push]
 jobs:
   build-push-sakura:
-    container: ghcr.io/lolibrary/builder
+    container: ghcr.io/lolibrary/build/builder
     credentials:
       username: ${{ github.actor }}
       password: ${{ secrets.GITHUB_TOKEN }}
