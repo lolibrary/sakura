@@ -25,7 +25,7 @@ jobs:
           password: ${{ secrets.PAT }}
           registry: ghcr.io
       - name: Build image
-        shell: zsh
+        shell: zsh --noprofile --norc -eo pipefail {0}
         run: |
           composer config http-basic.nova.laravel.com $NOVA_USERNAME $NOVA_API_KEY
           ./build.zsh
