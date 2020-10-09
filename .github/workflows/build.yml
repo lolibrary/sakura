@@ -3,7 +3,7 @@ on: [push]
 jobs:
   build-push-sakura:
     container:
-      image: docker.pkg.github.com/lolibrary/build/builder
+      image: ghcr.io/lolibrary/builder
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.PAT }}
@@ -23,7 +23,7 @@ jobs:
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.PAT }}
-          registry: docker.pkg.github.com
+          registry: ghcr.io
       - name: Build image
         shell: zsh
         run: |
