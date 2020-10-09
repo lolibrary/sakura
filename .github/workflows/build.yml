@@ -5,7 +5,7 @@ jobs:
     container:
       image: ghcr.io/lolibrary/builder
       credentials:
-        username: ${{ github.repository_owner }}
+        username: ${{ github.actor }}
         password: ${{ secrets.PAT }}
     runs-on: ubuntu-latest
     steps:
@@ -21,7 +21,7 @@ jobs:
       - name: GHCR login
         uses: docker/login-action@v1
         with:
-          username: ${{ github.repository_owner }}
+          username: ${{ github.actor }}
           password: ${{ secrets.PAT }}
           registry: ghcr.io
       - name: Build image
