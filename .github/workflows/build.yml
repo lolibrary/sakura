@@ -2,10 +2,11 @@ name: Build and push Sakura image
 on: [push]
 jobs:
   build-push-sakura:
-    container: ghcr.io/lolibrary/build/builder
-    credentials:
-      username: ${{ github.actor }}
-      password: ${{ secrets.GITHUB_TOKEN }}
+    container:
+      image: ghcr.io/lolibrary/build/builder
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Sakura
