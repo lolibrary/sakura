@@ -27,6 +27,7 @@ jobs:
       - name: Install Dependencies
         shell: zsh -eo pipefail {0}
         run: |
+          ls
           print -P "🐙 %F{green}$GITHUB_SHA%f"
           print "📲 Installing dependencies"
           print -P -n "    %F{red}composer%f    "
