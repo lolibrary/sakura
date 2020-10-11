@@ -27,10 +27,10 @@ jobs:
       - name: Build image
         shell: zsh -eo pipefail {0}
         run: |
-          composer config http-basic.nova.laravel.com $NOVA_USERNAME $NOVA_API_KEY
           ./build.zsh
     env:
       NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
       NOVA_API_KEY: ${{ secrets.NOVA_API_KEY }}
       PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
       PIPELINE: "true"
+      COMPOSER_AUTH: '{"http-basic.nova.laravel.com": {"username": "$NOVA_USERNAME", "password": "$NOVA_API_KEY"}}'
