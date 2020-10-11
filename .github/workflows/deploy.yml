@@ -1,5 +1,5 @@
 name: Build and push Sakura image
-on: [push]
+on: [workflow_dispatch]
 jobs:
   build-push-sakura:
     container:
@@ -14,29 +14,19 @@ jobs:
         with:
           repository: lolibrary/build
           token: ${{ secrets.PAT }}
-      - name: Checkout Sakura
-        uses: actions/checkout@v2
-        with:
-          path: cache
       - name: GHCR login
         uses: docker/login-action@v1
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.PAT }}
           registry: ghcr.io
-      - name: Install PHP dependencies
+      - name: Deploy
         run: |
-          composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_API_KEY }} --no-interaction --working-dir cache
-          composer install --no-interaction --working-dir cache
-      - name: Install JS dependencies
-        run: npm install --prefix cache
-      - name: Build App
-        run: npm run production --prefix cache
-      - name: Docker Build & Push
-        run: |
-          docker build -t $DOCKER_SHA_TAG .
-          docker push $DOCKER_SHA_TAG
+          cat "$(pwd)/manifests/prod.yml" | sed "s#PLACEHOLDER#\"$DOCKER_SHA_TAG\"#" | kubectl apply --record -f -
+          kubectl rollout status "deployment/s-sakura" -n $NAMESPACE
+
     env:
       DOCKER_SHA_TAG: "ghcr.io/lolibrary/sakura:${{ github.sha }}"
       PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
+      NAMESPACE: "default"
 
