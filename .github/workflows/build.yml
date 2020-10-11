@@ -40,7 +40,7 @@ jobs:
           print "✅"
       - name: Build App
         shell: zsh -eo pipefail {0}
-        run: npm run production --prefix $cache
+        run: npm run production --prefix cache
       - name: Docker Build & Push
         shell: zsh -eo pipefail {0}
         run: |
@@ -48,8 +48,5 @@ jobs:
           docker push $DOCKER_SHA_TAG
     env:
       DOCKER_SHA_TAG: "ghcr.io/lolibrary/sakura:$GITHUB_SHA"
-      NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
-      NOVA_API_KEY: ${{ secrets.NOVA_API_KEY }}
       PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
-      PIPELINE: "true"
-      COMPOSER_AUTH: '{"http-basic": {"http-basic.nova.laravel.com": {"username": "${{ secrets.NOVA_USERNAME }}", "password": "${{ secrets.NOVA_API_KEY }}"}}}'
+
