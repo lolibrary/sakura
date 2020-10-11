@@ -24,20 +24,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.PAT }}
           registry: ghcr.io
-      - name: Install Dependencies
+      - name: Install PHP dependencies
         shell: zsh -eo pipefail {0}
         run: |
-          ls
-          print $COMPOSER_AUTH
           composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_API_KEY }} --no-interaction --working-dir cache
-          print -P "🐙 %F{green}$GITHUB_SHA%f"
-          print "📲 Installing dependencies"
-          print -P -n "    %F{red}composer%f    "
           composer install --no-interaction --working-dir cache
-          print "✅"
-          print -P -n "    %F{red}node.js%f     "
-          npm install --prefix cache
-          print "✅"
+      - name: Install JS dependencies
+        shell: zsh -eo pipefail {0}
+        run: npm install --prefix cache
       - name: Build App
         shell: zsh -eo pipefail {0}
         run: npm run production --prefix cache
@@ -47,6 +41,6 @@ jobs:
           docker build -t $DOCKER_SHA_TAG .
           docker push $DOCKER_SHA_TAG
     env:
-      DOCKER_SHA_TAG: "ghcr.io/lolibrary/sakura:$GITHUB_SHA"
+      DOCKER_SHA_TAG: "ghcr.io/lolibrary/sakura:${{ github.sha }}"
       PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
 
