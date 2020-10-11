@@ -29,6 +29,7 @@ jobs:
         run: |
           ls
           print $COMPOSER_AUTH
+          composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_API_KEY }} --no-interaction --working-dir cache
           print -P "🐙 %F{green}$GITHUB_SHA%f"
           print "📲 Installing dependencies"
           print -P -n "    %F{red}composer%f    "
