@@ -51,4 +51,4 @@ jobs:
       NOVA_API_KEY: ${{ secrets.NOVA_API_KEY }}
       PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
       PIPELINE: "true"
-      COMPOSER_AUTH: '{"http-basic.nova.laravel.com": {"username": "${{ secrets.NOVA_USERNAME }}", "password": "${{ secrets.NOVA_API_KEY }}"}}'
+      COMPOSER_AUTH: '{"http-basic": {"http-basic.nova.laravel.com": {"username": "${{ secrets.NOVA_USERNAME }}", "password": "${{ secrets.NOVA_API_KEY }}"}}}'
