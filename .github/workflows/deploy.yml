@@ -25,7 +25,7 @@ jobs:
         run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
       - name: Deploy
         run: |
-          cat "$(pwd)/manifests/prod.yml" | sed "s#PLACEHOLDER#\"$DOCKER_SHA_TAG\"#" | kubectl apply --record -f -
+          cat "$(pwd)/manifests/prod.yml" | sed "s#PLACEHOLDER#\"gcr.io/lolibrary-180111/sakura:530e1a3d4ea898befb9bfdcf454e01b2423c95dc\"#" | kubectl apply --record -f -
           kubectl rollout status "deployment/s-sakura" -n $NAMESPACE
 
     env:
@@ -34,5 +34,3 @@ jobs:
       NAMESPACE: "default"
       GKE_CLUSTER: "lolibrary"
       GKE_ZONE: "us-central1-a"
-
-
