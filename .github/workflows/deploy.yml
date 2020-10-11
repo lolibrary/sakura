@@ -1,7 +1,7 @@
 name: Deploy Sakura
 on: [workflow_dispatch]
 jobs:
-  build-push-sakura:
+  deploy-sakura:
     container:
       image: ghcr.io/lolibrary/builder
       credentials:
@@ -22,8 +22,8 @@ jobs:
           registry: ghcr.io
       - name: Deploy
         run: |
-          cat "$(pwd)/manifests/prod.yml" | sed "s#PLACEHOLDER#\"$DOCKER_SHA_TAG\"#" | kubectl apply --record -f -
-          kubectl rollout status "deployment/s-sakura" -n $NAMESPACE
+          cat "$(pwd)/manifests/prod.yml" | sed "s#PLACEHOLDER#\"$DOCKER_SHA_TAG\"#"
+          kubectl rollout status "deployment/s-sakura"
 
     env:
       DOCKER_SHA_TAG: "ghcr.io/lolibrary/sakura:${{ github.sha }}"
