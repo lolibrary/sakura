@@ -28,6 +28,7 @@ jobs:
         shell: zsh -eo pipefail {0}
         run: |
           ls
+          print $COMPOSER_AUTH
           print -P "🐙 %F{green}$GITHUB_SHA%f"
           print "📲 Installing dependencies"
           print -P -n "    %F{red}composer%f    "
@@ -38,8 +39,7 @@ jobs:
           print "✅"
       - name: Build App
         shell: zsh -eo pipefail {0}
-        run: |
-          npm run production --prefix $cache
+        run: npm run production --prefix $cache
       - name: Docker Build & Push
         shell: zsh -eo pipefail {0}
         run: |
@@ -51,4 +51,4 @@ jobs:
       NOVA_API_KEY: ${{ secrets.NOVA_API_KEY }}
       PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
       PIPELINE: "true"
-      COMPOSER_AUTH: '{"http-basic.nova.laravel.com": {"username": "$NOVA_USERNAME", "password": "$NOVA_API_KEY"}}'
+      COMPOSER_AUTH: '{"http-basic.nova.laravel.com": {"username": "${{ secrets.NOVA_USERNAME }}", "password": "${{ secrets.NOVA_API_KEY }}"}}'
