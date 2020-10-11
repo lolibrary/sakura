@@ -2,11 +2,6 @@ name: Deploy Sakura
 on: [workflow_dispatch]
 jobs:
   deploy-sakura:
-    container:
-      image: ghcr.io/lolibrary/builder
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.PAT }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout build tools
