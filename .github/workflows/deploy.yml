@@ -25,7 +25,6 @@ jobs:
         run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
       - name: Deploy
         run: |
-          kubectl create secret docker-registry ghcr --docker-server="https://ghcr.io" --docker-username=${{ github.actor }} --docker-password=${{ secrets.PAT }}
           cat "$(pwd)/manifests/prod.yml" | sed "s#PLACEHOLDER#\"$DOCKER_SHA_TAG\"#" | kubectl apply --record -f -
           kubectl rollout status "deployment/s-sakura" -n $NAMESPACE
 
