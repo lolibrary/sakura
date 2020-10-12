@@ -1,4 +1,4 @@
-name: Deploy Sakura
+name: Deploy Sakura to Stage
 on: [workflow_dispatch]
 jobs:
   deploy-sakura:
@@ -25,12 +25,12 @@ jobs:
         run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
       - name: Deploy
         run: |
-          cat "$(pwd)/manifests/prod.yml" | sed "s#PLACEHOLDER#\"$DOCKER_SHA_TAG\"#" | kubectl apply --record -f -
+          cat "$(pwd)/manifests/stage.yml" | sed "s#PLACEHOLDER#\"$DOCKER_SHA_TAG\"#" | kubectl apply --record -f -
           kubectl rollout status "deployment/s-sakura" -n $NAMESPACE
 
     env:
       DOCKER_SHA_TAG: "ghcr.io/lolibrary/sakura:${{ github.sha }}"
       PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
       NAMESPACE: "default"
-      GKE_CLUSTER: "lolibrary"
+      GKE_CLUSTER: "staging"
       GKE_ZONE: "us-central1-a"
