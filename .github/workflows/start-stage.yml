@@ -17,6 +17,10 @@ jobs:
             kubectl get secret cloudsql-instance-credentials -oyaml > instance.creds
             kubectl get secret cloudsql-db-credentials -oyaml > db.creds
             kubectl get secret digitalocean-spaces -oyaml > do.creds
+            kubectl get secret php-app-key -oyaml > app.creds
+            kubectl get secret postmarkapp -oyaml > post.creds
+            kubectl get secret sentry-php -oyaml > sentry.creds
+            kubectl get secret php-cloud-sql -oyaml > sql.creds
       - name: Create cluster 
         run: gcloud container clusters create "$STAGE_CLUSTER" --zone "$GKE_ZONE"
       - name: Add secrets
@@ -25,6 +29,10 @@ jobs:
           kubectl create -f ./instance.creds
           kubectl create -f ./db.creds
           kubectl create -f ./do.creds
+          kubectl create -f ./app.creds
+          kubectl create -f ./post.creds
+          kubectl create -f ./sentry.creds
+          kubectl create -f ./sql.creds
           rm *.creds
     env:
       STAGE_CLUSTER: "staging"
