@@ -1,7 +1,7 @@
 name: Start Staging Cluster
 on: [workflow_dispatch]
 jobs:
-  deploy-sakura:
+  start-stage:
     runs-on: ubuntu-latest
     steps:
       - name: GCloud login
@@ -12,17 +12,19 @@ jobs:
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
       - name: Log into prod cluster
         run: gcloud container clusters get-credentials "$PROD_CLUSTER" --zone "$GKE_ZONE"
-      - name: Copy db secrets
+      - name: Copy secrets
         run: |
             kubectl get secret cloudsql-instance-credentials -oyaml > instance.creds
             kubectl get secret cloudsql-db-credentials -oyaml > db.creds
+            kubectl get secret digitalocean-spaces -oyaml > do.creds
       - name: Create cluster 
         run: gcloud container clusters create "$STAGE_CLUSTER" --zone "$GKE_ZONE"
       - name: Add secrets
         run: |
           kubectl create secret docker-registry ghcr --docker-server="https://ghcr.io" --docker-username=${{ github.actor }} --docker-password=${{ secrets.PAT }}
-          kubectl apply -f ./instance.creds
-          kubectl apply -f ./db.creds
+          kubectl create -f ./instance.creds
+          kubectl create -f ./db.creds
+          kubectl create -f ./do.creds
           rm *.creds
     env:
       STAGE_CLUSTER: "staging"
