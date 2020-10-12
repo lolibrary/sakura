@@ -11,11 +11,22 @@ jobs:
           service_account_key: ${{ secrets.GCLOUD_SA_KEY }}
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
       - name: Create cluster 
-        run: gcloud container clusters create "$GKE_CLUSTER" --zone "$GKE_ZONE"
-      - name: Configure kubectl creds
-        run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
-      - name: Add GHCR login secret
-        run: kubectl create secret docker-registry ghcr --docker-server="https://ghcr.io" --docker-username=${{ github.actor }} --docker-password=${{ secrets.PAT }}
+        run: gcloud container clusters create "$STAGE_CLUSTER" --zone "$GKE_ZONE"
+      - name: Log into prod cluster
+        run: gcloud container clusters get-credentials "$PROD_CLUSTER" --zone "$GKE_ZONE"
+      - name: Copy db secrets
+        run: |
+            kubectl get secret cloudsql-instance-credentials -oyaml > instance.creds
+            kubectl get secret cloudsql-db-credentials -oyaml > db.creds
+      - name: Log into stage cluster
+        run: gcloud container clusters get-credentials "$STAGE_CLUSTER" --zone "$GKE_ZONE"
+      - name: Add secrets
+        run: |
+          kubectl create secret docker-registry ghcr --docker-server="https://ghcr.io" --docker-username=${{ github.actor }} --docker-password=${{ secrets.PAT }}
+          kubectl apply -f ./instance.creds
+          kubectl apply -f ./db.creds
+          rm *.creds
     env:
-      GKE_CLUSTER: "staging"
+      STAGE_CLUSTER: "staging"
+      PROD_CLUSTER: "staging"
       GKE_ZONE: "us-central1-a"
