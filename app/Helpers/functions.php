@@ -252,6 +252,9 @@ if (! function_exists('cdn_link')) {
 
 if (! function_exists('cdn_thumbnail')) {
     function cdn_thumbnail(string $path, array $options = []) {
+        if (is_null($path)) {
+            $path = default_asset();
+        };
         static $defaults = [
             'width' => '300',
             'height' => '300',
