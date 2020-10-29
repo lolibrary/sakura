@@ -1,7 +1,7 @@
 name: Start Staging Cluster
 on: [workflow_dispatch]
 jobs:
-  deploy-sakura:
+  start-stage:
     runs-on: ubuntu-latest
     steps:
       - name: GCloud login
@@ -10,12 +10,31 @@ jobs:
           version: '290.0.1'
           service_account_key: ${{ secrets.GCLOUD_SA_KEY }}
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
+      - name: Log into prod cluster
+        run: gcloud container clusters get-credentials "$PROD_CLUSTER" --zone "$GKE_ZONE"
+      - name: Copy secrets
+        run: |
+            kubectl get secret cloudsql-instance-credentials -oyaml > instance.creds
+            kubectl get secret cloudsql-db-credentials -oyaml > db.creds
+            kubectl get secret digitalocean-spaces -oyaml > do.creds
+            kubectl get secret php-app-key -oyaml > app.creds
+            kubectl get secret postmarkapp -oyaml > post.creds
+            kubectl get secret sentry-php -oyaml > sentry.creds
+            kubectl get secret php-cloud-sql -oyaml > sql.creds
       - name: Create cluster 
-        run: gcloud container clusters create "$GKE_CLUSTER" --zone "$GKE_ZONE"
-      - name: Configure kubectl creds
-        run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
-      - name: Add GHCR login secret
-        run: kubectl create secret docker-registry ghcr --docker-server="https://ghcr.io" --docker-username=${{ github.actor }} --docker-password=${{ secrets.PAT }}
+        run: gcloud container clusters create "$STAGE_CLUSTER" --zone "$GKE_ZONE"
+      - name: Add secrets
+        run: |
+          kubectl create secret docker-registry ghcr --docker-server="https://ghcr.io" --docker-username=${{ github.actor }} --docker-password=${{ secrets.PAT }}
+          kubectl create -f ./instance.creds
+          kubectl create -f ./db.creds
+          kubectl create -f ./do.creds
+          kubectl create -f ./app.creds
+          kubectl create -f ./post.creds
+          kubectl create -f ./sentry.creds
+          kubectl create -f ./sql.creds
+          rm *.creds
     env:
-      GKE_CLUSTER: "staging"
+      STAGE_CLUSTER: "staging"
+      PROD_CLUSTER: "lolibrary"
       GKE_ZONE: "us-central1-a"
