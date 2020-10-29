@@ -12,8 +12,6 @@
     <meta name="search-endpoint" content="{{ route('api.search') }}">
     <meta name="default-image" content="{{ default_asset() }}">
 
-    <script src="https://kit.fontawesome.com/1a4d8fcd0e.js"></script>
-
     <!-- Styles -->
     <link href="{{ mix('assets/app.css') }}" rel="stylesheet">
 
