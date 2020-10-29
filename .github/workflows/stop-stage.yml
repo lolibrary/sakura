@@ -10,8 +10,8 @@ jobs:
           version: '290.0.1'
           service_account_key: ${{ secrets.GCLOUD_SA_KEY }}
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
-      - name: Start 
-        run: gcloud container clusters delete "$GKE_CLUSTER" --zone "$GKE_ZONE"
+      - name: Stop stage 
+        run: gcloud container clusters delete "$GKE_CLUSTER" --zone "$GKE_ZONE" --quiet
     env:
       GKE_CLUSTER: "staging"
       GKE_ZONE: "us-central1-a"
