@@ -83,7 +83,7 @@
 
         <div class="row text-center p-5" v-if="loading">
           <div class="col text-center text-muted">
-            <i class="fas fa-5x fa-spinner fa-pulse"></i>
+            <i class="far fa-5x fa-spinner fa-pulse"></i>
           </div>
         </div>
       </div>
