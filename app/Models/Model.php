@@ -65,7 +65,7 @@ abstract class Model extends Eloquent
      *
      * @var array
      */
-    protected $appends = ['url'];
+    protected $appends = ['url', 'id'];
 
     /**
      * The number of items to show per page.
