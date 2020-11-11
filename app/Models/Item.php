@@ -106,7 +106,6 @@ class Item extends Model
      * Use: `Item::with(Item::FULLY_LOAD)`
      */
     public const FULLY_LOAD = [
-        'id',
         'tags',
         'colors',
         'features',
@@ -123,7 +122,6 @@ class Item extends Model
      * Use: `Item::with(Item::PARTIAL_LOAD)`
      */
     public const PARTIAL_LOAD = [
-        'id',
         'submitter',
         'brand',
         'category',
@@ -136,7 +134,6 @@ class Item extends Model
      * @var array
      */
     protected $guarded = [
-        'id',
         'status',
         'slug',
         'created_at',
@@ -156,7 +153,7 @@ class Item extends Model
      *
      * @var array
      */
-    protected $appends = ['price_details', 'url'];
+    protected $appends = ['price_details', 'url', 'edit_url'];
 
     /**
      * An array of keys to convert to dates.
@@ -171,7 +168,7 @@ class Item extends Model
      * @var array
      */
     protected $visible = [
-        'id',
+        'edit_url',
         'slug',
         'url',
         'english_name',
