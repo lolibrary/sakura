@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
  * @property \Carbon\Carbon $updated_at
  *
  * @property string $url
+ * @property string $edit_url
  *
  * @method static Model find(string $id)
  * @method static Model findOrFail(string $id)
@@ -65,7 +66,7 @@ abstract class Model extends Eloquent
      *
      * @var array
      */
-    protected $appends = ['url'];
+    protected $appends = ['url', 'edit_url'];
 
     /**
      * The number of items to show per page.
@@ -94,6 +95,18 @@ abstract class Model extends Eloquent
         $route = $this->getRouteShowName();
 
         return route($route, $this);
+    }
+
+    /**
+     * Helper attribute for getting the URL to any model.
+     *
+     * @return string
+     */
+    public function getEditUrlAttribute()
+    {
+        $class = Str::plural(Str::lower(class_basename($this)));
+
+        return '/library/resources/'.$class.'/'.$this->id.'/edit';
     }
 
     /**
