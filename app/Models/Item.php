@@ -106,6 +106,7 @@ class Item extends Model
      * Use: `Item::with(Item::FULLY_LOAD)`
      */
     public const FULLY_LOAD = [
+        'id',
         'tags',
         'colors',
         'features',
@@ -122,6 +123,7 @@ class Item extends Model
      * Use: `Item::with(Item::PARTIAL_LOAD)`
      */
     public const PARTIAL_LOAD = [
+        'id',
         'submitter',
         'brand',
         'category',
