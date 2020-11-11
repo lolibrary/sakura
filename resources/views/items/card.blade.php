@@ -51,7 +51,7 @@
         View Item
     </a>
     @senior
-    <a class=" btn btn-outline-primary rounded-0" style="border: none;" href="{{ url('/library/resources/items/' + $item->id + '/edit') }}">
+    <a class=" btn btn-outline-primary rounded-0" style="border: none;" href="{{ $item->edit_url }}">
         Edit Item
     </a>
     @endsenior
