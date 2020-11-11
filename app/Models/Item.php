@@ -134,7 +134,6 @@ class Item extends Model
      * @var array
      */
     protected $guarded = [
-        'id',
         'status',
         'slug',
         'created_at',
@@ -154,7 +153,7 @@ class Item extends Model
      *
      * @var array
      */
-    protected $appends = ['price_details', 'url'];
+    protected $appends = ['price_details', 'url', 'edit_url'];
 
     /**
      * An array of keys to convert to dates.
@@ -169,7 +168,7 @@ class Item extends Model
      * @var array
      */
     protected $visible = [
-        'id',
+        'edit_url',
         'slug',
         'url',
         'english_name',

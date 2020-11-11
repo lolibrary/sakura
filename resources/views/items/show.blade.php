@@ -23,6 +23,15 @@
                         @include('components.items.closet')
                     </div>
                 </div>
+                @senior
+                <div class="row p-0 mx-0 my-3">
+                    <div class="col p-1 list-group text-center small">
+                    <a class="btn btn-outline-primary" href="{{ $item->edit_url }}">
+                        <i class="fal fa-fw fa-edit"></i>  {{ __('Edit Item') }}
+                    </a>
+                    </div>
+                </div>
+                @endsenior
             </div>
 
             <div class="col-sm p-2 px-4">
