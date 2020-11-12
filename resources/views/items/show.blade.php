@@ -22,16 +22,8 @@
                     <div class="col p-1 list-group text-center small">
                         @include('components.items.closet')
                     </div>
-                </div>
-                @if (auth()->user())
-                <div class="row p-0 mx-0 my-3">
-                    <div class="col p-1 list-group text-center small">
-                    <a class="btn btn-outline-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeuCoQbM7cXwF2OAkljtlmALwdgUNCAkKGEDeQHomCySMhStQ/viewform?usp=pp_url&entry.1974464960={{ $item->url }}">
-                        <i class="fal fa-fw fa-edit"></i>  {{ __('Submit Images/Corrections') }}
-                    </a>
-                    </div>
-                </div>
-                @elseif (auth()->user()->senior())
+                </div>                
+                @if (auth()->user()->senior())
                 <div class="row p-0 mx-0 my-3">
                     <div class="col p-1 list-group text-center small">
                     <a class="btn btn-outline-primary" href="{{ $item->edit_url }}">
@@ -39,7 +31,14 @@
                     </a>
                     </div>
                 </div>
-
+                @elseif (auth()->user())
+                <div class="row p-0 mx-0 my-3">
+                    <div class="col p-1 list-group text-center small">
+                    <a class="btn btn-outline-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeuCoQbM7cXwF2OAkljtlmALwdgUNCAkKGEDeQHomCySMhStQ/viewform?usp=pp_url&entry.1974464960={{ $item->url }}">
+                        <i class="fal fa-fw fa-edit"></i>  {{ __('Submit Images/Corrections') }}
+                    </a>
+                    </div>
+                </div>
                 @endif
             </div>
 
