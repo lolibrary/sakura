@@ -162,6 +162,7 @@
             default() {
               return {username: "", level: 0};
             }
+          }
         },
 
         data() {
