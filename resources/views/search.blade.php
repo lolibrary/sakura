@@ -7,7 +7,7 @@
   :features="@include('components.features')"
   :tags="@include('components.tags')"
   :colors="@include('components.colors')"
-  :years=@include('components.years')
+  :years="@include('components.years')"
   :user="{{ auth()->user()->toJson()"
   url="{{ route('search') }}"
   endpoint="{{ route('api.search') }}"
