@@ -60,7 +60,7 @@
 
           <div class="row">
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 p-2" v-for="result in results.data">
-              <search-result :item="result"></search-result>
+              <search-result :item="result" :user="user"></search-result>
             </div>
           </div>
 
@@ -156,6 +156,12 @@
           endpoint: {
             type: String,
             default: '',
+          },
+          user: {
+            type: Object,
+            default() {
+              return {username: "", level: 0};
+            }
           }
         },
 
