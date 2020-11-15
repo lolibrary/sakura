@@ -40,6 +40,9 @@
     <a class="btn btn-outline-primary rounded-0" style="border: none;" :href="item.url">
         View Item
     </a>
+    <a v-if="user.level >= 100" class=" btn btn-outline-primary rounded-0" style="border: none;" :href="item.edit_url">
+        Edit Item
+    </a>
 </div>
 
 </template>
@@ -54,6 +57,7 @@ export default {
           id: "",
           slug: "",
           url: "",
+          edit_url: "",
           english_name: "",
           foreign_name: "",
           product_number: "",
@@ -82,6 +86,10 @@ export default {
           updated_at: null,
         };
       },
+    },
+    user: {
+        username: "",
+        level: 0,
     },
   },
 
