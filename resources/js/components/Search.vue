@@ -162,7 +162,6 @@
         data() {
           return {
             results: {},
-            user: {},
             loading: false,
 
             // a function so we can read the initial state from the url.
