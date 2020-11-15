@@ -40,7 +40,7 @@
     <a class="btn btn-outline-primary rounded-0" style="border: none;" :href="item.url">
         View Item
     </a>
-    <a v-if="user && user.senior" class=" btn btn-outline-primary rounded-0" style="border: none;" :href="item.edit_url">
+    <a v-if="user && user.level >= 100" class=" btn btn-outline-primary rounded-0" style="border: none;" :href="item.edit_url">
         Edit Item
     </a>
 </div>
