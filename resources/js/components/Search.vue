@@ -156,7 +156,12 @@
           endpoint: {
             type: String,
             default: '',
-          }
+          },
+          user: {
+            type: Object,
+            default() {
+              return {username: "", level: 0};
+            }
         },
 
         data() {
