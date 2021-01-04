@@ -15,7 +15,17 @@
                     @endif
 
                     {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
+                    {{ __('If you did not receive the email, click the following to resend:') }}
+                    <form action="{{ route('verification.resend') }}" method="POST">
+                        @csrf
+                        <div class="form-group row my-4">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-block btn-outline-primary">
+                                    {{ __('Resend Verification Email') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
