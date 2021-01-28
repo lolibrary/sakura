@@ -23,7 +23,7 @@
         "lolibrary/image-array": "*",
         "sentry/sentry-laravel": "^1.6",
         "whitecube/nova-flexible-content": "^0.1.11",
-        "stevebauman/purify": "*"
+        "stevebauman/purify": "^4.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",
