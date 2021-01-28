@@ -27,7 +27,7 @@ jobs:
       - name: Install PHP dependencies
         run: |
           composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_API_KEY }} --no-interaction --working-dir cache
-          composer update --working-dir cache
+          composer update stevebauman/purify --working-dir cache
           composer install --no-interaction --working-dir cache
       - name: Install JS dependencies
         run: npm install --prefix cache
