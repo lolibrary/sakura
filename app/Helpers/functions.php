@@ -276,8 +276,7 @@ if (! function_exists('purify')) {
      */
     function purify(string $input)
     {
-        $config = ['HTML.Allowed' => 'ul,li,i,em,strong,b,a[href]'];
-        return Purify::clean($input, $config);
+        return Purify::clean($input);
     }
 }
 
