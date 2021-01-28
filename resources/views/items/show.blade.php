@@ -96,7 +96,7 @@
 
                 @if ($item->notes)
                     <h4 class="mt-4">Notes</h4>
-                    <p class="text-muted text-regular">{!! $item->notes !!}</p>
+                    <p class="text-muted text-regular">{!! purify($item->notes) !!}</p>
                 @endif
 
                 <div class="row">

@@ -266,3 +266,17 @@ if (! function_exists('cdn_thumbnail')) {
         return cdn_link($path) . '?' . http_build_query($query);
     }
 }
+
+if (! function_exists('purify')) {
+    /**
+     * Return text run through Purify
+     *
+     * @param string $path
+     * @return string
+     */
+    function purify(string $input)
+    {
+        return Purify::clean($input);
+    }
+}
+
