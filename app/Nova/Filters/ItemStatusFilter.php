@@ -44,7 +44,8 @@ class ItemStatusFilter extends Filter
             case 'my-published':
                 return $this->restrict($request, $query)
                     ->where('status', BaseItem::PUBLISHED);
-
+            case 'pending':
+                return $query->where('status', BaseItem::PENDING);
             case 'drafts':
                 return $query->where('status', BaseItem::DRAFT);
             case 'my-drafts':
