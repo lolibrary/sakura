@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
-class UnpublishItem extends Action
+class PendingItem extends Action
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
