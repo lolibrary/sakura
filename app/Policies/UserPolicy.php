@@ -18,7 +18,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->admin();
+        return $user->senior();
     }
 
     /**
@@ -30,7 +30,7 @@ class UserPolicy
      */
     public function view(User $user, User $target)
     {
-        return $user->admin() || $user->is($target);
+        return $user->senior() || $user->is($target);
     }
 
     /**
