@@ -85,7 +85,7 @@ trait Publishable
      */
     public function draft(): bool
     {
-        return $this->status === static::DRAFT;
+        return $this->status === static::DRAFT || $this->status === static::PENDING;
     }
 
     /**

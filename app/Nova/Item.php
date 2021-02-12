@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Models\Item as BaseItem;
 use App\Nova\Actions\PublishItem;
 use App\Nova\Actions\UnpublishItem;
+use App\Nova\Actions\PendingItem;
 use App\Nova\Filters\ItemStatusFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -262,6 +263,18 @@ class Item extends Resource
                 }
 
                 return $model->published() && $request->user()->can('publish', $model);
+            }),
+
+            (new PendingItem)->canSee(function (Request $request) {
+                /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
+                $model = $request->findModelQuery()->first();
+
+                /** @var \App\Models\Item $model */
+                if ($model === null) {
+                    return $request->user()->senior();
+                }
+
+                return $model->isPending() && $request->user()->can('update', $model);
             }),
         ];
     }
