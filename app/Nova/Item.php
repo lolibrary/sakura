@@ -271,7 +271,7 @@ class Item extends Resource
 
                 /** @var \App\Models\Item $model */
                 if ($model === null) {
-                    return $request->user()->senior();
+                    return $request->user()->junior();
                 }
 
                 return $model->isPending() && $request->user()->can('update', $model);

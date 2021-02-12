@@ -26,7 +26,7 @@ class PendingItem extends Action
     {
         $models->each->setPending();
 
-        return Action::message('Unpublished!');
+        return Action::message('Marked pending!');
     }
 
     /**
