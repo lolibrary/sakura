@@ -79,7 +79,7 @@ class ItemStatusFilter extends Filter
      */
     public function options(Request $request)
     {
-        if ($request->user()->developer()) {
+        if ($request->user()->senior()) {
             return [
                 'My Items' => 'my-items',
                 'My Drafts' => 'my-drafts',
@@ -94,6 +94,7 @@ class ItemStatusFilter extends Filter
                 'All Drafts (status = 0)' => 'drafts',
             ];
         }
+        
 
         // TODO: proper moderation queue resource, App\Nova\Queue.
         if ($request->user()->lolibrarian()) {
