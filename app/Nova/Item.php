@@ -250,7 +250,7 @@ class Item extends Resource
                     return $request->user()->lolibrarian();
                 }
 
-                return $model->draft() && $request->user()->can('publish', $model);
+                return ($model->draft() || $model->isPending()) && $request->user()->can('publish', $model);
             }),
 
             (new UnpublishItem)->canSee(function (Request $request) {
@@ -274,7 +274,7 @@ class Item extends Resource
                     return $request->user()->junior();
                 }
 
-                return $model->isPending() && $request->user()->can('update', $model);
+                return ($model->draft() || $model->published()) && $request->user()->can('update', $model);
             }),
         ];
     }
