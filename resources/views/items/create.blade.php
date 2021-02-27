@@ -120,7 +120,7 @@
                 <div class="col-lg-4">
                     <div class="form-label-group">
                         <select name="year" id="year" class="form-control form-control-chosen" required>
-                            @foreach (array_reverse(range(1990, date('Y'))) as $year)
+                            @foreach (array_reverse(range(1970, date('Y'))) as $year)
                                 <option value="{{ $year }}" @if ($year == old('year', date('Y'))) selected @endif>{{ $year }}</option>
                             @endforeach
                         </select>

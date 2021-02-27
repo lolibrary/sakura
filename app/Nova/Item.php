@@ -104,14 +104,14 @@ class Item extends Resource
 
             Select::make('Year')
                 ->options(
-                    collect(range(1990, (int) date('Y') + 1))
+                    collect(range(1970, (int) date('Y') + 1))
                         ->reverse()
                         ->mapWithKeys(function ($value) {
                             return [$value => $value];
                         })
                 )
                 ->displayUsingLabels()
-                ->rules('nullable', 'integer', 'min:1990', 'max:'.(date('Y') + 3))
+                ->rules('nullable', 'integer', 'min:1970', 'max:'.(date('Y') + 3))
                 ->hideFromIndex(),
 
             BelongsTo::make('Brand')->sortable(),
@@ -250,7 +250,7 @@ class Item extends Resource
                     return $request->user()->lolibrarian();
                 }
 
-                return ($model->draft() || $model->isPending()) && $request->user()->can('publish', $model);
+                return !$model->published() && $request->user()->can('publish', $model);
             }),
 
             (new UnpublishItem)->canSee(function (Request $request) {
