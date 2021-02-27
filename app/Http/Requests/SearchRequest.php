@@ -69,9 +69,9 @@ class SearchRequest extends FormRequest
             'tags' => 'sometimes|array',
             'tags.*' => 'required|string|exists:tags,slug',
 
-            'year' => 'sometimes|required|integer|min:1990|max:'.(date('Y') + 3),
+            'year' => 'sometimes|required|integer|min:1970|max:'.(date('Y') + 3),
             'years' => 'sometimes|array',
-            'years.*' => 'required|integer|min:1990|max:'.(date('Y') + 3),
+            'years.*' => 'required|integer|min:1970|max:'.(date('Y') + 3),
         ];
     }
 }
