@@ -118,6 +118,7 @@ class Item extends Resource
             BelongsTo::make('Category')->sortable(),
 
             Trix::make('Notes')->alwaysShow(),
+            Trix::make('Internal Notes')->alwaysShow(),
 
             new Panel('Submission Details', [
                 BelongsTo::make('Submitter', 'submitter', User::class)->readonly()->sortable()->exceptOnForms(),
