@@ -63,6 +63,7 @@ class Item extends Model
         'cad' => 'Canadian Dollar (CA$)',
         'aud' => 'Australian Dollar (AU$)',
         'mxn' => 'Mexican Pesos ($)',
+        'chf' => 'Swiss Francs (CHF)',
     ];
 
     /**
@@ -174,6 +175,7 @@ class Item extends Model
         'english_name',
         'foreign_name',
         'notes',
+        'internal_notes',
         'price_details',
         'product_number',
 
