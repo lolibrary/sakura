@@ -104,11 +104,11 @@ class SearchController extends Base
                     }
 
                 } elseif ($matcher == "NOT") {
-                    foreach ($models as $model) {
-                        $query->whereHas($relation, function (Builder $query) use ($model) {
-                            $query->where('slug', '!=', $model);
+                        $query->whereNotIn($relation, function (Builder $query) use ($models) {
+                            $query->whereHas($relation,function (Builder $query) use ($models) {
+                                $query->whereIn('slug', $models);
+                            });
                         });
-                    }
 
                 } elseif ($matcher == "OR") {
                     $query->whereHas($relation, function (Builder $query) use ($models) {

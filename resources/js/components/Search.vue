@@ -11,44 +11,44 @@
                 <div class="input-group pb-2">
                     <label class="control-label">Category</label>
                     <v-select style="width: 100%" v-model="state.categories" :options="categories" label="name" placeholder="Tap to filter" multiple></v-select>
-                    <span v-if="state.categories.length > 0" class="match_type"> Match
-                    <b-form-radio-group buttons size="sm" v-model="state.category_matcher" :options="options"></b-form-radio-group>
-                    </span>
+                    <div v-if="state.categories.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons button-variant="outline-primary" size="sm" v-model="state.category_matcher" :options="options"></b-form-radio-group>
+                    </div>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Brand</label>
                     <v-select style="width: 100%" v-model="state.brands" :options="brands" label="name" placeholder="Tap to filter" multiple></v-select>
-                    <span v-if="state.brands.length > 0" class="match_type"> Match
-                    <b-form-radio-group buttons size="sm" v-model="state.brand_matcher" :options="options"></b-form-radio-group>
-                    </span>
+                    <div v-if="state.brands.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons button-variant="outline-primary" size="sm" v-model="state.brand_matcher" :options="options"></b-form-radio-group>
+                    </div>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Features</label>
                     <v-select style="width: 100%" v-model="state.features" :options="features" label="name" placeholder="Tap to filter" multiple></v-select>
-                    <span v-if="state.features.length > 0" class="match_type"> Match
-                    <b-form-radio-group buttons size="sm" v-model="state.feature_matcher" :options="options"></b-form-radio-group>
-                    </span>
+                    <div v-if="state.features.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons button-variant="outline-primary" size="sm" v-model="state.feature_matcher" :options="options"></b-form-radio-group>
+                    </div>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Colorway</label>
                     <v-select style="width: 100%" v-model="state.colors" :options="colors" label="name" placeholder="Tap to filter" multiple></v-select>
-                    <span v-if="state.colors.length > 0" class="match_type"> Match
-                    <b-form-radio-group buttons size="sm" v-model="state.color_matcher" :options="options"></b-form-radio-group>
-                    </span>
+                    <div v-if="state.colors.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons button-variant="outline-primary" size="sm" v-model="state.color_matcher" :options="options"></b-form-radio-group>
+                    </div>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Tags</label>
                     <v-select style="width: 100%" v-model="state.tags" :options="tags" label="slug" placeholder="Tap to filter" multiple></v-select>
-                    <span v-if="state.tags.length > 0" class="match_type"> Match
-                    <b-form-radio-group buttons size="sm" v-model="state.tag_matcher" :options="options"></b-form-radio-group>
-                    </span>
+                    <div v-if="state.tags.length > 0" class="match_type"> Match
+                    <b-form-radio-group button-variant="outline-primary" buttons size="sm" v-model="state.tag_matcher" :options="options"></b-form-radio-group>
+                    </div>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Year</label>
                     <v-select style="width: 100%" v-model="state.years" :options="years" placeholder="Tap to filter" multiple></v-select>
-                    <span v-if="state.years.length > 0" class="match_type"> Match
-                    <b-form-radio-group buttons size="sm" v-model="state.year_matcher" :options="options"></b-form-radio-group>
-                    </span>
+                    <div v-if="state.years.length > 0" class="match_type"> Match
+                    <b-form-radio-group button-variant="outline-primary" buttons size="sm" v-model="state.year_matcher" :options="options"></b-form-radio-group>
+                    </div>
                 </div>
             </div>
         </div>
