@@ -97,6 +97,11 @@ class SearchController extends Base
 
             if (count($models) > 0) {
                 if ($matcher == "AND") {
+                    foreach ($models as $model) {
+                        $query->whereHas($relation, function (Builder $query) use ($model) {
+                            $query->where('slug', $model);
+                        });
+                    }
 
                 } elseif ($matcher == "NOT") {
                     $query->whereHas($relation, function (Builder $query) use ($models) {

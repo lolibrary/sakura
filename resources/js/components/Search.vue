@@ -11,32 +11,44 @@
                 <div class="input-group pb-2">
                     <label class="control-label">Category</label>
                     <v-select style="width: 100%" v-model="state.categories" :options="categories" label="name" placeholder="Tap to filter" multiple></v-select>
-                    <b-form-radio-group v-if="state.categories.length > 0" buttons v-model="state.category_matcher" :options="options"></b-form-radio-group>
+                    <span v-if="state.categories.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons size="sm" v-model="state.category_matcher" :options="options"></b-form-radio-group>
+                    </span>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Brand</label>
                     <v-select style="width: 100%" v-model="state.brands" :options="brands" label="name" placeholder="Tap to filter" multiple></v-select>
-                    <b-form-radio-group v-if="state.brands.length > 0" buttons v-model="state.brand_matcher" :options="options"></b-form-radio-group>
+                    <span v-if="state.brands.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons size="sm" v-model="state.brand_matcher" :options="options"></b-form-radio-group>
+                    </span>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Features</label>
                     <v-select style="width: 100%" v-model="state.features" :options="features" label="name" placeholder="Tap to filter" multiple></v-select>
-                    <b-form-radio-group v-if="state.features.length > 0" buttons v-model="state.feature_matcher" :options="options"></b-form-radio-group>
+                    <span v-if="state.features.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons size="sm" v-model="state.feature_matcher" :options="options"></b-form-radio-group>
+                    </span>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Colorway</label>
                     <v-select style="width: 100%" v-model="state.colors" :options="colors" label="name" placeholder="Tap to filter" multiple></v-select>
-                    <b-form-radio-group v-if="state.colors.length > 0" buttons v-model="state.color_matcher" :options="options"></b-form-radio-group>
+                    <span v-if="state.colors.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons size="sm" v-model="state.color_matcher" :options="options"></b-form-radio-group>
+                    </span>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Tags</label>
                     <v-select style="width: 100%" v-model="state.tags" :options="tags" label="slug" placeholder="Tap to filter" multiple></v-select>
-                    <b-form-radio-group v-if="state.tags.length > 0" buttons v-model="state.tag_matcher" :options="options"></b-form-radio-group>
+                    <span v-if="state.tags.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons size="sm" v-model="state.tag_matcher" :options="options"></b-form-radio-group>
+                    </span>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Year</label>
                     <v-select style="width: 100%" v-model="state.years" :options="years" placeholder="Tap to filter" multiple></v-select>
-                    <b-form-radio-group v-if="state.years.length > 0" buttons v-model="state.year_matcher" :options="options"></b-form-radio-group>
+                    <span v-if="state.years.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons size="sm" v-model="state.year_matcher" :options="options"></b-form-radio-group>
+                    </span>
                 </div>
             </div>
         </div>
@@ -287,12 +299,12 @@
               tags: this.state.tags.map(obj => obj.slug),
               colors: this.state.colors.map(obj => obj.slug),
               years: this.state.years.map(year => parseInt(year, 10)),
-              category_matcher: this.state.category_matcher,
-              brand_matcher: this.state.brand_matcher,
-              feature_matcher: this.state.feature_matcher,
-              tag_matcher: this.state.tag_matcher,
-              color_matcher: this.state.color_matcher,
-              year_matcher: this.state.year_matcher,
+              category_matcher: this.state.categories.length > 0 ? this.state.category_matcher : undefined,
+              brand_matcher: this.state.categories.length > 0 ? this.state.brand_matcher : undefined,
+              feature_matcher: this.state.categories.length > 0 ? this.state.feature_matcher : undefined,
+              tag_matcher: this.state.categories.length > 0 ? this.state.tag_matcher : undefined,
+              color_matcher: this.state.categories.length > 0 ? this.state.color_matcher : undefined,
+              year_matcher: this.state.categories.length > 0 ? this.state.year_matcher : undefined,
             };
           }
         },
