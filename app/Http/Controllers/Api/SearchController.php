@@ -108,9 +108,9 @@ class SearchController extends Base
                     $not_query = Item::query();
                     $not_query->whereHas($relation, function (Builder $not_query) use ($models) {
                         $not_query->whereIn('slug', $models);
-                    });
+                    }).pluck('id');
 
-                    $query->whereNotIn($relation, $not_query);
+                    $query->whereNotIn('id', $not_query);
 
                 } elseif ($matcher == "OR") {
                     $query->whereHas($relation, function (Builder $query) use ($models) {
