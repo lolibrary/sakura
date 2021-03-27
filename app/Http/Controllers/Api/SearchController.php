@@ -104,8 +104,8 @@ class SearchController extends Base
                     }
 
                 } elseif ($matcher == "NOT") {
-                        $query->whereNotIn($relation, function (Builder $query) use ($models) {
-                            $query->whereHas($relation,function (Builder $query) use ($models) {
+                        $query->whereNotIn($relation, function (Builder $query) {
+                            $query->whereHas($relation, function (Builder $query) use ($models) {
                                 $query->whereIn('slug', $models);
                             });
                         });
