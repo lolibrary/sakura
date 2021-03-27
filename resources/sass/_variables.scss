@@ -9,4 +9,5 @@ $line-height-base: 1.6;
 
 $theme-colors: (
     "primary": #222288
+    "secondary": theme-color-level(primary, -10)
 );
