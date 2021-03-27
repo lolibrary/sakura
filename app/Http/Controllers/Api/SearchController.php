@@ -30,10 +30,6 @@ class SearchController extends Base
         Tag::class => 'tags',
     ];
 
-    protected const OPERATORS = [
-
-    ]
-
     /**
      * Search for items.
      *
