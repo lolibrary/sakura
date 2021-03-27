@@ -92,8 +92,8 @@ class SearchController extends Base
         foreach (static::FILTERS as $class => $relation) {
             [$singular, $plural] = [Str::singular($relation), Str::plural($relation)];
 
-            $models = (array) $request->input($plural);
-            $matcher = $request->input($singular) ?? "OR";
+            $models = (array) $request->input($plural) ?? $request->input($singular);
+            $matcher = $request->input($singular + "_matcher") ?? "OR";
 
             if (count($models) > 0) {
                 if ($matcher == "AND") {
