@@ -287,12 +287,12 @@
               tags: this.state.tags.map(obj => obj.slug),
               colors: this.state.colors.map(obj => obj.slug),
               years: this.state.years.map(year => parseInt(year, 10)),
-              category: this.state.category,
-              brand: this.state.brand,
-              feature: this.state.feature,
-              tag: this.state.tag,
-              color: this.state.color,
-              year: this.state.year,
+              category_matcher: this.state.category_matcher,
+              brand_matcher: this.state.brand_matcher,
+              feature_matcher: this.state.feature_matcher,
+              tag_matcher: this.state.tag_matcher,
+              color_matcher: this.state.color_matcher,
+              year_matcher: this.state.year_matcher,
             };
           }
         },
