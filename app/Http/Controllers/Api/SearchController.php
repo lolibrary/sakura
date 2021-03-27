@@ -93,7 +93,7 @@ class SearchController extends Base
             [$singular, $plural] = [Str::singular($relation), Str::plural($relation)];
 
             $models = (array) $request->input($plural) ?? $request->input($singular);
-            $matcher = $request->input($singular + "_matcher") ?? "OR";
+            $matcher = $request->input($singular . "_matcher") ?? "OR";
 
             if (count($models) > 0) {
                 if ($matcher == "AND") {
@@ -108,6 +108,7 @@ class SearchController extends Base
                         $query->whereIn('slug', $models);
                     });
                 }
+                
             }
         }
     }
