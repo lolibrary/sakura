@@ -204,12 +204,12 @@
               tags: [],
               colors: [],
               years: [],
-              category_matcher: undefined,
-              brand_matcher: undefined,
-              feature_matcher: undefined,
-              tag_matcher: undefined,
-              color_matcher: undefined,
-              year_matcher: undefined
+              category_matcher: 'OR',
+              brand_matcher: 'OR',
+              feature_matcher: 'OR',
+              tag_matcher: 'OR',
+              color_matcher: 'OR',
+              year_matcher: 'OR'
             },
 
             page: 1,
@@ -300,11 +300,11 @@
               colors: this.state.colors.map(obj => obj.slug),
               years: this.state.years.map(year => parseInt(year, 10)),
               category_matcher: this.state.categories.length > 0 ? this.state.category_matcher : undefined,
-              brand_matcher: this.state.categories.length > 0 ? this.state.brand_matcher : undefined,
-              feature_matcher: this.state.categories.length > 0 ? this.state.feature_matcher : undefined,
-              tag_matcher: this.state.categories.length > 0 ? this.state.tag_matcher : undefined,
-              color_matcher: this.state.categories.length > 0 ? this.state.color_matcher : undefined,
-              year_matcher: this.state.categories.length > 0 ? this.state.year_matcher : undefined,
+              brand_matcher: this.state.brands.length > 0 ? this.state.brand_matcher : undefined,
+              feature_matcher: this.state.features.length > 0 ? this.state.feature_matcher : undefined,
+              tag_matcher: this.state.tags.length > 0 ? this.state.tag_matcher : undefined,
+              color_matcher: this.state.colors.length > 0 ? this.state.color_matcher : undefined,
+              year_matcher: this.state.years.length > 0 ? this.state.year_matcher : undefined,
             };
           }
         },
