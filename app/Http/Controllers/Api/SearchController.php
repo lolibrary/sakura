@@ -30,6 +30,10 @@ class SearchController extends Base
         Tag::class => 'tags',
     ];
 
+    protected const OPERATORS = [
+
+    ]
+
     /**
      * Search for items.
      *
@@ -92,12 +96,22 @@ class SearchController extends Base
         foreach (static::FILTERS as $class => $relation) {
             [$singular, $plural] = [Str::singular($relation), Str::plural($relation)];
 
-            $models = (array) ($request->input($plural) ?? $request->input($singular));
+            $models = (array) $request->input($plural);
+            $matcher = $request->input($singular) ?? "OR";
 
             if (count($models) > 0) {
-                $query->whereHas($relation, function (Builder $query) use ($models) {
-                    $query->whereIn('slug', $models);
-                });
+                if ($matcher == "AND") {
+
+                } elseif ($matcher == "NOT") {
+                    $query->whereHas($relation, function (Builder $query) use ($models) {
+                        $query->whereNotIn('slug', $models);
+                    });
+
+                } elseif ($matcher == "OR") {
+                    $query->whereHas($relation, function (Builder $query) use ($models) {
+                        $query->whereIn('slug', $models);
+                    });
+                }
             }
         }
     }

@@ -11,26 +11,32 @@
                 <div class="input-group pb-2">
                     <label class="control-label">Category</label>
                     <v-select style="width: 100%" v-model="state.categories" :options="categories" label="name" placeholder="Tap to filter" multiple></v-select>
+                    <b-form-radio-group buttons v-model="state.category" :options="options"></b-form-radio-group>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Brand</label>
                     <v-select style="width: 100%" v-model="state.brands" :options="brands" label="name" placeholder="Tap to filter" multiple></v-select>
+                    <b-form-radio-group buttons v-model="state.brand" :options="options"></b-form-radio-group>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Features</label>
                     <v-select style="width: 100%" v-model="state.features" :options="features" label="name" placeholder="Tap to filter" multiple></v-select>
+                    <b-form-radio-group buttons v-model="state.feature" :options="options"></b-form-radio-group>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Colorway</label>
                     <v-select style="width: 100%" v-model="state.colors" :options="colors" label="name" placeholder="Tap to filter" multiple></v-select>
+                    <b-form-radio-group buttons v-model="state.color" :options="options"></b-form-radio-group>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Tags</label>
                     <v-select style="width: 100%" v-model="state.tags" :options="tags" label="slug" placeholder="Tap to filter" multiple></v-select>
+                    <b-form-radio-group buttons v-model="state.tag" :options="options"></b-form-radio-group>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Year</label>
                     <v-select style="width: 100%" v-model="state.years" :options="years" placeholder="Tap to filter" multiple></v-select>
+                    <b-form-radio-group buttons v-model="state.year" :options="options"></b-form-radio-group>
                 </div>
             </div>
         </div>
@@ -170,6 +176,13 @@
             results: {},
             loading: false,
 
+            // Options for the match type selector
+            options: [
+              { text: 'Any', value: 'OR' },
+              { text: 'All', value: 'AND' },
+              { text: 'None', value: 'NOT' }
+            ],
+
             // a function so we can read the initial state from the url.
             state: {
               search: undefined,
@@ -179,6 +192,12 @@
               tags: [],
               colors: [],
               years: [],
+              category: undefined,
+              brand: undefined,
+              feature: undefined,
+              tag: undefined,
+              color: undefined,
+              year: undefined
             },
 
             page: 1,
@@ -228,6 +247,16 @@
             this.state[key] = this[key].filter(obj => value.indexOf(obj.slug) !== -1);
           }
 
+          for (let key of ["category", "feature", "brand", "color", "tag", "year"]) {
+            value = query[key];
+
+            if (value === undefined) {
+              continue;
+            }
+
+            this.state[key] = ['AND', 'OR', 'NOT'].includes(value) ? value : undefined;
+          }
+
           if (query.search !== undefined && query.search.length > 0) {
             this.state.search = query.search;
           }
@@ -258,6 +287,12 @@
               tags: this.state.tags.map(obj => obj.slug),
               colors: this.state.colors.map(obj => obj.slug),
               years: this.state.years.map(year => parseInt(year, 10)),
+              category: this.state.category,
+              brand: this.state.brand,
+              feature: this.state.feature,
+              tag: this.state.tag,
+              color: this.state.color,
+              year: this.state.year,
             };
           }
         },
