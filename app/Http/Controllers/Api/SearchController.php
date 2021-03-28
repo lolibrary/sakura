@@ -92,12 +92,32 @@ class SearchController extends Base
         foreach (static::FILTERS as $class => $relation) {
             [$singular, $plural] = [Str::singular($relation), Str::plural($relation)];
 
-            $models = (array) ($request->input($plural) ?? $request->input($singular));
+            $models = (array) $request->input($plural) ?? $request->input($singular);
+            $matcher = $request->input($singular . "_matcher") ?? "OR";
 
             if (count($models) > 0) {
-                $query->whereHas($relation, function (Builder $query) use ($models) {
-                    $query->whereIn('slug', $models);
-                });
+                if ($matcher == "AND") {
+                    foreach ($models as $model) {
+                        $query->whereHas($relation, function (Builder $query) use ($model) {
+                            $query->where('slug', $model);
+                        });
+                    }
+
+                } elseif ($matcher == "NOT") {
+
+                    $not_query = Item::query();
+                    $not_query->whereHas($relation, function (Builder $not_query) use ($models) {
+                        $not_query->whereIn('slug', $models);
+                    })->select('id')->distinct();
+
+                    $query->whereNotIn('id', $not_query);
+
+                } elseif ($matcher == "OR") {
+                    $query->whereHas($relation, function (Builder $query) use ($models) {
+                        $query->whereIn('slug', $models);
+                    });
+                }
+                
             }
         }
     }

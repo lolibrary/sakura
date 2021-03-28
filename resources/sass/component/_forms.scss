@@ -12,3 +12,14 @@
 .form-control {
   border: 1px solid #ccc !important;
 }
+
+.match_type {
+  padding-top: 10px;
+  width: 100%;
+  text-align: right;
+  color: $secondary;
+
+  div {
+    padding-left: 5px;
+  }
+}

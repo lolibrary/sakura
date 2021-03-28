@@ -18,6 +18,7 @@ window.Vue = require('vue');
 Vue.component('v-pagination', require('./components/Pagination.vue').default);
 Vue.component('search-page', require('./components/Search.vue').default);
 Vue.component('v-select', require('vue-select').VueSelect);
+Vue.component('b-form-radio-group', require('bootstrap-vue').BFormRadioGroup);
 Vue.component('search-result', require('./components/Result.vue').default);
 
 const app = new Vue({
