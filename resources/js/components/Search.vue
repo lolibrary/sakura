@@ -11,26 +11,44 @@
                 <div class="input-group pb-2">
                     <label class="control-label">Category</label>
                     <v-select style="width: 100%" v-model="state.categories" :options="categories" label="name" placeholder="Tap to filter" multiple></v-select>
+                    <div v-if="state.categories.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons button-variant="outline-secondary" size="sm" v-model="state.category_matcher" :options="options"></b-form-radio-group>
+                    </div>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Brand</label>
                     <v-select style="width: 100%" v-model="state.brands" :options="brands" label="name" placeholder="Tap to filter" multiple></v-select>
+                    <div v-if="state.brands.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons button-variant="outline-secondary" size="sm" v-model="state.brand_matcher" :options="options"></b-form-radio-group>
+                    </div>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Features</label>
                     <v-select style="width: 100%" v-model="state.features" :options="features" label="name" placeholder="Tap to filter" multiple></v-select>
+                    <div v-if="state.features.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons button-variant="outline-secondary" size="sm" v-model="state.feature_matcher" :options="options"></b-form-radio-group>
+                    </div>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Colorway</label>
                     <v-select style="width: 100%" v-model="state.colors" :options="colors" label="name" placeholder="Tap to filter" multiple></v-select>
+                    <div v-if="state.colors.length > 0" class="match_type"> Match
+                    <b-form-radio-group buttons button-variant="outline-secondary" size="sm" v-model="state.color_matcher" :options="options"></b-form-radio-group>
+                    </div>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Tags</label>
                     <v-select style="width: 100%" v-model="state.tags" :options="tags" label="slug" placeholder="Tap to filter" multiple></v-select>
+                    <div v-if="state.tags.length > 0" class="match_type"> Match
+                    <b-form-radio-group button-variant="outline-secondary" buttons size="sm" v-model="state.tag_matcher" :options="options"></b-form-radio-group>
+                    </div>
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Year</label>
                     <v-select style="width: 100%" v-model="state.years" :options="years" placeholder="Tap to filter" multiple></v-select>
+                    <div v-if="state.years.length > 0" class="match_type"> Match
+                    <b-form-radio-group button-variant="outline-secondary" buttons size="sm" v-model="state.year_matcher" :options="options"></b-form-radio-group>
+                    </div>
                 </div>
             </div>
         </div>
@@ -170,6 +188,13 @@
             results: {},
             loading: false,
 
+            // Options for the match type selector
+            options: [
+              { text: 'Any', value: 'OR' },
+              { text: 'All', value: 'AND' },
+              { text: 'None', value: 'NOT' }
+            ],
+
             // a function so we can read the initial state from the url.
             state: {
               search: undefined,
@@ -179,6 +204,12 @@
               tags: [],
               colors: [],
               years: [],
+              category_matcher: 'OR',
+              brand_matcher: 'OR',
+              feature_matcher: 'OR',
+              tag_matcher: 'OR',
+              color_matcher: 'OR',
+              year_matcher: 'OR'
             },
 
             page: 1,
@@ -228,6 +259,16 @@
             this.state[key] = this[key].filter(obj => value.indexOf(obj.slug) !== -1);
           }
 
+          for (let key of ["category_matcher", "feature_matcher", "brand_matcher", "color_matcher", "tag_matcher", "year_matcher"]) {
+            value = query[key];
+
+            if (value === undefined) {
+              continue;
+            }
+
+            this.state[key] = ['AND', 'OR', 'NOT'].includes(value) ? value : undefined;
+          }
+
           if (query.search !== undefined && query.search.length > 0) {
             this.state.search = query.search;
           }
@@ -258,6 +299,12 @@
               tags: this.state.tags.map(obj => obj.slug),
               colors: this.state.colors.map(obj => obj.slug),
               years: this.state.years.map(year => parseInt(year, 10)),
+              category_matcher: this.state.categories.length > 0 ? this.state.category_matcher : undefined,
+              brand_matcher: this.state.brands.length > 0 ? this.state.brand_matcher : undefined,
+              feature_matcher: this.state.features.length > 0 ? this.state.feature_matcher : undefined,
+              tag_matcher: this.state.tags.length > 0 ? this.state.tag_matcher : undefined,
+              color_matcher: this.state.colors.length > 0 ? this.state.color_matcher : undefined,
+              year_matcher: this.state.years.length > 0 ? this.state.year_matcher : undefined,
             };
           }
         },
