@@ -38,7 +38,7 @@
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Tags</label>
-                    <v-select style="width: 100%" v-model="state.tags" :options="tags" label="slug" placeholder="Tap to filter" multiple></v-select>
+                    <v-select style="width: 100%" v-model="state.tags" :options="tags" label="name" placeholder="Tap to filter" multiple></v-select>
                     <div v-if="state.tags.length > 0" class="match_type"> Match
                     <b-form-radio-group button-variant="outline-secondary" buttons size="sm" v-model="state.tag_matcher" :options="options"></b-form-radio-group>
                     </div>

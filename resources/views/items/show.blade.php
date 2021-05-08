@@ -163,7 +163,7 @@
                     @forelse ($item->tags as $tag)
                         <div class="p-1 list-group text-center col-lg-4 col-6 small">
                             <a class="list-group-item" href="{{ $tag->url }}">
-                                #{{ $tag->slug }}
+                                {{ $tag->name }}
                             </a>
                         </div>
                     @empty
