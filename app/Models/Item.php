@@ -64,6 +64,7 @@ class Item extends Model
         'aud' => 'Australian Dollar (AU$)',
         'mxn' => 'Mexican Pesos ($)',
         'chf' => 'Swiss Francs (CHF)',
+        'rub' => 'Russian Rubles (₽)',
     ];
 
     /**
