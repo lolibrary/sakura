@@ -115,7 +115,7 @@ class Item extends Resource
                 ->hideFromIndex(),
 
             BelongsTo::make('Brand')->sortable(),
-            BelongsTo::make('Category')->sortable(),
+            AttachMany::make('Category', 'categories', Category::class),
 
             Trix::make('Notes')->alwaysShow(),
             Trix::make('Internal Notes')->alwaysShow(),
