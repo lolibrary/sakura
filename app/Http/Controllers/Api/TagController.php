@@ -9,13 +9,14 @@ use Illuminate\Http\Request;
 class TagController extends Controller
 {
     /**
-     * Get all tags, paginated.
+     * Return all tags, cached.
      *
-     * @return \App\Tag[]|\Illuminate\Pagination\LengthAwarePaginator
+     * @return mixed
+     * @throws \Exception
      */
     public function index()
     {
-        return Tag::orderBy('created_at')->paginate(100);
+        return Tag::cached();
     }
 
     /**
