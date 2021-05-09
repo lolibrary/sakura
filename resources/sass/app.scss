@@ -40,3 +40,8 @@
 .text-regular {
   font-family: Helvetica, Arial, sans-serif;
 }
+
+.card .category:not(:last-child)::after {
+  content: ", ";
+  margin-left: -.25em;
+}
