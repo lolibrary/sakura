@@ -135,8 +135,7 @@ class SearchController extends Base
         $matcher = $request->input("year_matcher") ?? "OR";
 
         if (count($years) > 0) {
-            if ($matcher == "AND" && count($years) == 1) { 
-                // Can only have one year per item for now, so don't bother trying unless it's only one
+            if ($matcher == "AND") { 
                 foreach ($years as $year) {
                     $query->where('year', $year);
                 }
