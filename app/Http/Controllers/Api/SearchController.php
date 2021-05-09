@@ -24,7 +24,7 @@ class SearchController extends Base
      */
     protected const FILTERS = [
         Brand::class => 'brand',
-        Category::class => 'category',
+        Category::class => 'categories',
         Color::class => 'colors',
         Feature::class => 'features',
         Tag::class => 'tags',
@@ -134,6 +134,20 @@ class SearchController extends Base
         $years = (array) ($request->input('years') ?? $request->input('year'));
 
         if (count($years) > 0) {
+            if ($matcher == "AND" && count($years === 1)) { 
+                // Can only have one year per item for now, so don't bother trying unless it's only one
+                foreach ($years as $year) {
+                    $query->where('year', $year);
+                }
+
+            } elseif ($matcher == "NOT") {
+
+                $not_query = Item::query()->whereIn('year', $years);
+                $query->whereNotIn('id', $not_query);
+
+            } elseif ($matcher == "OR") {
+                $query->whereIn('year', $years);
+            }
             $query->whereIn('year', $years);
         }
     }
