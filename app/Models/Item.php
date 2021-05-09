@@ -244,4 +244,9 @@ class Item extends Model
             'formatted' => $this->price_formatted,
         ];
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category');
+    }
 }
