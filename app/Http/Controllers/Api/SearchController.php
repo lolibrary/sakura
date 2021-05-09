@@ -24,7 +24,7 @@ class SearchController extends Base
      */
     protected const FILTERS = [
         Brand::class => 'brand',
-        Category::class => 'category',
+        Category::class => 'categories',
         Color::class => 'colors',
         Feature::class => 'features',
         Tag::class => 'tags',
@@ -132,9 +132,22 @@ class SearchController extends Base
     protected function years(Request $request, Builder $query)
     {
         $years = (array) ($request->input('years') ?? $request->input('year'));
+        $matcher = $request->input("year_matcher") ?? "OR";
 
         if (count($years) > 0) {
-            $query->whereIn('year', $years);
+            if ($matcher == "AND") { 
+                foreach ($years as $year) {
+                    $query->where('year', $year);
+                }
+
+            } elseif ($matcher == "NOT") {
+
+                $not_query = Item::query()->whereIn('year', $years)->select('id')->distinct();
+                $query->whereNotIn('id', $not_query);
+
+            } elseif ($matcher == "OR") {
+                $query->whereIn('year', $years);
+            }
         }
     }
 }

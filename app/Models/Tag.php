@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Cacheable;
+
 /**
  * A search tag.
  *
@@ -11,6 +13,8 @@ namespace App\Models;
  */
 class Tag extends Model
 {
+    use Cacheable;
+
     /**
      * The attributes we can fill on this model.
      *
