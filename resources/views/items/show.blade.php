@@ -124,7 +124,7 @@
                 <h4 class="mt-4">{{ __('Category') }}</h4>
                 <div class="row">
                     @forelse ($item->categories as $category)
-                        <div class="p-1 list-group text-center @if($item->categories->count() === 1) col @else col-lg-4 col-6 @endif small">
+                        <div class="p-1 list-group text-center col small">
                             <a class="list-group-item" href="{{ $category->url }}">
                                 {{ $category->name }}
                             </a>

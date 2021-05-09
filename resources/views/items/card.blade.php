@@ -44,6 +44,7 @@
                     <a href="{{ $category->url }}" class="category">
                         {{ $category->name }}
                     </a>
+                 @endfor
                 </p>
             </div>
         </li>
