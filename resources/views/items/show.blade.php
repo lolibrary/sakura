@@ -123,11 +123,15 @@
 
                 <h4 class="mt-4">{{ __('Category') }}</h4>
                 <div class="row">
-                    <div class="list-group col p-1 text-center small">
-                        <a class="list-group-item" href="{{ $item->category->url }}">
-                            {{ $item->category->name }}
-                        </a>
-                    </div>
+                    @forelse ($item->categories as $category)
+                        <div class="p-1 list-group text-center col-lg-4 col-6 small">
+                            <a class="list-group-item" href="{{ $category->url }}">
+                                {{ $category->name }}
+                            </a>
+                        </div>
+                    @empty
+                        <p class="col text-muted">No categories recorded!</p>
+                    @endforelse
                 </div>
 
                 <h4 class="mt-4">{{ __('Features') }} <i

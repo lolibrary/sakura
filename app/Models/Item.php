@@ -110,7 +110,7 @@ class Item extends Model
         'tags',
         'colors',
         'features',
-        'category',
+        'categories',
         'brand',
         'submitter',
         'attributes',
@@ -125,7 +125,7 @@ class Item extends Model
     public const PARTIAL_LOAD = [
         'submitter',
         'brand',
-        'category',
+        'categories',
         'tags',
     ];
 
@@ -182,7 +182,7 @@ class Item extends Model
         'tags',
         'colors',
         'features',
-        'category',
+        'categories',
         'brand',
         'submitter',
         'attributes',
