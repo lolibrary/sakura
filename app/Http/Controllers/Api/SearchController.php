@@ -143,13 +143,12 @@ class SearchController extends Base
 
             } elseif ($matcher == "NOT") {
 
-                $not_query = Item::query()->whereIn('year', $years);
+                $not_query = Item::query()->whereIn('year', $years)->select('id')->distinct();
                 $query->whereNotIn('id', $not_query);
 
             } elseif ($matcher == "OR") {
                 $query->whereIn('year', $years);
             }
-            $query->whereIn('year', $years);
         }
     }
 }
