@@ -24,7 +24,7 @@ class MultipleCategoriesItems extends Migration
         });
 
         Schema::table('category_item', function (Blueprint $table) {
-            DB::statement('insert into category_item (category_id, item_id) select category, id from items;');
+            DB::statement('insert into category_item (category_id, item_id) select category_id, id from items;');
         });
     }
 
