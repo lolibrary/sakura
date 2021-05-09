@@ -21,11 +21,11 @@ use NumberFormatter;
  * @property string      $currency        The currency of this item, as an ISO code.
  *
  * @property \App\Models\Image $image     The primary {@link \App\Models\Image} for this Item.
- * @property \App\Models\Category $category  The {@link \App\Models\Category} of this Item (e.g. JSK).
  * @property \App\Models\User $submitter The {@link \App\Models\User} who originally submitted this Item.
  * @property \App\Models\User $publisher The {@link \App\Models\User} who published this Item.
  * @property \App\Models\Brand $brand     The {@link \App\Models\Brand} of this Item (e.g. Angelic Pretty).
  *
+ * @property \App\Models\Category[]\Illuminate\Database\Eloquent\Collection $categories  The {@link \App\Models\Category categories} of this Item (e.g. JSK).
  * @property \App\Models\Image[]|\Illuminate\Database\Eloquent\Collection $images     The {@link \App\Models\Image images} for this Item.
  * @property \App\Models\Tag[]|\Illuminate\Database\Eloquent\Collection $tags       The {@link \App\Models\Tag search tags} for this Item.
  * @property \App\Models\Color[]|\Illuminate\Database\Eloquent\Collection $colors     The {@link \App\Models\Color colorways} this Item comes in (e.g. Black).
@@ -111,7 +111,7 @@ class Item extends Model
         'tags',
         'colors',
         'features',
-        'category',
+        'categories',
         'brand',
         'submitter',
         'attributes',
@@ -126,7 +126,7 @@ class Item extends Model
     public const PARTIAL_LOAD = [
         'submitter',
         'brand',
-        'category',
+        'categories',
         'tags',
     ];
 
@@ -183,7 +183,7 @@ class Item extends Model
         'tags',
         'colors',
         'features',
-        'category',
+        'categories',
         'brand',
         'submitter',
         'attributes',
@@ -244,5 +244,10 @@ class Item extends Model
             'local_price' => $this->getFullPrice(),
             'formatted' => $this->price_formatted,
         ];
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category');
     }
 }
