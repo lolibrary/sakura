@@ -40,11 +40,11 @@
                     </a>
                 </p>
                 <p class="p-0 m-0 text-right flex-fill" style="white-space: nowrap; overflow-x: hidden">
-                @for ($item->categories as $category)
+                @foreach($item->categories as $category)
                     <a href="{{ $category->url }}" class="category">
                         {{ $category->name }}
                     </a>
-                 @endfor
+                 @endforeach
                 </p>
             </div>
         </li>

@@ -30,8 +30,8 @@
                     </a>
                 </p>
                 <p class="p-0 m-0 text-right flex-fill" style="white-space: nowrap; overflow-x: hidden;">
-                    <a :href="item.category.url" :title="item.category.name">
-                        {{ item.category.name.substring(0, 9) }}
+                    <a v-for="category in item.categories" :href="category.url" :title="category.name" class="category">
+                        {{ category.name }}
                     </a>
                 </p>
             </div>
