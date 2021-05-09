@@ -132,6 +132,7 @@ class SearchController extends Base
     protected function years(Request $request, Builder $query)
     {
         $years = (array) ($request->input('years') ?? $request->input('year'));
+        $matcher = $request->input("year_matcher") ?? "OR";
 
         if (count($years) > 0) {
             if ($matcher == "AND" && count($years) == 1) { 
