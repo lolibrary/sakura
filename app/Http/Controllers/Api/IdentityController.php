@@ -12,7 +12,7 @@ class IdentityController extends Controller
      *
      * @return \App\User
      */
-    public function identity()
+    public function show()
     {
         return auth()->user();
     }

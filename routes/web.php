@@ -24,6 +24,9 @@ Route::prefix('profile')->group(function () {
     Route::get('wishlist', 'ProfileController@wishlist')->name('wishlist');
 });
 
+// auth endpoint (for mediawiki)
+Route::get('api/auth', 'IdentityController@show');
+
 // blog posts route.
 Route::get('blog/{post}', 'BlogController@show')->name('posts.show');
 
