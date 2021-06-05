@@ -25,7 +25,7 @@ Route::prefix('profile')->group(function () {
 });
 
 // auth endpoint (for mediawiki)
-Route::get('api/auth', 'IdentityController@show');
+Route::get('api/auth', 'Api\\IdentityController@show');
 
 // blog posts route.
 Route::get('blog/{post}', 'BlogController@show')->name('posts.show');
