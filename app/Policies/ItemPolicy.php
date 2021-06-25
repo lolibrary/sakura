@@ -78,7 +78,7 @@ class ItemPolicy
             return $user->junior();
         }
 
-        return $user->lolibrarian();
+        return $user->senior();
     }
 
     /**

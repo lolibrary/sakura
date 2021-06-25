@@ -116,6 +116,10 @@ class ItemStatusFilter extends Filter
             'My Items' => 'my-items',
             'My Drafts' => 'my-drafts',
             'My Items (Published)' => 'my-published',
+
+            'All Drafts' => 'drafts',
+            'All Published' => 'published',
+            'All Pending' => 'pending',
         ];
     }
 
