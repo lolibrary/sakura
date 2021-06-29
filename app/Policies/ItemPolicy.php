@@ -72,13 +72,13 @@ class ItemPolicy
 
         // otherwise, this is a draft:
         // users can update their own drafts if junior.
-        // users can update other people's drafts if lolibrarian.
+        // users can update other people's drafts if senior.
 
         if ($item->user_id === $user->id) {
             return $user->junior();
         }
 
-        return $user->senior();
+        return $user->lolibrarian();
     }
 
     /**
