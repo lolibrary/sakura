@@ -63,7 +63,7 @@ trait Publishable
      *
      * @return bool
      */
-    public function isPending(): bool
+    public function pending(): bool
     {
         return $this->status === static::PENDING;
     }
