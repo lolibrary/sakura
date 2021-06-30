@@ -74,7 +74,7 @@ class ItemPolicy
         // users can update their own drafts if junior.
         // users can update other people's drafts if senior.
 
-        if ($item->user_id === $user->id) {
+        if ($item->user_id == $user->id) {
             return $user->junior();
         }
 
