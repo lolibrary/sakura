@@ -34,7 +34,7 @@ class ItemPolicy
      */
     public function view(User $user, Item $item)
     {
-        if ($item->submitter_id !== $user->id) {
+        if ($item->user_id !== $user->id) {
             return $user->lolibrarian();
         }
 
@@ -74,7 +74,7 @@ class ItemPolicy
         // users can update their own drafts if junior.
         // users can update other people's drafts if senior.
 
-        if ($item->submitter_id == $user->id) {
+        if ($item->user_id == $user->id) {
             return $user->junior();
         }
 
@@ -101,7 +101,7 @@ class ItemPolicy
         }
 
         // junior can delete their own drafts.
-        if ($item->submitter_id === $user->id) {
+        if ($item->user_id === $user->id) {
             return $user->junior();
         }
 
@@ -130,7 +130,7 @@ class ItemPolicy
 
         // otherwise, this is a draft:
         // users can publish their own drafts if lolibrarian.
-        if ($item->submitter_id === $user->id) {
+        if ($item->user_id === $user->id) {
             return $user->lolibrarian();
         }
 
