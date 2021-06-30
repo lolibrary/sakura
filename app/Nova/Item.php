@@ -249,7 +249,7 @@ class Item extends Resource
 
                 /** @var \App\Models\Item $model */
                 if ($model === null) {
-                    return $request->user()->senior();
+                    return $request->user()->lolibrarian();
                 }
 
                 return !$model->published() && $request->user()->can('publish', $model);
