@@ -51,7 +51,7 @@ class PublishItem extends Action
         if ($model->published()) {
             return false;
         }
-
+        dd($request->user(), $model);
         return $request->user()->can('publish', $model);
     }
 }
