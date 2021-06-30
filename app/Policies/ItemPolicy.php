@@ -61,6 +61,7 @@ class ItemPolicy
      */
     public function update(User $user, Item $item)
     {
+        dd($item, $user);
         if ($item->status === Item::PUBLISHED) {
             // lolibrarians can update items they themselves published
             if ($item->publisher_id === $user->id) {

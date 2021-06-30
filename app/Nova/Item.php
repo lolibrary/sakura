@@ -279,17 +279,17 @@ class Item extends Resource
                 return ($model->draft() || $model->published()) && $request->user()->can('update', $model);
             }),
 
-            // (new DraftItem)->canSee(function (Request $request) {
-            //     /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
-            //     $model = $request->findModelQuery()->first();
+            (new DraftItem)->canSee(function (Request $request) {
+                /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
+                $model = $request->findModelQuery()->first();
 
-            //     /** @var \App\Models\Item $model */
-            //     if ($model === null) {
-            //         return $request->user()->junior();
-            //     }
+                /** @var \App\Models\Item $model */
+                if ($model === null) {
+                    return $request->user()->junior();
+                }
 
-            //     return ($model->pending() && $request->user()->can('update', $model) || $model->published()) && $request->user()->can('publish', $model);
-            // }),
+                return ($model->pending() && $request->user()->can('update', $model) || $model->published()) && $request->user()->can('publish', $model);
+            }),
         ];
     }
 }
