@@ -32,5 +32,5 @@ jobs:
       DOCKER_SHA_TAG: "ghcr.io/lolibrary/sakura:${{ github.sha }}"
       PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
       NAMESPACE: "default"
-      GKE_CLUSTER: "lolibrary"
+      GKE_CLUSTER: "lolibrary-prod"
       GKE_ZONE: "us-central1-a"

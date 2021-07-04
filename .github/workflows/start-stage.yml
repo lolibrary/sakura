@@ -38,5 +38,5 @@ jobs:
           rm *.creds
     env:
       STAGE_CLUSTER: "staging"
-      PROD_CLUSTER: "lolibrary"
+      PROD_CLUSTER: "lolibrary-prod"
       GKE_ZONE: "us-central1-a"
