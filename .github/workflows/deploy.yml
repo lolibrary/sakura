@@ -25,11 +25,14 @@ jobs:
         run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
       - name: Deploy
         run: |
-          cat "$(pwd)/manifests/prod.yml" | sed "s#PLACEHOLDER#\"$DOCKER_SHA_TAG\"#" | kubectl apply --record -f -
+          docker pull $DOCKER_WIKI_REPO:latest
+          export WIKI_TAG=$(docker image inspect -f "{{(index .RepoDigests 0)}}" $DOCKER_WIKI_REPO:latest)
+          cat "$(pwd)/manifests/prod.yml" | sed "s#PLACEHOLDER#\"$DOCKER_SHA_TAG\"#" |  sed "s#WIKIHOLDER#\"$WIKI_TAG\"#" | kubectl apply --record -f -
           kubectl rollout status "deployment/s-sakura" -n $NAMESPACE
 
     env:
       DOCKER_SHA_TAG: "ghcr.io/lolibrary/sakura:${{ github.sha }}"
+      DOCKER_WIKI_REPO: "ghcr.io/lolibrary/wiki"
       PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
       NAMESPACE: "default"
       GKE_CLUSTER: "lolibrary-prod"
