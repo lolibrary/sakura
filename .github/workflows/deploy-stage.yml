@@ -26,7 +26,7 @@ jobs:
       - name: Deploy
         run: |
           docker pull $DOCKER_WIKI_REPO:latest
-          docker image inspect $DOCKER_WIKI_REPO:latest
+          export WIKI_TAG=$(docker image inspect -f "{{(index .RepoDigests 0)}}" $DOCKER_WIKI_REPO:latest)
           echo $WIKI_TAG
           cat "$(pwd)/manifests/prod.yml" | sed "s#PLACEHOLDER#\"$DOCKER_SHA_TAG\"#" |  sed "s#WIKIHOLDER#\"$DOCKER_WIKI_REPO:$WIKI_TAG\"#" |kubectl apply --record -f -
           kubectl rollout status "deployment/s-sakura" -n $NAMESPACE
