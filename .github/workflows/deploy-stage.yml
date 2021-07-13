@@ -25,8 +25,8 @@ jobs:
         run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
       - name: Deploy
         run: |
-          docker images --format "***.Tag*** ***.CreatedAt***" $DOCKER_WIKI_REPO | sort -rk 2 | awk 'NR==1***print $1***'
-          export WIKI_TAG=$(docker images --format "{{.Tag}} {{.CreatedAt}}" $DOCKER_WIKI_REPO | sort -rk 2 | awk 'NR==1{print $1}')
+          docker images --format "{{.Tag}}" | head -1
+          export WIKI_TAG=$(docker images --format "{{.Tag}}" | head -1)
           echo $WIKI_TAG
           cat "$(pwd)/manifests/prod.yml" | sed "s#PLACEHOLDER#\"$DOCKER_SHA_TAG\"#" |  sed "s#WIKIHOLDER#\"$DOCKER_WIKI_REPO:$WIKI_TAG\"#" |kubectl apply --record -f -
           kubectl rollout status "deployment/s-sakura" -n $NAMESPACE
