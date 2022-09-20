@@ -26,6 +26,7 @@ jobs:
           registry: ghcr.io
       - name: Install PHP dependencies
         run: |
+          ls
           composer update mirrors
           composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_API_KEY }} --no-interaction --working-dir cache
           COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --working-dir cache
