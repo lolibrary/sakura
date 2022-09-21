@@ -65,6 +65,7 @@ class Item extends Model
         'mxn' => 'Mexican Pesos ($)',
         'chf' => 'Swiss Francs (CHF)',
         'rub' => 'Russian Rubles (₽)',
+        'brl' => 'Brazilian Real (R$)',
     ];
 
     /**
