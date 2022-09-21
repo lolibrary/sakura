@@ -13,7 +13,7 @@ trait Closet
      */
     public function closet()
     {
-        return $this->belongsToMany(Item::class, 'closet')->withTimestamps();
+        return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderByDesc('created_at');;
     }
 
     /**
