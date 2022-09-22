@@ -13,7 +13,7 @@ trait Wishlist
      */
     public function wishlist()
     {
-        return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderByAsc('created_at');;
+        return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderByAsc('created_at');
     }
 
     /**
