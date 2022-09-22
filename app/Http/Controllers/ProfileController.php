@@ -49,9 +49,9 @@ class ProfileController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function wishlist()
+    public function wishlist(Request $request)
     {
-        $user = Auth::user(Request $request);
+        $user = Auth::user();
         $items = $user->wishlist($request->input('order'))->paginate(24);
 
         return view('profile.wishlist', compact('user', 'items'));
