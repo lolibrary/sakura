@@ -31,7 +31,7 @@ class ProfileController extends Controller
     /**
      * Get a user's closet (owned items).
      * 
-     * @param \App\Requests\SearchRequest|\Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function closet(Request $request)
