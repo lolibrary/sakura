@@ -123,7 +123,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function wishlist()
     {
-        return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderByAsc('created_at');
+        return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->latest();
     }
 
     /**
@@ -133,7 +133,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function closet()
     {
-        return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->latest();
+        return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->oldest();
     }
 
     /**
