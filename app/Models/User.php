@@ -129,11 +129,18 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The items a user owns.
      *
+     * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function closet()
+    public function closet($order)
     {
-        return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->oldest();
+        if ($order == 'old'){ 
+            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->oldest();
+        } elseif ($order == 'alpha'){ 
+            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->sort_by('english_name');
+        } else {
+            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->latest();
+        }
     }
 
     /**

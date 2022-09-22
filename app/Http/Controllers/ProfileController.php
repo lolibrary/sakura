@@ -30,13 +30,14 @@ class ProfileController extends Controller
 
     /**
      * Get a user's closet (owned items).
-     *
+     * 
+     * @param \App\Requests\SearchRequest|\Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function closet()
+    public function closet(Request $request)
     {
         $user = Auth::user();
-        $items = $user->closet()->paginate(24);
+        $items = $user->closet($request->input('order'))->paginate(24);
 
         return view('profile.closet', compact('user', 'items'));
     }
