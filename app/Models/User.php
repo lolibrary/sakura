@@ -119,11 +119,18 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The items a user has favourited/wishlisted.
      *
+     * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function wishlist()
+    public function wishlist(@param string $order)
     {
-        return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->latest();
+        if ($order == 'old'){ 
+            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->oldest();
+        } elseif ($order == 'alpha'){ 
+            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('english_name', 'desc');
+        } else {
+            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->latest();
+        }
     }
 
     /**
@@ -137,7 +144,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($order == 'old'){ 
             return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->oldest();
         } elseif ($order == 'alpha'){ 
-            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->sort_by('english_name');
+            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy('english_name', 'desc');
         } else {
             return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->latest();
         }

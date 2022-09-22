@@ -46,12 +46,13 @@ class ProfileController extends Controller
     /**
      * Get a user's wishlist (favourited items).
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function wishlist()
     {
-        $user = Auth::user();
-        $items = $user->wishlist()->paginate(24);
+        $user = Auth::user(Request $request);
+        $items = $user->wishlist($request->input('order'))->paginate(24);
 
         return view('profile.wishlist', compact('user', 'items'));
     }
