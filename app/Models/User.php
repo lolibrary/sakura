@@ -122,7 +122,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function wishlist(@param string $order)
+    public function wishlist($order)
     {
         if ($order == 'old'){ 
             return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->oldest();
