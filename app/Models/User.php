@@ -125,11 +125,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function wishlist($order = '')
     {
         if ($order == 'old'){ 
-            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('wishlist.created_at', 'desc');
+            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('wishlist.created_at', 'asc');
         } elseif ($order == 'alpha'){ 
-            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('english_name', 'desc');
+            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('english_name', 'asc');
         } else {
-            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->latest();
+            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('wishlist.created_at', 'desc');
         }
     }
 
@@ -142,11 +142,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function closet($order = '')
     {
         if ($order == 'old'){ 
-            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->oldest();
+            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy('closet.created_at', 'asc');
         } elseif ($order == 'alpha'){ 
-            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy('english_name', 'desc');
+            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy('english_name', 'asc');
         } else {
-            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->latest();
+            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy('closet.created_at', 'desc');
         }
     }
 
