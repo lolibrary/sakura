@@ -131,23 +131,15 @@ class SearchController extends Base
      */
     protected function years(Request $request, Builder $query)
     {
-        $years = (array) ($request->input('years') ?? $request->input('year'));
-        $matcher = $request->input("year_matcher") ?? "OR";
+        $start_year = $request->input('start_year');
+        $end_year = $request->input('end_year');
 
-        if (count($years) > 0) {
-            if ($matcher == "AND") { 
-                foreach ($years as $year) {
-                    $query->where('year', $year);
-                }
+        if (isNumeric($start_year)){
+            $query->where('year', '>=', $start_year)
+        }
 
-            } elseif ($matcher == "NOT") {
-
-                $not_query = Item::query()->whereIn('year', $years)->select('id')->distinct();
-                $query->whereNotIn('id', $not_query);
-
-            } elseif ($matcher == "OR") {
-                $query->whereIn('year', $years);
-            }
+        if (isNumeric($end_year)){
+            $query->where('year', '<=', $end_year)
         }
     }
 }

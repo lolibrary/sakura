@@ -44,11 +44,12 @@
                     </div>
                 </div>
                 <div class="input-group pb-2">
-                    <label class="control-label">Year</label>
-                    <v-select style="width: 100%" v-model="state.years" :options="years" placeholder="Tap to filter" multiple></v-select>
-                    <div v-if="state.years.length > 0" class="match_type"> Match
-                    <b-form-radio-group button-variant="outline-secondary" buttons size="sm" v-model="state.year_matcher" :options="options"></b-form-radio-group>
-                    </div>
+                    <label class="control-label">Start Year</label>
+                    <v-select style="width: 100%" v-model="state.start_year" :options="years" placeholder="Tap to filter"></v-select>
+                </div>
+                <div class="input-group pb-2">
+                    <label class="control-label">End Year</label>
+                    <v-select style="width: 100%" v-model="state.end_year" :options="years" placeholder="Tap to filter"></v-select>
                 </div>
             </div>
         </div>
@@ -203,13 +204,13 @@
               features: [],
               tags: [],
               colors: [],
-              years: [],
+              start_year: undefined,
+              end_year: undefined,
               category_matcher: 'OR',
               brand_matcher: 'OR',
               feature_matcher: 'OR',
               tag_matcher: 'OR',
               color_matcher: 'OR',
-              year_matcher: 'OR'
             },
 
             page: 1,
@@ -273,8 +274,12 @@
             this.state.search = query.search;
           }
 
-          if (query.years !== undefined && query.years.length > 0) {
-            this.state.years = query.years.map(year => year.toString());
+          if (query.start_year !== undefined && query.start_year.length > 0) {
+            this.state.start_year = query.start_year.toString();
+          }
+
+          if (query.end_year !== undefined && query.end_year.length > 0) {
+            this.state.end_year = query.end_year.toString();
           }
 
           if (query.page !== undefined) {
@@ -298,13 +303,13 @@
               features: this.state.features.map(obj => obj.slug),
               tags: this.state.tags.map(obj => obj.slug),
               colors: this.state.colors.map(obj => obj.slug),
-              years: this.state.years.map(year => parseInt(year, 10)),
+              start_year: parseInt(this.state.start_year, 10),
+              end_year: parseInt(this.state.end_year, 10),
               category_matcher: this.state.categories.length > 0 ? this.state.category_matcher : undefined,
               brand_matcher: this.state.brands.length > 0 ? this.state.brand_matcher : undefined,
               feature_matcher: this.state.features.length > 0 ? this.state.feature_matcher : undefined,
               tag_matcher: this.state.tags.length > 0 ? this.state.tag_matcher : undefined,
               color_matcher: this.state.colors.length > 0 ? this.state.color_matcher : undefined,
-              year_matcher: this.state.years.length > 0 ? this.state.year_matcher : undefined,
             };
           }
         },
