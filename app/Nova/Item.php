@@ -136,7 +136,7 @@ class Item extends Resource
                     ->displayUsingLabels()
                     ->hideFromIndex(),
                 Text::make('Price')
-                    ->rules('numeric'),
+                    ->rules('numeric')
                     ->hideFromIndex(),
             ]),
 
