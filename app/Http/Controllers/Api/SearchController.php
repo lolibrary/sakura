@@ -135,11 +135,11 @@ class SearchController extends Base
         $end_year = $request->input('end_year');
 
         if (isNumeric($start_year)){
-            $query->where('year', '>=', $start_year)
+            $query->where('year', '>=', $start_year);
         }
 
         if (isNumeric($end_year)){
-            $query->where('year', '<=', $end_year)
+            $query->where('year', '<=', $end_year);
         }
     }
 }
