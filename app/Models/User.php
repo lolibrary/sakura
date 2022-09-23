@@ -122,10 +122,10 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function wishlist($order)
+    public function wishlist($order = '')
     {
         if ($order == 'old'){ 
-            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->oldest();
+            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('wishlist.created_at', 'desc');
         } elseif ($order == 'alpha'){ 
             return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('english_name', 'desc');
         } else {
@@ -139,7 +139,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function closet($order)
+    public function closet($order = '')
     {
         if ($order == 'old'){ 
             return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->oldest();
