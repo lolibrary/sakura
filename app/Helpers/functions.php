@@ -303,23 +303,23 @@ if (! function_exists('sorted')) {
         switch($order) {
             case ORDER['ADDED_OLDEST']['key']:
                 $table = $relationship ? "$relationship.created_at" : 'created_at';
-                return $items->orderBy($table, 'asc');
+                return [$table, 'asc'];
                 break;
             case ORDER['ADDED_NEWEST']['key']:
                 $table = $relationship ? "$relationship.created_at" : 'created_at';
-                return $items->orderBy($table, 'desc');
+                return [$table, 'desc'];
                 break;
             case ORDER['ALPHA']['key']:
-                return $items->orderBy('english_name', 'asc');
+                return ['english_name', 'asc'];
                 break;
             case ORDER['ALPHA_REVERSE']['key']:
-                return $items->orderBy('english_name', 'desc');
+                return ['english_name', 'desc'];
                 break;
             case ORDER['YEAR_OLDEST']['key']:
-                return $items->orderBy('year', 'asc');
+                return ['year', 'asc'];
                 break;
             case ORDER['YEAR_NEWEST']['key']:
-                return $items->orderBy('year', 'desc');
+                return ['year', 'desc'];
                 break;
             }
     }
