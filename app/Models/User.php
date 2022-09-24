@@ -122,7 +122,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function wishlist($order = 'added_newest')
+    public function wishlist($order = 'added_new')
     {
         $order_vars = sorted($order, 'wishlist');
         return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy(...$order_vars);
@@ -134,10 +134,10 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function closet($order = 'added_newest')
+    public function closet($order = 'added_new')
     {
         $order_vars = sorted($order, 'closet');
-        return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy(...$order_vars);
+        return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy(...(sorted($order, 'closet')));
     }
 
     /**

@@ -321,6 +321,9 @@ if (! function_exists('sorted')) {
             case ORDER['YEAR_NEWEST']['key']:
                 return ['year', 'desc'];
                 break;
+            default:
+                return ['english_name', 'asc'];
+                break;
             }
     }
 
