@@ -122,15 +122,9 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function wishlist($order = '')
+    public function wishlist($order = 'added_newest')
     {
-        if ($order == 'old'){ 
-            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('wishlist.created_at', 'asc');
-        } elseif ($order == 'alpha'){ 
-            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('english_name', 'asc');
-        } else {
-            return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('wishlist.created_at', 'desc');
-        }
+        return sorted($this->belongsToMany(Item::class, 'wishlist')->withTimestamps(), $order, 'wishlist');
     }
 
     /**
@@ -139,15 +133,10 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function closet($order = '')
+    public function closet($order = 'added_newest')
     {
-        if ($order == 'old'){ 
-            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy('closet.created_at', 'asc');
-        } elseif ($order == 'alpha'){ 
-            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy('english_name', 'asc');
-        } else {
-            return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy('closet.created_at', 'desc');
-        }
+        return sorted($this->belongsToMany(Item::class, 'closet')->withTimestamps(), $order, 'closet');
+ 
     }
 
     /**
