@@ -12,6 +12,15 @@ use GuzzleHttp\Psr7\Uri;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
+public const ORDER = [
+    'YEAR_NEWEST' => ['name' => 'Year (newest first)', 'key' => 'year_new'],
+    'YEAR_OLDEST' => ['name' => 'Year (oldest first)', 'key' => 'year_old'],
+    'ADDED_NEWEST' => ['name' => 'Added (newest first)', 'key' => 'added_new'],
+    'ADDED_OLDEST' => ['name' => 'Added (oldest first)', 'key' => 'added_old'],
+    'ALPHA' => ['name' => 'English Name (A to Z)', 'key' => 'alpha'],
+    'ALPHA_REVERSE' => ['name' => 'English Name (Z to A)', 'key' => 'alpha_reverse'],
+];
+
 if (! function_exists('uuid')) {
     /**
      * Return a UUID without giving away our mac address.
@@ -279,15 +288,6 @@ if (! function_exists('purify')) {
         return Purify::clean($input);
     }
 }
-
-public const ORDER = [
-    'YEAR_NEWEST' => ['name' => 'Year (newest first)', 'key' => 'year_new'],
-    'YEAR_OLDEST' => ['name' => 'Year (oldest first)', 'key' => 'year_old'],
-    'ADDED_NEWEST' => ['name' => 'Added (newest first)', 'key' => 'added_new'],
-    'ADDED_OLDEST' => ['name' => 'Added (oldest first)', 'key' => 'added_old'],
-    'ALPHA' => ['name' => 'English Name (A to Z)', 'key' => 'alpha'],
-    'ALPHA_REVERSE' => ['name' => 'English Name (Z to A)', 'key' => 'alpha_reverse'],
-];
 
 if (! function_exists('sorted')) {
    /**
