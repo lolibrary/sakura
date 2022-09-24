@@ -298,7 +298,7 @@ if (! function_exists('sorted')) {
      * @param string $relationship
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    function sorted($items, $order, $relationship = null)
+    function sorted($order, $relationship = null)
     {
         switch($order) {
             case ORDER['ADDED_OLDEST']['key']:
