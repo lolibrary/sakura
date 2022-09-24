@@ -51,6 +51,10 @@
                     <label class="control-label">End Year</label>
                     <v-select style="width: 100%" v-model="state.end_year" :options="years" placeholder="Tap to filter"></v-select>
                 </div>
+                <div class="input-group pb-2">
+                    <label class="control-label">Years</label>
+                    <vue-slider v-model="years" :enable-cross="false"></vue-slider>
+                </div>
             </div>
         </div>
 
@@ -204,6 +208,7 @@
               features: [],
               tags: [],
               colors: [],
+              years: [],
               start_year: undefined,
               end_year: undefined,
               category_matcher: 'OR',
@@ -303,6 +308,7 @@
               features: this.state.features.map(obj => obj.slug),
               tags: this.state.tags.map(obj => obj.slug),
               colors: this.state.colors.map(obj => obj.slug),
+              years: this.state.years,
               start_year: this.state.start_year ? parseInt(this.state.start_year, 10) : undefined,
               end_year: this.state.end_year ? parseInt(this.state.end_year, 10) : undefined,
               category_matcher: this.state.categories.length > 0 ? this.state.category_matcher : undefined,

@@ -32,6 +32,7 @@
         "qs": "^6.8.0",
         "sass-svg-uri": "^1.0.0",
         "simple-lightbox": "^2.1.0",
-        "vue-select": "^3.1.0"
+        "vue-select": "^3.1.0",
+        "vue-slider-component": "^4.1.0-beta.1"
     }
 }

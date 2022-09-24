@@ -20,6 +20,7 @@ Vue.component('search-page', require('./components/Search.vue').default);
 Vue.component('v-select', require('vue-select').VueSelect);
 Vue.component('b-form-radio-group', require('bootstrap-vue').BFormRadioGroup);
 Vue.component('search-result', require('./components/Result.vue').default);
+Vue.component('v-slider', require('vue-slider-component').VueSlider);
 
 const app = new Vue({
     el: '#app'
