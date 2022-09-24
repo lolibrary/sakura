@@ -12,7 +12,7 @@ use GuzzleHttp\Psr7\Uri;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
-$ORDER = [
+const ORDER = [
     'YEAR_NEWEST' => ['name' => 'Year (newest first)', 'key' => 'year_new'],
     'YEAR_OLDEST' => ['name' => 'Year (oldest first)', 'key' => 'year_old'],
     'ADDED_NEWEST' => ['name' => 'Added (newest first)', 'key' => 'added_new'],
@@ -301,24 +301,24 @@ if (! function_exists('sorted')) {
     function sorted($items, $order, $relationship = null)
     {
         switch($order) {
-            case $ORDER['ADDED_OLDEST']['key']:
+            case ORDER['ADDED_OLDEST']['key']:
                 $table = $relationship ? "$relationship.created_at" : 'created_at';
                 return $items->orderBy($table, 'asc');
                 break;
-            case $ORDER['ADDED_NEWEST']['key']:
+            case ORDER['ADDED_NEWEST']['key']:
                 $table = $relationship ? "$relationship.created_at" : 'created_at';
                 return $items->orderBy($table, 'desc');
                 break;
-            case $ORDER['ALPHA']['key']:
+            case ORDER['ALPHA']['key']:
                 return $items->orderBy('english_name', 'asc');
                 break;
-            case $ORDER['ALPHA_REVERSE']['key']:
+            case ORDER['ALPHA_REVERSE']['key']:
                 return $items->orderBy('english_name', 'desc');
                 break;
-            case $ORDER['YEAR_OLDEST']['key']:
+            case ORDER['YEAR_OLDEST']['key']:
                 return $items->orderBy('year', 'asc');
                 break;
-            case $ORDER['YEAR_NEWEST']['key']:
+            case ORDER['YEAR_NEWEST']['key']:
                 return $items->orderBy('year', 'desc');
                 break;
             }
