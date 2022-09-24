@@ -12,7 +12,7 @@ use GuzzleHttp\Psr7\Uri;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
-public const ORDER = [
+$ORDER = [
     'YEAR_NEWEST' => ['name' => 'Year (newest first)', 'key' => 'year_new'],
     'YEAR_OLDEST' => ['name' => 'Year (oldest first)', 'key' => 'year_old'],
     'ADDED_NEWEST' => ['name' => 'Added (newest first)', 'key' => 'added_new'],
