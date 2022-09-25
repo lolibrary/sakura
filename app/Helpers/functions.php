@@ -12,6 +12,15 @@ use GuzzleHttp\Psr7\Uri;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
+const ORDER = [
+    'YEAR_NEWEST' => ['name' => 'Year (newest first)', 'key' => 'year_new'],
+    'YEAR_OLDEST' => ['name' => 'Year (oldest first)', 'key' => 'year_old'],
+    'ADDED_NEWEST' => ['name' => 'Added (newest first)', 'key' => 'added_new'],
+    'ADDED_OLDEST' => ['name' => 'Added (oldest first)', 'key' => 'added_old'],
+    'ALPHA' => ['name' => 'English Name (A to Z)', 'key' => 'alpha'],
+    'ALPHA_REVERSE' => ['name' => 'English Name (Z to A)', 'key' => 'alpha_reverse'],
+];
+
 if (! function_exists('uuid')) {
     /**
      * Return a UUID without giving away our mac address.
@@ -278,5 +287,45 @@ if (! function_exists('purify')) {
     {
         return Purify::clean($input);
     }
+}
+
+if (! function_exists('sorted')) {
+   /**
+     * Takes a list of items and returns them sorted in a particular order
+     *
+     * @param \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[] $items
+     * @param string $order
+     * @param string $relationship
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
+     */
+    function sorted($order, $relationship = null)
+    {
+        switch($order) {
+            case ORDER['ADDED_OLDEST']['key']:
+                $table = $relationship ? "$relationship.created_at" : 'created_at';
+                return [$table, 'asc'];
+                break;
+            case ORDER['ADDED_NEWEST']['key']:
+                $table = $relationship ? "$relationship.created_at" : 'created_at';
+                return [$table, 'desc'];
+                break;
+            case ORDER['ALPHA']['key']:
+                return ['english_name', 'asc'];
+                break;
+            case ORDER['ALPHA_REVERSE']['key']:
+                return ['english_name', 'desc'];
+                break;
+            case ORDER['YEAR_OLDEST']['key']:
+                return ['year', 'asc'];
+                break;
+            case ORDER['YEAR_NEWEST']['key']:
+                return ['year', 'desc'];
+                break;
+            default:
+                return ['english_name', 'asc'];
+                break;
+            }
+    }
+
 }
 

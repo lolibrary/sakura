@@ -136,7 +136,8 @@ class Item extends Resource
                     ->displayUsingLabels()
                     ->hideFromIndex(),
                 Text::make('Price')
-                    ->rules('numeric')
+                    ->help('Values should only be numbers - don\'t include commas or currency symbols!')
+                    ->rules('nullable', 'numeric')
                     ->hideFromIndex(),
             ]),
 

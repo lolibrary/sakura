@@ -55,6 +55,9 @@
                     <label class="control-label">Years</label>
                     <vue-slider v-model="years" :enable-cross="false"></vue-slider>
                 </div>
+                <div class="input-group pb-2">
+                  <button class="btn btn-block btn-outline-primary" style="width: 100%" @click="clearAll">Clear Filters</button>
+                </div>
             </div>
         </div>
 
@@ -239,6 +242,24 @@
               this.loading = false;
             });
           },
+
+          clearAll() {
+            this.state = {
+              search: undefined,
+              categories: [],
+              brands: [],
+              features: [],
+              tags: [],
+              colors: [],
+              years: [],
+              category_matcher: 'OR',
+              brand_matcher: 'OR',
+              feature_matcher: 'OR',
+              tag_matcher: 'OR',
+              color_matcher: 'OR',
+              year_matcher: 'OR'
+            }
+          }
         },
 
         watch: {

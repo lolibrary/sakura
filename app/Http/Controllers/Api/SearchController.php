@@ -56,7 +56,7 @@ class SearchController extends Base
             });
         }
 
-        $query->orderByDesc('published_at');
+        $query->orderBy(...(sorted('alpha')));
 
         $query->where('status', Item::PUBLISHED);
 
