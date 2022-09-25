@@ -53,7 +53,7 @@
                 </div>
                 <div class="input-group pb-2">
                     <label class="control-label">Years</label>
-                    <vue-slider v-model="years" :enable-cross="false"></vue-slider>
+                    <v-slider v-model="years" :enable-cross="false"></v-slider>
                 </div>
                 <div class="input-group pb-2">
                   <button class="btn btn-block btn-outline-primary" style="width: 100%" @click="clearAll">Clear Filters</button>
