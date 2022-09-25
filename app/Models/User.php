@@ -124,8 +124,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function wishlist($order = 'added_new')
     {
-        $order_vars = sorted($order, 'wishlist');
-        return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy(...$order_vars);
+        return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy(...(sorted($order, 'wishlist')));
     }
 
     /**
@@ -136,7 +135,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function closet($order = 'added_new')
     {
-        $order_vars = sorted($order, 'closet');
         return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy(...(sorted($order, 'closet')));
     }
 
