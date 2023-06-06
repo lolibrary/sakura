@@ -1,9 +1,9 @@
 <?php
 return [
     'skip' => 'Passer au contenu',
-    'donate' => '',
-    'login' => '',
-    'search' => '',
+    'donate' => 'Faire un don',
+    'login' => 'Se connecter',
+    'search' => 'Rechercher',
     'npo' => 'Lolibrary Inc. est une association à but non lucratif de type 501(c)(3), constituée aux États-Unis.',
     'wishlist' => [
         'added' => '":item" ajouté à votre liste de souhaits',
