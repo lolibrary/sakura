@@ -3,7 +3,7 @@ return [
     'skip' => '',
     'donate' => '',
     'login' => '',
-    'search' => '',
+    'search' => '搜',
     'npo' => '',
     'wishlist' => [
         'added' => '',
