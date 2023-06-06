@@ -1,0 +1,1 @@
+This directory contains assets, including images and branding, for the main [Lolibrary website](https://lolibrary.org), and are **not licensed for reuse by others**. They are included here as examples, and for volunteers working on the main site.
