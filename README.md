@@ -9,7 +9,7 @@
 
 ### Technology
 
-This codebase is primarily written in PHP, using the [Laravel](https://laravel.com/) framework. Some of the search functionality is written in [Vue.js](https://vuewjs.org). UI styling is done using [Bootstrap 4](https://getbootstrap.com/docs/4.6/getting-started/introduction/).
+This codebase is primarily written in PHP, using the [Laravel](https://laravel.com/) framework. Some of the search functionality is written in [Vue.js](https://vuewjs.org). UI styling is done using [Bootstrap 4](https://getbootstrap.com/docs/4.6/getting-started/introduction/). Translation of UI elements is in progress, using [Weblate](https://hosted.weblate.org/projects/lolibrary/).
 
 ### Licensing
 
