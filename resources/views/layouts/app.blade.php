@@ -18,7 +18,7 @@
     @yield('meta', '')
 </head>
 <body>
-    <a class="sr-only sr-only-focusable" href="#skip-navigation">{{ __('layouts.skip') }}</a>
+    <a class="sr-only sr-only-focusable" href="#skip-navigation">{{ __('ui.skip') }}</a>
     <div id="app" style="margin-top: 55px">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top">
             <div class="container">
@@ -41,19 +41,19 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        <li><a class="nav-link" href="{{ route('donate') }}">{{ __('layouts.donate') }}</a></li>
+                        <li><a class="nav-link" href="{{ route('donate') }}">{{ __('ui.donate') }}</a></li>
                         @guest
-                            <li><a class="nav-link" href="{{ route('login') }}">{{ __('layouts.login') }}</a></li>
-                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('layouts.register') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('login') }}">{{ __('ui.login') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('ui.register') }}</a></li>
                         @else
                             @include('components.navbar.dropdown')
                         @endguest
 
-                        <li class="d-sm-none"><a class="nav-link" href="{{ route('search') }}">{{ __('layouts.search') }}</a></li>
+                        <li class="d-sm-none"><a class="nav-link" href="{{ route('search') }}">{{ __('ui.search') }}</a></li>
                     </ul>
 
                     <form class="form-inline pl-md-3 d-none d-sm-flex" action="{{ route('search') }}" method="get">
-                        <input class="form-control mr-sm-2" name="search" autocomplete="off" type="search" placeholder="{{ __('layouts.search') }}" aria-label="{{ __('layouts.search') }}">
+                        <input class="form-control mr-sm-2" name="search" autocomplete="off" type="search" placeholder="{{ __('ui.search') }}" aria-label="{{ __('ui.search') }}">
                         <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="far fa-search" aria-label="Search Icon"></i></button>
                     </form>
                 </div>
@@ -78,7 +78,7 @@
 
         <footer class="footer mt-4 py-5 text-muted" style="height: 25vh">
             <div class="container">
-                <p class="npo-statement">Lolibrary Inc is a 501(c)(3) non-profit incorporated in the USA.</p>
+                <p class="npo-statement">{{__('ui.npo')}}</p>
 
                 <p>
                     Powered by <a href="https://www.fastly.com" title="Fastly" rel="external nofollow">
