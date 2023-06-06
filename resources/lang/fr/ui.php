@@ -1,18 +1,18 @@
 <?php
 return [
-    'skip' => '',
+    'skip' => 'Passer au contenu',
     'donate' => '',
     'login' => '',
     'search' => '',
-    'npo' => '',
+    'npo' => 'Lolibrary Inc. est une association à but non lucratif de type 501(c)(3), constituée aux États-Unis.',
     'wishlist' => [
-        'added' => '',
-        'removed' => '',
+        'added' => '":item" ajouté à votre liste de souhaits',
+        'removed' => '":item" supprimé de votre liste de souhaits',
         'stargazers' => '',
     ],
     'closet' => [
-        'added' => '',
-        'removed' => '',
-        'owners' => '',
+        'added' => '":item" a été ajouté à votre placard',
+        'removed' => '":item" supprimé de votre placard',
+        'owners' => 'Propriétaire|Propriétaires|Propriétaires',
     ],
 ];
