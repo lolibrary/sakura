@@ -6,7 +6,7 @@
 
     {{-- todo: put brands in here with their images --}}
     {{-- todo: carousel these! (or scroll left/right) --}}
-    <h2 class="mt-5">{{ __('Brands') }}</h2>
+    <h2 class="mt-5">{{ __('ui.brands') }}</h2>
     <div class="scrollbox">
         @foreach ($brands as $brand)
         <div class="scrollbox-item m-2">
@@ -25,7 +25,7 @@
         @endforeach
     </div>
 
-    <h2 class="mt-5">{{ __('Categories') }}</h2>
+    <h2 class="mt-5">{{ __(ui.categories) }}</h2>
     <div class="scrollbox">
         @foreach ($categories as $category)
         <div class="scrollbox-item m-2">
@@ -43,7 +43,7 @@
         @endforeach
     </div>
 
-    <h2 class="mt-5">{{ __('Recent Items') }}</h2>
+    <h2 class="mt-5">{{ __('ui.recent_items') }}</h2>
     <div class="scrollbox">
         @foreach ($recent as $item)
             <div class="scrollbox-item scrollbox-item-card m-2">

@@ -5,20 +5,20 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+                <div class="card-header">{{ __('ui.auth.verify') }}</div>
 
                 <div class="card-body">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
+                            {{ __('ui.auth.verify_resent') }}
                         </div>
                     @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }}, <form action="{{ route('verification.resend') }}" method="POST" style="display:inline">
+                    {{ __('ui.auth.check_email') }}
+                    {{ __('ui.auth.not_recieved') }}, <form action="{{ route('verification.resend') }}" method="POST" style="display:inline">
                         @csrf
                                 <button type="submit" class="btn btn-link" style="padding:0; vertical-align: baseline">
-                                    {{ __('click here to request another') }}
+                                    {{ __('ui.auth.resend') }}
                                 </button>
                     </form>
                 </div>
