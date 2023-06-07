@@ -35,14 +35,26 @@ return [
         'forgot_pw' => 'Forgot Your Password?',
         'pw_reset' => 'Reset Password',
         'pw_reset_btn' => 'Send Password Reset Link',
-    ]
+    ],
 
     'blog' => [
         'anon' => 'Anonymous',
         'by' => 'posted by',
         'read_more' => 'Read More',
         'posts' => 'Blog Posts',
-    ]
+    ],
+
+    'donate' => [
+        'txt1' => "Lolibrary is funded entirely by donations from our users, and we're eternally grateful for all the support you give us!",
+        'txt2' => "We're a registered non-profit, and all funds will go towards operating costs for Lolibrary, as well as future development. If you'd prefer to <a href=\"https://patreon.com/lolibrary\" target=\"_blank\" rel=\"external\">support us on Patreon</a>, you can go there, too!",
+        'patreon' => 'Support us on patreon',
+        'other' => 'Alternatively, you can donate using the link below, where you can pay with Card, PayPal or Apple Pay.',
+        'npo' => 'Lolibrary is a 501(c)(3) registered non-profit incorporated in the USA; all donations are tax-deductible and our EIN is 81-2942481.',
+        'thanks' => 'Thank you for donating to Lolibrary!',
+        'thanks_txt' => "It's folks like you who enable us to keep offering the service we do. Thank you!",
+        'recurring' => 'Donate regularly?',
+        'patreon_txt' => "Patrons on patreon can get extra goodies for donating monthly!",
+    ],
 
     'wishlist' => [
         'added' => 'Added ":item" to your wishlist',
