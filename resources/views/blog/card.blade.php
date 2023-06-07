@@ -5,7 +5,7 @@
     <div class="card-body">
         <h5 class="card-title">{{ $post->title }}</h5>
         <h6 class="card-subtitle mb-2 text-muted text-right">
-            {{ __('posted by') }} {{ $post->user->username ?? 'Anonymous' }},
+            {{ __('ui.blog.by') }} {{ $post->user->username ?? __('ui.blog.anon') }},
 
             @if ($post->published_at)
                 <time datetime="{{ $post->published_at->toRfc3339String() }}">{{ $post->published_at->format('jS M Y H:i') }}</time>
@@ -21,7 +21,7 @@
 
         <div class="card-body text-right">
             <a href="{{ $post->url }}" class="card-link">
-                <i class="far fa-book"></i> Read More
+                <i class="far fa-book"></i> {{ __('ui.blog.read_more')}}
             </a>
         </div>
     </div>

@@ -3,7 +3,7 @@
 @section('content')
 <div class="col" style="height: 3rem">
     <a href="{{ route('home') }}" class="px-4 h5">
-        <i class="far fa-chevron-left"></i> {{ __('Back to homepage') }}
+        <i class="far fa-chevron-left"></i> {{ __('ui.back') }}
     </a>
 </div>
 
@@ -13,7 +13,7 @@
         <div class="card-body">
             <h5 class="card-title">{{ $post->title }}</h5>
             <h6 class="card-subtitle mb-2 text-muted text-right">
-                {{ __('posted by') }} {{ $post->user->username ?? 'Anonymous' }},
+                {{ __('ui.blog.by') }} {{ $post->user->username ?? __('ui.blog.anon')}},
 
                 @if ($post->published_at)
                     <time datetime="{{ $post->published_at->toRfc3339String() }}">{{ $post->published_at->format('jS M Y H:i') }}</time>

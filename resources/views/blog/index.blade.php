@@ -3,7 +3,7 @@
 {{-- todo: add article opengraph stuff --}}
 
 @section('content')
-    <h1> Blog Posts</h1>
+    <h1> {{ __('ui.blog.posts')}}</h1>
 
     <div class="col-md-6 mx-auto">
         <div class="card" style="margin-bottom: 10px">
@@ -11,7 +11,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ $post->title }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted text-right">
-                    {{ __('posted by') }} {{ $post->user->username ?? 'Anonymous' }},
+                    {{ __('ui.blog.by') }} {{ $post->user->username ?? __('ui.blog.anon') }},
 
                     @if ($post->published_at)
                         <time datetime="{{ $post->published_at->toRfc3339String() }}">{{ $post->published_at->format('jS M Y H:i') }}</time>

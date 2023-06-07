@@ -9,6 +9,7 @@ return [
     'categories' => 'Categories',
     'recent_items' => 'Recent Items',
     'brands' => 'Brands',
+    'back' => 'Back to homepage',
 
     'auth' => [
         'verify' => 'Verify Your Email Address',
@@ -34,6 +35,13 @@ return [
         'forgot_pw' => 'Forgot Your Password?',
         'pw_reset' => 'Reset Password',
         'pw_reset_btn' => 'Send Password Reset Link',
+    ]
+
+    'blog' => [
+        'anon' => 'Anonymous',
+        'by' => 'posted by',
+        'read_more' => 'Read More',
+        'posts' => 'Blog Posts',
     ]
 
     'wishlist' => [
