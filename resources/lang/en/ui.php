@@ -56,6 +56,15 @@ return [
         'patreon_txt' => "Patrons on patreon can get extra goodies for donating monthly!",
     ],
 
+    'error' => [
+        '401' => "Sorry, this page is off-limits!",
+        '404' => "Sorry, the page you are looking for could not be found.",
+        '500' => "Sorry, something on our end broke while loading this page.",
+        '500_txt' => "We've logged the error and will be looking into it!",
+        '503' => "We are doing a little spring cleaning.",
+        '503_txt' => "Be right back!",
+    ],
+
     'wishlist' => [
         'added' => 'Added ":item" to your wishlist',
         'removed' => 'Removed ":item" from your wishlist',
