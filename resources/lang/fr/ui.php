@@ -21,7 +21,7 @@ return [
         'title' => 'Armoire',
         'remove' => 'Retirer de l\'armoire',
         'empty' => 'Il n\'y a pas d\'objets dans votre armoire.',
-        'add' => 'Pourquoi ne pas <a href=":link">rechercher des objets à ajouter</a>?',
+        'add' => 'Pourquoi ne pas <a href=":link">rechercher des objets à ajouter</a> ?',
     ],
     'auth' => [
         'email_txt' => "Nous ne partagerons pas votre adresse mail.",
@@ -37,7 +37,7 @@ return [
         'username_guide' => 'Votre nom d\'utilisateur peut contenir des lettres de l\'alphabet anglais, des nombres, des tirets (-) et des traits d\'unions (_).',
         'email' => 'Adresse mail',
         'pw' => 'Mot de passe',
-        'forgot_pw' => 'Vous avez oublié votre mot de passe ?',
+        'forgot_pw' => 'Vous avez oublié(e) votre mot de passe ?',
         'pw_reset' => 'Réinitialiser le mot de passe',
         'pw_reset_btn' => 'Envoyer le lien de réinitialisation du mot de passe',
         'pw_no_change' => "Laissez cet espace vide si vous ne souhaitez pas changer de mot de passe.",
