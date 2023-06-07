@@ -8,7 +8,7 @@ return [
     'wishlist' => [
         'added' => '":item" ajouté à votre liste de souhaits',
         'removed' => '":item" supprimé de votre liste de souhaits',
-        'stargazers' => 'Demandeur / Demandeuse|Demandeurs / Demandeuses|',
+        'stargazers' => 'Demandeur.se|Demandeurs.ses|',
         'title' => 'Liste de souhaits',
         'remove' => 'Retirer de la liste de souhaits',
         'empty' => 'Il n\'y a pas d\'objets dans votre liste de souhaits.',
@@ -53,11 +53,11 @@ return [
     'donate' => [
         'other' => 'Par ailleurs, vous pouvez faire des dons en utilisant le lien ci-dessous, où vous pouvez payer avec une carte bancaire, Paypal ou Apple Pay.',
         'txt1' => "Lolibrary est entièrement fondé grâce aux dons des utilisateurs, et nous sommes éternellement reconnaissants du soutien que vous nous apportez!",
-        'txt2' => "Nous sommes reconnus comme organisation à but non lucratif, et tout les fonds seront distribués pour les coûts d'opération de Lolibrary ainsi que son futur développement. Si vous préférez nous<a href=\"https://patreon.com/lolibrary\" target=\"_blank\" rel=\"external\">soutenir depuis Patreon</a>, vous pouvez également vous y rendre!",
-        'thanks' => 'Merci pour votre don pour Lolibrary!',
+        'txt2' => "Nous sommes reconnus comme organisation à but non lucratif, et tout les fonds seront distribués pour les coûts d'opération de Lolibrary ainsi que son futur développement. Si vous préférez nous<a href=\"https://patreon.com/lolibrary\" target=\"_blank\" rel=\"external\">soutenir depuis Patreon</a>, vous pouvez également vous y rendre !",
+        'thanks' => 'Merci pour votre don envers Lolibrary!',
         'thanks_txt' => "C'est grâce aux gens comme vous que nous pouvons offrir les services que l'on présente. Merci!",
         'patreon' => 'Nous soutenir sur Patreon',
-        'npo' => 'Lolibrary est une 501(c)(3) organisation reconnue à but non lucratif aux Etats-Unis; tout les dons sont déduits de taxes et notre EIN est 81-2942481.',
+        'npo' => 'Lolibrary est une organisation reconnue à but non lucratif aux États-Unis, conformément à l\'article 501(c)(3); tout les dons sont déduits de taxes et notre EIN est 81-2942481.',
         'recurring' => 'Faire un don régulièrement?',
         'patreon_txt' => "Les donateurs de Patreon gagnent des goodies en plus pour leurs dons mensuels!",
     ],
