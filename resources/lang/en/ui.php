@@ -10,6 +10,7 @@ return [
     'recent_items' => 'Recent Items',
     'brands' => 'Brands',
     'back' => 'Back to homepage',
+    'profile' => 'Profile',
 
     'auth' => [
         'verify' => 'Verify Your Email Address',
@@ -29,12 +30,15 @@ return [
         'username' => 'Username',
         'username_guide' => 'Your username can be english letters, numbers, hyphens (-) and underscores (_).',
         'email' => 'E-Mail Address',
+        'email_txt' => "We'll never share your email with anyone else.",
         'pw' => 'Password',
         'pw_confirm' => 'Confirm Password',
         'remember' => 'Remember Me',
         'forgot_pw' => 'Forgot Your Password?',
         'pw_reset' => 'Reset Password',
         'pw_reset_btn' => 'Send Password Reset Link',
+        'pw_no_change' => "Leave this blank if you don't want to change your password.",
+        'username_txt' => 'To change your username, <a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">click here</a>',
     ],
 
     'blog' => [
@@ -69,11 +73,19 @@ return [
         'added' => 'Added ":item" to your wishlist',
         'removed' => 'Removed ":item" from your wishlist',
         'stargazers' => 'Stargazer|Stargazers',
+        'title' => 'Wishlist',
+        'remove' => 'Remove from Wishlist',
+        'empty' => 'There are no items in your wishlist.',
+        'add' => 'Why not <a href=":link">search for some items to add</a>?',
     ],
 
     'closet' => [
         'added' => 'Added ":item" to your closet',
         'removed' => 'Removed ":item" from your closet',
         'owners' => 'Owner|Owners',
+        'title' => 'Closet',
+        'remove' => 'Remove from Closet',
+        'empty' => 'There are no items in your closet.',
+        'add' => 'Why not <a href=":link">search for some items to add</a>?',
     ],
 ];

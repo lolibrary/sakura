@@ -1,4 +1,4 @@
-@extends('profile.layout', ['title' => 'Wishlist'])
+@extends('profile.layout', ['title' => __('ui.wishlist.title')])
 
 @section('profile')
 @if ($items->count() > 0)
@@ -13,7 +13,7 @@
                     <button class="btn btn-outline-danger btn-block rounded-0"
                         style="border: none; border-top: 1px solid rgba(0, 0, 0, 0.125);"
                         type="submit">
-                        Remove from Wishlist
+                        {{ __('ui.wishlist.remove') }}
                     </button>
                 </form>
             @endcomponent
@@ -24,8 +24,8 @@
     {{ $items->links() }}
 @else
 <div class="text-center mt-5">
-    <p class="h2">There are no items in your wishlist.</p>
-    <p class="lead">Why not <a href="{{ route('search') }}">search for some items to add</a>?</p>
+    <p class="h2">{{ __('ui.wishlist.empty') }}</p>
+    <p class="lead">{{ __('ui.wishlist.add', ['link' => route('search')]) }}</p>
 </div>
 <div class="row pt-5">
     <div class="col-4">

@@ -1,4 +1,4 @@
-@extends('profile.layout', ['title' => 'Closet'])
+@extends('profile.layout', ['title' => __('ui.closet.title')])
 
 @section('profile')
 @if ($items->count() > 0)
@@ -13,7 +13,7 @@
                     <button class="btn btn-outline-danger btn-block rounded-0"
                         style="border: none; border-top: 1px solid rgba(0, 0, 0, 0.125);"
                         type="submit">
-                        Remove from Closet
+                        {{ __('ui.closet.remove') }}
                     </button>
                 </form>
             @endcomponent
@@ -24,8 +24,8 @@
     {{ $items->links() }}
 @else
 <div class="text-center mt-5">
-    <p class="h2">There are no items in your closet.</p>
-    <p class="lead">Why not <a href="{{ route('search') }}">search for some items to add</a>?</p>
+    <p class="h2">{{ __('ui.closet.empty') }}</p>
+    <p class="lead">{{ __('ui.closet.add', ['link' => route('search')]) }}</p>
 </div>
 <div class="row pt-5">
     <div class="col-4">

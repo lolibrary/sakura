@@ -11,15 +11,15 @@
             <div class="list-group">
                     <a href="{{ route('profile') }}" class="list-group-item list-group-item-action @if (Route::is('profile')) active @endif">
                         <i class="fal fa-fw fa-user"></i>
-                        {{ __('Profile') }}
+                        {{ __('ui.profile') }}
                     </a>
                     <a href="{{ route('wishlist') }}" class="list-group-item list-group-item-action @if (Route::is('wishlist')) active @endif">
                         <i class="fal fa-fw fa-star"></i>
-                        {{ __('Wishlist') }}
+                        {{ __('ui.wishlist.title') }}
                     </a>
                     <a href="{{ route('closet') }}" class="list-group-item list-group-item-action @if (Route::is('closet')) active @endif">
                         <i class="fal fa-fw fa-tags"></i>
-                        {{ __('Closet') }}
+                        {{ __('ui.wishlist.closet') }}
                     </a>
             </div>
         </div>
