@@ -15,4 +15,5 @@ return [
         'removed' => '',
         'owners' => '',
     ],
+    'brands' => 'ブランド',
 ];
