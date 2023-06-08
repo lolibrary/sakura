@@ -117,7 +117,7 @@ return [
     'curtains-drapes' => 'Rideaux/Drapés',
     'tournewsoul' => 'Marque Indépendante : TourNewSoul',
     'gradient' => 'Motif : Dégradé',
-    'lollipops' => '',
+    'lollipops' => 'Sucettes',
     'r-r-memorandum' => '',
     'sole-wood' => '',
     'pies' => '',
