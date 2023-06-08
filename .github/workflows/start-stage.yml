@@ -16,8 +16,8 @@ jobs:
       - id: 'get-credentials'
         uses: 'google-github-actions/get-gke-credentials@v1'
         with:
-          cluster_name: env.PROD_CLUSTER
-          location: env.GKE_ZONE
+          cluster_name: ${{ env.PROD_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
       - name: Copy secrets
         run: |
             kubectl get secret cloudsql-instance-credentials -oyaml > instance.creds
