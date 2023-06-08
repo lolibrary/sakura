@@ -13,8 +13,11 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v1'
         with:
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
-      - name: Log into prod cluster
-        run: gcloud container clusters get-credentials "$PROD_CLUSTER" --zone "$GKE_ZONE"
+      - id: 'get-credentials'
+        uses: 'google-github-actions/get-gke-credentials@v1'
+        with:
+          cluster_name: $PROD_CLUSTER
+          location: $GKE_ZONE
       - name: Copy secrets
         run: |
             kubectl get secret cloudsql-instance-credentials -oyaml > instance.creds
