@@ -16,7 +16,7 @@ jobs:
       - id: 'get-credentials'
         uses: 'google-github-actions/get-gke-credentials@v1'
         with:
-          cluster_name: ${{ env.PROD_CLUSTER }}
+          cluster_name: ${{ env.GKE_CLUSTER }}
           location: ${{ env.GKE_ZONE }}
       - name: GHCR login
         uses: docker/login-action@v1
