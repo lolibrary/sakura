@@ -219,7 +219,7 @@ return [
     'spades' => '',
     'seashells' => '海贝壳',
     'damask' => '',
-    'lions' => '',
+    'lions' => '狮子',
     'anchors' => '锚',
     'animal-print' => '',
     'apron' => '',
