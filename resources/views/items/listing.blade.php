@@ -4,7 +4,7 @@
             @include('items.card', ['item' => $item])
         </div>
     @empty
-        <p class="text-center">No items found!</p>
+        <p class="text-center">{{ __('ui.item.none') }}</p>
     @endif
 </div>
 

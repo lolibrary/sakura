@@ -26,10 +26,10 @@
         <li class="list-group-item py-1 px-3">
             <div class="row small text-muted">
                 <p class="col m-0 text-left">
-                    {{ __('Brand') }}
+                    {{ __('ui.item.brand') }}
                 </p>
                 <p class="col m-0 text-right">
-                    {{ __('Category') }}
+                    {{ __('ui.item.category') }}
                 </p>
             </div>
             <div class="d-flex small">
@@ -50,11 +50,11 @@
         </li>
     </ul>
     <a class=" btn btn-outline-primary rounded-0" style="border: none;" href="{{ $item->url }}">
-        View Item
+        {{ __('ui.item.view') }}
     </a>
     @senior
     <a class=" btn btn-outline-primary rounded-0" style="border: none;" href="{{ $item->edit_url }}">
-        Edit Item
+        {{ __('ui.item.edit') }}
     </a>
     @endsenior
 

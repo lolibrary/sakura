@@ -27,7 +27,7 @@
                 <div class="row p-0 mx-0 my-3">
                     <div class="col p-1 list-group text-center small">
                     <a class="btn btn-outline-primary" href="{{ $item->edit_url }}">
-                        <i class="fal fa-fw fa-edit"></i>  {{ __('Edit Item') }}
+                        <i class="fal fa-fw fa-edit"></i>  {{ __('ui.item.edit') }}
                     </a>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="row p-0 mx-0 my-3">
                     <div class="col p-1 list-group text-center small">
                     <a class="btn btn-outline-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeuCoQbM7cXwF2OAkljtlmALwdgUNCAkKGEDeQHomCySMhStQ/viewform?usp=pp_url&entry.1974464960={{ $item->url }}">
-                        <i class="fal fa-fw fa-edit"></i>  {{ __('Submit Images/Corrections') }}
+                        <i class="fal fa-fw fa-edit"></i>  {{ __('ui.item.suggest') }}
                     </a>
                     </div>
                 </div>
@@ -43,48 +43,49 @@
             </div>
 
             <div class="col-sm p-2 px-4">
-                <h4 class="mt-2">{{ __('Item Info') }}</h4>
+                <h4 class="mt-2">{{ __('ui.item.info') }}</h4>
                 <div class="text-muted">
                     <p class="m-0">
                         @if ($item->year)
-                            Released in <span class="text-regular">{{ $item->year }}</span>
+                            {{ __('ui.item.year', ['year' => $item->year]) }}
                         @else
-                            Unknown release year
+                            {{ __('ui.item.year_unknown') }}
                         @endif
                     </p>
 
                     <p class="m-0">
                         @if ($item->product_number)
+                            {{ __('ui.item.prod_num', ['prod_num' => $item->product_number]) }}
                             Product number: <span class="text-regular">{{ $item->product_number }}</span>
                         @else
-                            No product number recorded.
+                            {{ __('ui.item.prod_num_unknown') }}
                         @endif
                     </p>
 
                     <p class="m-0">
                         @if ($item->price)
-                            Originally listed for <span class="text-regular">{{ $item->price_formatted }}</span>
+                            {{ __('ui.item.price', ['price' => $item->price_formatted]) }}
                         @else
-                            No listing price recorded.
+                            {{ __('ui.item.price_unknown') }}
                         @endif
                     </p>
 
                     <p class="m-0">
                         @if ($item->submitter)
-                            Submitted by <span class="text-regular">{{ $item->submitter->username }}</span>
+                            {{ __('ui.item.submitter', ['submitter' => $item->submitter->username]) }}
                         @else
-                            Submitted by anonymous
+                            {{ __('ui.item.submitter_unknown') }}
                         @endif
                     </p>
 
                     <p class="m-0">
                         @if ($item->published())
-                            Published on
+                            {{ __('ui.item.published') }}
                             <time datetime="{{ $item->published_at->toRfc3339String() }}"
                                   class="text-regular">{{ $item->published_at->format('jS M Y, H:i') }} UTC
                             </time>
                         @else
-                            <span class="text-danger">This is a Draft Post</span>
+                            <span class="text-danger">{{ __('ui.item.draft') }}</span>
                         @endif
                     </p>
                 </div>
@@ -95,7 +96,7 @@
                 @endforeach
 
                 @if ($item->notes)
-                    <h4 class="mt-4">Notes</h4>
+                    <h4 class="mt-4">{{ __('ui.item.notes') }}</h4>
                     <p class="text-muted text-regular">{!! purify($item->notes) !!}</p>
                 @endif
 
@@ -112,7 +113,7 @@
                     </div>
                 </div>
 
-                <h4 class="mt-4">{{ __('Brand') }}</h4>
+                <h4 class="mt-4">{{ __('ui.item.brand') }}</h4>
                 <div class="row">
                     <div class="list-group col p-1 text-center small">
                         <a class="list-group-item" href="{{ $item->brand->url }}">
@@ -121,7 +122,7 @@
                     </div>
                 </div>
 
-                <h4 class="mt-4">{{ __('Category') }}</h4>
+                <h4 class="mt-4">{{ __('ui.item.category') }}</h4>
                 <div class="row">
                     @forelse ($item->categories as $category)
                         <div class="p-1 list-group text-center col small">
@@ -130,12 +131,12 @@
                             </a>
                         </div>
                     @empty
-                        <p class="col text-muted">No categories recorded!</p>
+                        <p class="col text-muted">{{ __('ui.item.category_none') }}</p>
                     @endforelse
                 </div>
 
-                <h4 class="mt-4">{{ __('Features') }} <i
-                        title="Features are things commonly found on an item, e.g. ruffles or elasticated linings."
+                <h4 class="mt-4">{{ __('ui.item.features') }} <i
+                        title="{{ __('ui.item.features_help') }}"
                         data-toggle="tooltip" class="fal fa-question-circle"></i></h4>
                 <div class="row">
                     @forelse ($item->features as $feature)
@@ -145,11 +146,11 @@
                             </a>
                         </div>
                     @empty
-                        <p class="col text-muted">No features recorded!</p>
+                        <p class="col text-muted">{{ __('ui.item.features_none') }}</p>
                     @endforelse
                 </div>
 
-                <h4 class="mt-4">{{ __('Colorways') }}</h4>
+                <h4 class="mt-4">{{ __('ui.item.colors') }}</h4>
                 <div class="row">
                     @forelse ($item->colors as $color)
                         <div class="p-1 list-group text-center col-lg-4 col-6 small">
@@ -158,11 +159,11 @@
                             </a>
                         </div>
                     @empty
-                        <p class="col text-muted">No colors recorded!</p>
+                        <p class="col text-muted">{{ __('ui.item.colors_none') }}</p>
                     @endforelse
                 </div>
 
-                <h4 class="mt-4">{{ __('Tags') }}</h4>
+                <h4 class="mt-4">{{ __('ui.item.tags') }}</h4>
                 <div class="row">
                     @forelse ($item->tags as $tag)
                         <div class="p-1 list-group text-center col-lg-4 col-6 small">
@@ -171,14 +172,14 @@
                             </a>
                         </div>
                     @empty
-                        <p class="col text-muted">No tags recorded!</p>
+                        <p class="col text-muted">{{ __('ui.item.tags_none') }}</p>
                     @endforelse
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <h4 class="my-4 px-4">{{ __('Images') }}</h4>
+            <h4 class="my-4 px-4">{{ __('ui.item.images') }}</h4>
             <div class="item-image-columns mb-5">
                 @foreach ($item->images as $image)
                     @isset ($image['attributes']['image'])
