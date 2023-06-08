@@ -243,7 +243,7 @@ return [
     'cupcakes' => '',
     'straw-wicker' => '',
     'rickrack' => '',
-    'jewelry' => '',
+    'jewelry' => 'Bijoux',
     'trees' => '',
     'apples' => '',
     'balloons' => '',
