@@ -7,7 +7,7 @@ return [
     'unmentionables' => '',
     'cutsew' => '',
     'petticoat' => '裙撑',
-    'vest' => '',
+    'vest' => '背心',
     'cardigan' => '开衫',
     'blouse' => '',
     'accessories' => '配饰',
