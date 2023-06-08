@@ -4,11 +4,14 @@ jobs:
   deploy-sakura:
     runs-on: ubuntu-latest
     steps:
-      - name: GCloud login
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: ${{ secrets.GCLOUD_SA_KEY }}
+      - name: GCloud setup
         uses: 'google-github-actions/setup-gcloud@v1'
         with:
-          version: '290.0.1'
-          service_account_key: ${{ secrets.GCLOUD_SA_KEY }}
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
       - name: Stop stage 
         run: gcloud container clusters delete "$GKE_CLUSTER" --zone "$GKE_ZONE" --quiet

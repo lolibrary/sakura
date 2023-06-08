@@ -1,10 +1,10 @@
-name: Build and push Sakura image
+name: Build and push branch image
 on:
   push:
     branches-ignore:
       - 'master'
 jobs:
-  build-push-sakura:
+  build-push-branch:
     container:
       image: ghcr.io/lolibrary/builder
       credentials:
