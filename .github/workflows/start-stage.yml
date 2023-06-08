@@ -18,6 +18,7 @@ jobs:
         with:
           cluster_name: ${{ env.PROD_CLUSTER }}
           location: ${{ env.GKE_ZONE }}
+          project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
       - name: Copy secrets
         run: |
             kubectl get secret cloudsql-instance-credentials -oyaml > instance.creds
