@@ -12,8 +12,8 @@ jobs:
       - id: 'get-credentials'
         uses: 'google-github-actions/get-gke-credentials@v1'
         with:
-          cluster_name: $GKE_CLUSTER
-          location: $GKE_ZONE
+          cluster_name: env.GKE_CLUSTER
+          location: env.GKE_ZONE
       - name: GCloud setup
         uses: 'google-github-actions/setup-gcloud@v1'
         with:
