@@ -116,7 +116,7 @@ return [
     'cinderella' => 'Cendrillon',
     'curtains-drapes' => 'Rideaux/Drapés',
     'tournewsoul' => 'Marque Indépendante : TourNewSoul',
-    'gradient' => '',
+    'gradient' => 'Motif : Dégradé',
     'lollipops' => '',
     'r-r-memorandum' => '',
     'sole-wood' => '',
