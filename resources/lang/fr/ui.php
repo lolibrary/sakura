@@ -8,7 +8,7 @@ return [
     'wishlist' => [
         'added' => '":item" ajouté à votre liste de souhaits',
         'removed' => '":item" supprimé de votre liste de souhaits',
-        'stargazers' => 'Demandeur.se|Demandeurs.ses|',
+        'stargazers' => 'Rêveur.se|Rêveur.se(s)|Rêveur.se(s)',
         'title' => 'Liste de souhaits',
         'remove' => 'Retirer de la liste de souhaits',
         'empty' => 'Il n\'y a pas d\'objets dans votre liste de souhaits.',
@@ -62,7 +62,7 @@ return [
         'patreon_txt' => "Les donateurs de Patreon gagnent des goodies en plus pour leurs dons mensuels !",
     ],
     'categories' => 'Catégories',
-    'recent_items' => 'Produits récents',
+    'recent_items' => 'Articles récents',
     'brands' => 'Marques',
     'back' => 'Retour à la page d\'accueil',
     'profile' => 'Profil',
