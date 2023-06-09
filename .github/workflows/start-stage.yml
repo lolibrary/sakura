@@ -39,7 +39,7 @@ jobs:
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
       - name: Add secrets
         run: |
-          kubectl create secret docker-registry ghcr --docker-server="https://ghcr.io" --docker-username=${{ github.actor }} --docker-password=${{ secrets.PAT }}
+          kubectl create secret docker-registry ghcr --docker-server="https://ghcr.io" --docker-username=${{ github.actor }} --docker-password=${{ secrets.DEPLOY_PAT }}
           kubectl create -f ./instance.creds
           kubectl create -f ./db.creds
           kubectl create -f ./do.creds
