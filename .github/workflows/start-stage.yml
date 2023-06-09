@@ -31,6 +31,12 @@ jobs:
             kubectl get secret redis -oyaml > redis.creds
       - name: Create cluster 
         run: gcloud container clusters create "$STAGE_CLUSTER" --zone "$GKE_ZONE" --enable-ip-alias
+      - id: 'get-stage-credentials'
+        uses: 'google-github-actions/get-gke-credentials@v1'
+        with:
+          cluster_name: ${{ env.STAGE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
+          project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
       - name: Add secrets
         run: |
           kubectl create secret docker-registry ghcr --docker-server="https://ghcr.io" --docker-username=${{ github.actor }} --docker-password=${{ secrets.PAT }}
