@@ -6,7 +6,7 @@ return [
     'corsetbustier' => 'コルセット',
     'unmentionables' => '',
     'cutsew' => 'カットソー',
-    'petticoat' => '',
+    'petticoat' => 'パニエ',
     'vest' => 'ベスト',
     'cardigan' => 'カーディガン',
     'blouse' => 'ブラウス',
