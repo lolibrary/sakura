@@ -9,6 +9,11 @@ jobs:
         with:
           repository: lolibrary/build
           token: ${{ secrets.PAT }}
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: ${{ secrets.GCLOUD_SA_KEY }}
       - name: GCloud setup
         uses: 'google-github-actions/setup-gcloud@v1'
         with:
