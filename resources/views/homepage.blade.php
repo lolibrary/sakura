@@ -25,7 +25,7 @@
         @endforeach
     </div>
 
-    <h2 class="mt-5">{{ __(ui.categories) }}</h2>
+    <h2 class="mt-5">{{ __('ui.categories') }}</h2>
     <div class="scrollbox">
         @foreach ($categories as $category)
         <div class="scrollbox-item m-2">
