@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - 'master'
-    paths-ignore:
-      - '.github/**'
 jobs:
   build-push-sakura:
     container:
