@@ -2,7 +2,6 @@
 
 return [
     'skip' => 'Skip to content',
-    'donate' => 'Donate',
     'login' => 'Login',
     'search' => 'Search',
     'npo' => 'Lolibrary Inc is a 501(c)(3) non-profit incorporated in the USA.',
@@ -49,6 +48,7 @@ return [
     ],
 
     'donate' => [
+        'title' => 'Donate',
         'txt1' => "Lolibrary is funded entirely by donations from our users, and we're eternally grateful for all the support you give us!",
         'txt2' => "We're a registered non-profit, and all funds will go towards operating costs for Lolibrary, as well as future development. If you'd prefer to <a href=\"https://patreon.com/lolibrary\" target=\"_blank\" rel=\"external\">support us on Patreon</a>, you can go there, too!",
         'patreon' => 'Support us on patreon',

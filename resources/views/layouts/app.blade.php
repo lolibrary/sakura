@@ -41,7 +41,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        <li><a class="nav-link" href="{{ route('donate') }}">{{ __('ui.donate') }}</a></li>
+                        <li><a class="nav-link" href="{{ route('donate') }}">{{ __('ui.donate.title') }}</a></li>
                         @guest
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('ui.login') }}</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">{{ __('ui.register') }}</a></li>
