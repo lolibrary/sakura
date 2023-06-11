@@ -20,7 +20,7 @@
 
           <p class="my-4">
             <a href="https://donorbox.org/lolibrary" target="_blank" rel="external" class="mx-3 btn btn-lg btn-outline-primary">
-              {{ __('ui.donate.other')}}
+              {{ __('ui.donate.title')}}
             </a>
           </p>
 
