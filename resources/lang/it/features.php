@@ -1,11 +1,11 @@
 <?php
 return [
-    'oxford' => '',
+    'oxford' => 'Stile: Oxford',
     'open-heel' => '',
     'ankle-boot' => '',
     'open-toe' => '',
     'wedge' => '',
-    'kimono-sleeves' => '',
+    'kimono-sleeves' => 'Maniche A Kimono',
     'frog-closure' => '',
     'sandal' => '',
     'style-boot' => '',
