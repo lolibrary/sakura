@@ -58,7 +58,7 @@
                     </form>
                     <ul>
                         @foreach(config('app.locales') as $key => $value)
-                            <li><a href="{{ route('set_lang', ['lang' => $key, 'returnto' => Route::current()->getName()]) }}">{{ $value }}</a></li>
+                            <li><a href="{{ route('set_lang', ['lang' => $key]) }}">{{ $value }}</a></li>
                         @endforeach
                     </ul>
                 </div>

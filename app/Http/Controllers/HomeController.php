@@ -39,6 +39,6 @@ class HomeController extends Controller
     public function set_lang(Request $request)
     {
         $request->session()->put('lang', $request->input('lang'));
-        return redirect()->route($request->input('returnto'));
+        return back();
     }
 }
