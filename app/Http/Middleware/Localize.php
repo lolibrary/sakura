@@ -12,7 +12,7 @@ class Localize
      * @param  \Illuminate\Http\Request  $request
      * @return string
      */
-    protected function handle($request, Closure $next)
+    public function handle($request, Closure $next)
     {
         $lang = $request->session()->get('lang');
         // TODO: add logic for checking if they have a stored value for language once that's implemented
