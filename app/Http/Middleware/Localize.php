@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Auth\Middleware\Localize as Middleware;
 
-class Localize extends Middleware
+class Localize
 {
     /**
      * Set locale for the request.
