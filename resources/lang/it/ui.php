@@ -11,10 +11,10 @@ return [
     'profile' => '',
     'auth' => [
         'verify' => '',
-        'verify_resent' => '',
+        'verify_resent' => 'Un nuovo link di verificazione è stato mandato al tuo indirizzo email.',
         'check_email' => '',
-        'not_recieved' => '',
-        'resend' => '',
+        'not_recieved' => 'Se non hai ricevuto la email',
+        'resend' => 'clicca qui per richiederne un altra.',
         'verify_success' => "",
         'verify_done' => "",
         'verify_needed' => '',
