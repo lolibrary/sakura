@@ -56,6 +56,11 @@
                         <input class="form-control mr-sm-2" name="search" autocomplete="off" type="search" placeholder="{{ __('ui.search') }}" aria-label="{{ __('ui.search') }}">
                         <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="far fa-search" aria-label="Search Icon"></i></button>
                     </form>
+                    <ul>
+                        @foreach(config('app.locale') as $key => $value)
+                            <li><a href="{{ route('set_lang', ['lang' => $key, 'returnto' => Route::current()->getName()]) }}">{{ $value }}</a></li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </nav>

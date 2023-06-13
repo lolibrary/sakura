@@ -15,6 +15,7 @@ Auth::routes(['verify' => true]);
 
 // Homepage
 Route::get('/', 'HomeController@homepage')->name('home');
+Route::get('/lang', 'HomeController@set_lang')->name('set_lang');
 Route::get('/search', 'SearchController@index')->name('search');
 
 // User

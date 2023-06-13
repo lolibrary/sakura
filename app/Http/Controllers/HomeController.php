@@ -34,4 +34,10 @@ class HomeController extends Controller
 
         return view('homepage', compact('posts', 'brands', 'categories', 'recent'));
     }
+
+    public function set_lang(Request $request, $lang, $returnto)
+    {
+        $request->session()->put('lang', $str);
+        return redirect()->route($returnto);
+    }
 }
