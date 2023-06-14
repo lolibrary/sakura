@@ -16,7 +16,7 @@ class Localize
     public function handle($request, Closure $next)
     {
         $lang = $request->session('lang');
-        $lang = 'en';
+        // $lang = 'en';
         // TODO: add logic for checking if they have a stored value for language once that's implemented
         if ($lang) {
             App::setLocale($lang);
