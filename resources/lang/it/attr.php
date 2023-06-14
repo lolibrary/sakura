@@ -1,6 +1,6 @@
 <?php
 return [
-    'owner-height' => '',
+    'owner-height' => 'Altezza di Proprietaria/o',
     'rise' => '',
     'thigh' => 'Coscia',
     'owner-underbust' => '',
