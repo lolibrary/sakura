@@ -40,7 +40,6 @@ class HomeController extends Controller
     {
         $lang = $request->query('lang');
         $request->session()->put('lang', $lang);
-        $request->session()->flash('status', $lang);
         return back();
     }
 }

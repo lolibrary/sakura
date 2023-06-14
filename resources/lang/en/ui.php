@@ -31,6 +31,7 @@ return [
         'email' => 'E-Mail Address',
         'email_txt' => "We'll never share your email with anyone else.",
         'pw' => 'Password',
+        'pw_guide' => 'Your password should be at least 12 characters long.',
         'pw_confirm' => 'Confirm Password',
         'remember' => 'Remember Me',
         'forgot_pw' => 'Forgot Your Password?',

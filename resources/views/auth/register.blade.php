@@ -63,7 +63,7 @@
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
                                 <small class="form-text text-muted">
-                                    Your password should be at least 12 characters long.
+                                    {{ __('ui.auth.pw_guide')}}
                                 </small>
 
                                 @if ($errors->has('password'))
