@@ -21,7 +21,7 @@ class Localize
         // if ($lang) {
         //     App::setLocale($lang);
         // }
-        $request->session()->flash('status', $lang);
+        // $request->session()->flash('status', $lang);
         return $next($request);
     }
 }
