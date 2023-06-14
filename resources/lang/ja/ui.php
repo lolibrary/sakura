@@ -2,7 +2,7 @@
 return [
     'skip' => '',
     'donate' => '',
-    'login' => '',
+    'login' => 'ログイン',
     'search' => '',
     'npo' => '',
     'wishlist' => [
