@@ -38,7 +38,7 @@ class HomeController extends Controller
 
     public function set_lang(Request $request)
     {
-        $request->session()->put('lang', $request->input('lang'));
+        $request->session()->put('lang', $request->query('lang'));
         return back();
     }
 }
