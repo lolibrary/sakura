@@ -25,7 +25,7 @@
 @else
 <div class="text-center mt-5">
     <p class="h2">{{ __('ui.wishlist.empty') }}</p>
-    <p class="lead">{{ __('ui.wishlist.add', ['link' => route('search')]) }}</p>
+    <p class="lead">@lang('ui.wishlist.add', ['link' => route('search')])</p>
 </div>
 <div class="row pt-5">
     <div class="col-4">

@@ -7,7 +7,7 @@
     <div class="row p-0">
         <div class="col-sm-10 col-md-8 col-lg-6 offset-sm-1 offset-md-2 offset-lg-3 px-2 text-center">
           <p>{{ __('ui.donate.txt1')}}</p>
-          <p>{{ __('ui.donate.txt2')}}</p>
+          <p>@lang('ui.donate.txt2')</p>
 
           <p class="my-4">
             <a title="{{ __('ui.donate.patreon')}}" href="https://patreon.com/lolibrary" target="_blank" rel="external">

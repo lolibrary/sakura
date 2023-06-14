@@ -47,7 +47,7 @@
                 <div class="text-muted">
                     <p class="m-0">
                         @if ($item->year)
-                            {{ __('ui.item.year', ['year' => $item->year]) }}
+                            @lang('ui.item.year', ['year' => $item->year])
                         @else
                             {{ __('ui.item.year_unknown') }}
                         @endif
@@ -55,7 +55,7 @@
 
                     <p class="m-0">
                         @if ($item->product_number)
-                            {{ __('ui.item.prod_num', ['prod_num' => $item->product_number]) }}
+                            @lang('ui.item.prod_num', ['prod_num' => $item->product_number])
                             Product number: <span class="text-regular">{{ $item->product_number }}</span>
                         @else
                             {{ __('ui.item.prod_num_unknown') }}
@@ -64,7 +64,7 @@
 
                     <p class="m-0">
                         @if ($item->price)
-                            {{ __('ui.item.price', ['price' => $item->price_formatted]) }}
+                            @lang('ui.item.price', ['price' => $item->price_formatted])
                         @else
                             {{ __('ui.item.price_unknown') }}
                         @endif
@@ -72,7 +72,7 @@
 
                     <p class="m-0">
                         @if ($item->submitter)
-                            {{ __('ui.item.submitter', ['submitter' => $item->submitter->username]) }}
+                            @lang('ui.item.submitter', ['submitter' => $item->submitter->username])
                         @else
                             {{ __('ui.item.submitter_unknown') }}
                         @endif

@@ -3,6 +3,7 @@ on:
   push:
     branches-ignore:
       - 'master'
+      - 'i18n'
 jobs:
   build-push-branch:
     container:

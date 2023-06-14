@@ -25,7 +25,7 @@
 @else
 <div class="text-center mt-5">
     <p class="h2">{{ __('ui.closet.empty') }}</p>
-    <p class="lead">{{ __('ui.closet.add', ['link' => route('search')]) }}</p>
+    <p class="lead">@lang('ui.closet.add', ['link' => route('search')])</p>
 </div>
 <div class="row pt-5">
     <div class="col-4">

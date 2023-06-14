@@ -11,7 +11,7 @@
         <label for="profile-username">{{ __('ui.auth.username') }}</label>
         <input type="text" readonly class="form-control-plaintext text-muted text-monospace" value="{{ $user->username }}">
         <small class="form-text text-muted">
-        {{ __('ui.auth.username_txt') }}
+        @lang('ui.auth.username_txt')
         </small>
     </div>
     <div class="form-group">
