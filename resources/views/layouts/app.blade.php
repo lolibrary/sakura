@@ -41,6 +41,18 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ config('app.locales')->(App::getLocale()) }} <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @foreach(config('app.locales') as $key => $value)
+                                <a class="dropdown-item" href="{{ route('set_lang', ['lang' => $key]) }}">{{ $value }}</a>
+                                @endforeach
+                            </div>
+                        </li>
+
                         <li><a class="nav-link" href="{{ route('donate') }}">{{ __('ui.donate.title') }}</a></li>
                         @guest
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('ui.login') }}</a></li>
