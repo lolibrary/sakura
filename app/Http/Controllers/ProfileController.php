@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
@@ -39,11 +41,31 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $validatedData = $request->validate([
-            'name' => 'nullable|max:255',
-            'username' => 'required|unique:users,username|max:255'
-            'email' => 'required|email|unique:users,email',
-            'profile-password' => 'nullable|confirmed|min:12',
+            'name' => 'required|string|max:255',
+            'username' => [
+                'required',
+                'string',
+                'min:3',
+                'max:40',
+                'regex:/^[^-_][0-9a-z_-]+$/u',
+                Rule::unique('users')->ignore($user),
+            ],
+            'email' => ['required', 'string', 'max:255', 'email', Rule::unique('users')->ignore($user)],
+            'password' => 'sometimes|string|confirmed|min:12',
         ]);
+
+        $user->name = $validatedData['name'];
+        $user->username = $validatedData['username'];
+
+        if ($user->email != $validatedData['email']) {
+            // If they've updated their email address, they need to re-verify it.
+            $user->email = $validatedData['email'];
+            $user->email_verified_at = NULL;
+        }
+
+        if ($validatedData['password']) {
+            $user->password = Hash::make($validatedData['password']);
+        }
     }
 
     /**
