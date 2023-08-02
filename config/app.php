@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'fr',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -109,7 +109,7 @@ return [
     'faker_locale' => 'en_US',
 
     // Available locales
-    'locales' => ['en' => 'English', 'fr' => 'French'],
+    'locales' => ['en' => 'English', 'fr' => 'français', 'nb_NO' => 'norsk (bokmål)'],
 
     /*
     |--------------------------------------------------------------------------
