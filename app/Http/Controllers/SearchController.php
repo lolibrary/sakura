@@ -6,6 +6,12 @@ class SearchController extends Controller
 {
     public function index()
     {
-        return view('search');
+        return view('search', ['items' => [
+            'brands' => Brand::cached(), 
+            'categories' => Category::cached(), 
+            'features' => Feature::cached(),
+            'attributes' => Attribute::cached(),
+            'colors' => Color::cached(),
+            'tags' => Tags::cached(),]]);
     }
 }
