@@ -35,6 +35,23 @@ class ProfileController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+        $validatedData = $request->validate([
+            'name' => 'nullable|max:255',
+            'username' => 'required|unique:users,username|max:255'
+            'email' => 'required|email|unique:users,email',
+            'profile-password' => 'nullable|confirmed|min:12',
+        ]);
+    }
+
+    /**
+     * Get a user's closet (owned items).
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function closet(Request $request)
     {
         $user = Auth::user();
