@@ -4,7 +4,7 @@
     </div>
     <div class="card-body">
       @foreach ($sections as $name => $items)
-        <div class="input-group pb-2">
+        <div class="pb-2">
             <label class="control-label" for="{{$name}}">{{ __('ui.item.' . $name)}}</label>
             <select style="width: 100%" name="{{$name}}" id="{{$name}}" data-placeholder="Tap to filter" multiple class="form-control form-control-chosen">
               @foreach($items as $item)
@@ -26,7 +26,7 @@
             </div>
         </div>
         @endforeach
-        <div class="input-group pb-2">
+        <div class="pb-2">
             <label class="control-label">Year</label>
             <v-select style="width: 100%" v-model="state.years" :options="years" placeholder="Tap to filter" multiple></v-select>
             <div v-if="state.years.length > 0" class="match_type"> Match
