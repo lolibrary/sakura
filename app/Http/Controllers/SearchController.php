@@ -6,7 +6,13 @@ use App\Models\Category;
 use App\Models\Feature;
 use App\Models\Attribute;
 use App\Models\Color;
+use App\Models\Item;
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 
 class SearchController extends Controller
 {
