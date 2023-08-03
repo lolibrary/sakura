@@ -12,7 +12,7 @@ class SearchController extends Controller
 {
     public function index()
     {
-        return view('search', ['items' => [
+        return view('search', ['sections' => [
             'brands' => Brand::cached(), 
             'categories' => Category::cached(), 
             'features' => Feature::cached(),
