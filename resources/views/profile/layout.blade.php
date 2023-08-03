@@ -19,7 +19,7 @@
                     </a>
                     <a href="{{ route('closet') }}" class="list-group-item list-group-item-action @if (Route::is('closet')) active @endif">
                         <i class="fal fa-fw fa-tags"></i>
-                        {{ __('ui.wishlist.closet') }}
+                        {{ __('ui.closet.title') }}
                     </a>
             </div>
         </div>

@@ -1,8 +1,8 @@
 <?php
 return [
-    'owner-height' => '',
+    'owner-height' => 'Eierhøyde',
     'rise' => '',
-    'thigh' => '',
+    'thigh' => 'Lår',
     'owner-underbust' => '',
     'handle length' => '',
     'neckline' => '',
@@ -31,5 +31,5 @@ return [
     'material' => '',
     'bust' => '',
     'waist' => '',
-    'length' => '',
+    'length' => 'Lengde',
 ];
