@@ -1,6 +1,17 @@
 @extends('profile.layout', ['title' => 'Profile'])
 
 @section('profile')
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <form id="nav-profile" method="POST" action="{{ route('profile') }}">
     @csrf
     <div class="form-group">
@@ -9,10 +20,7 @@
     </div>
     <div class="form-group">
         <label for="profile-username">{{ __('ui.auth.username') }}</label>
-        <input type="text" readonly class="form-control-plaintext text-muted text-monospace" value="{{ $user->username }}">
-        <small class="form-text text-muted">
-        @lang('ui.auth.username_txt')
-        </small>
+        <input type="text" id="profile-username" class="form-control" value="{{ $user->username }}" name="username">
     </div>
     <div class="form-group">
         <label for="profile-email">{{ __('ui.auth.email') }}</label>
