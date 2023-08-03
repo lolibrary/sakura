@@ -12,12 +12,6 @@
     </div>
 @endif
 
-@if (session('status'))
-    <div class="alert alert-success">
-        @lang(session('status'))
-    </div>
-@endif
-
 <form id="nav-profile" method="POST" action="{{ route('profile') }}">
     @csrf
     <div class="form-group">
