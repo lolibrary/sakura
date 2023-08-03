@@ -16,7 +16,7 @@
 
           <div class="row">
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 p-2" id="results">
-              @forelse ($results['items'] as $item)
+              @forelse ($items as $item)
                 @include('items.card', compact('item'))
               @empty
                 <div style="height: 14rem">
@@ -28,11 +28,13 @@
             </div>
           </div>
 
+          @if ($items->count() > 0)
           <div v-if="results && results.last_page > 1" class="row">
             <div class="col mb-2 mt-4" id="pagination">
-              @include('components.pagination')
+            {{ $items->links() }}
             </div>
           </div>
+          @endif
 
       </div>
 
