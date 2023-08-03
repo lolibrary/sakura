@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Auth\Events\Registered;
 
 class ProfileController extends Controller
 {
@@ -54,6 +55,8 @@ class ProfileController extends Controller
             'password' => 'nullable|string|confirmed|min:12',
         ]);
 
+        $status = 'ui.auth.update';
+
         $user->name = $validatedData['name'];
         $user->username = $validatedData['username'];
 
@@ -61,6 +64,8 @@ class ProfileController extends Controller
             // If they've updated their email address, they need to re-verify it.
             $user->email = $validatedData['email'];
             $user->email_verified_at = NULL;
+            event(new Registered($user));
+            $status = 'ui.auth.verify_update';
         }
 
         if ($validatedData['password']) {
@@ -68,6 +73,8 @@ class ProfileController extends Controller
         }
 
         $user->save();
+        
+        return redirect('profile')->with('status', $status);
     }
 
     /**
