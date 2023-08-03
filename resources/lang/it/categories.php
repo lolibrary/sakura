@@ -1,6 +1,6 @@
 <?php
 return [
-    'cape' => '',
+    'cape' => 'Mantello',
     'publications' => '',
     'hair-accessories' => '',
     'corsetbustier' => '',
