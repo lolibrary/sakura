@@ -40,8 +40,8 @@ class SearchController extends Controller
         });
 
         return view('search', ['sections' => [
-            'brand' => Brand::cached(), 
-            'category' => Category::cached(), 
+            'categories' => Category::cached(), 
+            'brands' => Brand::cached(), 
             'features' => Feature::cached(),
             'colors' => Color::cached(),
             'tags' => Tag::cached(),],

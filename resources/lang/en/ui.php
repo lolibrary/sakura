@@ -90,6 +90,18 @@ return [
         'add' => 'Why not <a href=":link">search for some items to add</a>?',
     ],
 
+    'search' => [
+        'brands' => 'Brands',
+        'categories' => 'Categories',
+        'tags' => 'Tags',
+        'features' => 'Features',
+        'colors' => 'Colors',
+        'match_type' => 'Match',
+        'match_any' => 'Any',
+        'match_all' => 'All',
+        'match_none' => 'None'
+    ],
+
     'item' => [
         'brand' => 'Brand',
         'category' => 'Category',
