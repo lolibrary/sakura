@@ -18,6 +18,7 @@ class SearchController extends Controller
             'features' => Feature::cached(),
             'attributes' => Attribute::cached(),
             'colors' => Color::cached(),
-            'tags' => Tag::cached(),]]);
+            'tags' => Tag::cached(),],
+        'results' => []]);
     }
 }
