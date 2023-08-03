@@ -32,7 +32,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Get a user's closet (owned items).
+     * Let users update their info.
      * 
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
@@ -51,7 +51,7 @@ class ProfileController extends Controller
                 Rule::unique('users')->ignore($user),
             ],
             'email' => ['required', 'string', 'max:255', 'email', Rule::unique('users')->ignore($user)],
-            'password' => 'sometimes|string|confirmed|min:12',
+            'password' => 'nullable|string|confirmed|min:12',
         ]);
 
         $user->name = $validatedData['name'];
