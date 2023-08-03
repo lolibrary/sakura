@@ -5,7 +5,7 @@
     <div class="card-body">
       @foreach ($sections as $name => $items)
         <div class="input-group pb-2">
-            <label class="control-label" for="{{$name}}">{{ __('ui.item' . $name')}}</label>
+            <label class="control-label" for="{{$name}}">{{ __('ui.item' . $name)}}</label>
             <select style="width: 100%" name="{{$name}}" id="{{$name}}" placeholder="Tap to filter" multiple class="form-control-chosen">
               @foreach($items as $item)
               <option value ="{{$item->slug}}"> {{ __($name . '.' . $item->slug) }}</option>
