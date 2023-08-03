@@ -13,13 +13,13 @@
             </select>
             <div class="match_type"> Match
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-outline-secondary active">
+                  <label class="btn btn-outline-secondary active btn-sm">
                     <input type="radio" name="{{ $name }}_matcher" value="OR" id="{{ $name }}_match_any" autocomplete="off" checked> Any
                   </label>
-                  <label class="btn btn-outline-secondary">
+                  <label class="btn btn-outline-secondary btn-sm">
                     <input type="radio" name="{{ $name }}_matcher" value="AND" id="{{ $name }}_match_all" autocomplete="off"> All
                   </label>
-                  <label class="btn btn-outline-secondary">
+                  <label class="btn btn-outline-secondary btn-sm">
                     <input type="radio" name="{{ $name }}_matcher" value="NONE" id="{{ $name }}_match_none" autocomplete="off"> None
                   </label>
                 </div>
