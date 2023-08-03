@@ -15,9 +15,10 @@
         </div>
 
           <div class="row">
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 p-2" id="results">
               @forelse ($items as $item)
+              <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 p-2">
                 @include('items.card', compact('item'))
+          </div>
               @empty
                 <div style="height: 14rem">
                   <img src="/categories/other.svg" class="mw-100 mh-100">
@@ -25,15 +26,10 @@
                 <p class="h4 text-center text-muted my-0">No Results!</p>
                 <p class="text-center">Try another search?</p>
               @endforelse
-            </div>
           </div>
 
           @if ($items->count() > 0)
-          <div v-if="results && results.last_page > 1" class="row">
-            <div class="col mb-2 mt-4" id="pagination">
             {{ $items->links() }}
-            </div>
-          </div>
           @endif
 
       </div>

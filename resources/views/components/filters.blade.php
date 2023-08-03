@@ -5,10 +5,10 @@
     <div class="card-body">
       @foreach ($sections as $name => $items)
         <div class="input-group pb-2">
-            <label class="control-label">{{ __($name . '.title')}}</label>
-            <select style="width: 100%" v-model="state.categories" :options="categories" label="name" placeholder="Tap to filter" multiple>
-              @foreach($items as $key => $value)
-              <option value ="{{$key}}"> {{ $value }}</option>
+            <label class="control-label" for="{{$name}}">{{ __('ui.' . $name . '.title')}}</label>
+            <select style="width: 100%" name="{{$name}}" id="{{$name}}" placeholder="Tap to filter" multiple class="form-control-chosen">
+              @foreach($items as $item)
+              <option value ="{{$item->slug}}"> {{ __($item->slug) }}</option>
               @endforeach
             </select>
             <div class="match_type"> Match
