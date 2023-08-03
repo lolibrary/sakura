@@ -1,6 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Feature;
+use App\Models\Attribute;
+use App\Models\Color;
+use App\Models\Tags;
 
 class SearchController extends Controller
 {
