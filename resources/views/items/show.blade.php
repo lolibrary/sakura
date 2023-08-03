@@ -56,7 +56,6 @@
                     <p class="m-0">
                         @if ($item->product_number)
                             @lang('ui.item.prod_num', ['prod_num' => $item->product_number])
-                            Product number: <span class="text-regular">{{ $item->product_number }}</span>
                         @else
                             {{ __('ui.item.prod_num_unknown') }}
                         @endif
