@@ -66,6 +66,8 @@ class ProfileController extends Controller
         if ($validatedData['password']) {
             $user->password = Hash::make($validatedData['password']);
         }
+
+        $user->save();
     }
 
     /**
