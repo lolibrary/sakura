@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Models\Feature;
 use App\Models\Attribute;
 use App\Models\Color;
-use App\Models\Tags;
+use App\Models\Tag;
 
 class SearchController extends Controller
 {
@@ -18,6 +18,6 @@ class SearchController extends Controller
             'features' => Feature::cached(),
             'attributes' => Attribute::cached(),
             'colors' => Color::cached(),
-            'tags' => Tags::cached(),]]);
+            'tags' => Tag::cached(),]]);
     }
 }
