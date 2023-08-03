@@ -17,7 +17,7 @@
           <div class="row">
               @forelse ($items as $item)
               <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 p-2">
-                @include('items.card', compact('item'))
+                @include('items.card', ['item' => compact('item'), 'type' => 'small'])
           </div>
               @empty
                 <div style="height: 14rem">
