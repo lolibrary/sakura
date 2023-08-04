@@ -13,8 +13,8 @@
 
 // Chosen
 @import '~sass-svg-uri/svg-uri';
-@import '~bootstrap4c-chosen/src/scss/component-variables';
-@import '~bootstrap4c-chosen/src/scss/component-chosen';
+@import 'component/chosen/component-variables';
+@import 'component/chosen/component-chosen';
 
 // simple-lightbox
 @import '~simple-lightbox/dist/simpleLightbox';
