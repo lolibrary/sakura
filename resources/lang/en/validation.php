@@ -13,6 +13,28 @@ return [
     |
     */
 
+    'confirmed' => 'The :attribute confirmation does not match.',
+    'email' => 'The :attribute must be a valid email address.',
+    'max' => [
+        'string' => 'The :attribute may not be greater than :max characters.',
+        // 'numeric' => 'The :attribute may not be greater than :max.',
+        // 'file' => 'The :attribute may not be greater than :max kilobytes.',
+        // 'array' => 'The :attribute may not have more than :max items.',
+    ],
+    'min' => [
+        'string' => 'The :attribute must be at least :min characters.',
+        // 'numeric' => 'The :attribute must be at least :min.',
+        // 'file' => 'The :attribute must be at least :min kilobytes.',
+
+        // 'array' => 'The :attribute must have at least :min items.',
+    ],
+    'regex' => 'The :attribute format is invalid.',
+    'required' => 'The :attribute field is required.',
+    'string' => 'The :attribute must be a string.',
+    'unique' => 'The :attribute has already been taken.',
+
+    
+
     // 'accepted' => 'The :attribute must be accepted.',
     // 'active_url' => 'The :attribute is not a valid URL.',
     // 'after' => 'The :attribute must be a date after :date.',
@@ -30,7 +52,6 @@ return [
     //     'array' => 'The :attribute must have between :min and :max items.',
     // ],
     // 'boolean' => 'The :attribute field must be true or false.',
-    'confirmed' => 'The :attribute confirmation does not match.',
     // 'date' => 'The :attribute is not a valid date.',
     // 'date_equals' => 'The :attribute must be a date equal to :date.',
     // 'date_format' => 'The :attribute does not match the format :format.',
@@ -39,7 +60,6 @@ return [
     // 'digits_between' => 'The :attribute must be between :min and :max digits.',
     // 'dimensions' => 'The :attribute has invalid image dimensions.',
     // 'distinct' => 'The :attribute field has a duplicate value.',
-    'email' => 'The :attribute must be a valid email address.',
     // 'ends_with' => 'The :attribute must end with one of the following: :values.',
     // 'exists' => 'The selected :attribute is invalid.',
     // 'file' => 'The :attribute must be a file.',
@@ -76,27 +96,14 @@ return [
     //     'string' => 'The :attribute must be less than or equal :value characters.',
     //     'array' => 'The :attribute must not have more than :value items.',
     // ],
-    'max' => [
-        // 'numeric' => 'The :attribute may not be greater than :max.',
-        // 'file' => 'The :attribute may not be greater than :max kilobytes.',
-        'string' => 'The :attribute may not be greater than :max characters.',
-        // 'array' => 'The :attribute may not have more than :max items.',
-    ],
     // 'mimes' => 'The :attribute must be a file of type: :values.',
     // 'mimetypes' => 'The :attribute must be a file of type: :values.',
-    'min' => [
-        // 'numeric' => 'The :attribute must be at least :min.',
-        // 'file' => 'The :attribute must be at least :min kilobytes.',
-        'string' => 'The :attribute must be at least :min characters.',
-        // 'array' => 'The :attribute must have at least :min items.',
-    ],
     // 'not_in' => 'The selected :attribute is invalid.',
     // 'not_regex' => 'The :attribute format is invalid.',
     // 'numeric' => 'The :attribute must be a number.',
     // 'password' => 'The password is incorrect.',
     // 'present' => 'The :attribute field must be present.',
-    'regex' => 'The :attribute format is invalid.',
-    'required' => 'The :attribute field is required.',
+
     // 'required_if' => 'The :attribute field is required when :other is :value.',
     // 'required_unless' => 'The :attribute field is required unless :other is in :values.',
     // 'required_with' => 'The :attribute field is required when :values is present.',
@@ -111,9 +118,7 @@ return [
     //     'array' => 'The :attribute must contain :size items.',
     // ],
     // 'starts_with' => 'The :attribute must start with one of the following: :values.',
-    'string' => 'The :attribute must be a string.',
     // 'timezone' => 'The :attribute must be a valid zone.',
-    'unique' => 'The :attribute has already been taken.',
     // 'uploaded' => 'The :attribute failed to upload.',
     // 'url' => 'The :attribute format is invalid.',
     // 'uuid' => 'The :attribute must be a valid UUID.',
