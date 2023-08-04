@@ -366,7 +366,6 @@
   }
   .chosen-choices {
     border: $chosen-focus-border;
-    @include border-bottom-radius(0);
     @include box-shadow($chosen-focus-box-shadow);
     @include transition($chosen-focus-transition);
     .search-field input[type="text"] {
