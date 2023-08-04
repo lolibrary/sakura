@@ -40,7 +40,7 @@ class SearchController extends Controller
         });
 
         return view('search', ['sections' => [
-            'categories' => Category::cached()->orderBy('name', 'asc'), 
+            'categories' => Category::cached()->sortBy('name'), 
             'brands' => Brand::cached(), 
             'features' => Feature::cached(),
             'colors' => Color::cached(),
