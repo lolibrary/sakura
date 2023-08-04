@@ -17,15 +17,16 @@ return [
     'email' => 'The :attribute must be a valid email address.',
     'max' => [
         'string' => 'The :attribute may not be greater than :max characters.',
+
         // 'numeric' => 'The :attribute may not be greater than :max.',
         // 'file' => 'The :attribute may not be greater than :max kilobytes.',
         // 'array' => 'The :attribute may not have more than :max items.',
     ],
     'min' => [
         'string' => 'The :attribute must be at least :min characters.',
+
         // 'numeric' => 'The :attribute must be at least :min.',
         // 'file' => 'The :attribute must be at least :min kilobytes.',
-
         // 'array' => 'The :attribute must have at least :min items.',
     ],
     'regex' => 'The :attribute format is invalid.',
