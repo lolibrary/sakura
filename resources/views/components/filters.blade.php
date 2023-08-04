@@ -27,8 +27,19 @@
         </div>
         @endforeach
         <div class="pb-2">
-            <label class="control-label">Year</label>
+            <label class="control-label" for="year-slider">Year</label>
             <v-select style="width: 100%" v-model="state.years" :options="years" placeholder="Tap to filter" multiple></v-select>
+            <input
+                type="text"
+                name="year"
+                id="year-slider"
+                data-provide="slider"
+                data-slider-ticks="[1970, 2023]"
+                data-slider-ticks-labels='["1970", "2023"]'
+                data-slider-min="1970"
+                data-slider-max="2023"
+                data-slider-step="1"
+            >
             <div class="match_type"> {{__('ui.search.match_type')}}
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-outline-secondary active btn-sm">
