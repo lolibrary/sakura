@@ -99,7 +99,7 @@ return [
         'match_type' => 'Match',
         'match_any' => 'Any',
         'match_all' => 'All',
-        'match_none' => 'None'
+        'match_none' => 'None',
     ],
 
     'item' => [
