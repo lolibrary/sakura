@@ -37,7 +37,9 @@ return [
         'pw_reset' => 'Đặt lại mật khẩu',
         'pw_reset_btn' => 'Gửi link đặt lại mật khẩu',
         'pw_no_change' => "Để mục này trống nếu như bạn không muốn đổi mật khẩu.",
-        'username_txt' => 'Để thay đổi tên tài khoản của bạn, <a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">Bấm vào đây</a>',
+        'username_txt' => 'Để thay đổi tên tài khoản của bạn,
+<a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">
+hãy bấm vào đây</a>',
     ],
     'blog' => [
         'anon' => 'Ẩn danh',
@@ -48,7 +50,7 @@ return [
     'donate' => [
         'title' => 'Quyên góp',
         'txt1' => "Tất cả ngân quỹ của Lolibrary đều dựa trên số tiền quyên tặng từ người dùng, và chúng mình sẽ luôn biết ơn vì tất cả sự giúp đỡ của các bạn!",
-        'txt2' => "",
+        'txt2' => "Chúng mình là một tổ chức phi lợi nhuận đã được đăng ký, và tất cả ngân quỹ đều được sử dụng cho mục đích duy trì Lolibrary, cùng với những cập nhật mới trong tương lai. Nếu như bạn muốn <a href=\"https://patreon.com/lolibrary\" target=\"_blank\" rel=\"external\">ủng hộ tụi mình trên Patreon</a>, bạn cũng có thể tới đó!",
         'patreon' => 'Ủng hộ chúng mình trên Patreon',
         'other' => 'Cách khác để quyên góp chính là dùng đường link bên dưới, nơi mà bạn có thể trả với thẻ ngân hàng, PayPal hoặc Apple Pay.',
         'npo' => 'Lolibrary Inc là một tổ chức phi lợi nhuận tại Mỹ theo điều mục 501(c)(3), tất cả mọi khoản quyên tặng đều có thể bị khấu trừ bởi thuế và EIN của chúng mình là 81-2942481.',
