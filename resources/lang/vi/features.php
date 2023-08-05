@@ -29,7 +29,7 @@ return [
     'built-in-petticoat' => 'Tùng phồng được may trong đồ',
     'removable-belt' => 'Thắt lưng tháo được',
     'detachable-sleeves' => 'Tay áo tháo được',
-    'princess-sleeves' => '',
+    'princess-sleeves' => 'Tay áo kiểu công chúa',
     'corset-lace-(decorative)' => '',
     'removable-sash' => '',
     'empire-waist' => '',
