@@ -1,7 +1,6 @@
 <?php
 return [
     'skip' => 'Passer au contenu',
-    'donate' => 'Faire un don',
     'login' => 'Se connecter',
     'search' => 'Rechercher',
     'npo' => 'Lolibrary Inc. est une association à but non lucratif de type 501(c)(3), constituée aux États-Unis.',
@@ -50,6 +49,8 @@ return [
         'remember' => 'Se souvenir de moi',
         'pw_confirm' => 'Confirmez le mot de passe',
         'pw_guide' => 'Votre mot de passe doit contenir au moins 12 caractères.',
+        'verify_update' => 'Les changements ont été sauvegardés ! Puisque vous avez mis à jour vote adresse email, vous devrez re vérifier votre nouvelle adresse email. Un nouveau lien de vérification a été envoyé sur votre adresse email.',
+        'update' => 'Les changements ont été sauvegardés !',
     ],
     'donate' => [
         'other' => 'Vous pouvez, par ailleurs faire des dons en utilisant le lien ci-dessous, où vous pouvez payer avec une carte bancaire, Paypal ou Apple Pay.',
