@@ -80,7 +80,7 @@
 
         @if (session('status'))
             <div class="alert-fullwidth text-center alert alert-primary" role="alert">
-                {{ session('status') }}
+                {{ __(session('status')) }}
             </div>
         @endif
 

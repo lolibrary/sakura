@@ -22,7 +22,9 @@ return [
         'verify_txt1' => "You'll need to verify your email before you proceed.",
         'verify_txt2' => "Not got an email yet? Click the button below to resend it.",
         'verify_resend' => 'Resend Email',
+        'verify_update' => 'Changes have been saved! Because you updated your email, you will need to verify the new email. A fresh verification link has been sent to your new email address.',
 
+        'update' => 'Changes have been saved!',
         'register' => 'Register',
         'name' => 'Name',
         'username' => 'Username',

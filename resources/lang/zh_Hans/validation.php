@@ -13,26 +13,26 @@ return [
     |
     */
 
-    'confirmed' => 'The :attribute confirmation does not match.',
-    'email' => 'The :attribute must be a valid email address.',
+    'confirmed' => '',
+    'email' => '',
     'max' => [
-        'string' => 'The :attribute may not be greater than :max characters.',
+        'string' => '',
 
         // 'numeric' => 'The :attribute may not be greater than :max.',
         // 'file' => 'The :attribute may not be greater than :max kilobytes.',
         // 'array' => 'The :attribute may not have more than :max items.',
     ],
     'min' => [
-        'string' => 'The :attribute must be at least :min characters.',
+        'string' => '',
 
         // 'numeric' => 'The :attribute must be at least :min.',
         // 'file' => 'The :attribute must be at least :min kilobytes.',
         // 'array' => 'The :attribute must have at least :min items.',
     ],
-    'regex' => 'The :attribute format is invalid.',
-    'required' => 'The :attribute field is required.',
-    'string' => 'The :attribute must be a string.',
-    'unique' => 'The :attribute has already been taken.',
+    'regex' => '',
+    'required' => '',
+    'string' => '',
+    'unique' => '',
 
     
 
