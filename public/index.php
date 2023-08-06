@@ -1,7 +1,9 @@
 <?php
 
-$_ENV["HTTPS"] = "on";
-$_SERVER["HTTPS"] = "on";
+if (!getenv("HTTPS_OFF")) {
+    $_ENV["HTTPS"] = "on";
+    $_SERVER["HTTPS"] = "on";
+}
 
 /**
  * Laravel - A PHP Framework For Web Artisans

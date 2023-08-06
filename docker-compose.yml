@@ -1,0 +1,60 @@
+# This will set up the sakura web container and a postgres container it can connect to.
+# The dev web container will run `npm install` and `npm run development` on startup, to pick up
+# any changes to JS or SCSS files.
+
+# If you are building the web container from scratch, you will need to provide the email address and
+# license key for Nova, and put a Fontawesome tarball in the root directory (or supply a different way
+# of accessing it or a replacement in package.json). These two components are propriety and we can't
+# redistribute them, sorry!
+
+# The db container uses mounted storage, so it's not necessary to rerun imports and migrations every time.
+# Postgres will look in /dev/initdb the first time the container is started and run any sql or shell scripts in there.
+
+version: "3"
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: lolibrary
+      POSTGRES_USER: postgres
+      POSTGRES_DB: library
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "8001:5432"
+    volumes:
+      - ./dev:/var/lib/postgresql/data:rw
+      - ./dev/initdb:/docker-entrypoint-initdb.d
+  web:
+    image: ghcr.io/lolibrary/sakura-dev:latest
+    # build:
+    #   context: .
+    #   dockerfile: ./dev-dockerfile
+    #   args:
+    #     NOVA_USERNAME: <email address for Nova license>
+    #     NOVA_API_KEY: <key for Nova license>
+    environment:
+      - APP_DEBUG=true
+      - APP_KEY=insecurerandomkey111111111111111
+      - DB_CONNECTION=pgsql
+      - DB_DATABASE=library
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=lolibrary
+      - DB_HOST=db
+      - AWS_DEFAULT_REGION=nyc3
+      - AWS_BUCKET=lolibrary
+      - AWS_URL="https://lolibrary.nyc3.digitaloceanspaces.com"
+      - AWS_CDN_URL="https://lolibrary.nyc3.cdn.digitaloceanspaces.com"
+      - APP_URL="http://0.0.0.0:3000"
+      - HTTPS_OFF=1
+    volumes:
+      - ./app:/srv/app
+      - ./database:/srv/database
+      - ./nova-components:/srv/nova-components
+      - ./resources:/srv/resources
+      - ./routes:/srv/routes
+      - ./tests:/srv/tests
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
