@@ -1,0 +1,77 @@
+# To run the Archive in docker for the first time you should run one of the init scripts:
+# - linux: `script/docker/init.sh`
+# - windows: `script/docker/init.cmd`
+#
+# This will handle setting up config files, creating databases, and running migrations.
+#
+# After these oneoff tasks have been performed, you can start the development
+# webserver with the command:
+#
+# ```
+# docker-compose up -d web
+# ```
+#
+# Once it is running, it will be visible at http://localhost:3000/
+#
+# To run tests, you should use the test container instead of the web container,
+# because it includes a headless chrome container for running JS-based tests.
+# You can run tests like this:
+#
+# ```
+# docker-compose run --rm test bundle exec cucumber features/other_a/autocomplete.feature
+# ```
+
+version: "3"
+# volumes:
+#   my-datavolume:
+#   redis-data:
+#   esdata1:
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: lolibrary
+      POSTGRES_USER: postgres
+      POSTGRES_DB: library
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "8001:5432"
+    # command:
+    #   [
+    #     "mysqld",
+    #     "--sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION",
+    #   ]
+    volumes:
+      - ./dev:/var/lib/postgresql/data:rw
+      - ./dev/initdb:/docker-entrypoint-initdb.d
+  web:
+    image: sakura
+    # build:
+    #   context: .
+    #   dockerfile: ./dev-dockerfile
+    environment:
+      - APP_DEBUG=true
+      - APP_KEY=insecurerandomkey111111111111111
+      - DB_CONNECTION=pgsql
+      - DB_DATABASE=library
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=lolibrary
+      - DB_HOST=db
+      - AWS_DEFAULT_REGION=nyc3
+      - AWS_BUCKET=lolibrary
+      - AWS_URL="https://lolibrary.nyc3.digitaloceanspaces.com"
+      - AWS_CDN_URL="https://lolibrary.nyc3.cdn.digitaloceanspaces.com"
+      - APP_URL="http://0.0.0.0:3000"
+      - HTTPS_OFF=1
+    volumes:
+      - ./app:/srv/app
+      - ./database:/srv/database
+      - ./nova-components:/srv/nova-components
+      - ./resources:/srv/resources
+      - ./routes:/srv/routes
+      - ./tests:/srv/tests
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
