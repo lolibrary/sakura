@@ -4,6 +4,7 @@ on:
     branches-ignore:
       - 'master'
       - 'i18n'
+      - 'dev'
 jobs:
   build-push-branch:
     container:

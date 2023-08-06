@@ -3,9 +3,9 @@ on:
   push:
     branches:
       - 'master'
-      - 'dockerize'
+      - 'dev'
 jobs:
-  build-push-branch:
+  build-push-dev:
     container:
       image: ghcr.io/lolibrary/builder
       credentials:

@@ -1,31 +1,16 @@
-# To run the Archive in docker for the first time you should run one of the init scripts:
-# - linux: `script/docker/init.sh`
-# - windows: `script/docker/init.cmd`
-#
-# This will handle setting up config files, creating databases, and running migrations.
-#
-# After these oneoff tasks have been performed, you can start the development
-# webserver with the command:
-#
-# ```
-# docker-compose up -d web
-# ```
-#
-# Once it is running, it will be visible at http://localhost:3000/
-#
-# To run tests, you should use the test container instead of the web container,
-# because it includes a headless chrome container for running JS-based tests.
-# You can run tests like this:
-#
-# ```
-# docker-compose run --rm test bundle exec cucumber features/other_a/autocomplete.feature
-# ```
+# This will set up the sakura web container and a postgres container it can connect to.
+# The dev web container will run `npm install` and `npm run development` on startup, to pick up
+# any changes to JS or SCSS files.
+
+# If you are building the web container from scratch, you will need to provide the email address and
+# license key for Nova, and put a Fontawesome tarball in the root directory (or supply a different way
+# of accessing it or a replacement in package.json). These two components are propriety and we can't
+# redistribute them, sorry!
+
+# The db container uses mounted storage, so it's not necessary to rerun imports and migrations every time.
+# Postgres will look in /dev/initdb the first time the container is started and run any sql or shell scripts in there.
 
 version: "3"
-# volumes:
-#   my-datavolume:
-#   redis-data:
-#   esdata1:
 services:
   db:
     image: postgres
@@ -37,19 +22,17 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "8001:5432"
-    # command:
-    #   [
-    #     "mysqld",
-    #     "--sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION",
-    #   ]
     volumes:
       - ./dev:/var/lib/postgresql/data:rw
       - ./dev/initdb:/docker-entrypoint-initdb.d
   web:
-    image: sakura
+    image: ghcr.io/lolibrary/sakura-dev:latest
     # build:
     #   context: .
     #   dockerfile: ./dev-dockerfile
+    #   args:
+    #     NOVA_USERNAME: <email address for Nova license>
+    #     NOVA_API_KEY: <key for Nova license>
     environment:
       - APP_DEBUG=true
       - APP_KEY=insecurerandomkey111111111111111
