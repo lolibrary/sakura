@@ -16,6 +16,9 @@
 @import 'chosen/component-variables';
 @import 'chosen/component-chosen';
 
+// Bootstrap-slider
+@import 'slider/bootstrap-slider';
+
 // simple-lightbox
 @import '~simple-lightbox/dist/simpleLightbox';
 
@@ -44,4 +47,20 @@
 .card .category:not(:last-child)::after {
   content: ", ";
   margin-left: -.25em;
+}
+
+#slider-wrapper {
+  padding-left: 20px;
+  padding-right: 20px;
+
+  .slider-tick {
+    display: none;
+  }
+
+  .slider-track {
+    background: none;
+    background-color: $input-border-color;
+    border: 1px solid $input-border-color;
+    box-shadow: none;
+  }
 }

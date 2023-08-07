@@ -30,16 +30,26 @@ class SearchController extends Base
         Tag::class => 'tags',
     ];
 
-    /**
+        /**
      * Search for items.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\App\Item[]
      */
-    public function search(SearchRequest $request)
+    public function search_index(SearchRequest $request)
     {
         $query = Item::query();
-
+        return search($request, $query);
+    }
+    /**
+     * Search for items.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\App\Item[]
+     */
+    public function search(SearchRequest $request, Builder $query)
+    {
         $this->filters($request, $query);
         $this->years($request, $query);
 

@@ -40,6 +40,31 @@ class SearchRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $years = explode(",", $this->year);
+        $keys = ['categories', 'brands', 'colors', 'tags', 'features'];
+
+        foreach ($keys as $key) {
+            if (strlen($this->$key) > 0) {
+                $arr = explode(",", $this->$key);
+                $this->merge([
+                    $key => $arr,
+                ]);
+            }
+        } 
+
+        $this->merge([
+            'years' => array_map('intval', $years),
+        ]);
+    }
+
+
+    /**
      * Get a list of rules for this request.
      *
      * @return array
@@ -69,9 +94,9 @@ class SearchRequest extends FormRequest
             'tags' => 'sometimes|array',
             'tags.*' => 'required|string|exists:tags,slug',
 
-            'year' => 'sometimes|required|integer|min:1970|max:'.(date('Y') + 3),
-            'years' => 'sometimes|array',
-            'years.*' => 'required|integer|min:1970|max:'.(date('Y') + 3),
+            // 'year' => 'sometimes|required|integer|min:1970|max:'.(date('Y') + 3),
+            // 'years' => 'sometimes|array',
+            // 'years.*' => 'required|integer|min:1970|max:'.(date('Y') + 3),
         ];
     }
 }

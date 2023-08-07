@@ -11,40 +11,24 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Http\Requests\Api\SearchRequest;
+use App\Http\Controllers\Api\SearchController as ApiSearchController;
 
 
 class SearchController extends Controller
 {
-    public function index()
+    public function index(SearchRequest $request)
     {
         $query = Item::query();
-        $query->orderBy(...(sorted('added_new')));
-
-        $query->where('status', Item::PUBLISHED);
-
-        $paginator = $query->paginate(24);
-
-        $paginator->each(function (Item $item) {
-            $item->image = Storage::cloud()->url($item->image);
-            $item->makeVisible('image');
-
-            if ($item->brand !== null) {
-                $item->brand->image = Storage::cloud()->url($item->brand->image);
-                $item->brand->makeVisible('image');
-            }
-
-            if ($item->category !== null) {
-                $item->category->image = Storage::cloud()->url($item->category->image);
-                $item->category->makeVisible('image');
-            }
-        });
+        $search = new ApiSearchController();
+        $items = $search->search($request, $query);
 
         return view('search', ['sections' => [
             'categories' => Category::cached()->sortBy('name'), 
-            'brands' => Brand::cached(), 
-            'features' => Feature::cached(),
-            'colors' => Color::cached(),
-            'tags' => Tag::cached(),],
-            'items' => $paginator]);
+            'brands' => Brand::cached()->sortBy('name'), 
+            'features' => Feature::cached()->sortBy('name'),
+            'colors' => Color::cached()->sortBy('name'),
+            'tags' => Tag::cached()->sortBy('name'),],
+            'items' => $items]);
     }
 }

@@ -52,6 +52,13 @@ window.chosen = require('chosen-js');
 
  window.SimpleLightbox = require('simple-lightbox');
 
+ /**
+ * simple-lightbox is a lightweight lightbox interface, to make paging through
+ * item photos a little nicer. It will register on elements with 'data-lightbox="show"'
+ */
+
+ window.slider = require("bootstrap-slider");
+
 /**
  * Both chosen and simple-lightbox need to be initialized *after* the rest of the
  * page has loaded - otherwise their elements may not be present yet.
