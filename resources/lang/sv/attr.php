@@ -1,7 +1,7 @@
 <?php
 return [
-    'owner-height' => 'Ägarens längd',
-    'rise' => 'Gren',
+    'owner-height' => 'Ägarens höjd',
+    'rise' => 'Grenhöjd',
     'thigh' => 'Lår',
     'owner-underbust' => 'Ägarens underbystmått',
     'handle length' => 'Handtagets längd',
@@ -14,7 +14,7 @@ return [
     'owner-length' => 'Ägarens längd',
     'bodice-length' => 'Överkroppslängd',
     'owner-bust' => 'Ägarens bystmått',
-    'sleeve-width' => 'Ärmlängd',
+    'sleeve-width' => 'Ärmbredd',
     'owner-waist' => 'Ägarens midjemått',
     'soles' => 'Sulor',
     'finishes' => 'Ytmaterial',
@@ -25,7 +25,7 @@ return [
     'owner-notes' => 'Ägarens anteckningar',
     'width' => 'Bredd',
     'skirt-length' => 'Kjollängd',
-    'cuff' => 'Ärmslut',
+    'cuff' => 'Ärmslut / manschett',
     'shoulder-width' => 'Axelbredd',
     'sleeve-length' => 'Ärmlängd',
     'material' => 'Material',
