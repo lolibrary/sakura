@@ -21,6 +21,7 @@ Route::get('/search', 'SearchController@index')->name('search');
 // User
 Route::prefix('profile')->group(function () {
     Route::get('/', 'ProfileController@profile')->name('profile');
+    Route::post('/', 'ProfileController@update')->name('update');
     Route::get('closet', 'ProfileController@closet')->name('closet');
     Route::get('wishlist', 'ProfileController@wishlist')->name('wishlist');
 });

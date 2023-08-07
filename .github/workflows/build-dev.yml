@@ -1,12 +1,11 @@
-name: Build and push branch image
+name: Build and push dev image
 on:
   push:
-    branches-ignore:
+    branches:
       - 'master'
-      - 'i18n'
       - 'dev'
 jobs:
-  build-push-branch:
+  build-push-dev:
     container:
       image: ghcr.io/lolibrary/builder
       credentials:
@@ -29,19 +28,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.PAT }}
           registry: ghcr.io
-      - name: Install PHP dependencies
-        run: |
-          composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_API_KEY }} --no-interaction --working-dir cache
-          COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --working-dir cache
-      - name: Install JS dependencies
-        run: npm install --prefix cache
-      - name: Build App
-        run: npm run development --prefix cache
+      - name: Move fontfiles
+        run: cp fortawesome* cache/
       - name: Docker Build & Push
         run: |
-          docker build -t $DOCKER_SHA_TAG .
+          docker build -t $DOCKER_SHA_TAG -t $DOCKER_LATEST_TAG --build-arg NOVA_USERNAME=${{ secrets.NOVA_USERNAME }} --build-arg NOVA_API_KEY=${{ secrets.NOVA_API_KEY }} -f cache/dev-dockerfile ./cache/
           docker push $DOCKER_SHA_TAG
+          docker push $DOCKER_LATEST_TAG
     env:
-      DOCKER_SHA_TAG: "ghcr.io/lolibrary/sakura:${{ github.sha }}"
-      PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
+      DOCKER_SHA_TAG: "ghcr.io/lolibrary/sakura-dev:${{ github.sha }}"
+      DOCKER_LATEST_TAG: "ghcr.io/lolibrary/sakura-dev:latest"
 
