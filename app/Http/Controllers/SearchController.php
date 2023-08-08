@@ -31,4 +31,12 @@ class SearchController extends Controller
             'tags' => Tag::cached()->sortBy('name'),],
             'items' => $items]);
     }
+
+    public function post(SearchRequest $request) {
+        $query = Item::query();
+        $search = new ApiSearchController();
+        $items = $search->search($request, $query);
+
+        return view('components.search-results', ['items' => $items]);
+    }
 }

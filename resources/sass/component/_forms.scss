@@ -13,7 +13,7 @@
   border: 1px solid #ccc !important;
 }
 
-.match_type {
+.match_type, .year_match_type {
   padding-top: 10px;
   width: 100%;
   text-align: right;
@@ -23,3 +23,5 @@
     padding-left: 5px;
   }
 }
+
+.match_type { display: none; }
