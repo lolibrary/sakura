@@ -13,6 +13,7 @@
 version: "3"
 services:
   db:
+    container_name: db
     image: postgres
     restart: always
     environment:
@@ -26,6 +27,7 @@ services:
       - ./dev:/var/lib/postgresql/data:rw
       - ./dev/initdb:/docker-entrypoint-initdb.d
   web:
+    container_name: web
     image: ghcr.io/lolibrary/sakura-dev:latest
     # build:
     #   context: .
