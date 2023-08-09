@@ -93,6 +93,7 @@ return [
     |
     */
 
+    'use_fallback' => true,
     'fallback_locale' => 'en',
 
     /*
@@ -109,7 +110,7 @@ return [
     'faker_locale' => 'en_US',
 
     // Available locales
-    'locales' => ['en' => 'English', 'fr' => 'français', 'nb_NO' => 'norsk (bokmål)'],
+    'locales' => ['en', 'fr', 'nb_NO'],
 
     /*
     |--------------------------------------------------------------------------

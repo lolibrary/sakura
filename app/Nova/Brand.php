@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use YesWeDev\Nova\Translatable\Translatable;
 
 class Brand extends Resource
 {
@@ -50,7 +51,8 @@ class Brand extends Resource
                 ->path('brands')
                 ->nullable(),
 
-            Text::make('Name')
+            Translatable::make('Name')
+                ->indexLocale('en')
                 ->sortable()
                 ->rules('required', 'string', 'min:2', 'max:255'),
 
