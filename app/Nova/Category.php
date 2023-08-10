@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use YesWeDev\Nova\Translatable\Translatable;
 
 class Category extends Resource
 {
@@ -31,8 +32,28 @@ class Category extends Resource
      * @var array
      */
     public static $search = [
-        'name', 'slug',
+        'slug',
     ];
+
+    /**
+     * Overrides to make search/filter work with translations.
+     */
+    protected static function applySearch($query, $search)
+    {
+        return $query->where(function ($query) use ($search) {
+            $model = $query->getModel();
+
+            foreach (static::searchableColumns() as $column) {
+                $query->orWhere($model->qualifyColumn($column), 'ilike', '%'.$search.'%');
+            }
+            $query->orWhereTranslationLike('name', '%'.$search.'%');
+        });
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->orderByTranslation('name');
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -50,7 +71,7 @@ class Category extends Resource
                 ->path('categories')
                 ->nullable(),
 
-            Text::make('Name')
+            Translatable::make('Name')
                 ->sortable()
                 ->rules('required', 'string', 'min:2', 'max:255'),
 
