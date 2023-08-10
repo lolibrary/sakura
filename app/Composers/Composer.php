@@ -4,6 +4,8 @@ namespace App\Composers;
 
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 
 abstract class Composer
 {
@@ -52,7 +54,8 @@ abstract class Composer
      */
     protected function key()
     {
-        return 'composer:'.$this->name();
+        $locale = App::getLocale();
+        return 'composer:'.$locale .':'.$this->name();
     }
 
     /**
