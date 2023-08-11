@@ -9,7 +9,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use YesWeDev\Nova\Translatable\Translatable;
 
-class Attribute extends Resource
+class Attribute extends TranslatableResource
 {
     /**
      * The model the resource corresponds to.

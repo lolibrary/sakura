@@ -10,7 +10,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use YesWeDev\Nova\Translatable\Translatable;
 
 
-class Tag extends Resource
+class Tag extends TranslatableResource
 {
     /**
      * The model the resource corresponds to.
@@ -34,26 +34,6 @@ class Tag extends Resource
     public static $search = [
         'slug',
     ];
-
-    /**
-     * Overrides to make search/filter work with translations.
-     */
-    protected static function applySearch($query, $search)
-    {
-        return $query->where(function ($query) use ($search) {
-            $model = $query->getModel();
-
-            foreach (static::searchableColumns() as $column) {
-                $query->orWhere($model->qualifyColumn($column), 'ilike', '%'.$search.'%');
-            }
-            $query->orWhereTranslationLike('name', '%'.$search.'%');
-        });
-    }
-
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->orderByTranslation('name');
-    }
 
     /**
      * Get the fields displayed by the resource.
