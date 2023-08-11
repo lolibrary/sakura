@@ -110,7 +110,7 @@ return [
     'faker_locale' => 'en_US',
 
     // Available locales
-    'locales' => ['en', 'fr', 'nb_NO'],
+    'locales' => ['en' => 'English', 'fr' => 'français', 'nb_NO' => 'norsk (bokmål)']
 
     /*
     |--------------------------------------------------------------------------
