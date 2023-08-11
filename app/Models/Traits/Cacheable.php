@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models\Traits;
+use Illuminate\Support\Facades\App;
 
 trait Cacheable
 {

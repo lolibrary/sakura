@@ -72,8 +72,9 @@ class Color extends Resource
                 ->hideFromIndex(),
 
             Translatable::make('Name')
+                ->indexLocale('en')
                 ->sortable()
-                ->rules('required', 'string', 'min:2', 'max:255'),
+                ->rules('required', 'min:2', 'max:255'),
 
             DateTime::make('Created', 'created_at')->onlyOnDetail(),
             DateTime::make('Updated', 'updated_at')->onlyOnDetail(),

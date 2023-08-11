@@ -74,7 +74,7 @@ class Brand extends Resource
             Translatable::make('Name')
                 ->indexLocale('en')
                 ->sortable()
-                ->rules('required', 'string', 'min:2', 'max:255'),
+                ->rules('required', 'min:2', 'max:255'),
 
             Text::make('Slug')
                 ->sortable()

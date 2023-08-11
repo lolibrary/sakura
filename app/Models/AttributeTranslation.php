@@ -8,7 +8,7 @@ namespace App\Models;
  *
  * @property string $name The name of this model.
  */
-class AttributeTranslation extends Model
+class AttributeTranslation extends TranslationModel
 {
 
     /**
