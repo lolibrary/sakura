@@ -46,10 +46,6 @@ class CreateTranslationTables extends Migration
         }
 
         foreach(TABLES as $single => $plural) {
-
-            $curryCreator = createCreator($single, $plural);
-            $curryMigrator = createMigrator($single, $plural);
-
             Schema::create("${single}_translations", $creator); 
             Schema::table("${single}_translations", $migrator);
     
