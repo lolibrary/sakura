@@ -69,7 +69,7 @@ class TextTool extends Command
                         return [
                             "${table}_id" => $key,
                             'locale' => $lang,
-                            'name' = $value
+                            'name' => $value
                         ];
                     }
                     $cleaned = array_filter($values);
