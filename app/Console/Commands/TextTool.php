@@ -71,7 +71,8 @@ class TextTool extends Command
                             'locale' => $lang,
                             'name' => $value
                         ];
-                    }
+                    };
+                    
                     $cleaned = array_filter($values);
                     $mapped = array_map($mapper, array_keys($cleaned), array_values($cleaned));
 

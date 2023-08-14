@@ -39,11 +39,11 @@ class CreateTranslationTables extends Migration
           
             $table->unique(["{$single}_id", 'locale']);
             $table->foreign("{$single}_id")->references('id')->on($plural)->onDelete('cascade');
-        }
+        };
 
         $migrator = function($table) use ($single, $plural) {
             DB::statement("insert into ? (?, name, locale) select id, name, 'en' from ?", ["${single}_translations", "${single}_id", $plural]);
-        }
+        };
 
         foreach(TABLES as $single => $plural) {
             Schema::create("${single}_translations", $creator); 
