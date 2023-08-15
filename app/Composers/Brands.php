@@ -11,9 +11,12 @@ class Brands extends Composer
      */
     protected function load()
     {
-        return Brand::select(['name', 'slug'])
-            ->orderBy('slug', 'asc')
+        return Brand::select(['slug'])
+            ->orderByTranslation('name')
             ->get()
+            ->sortBy(function ($item, $key) {
+                return strtolower($item['name']);
+            })
             ->toSelectArray();
     }
 }

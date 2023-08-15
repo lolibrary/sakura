@@ -11,9 +11,12 @@ class Colors extends Composer
      */
     protected function load()
     {
-        return Color::select(['name', 'slug'])
-            ->orderBy('slug', 'asc')
+        return Color::select(['slug'])
+            ->orderByTranslation('name')
             ->get()
+            ->sortBy(function ($item, $key) {
+                return strtolower($item['name']);
+            })
             ->toSelectArray();
     }
 }

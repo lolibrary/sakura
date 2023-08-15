@@ -11,9 +11,12 @@ class Features extends Composer
      */
     protected function load()
     {
-        return Feature::select(['name', 'slug'])
-            ->orderBy('slug', 'asc')
+        return Feature::select(['slug'])
+            ->orderByTranslation('name')
             ->get()
+            ->sortBy(function ($item, $key) {
+                return strtolower($item['name']);
+            })
             ->toSelectArray();
     }
 }

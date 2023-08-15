@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 use App\Models\Traits\Cacheable;
 
 /**
@@ -11,9 +13,18 @@ use App\Models\Traits\Cacheable;
  * @property string $name The friendly name of this tag.
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $items
  */
-class Tag extends Model
+class Tag extends Model implements TranslatableContract
 {
     use Cacheable;
+    use Translatable;
+
+    /**
+     * Translatable attributes.
+     *
+     * @var array
+     */
+    public $translatedAttributes = ['name'];
+    public $useTranslationFallback = true;
 
     /**
      * The attributes we can fill on this model.

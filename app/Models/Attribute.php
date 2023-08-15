@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Models\Traits\Cacheable;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
+
 
 /**
  * An attribute.
@@ -13,9 +16,18 @@ use App\Models\Traits\Cacheable;
  * @property \App\Models\Pivot $pivot A pivot object containing the value of this attribute.
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $items
  */
-class Attribute extends Model
+class Attribute extends Model implements TranslatableContract
 {
     use Cacheable;
+    use Translatable;
+
+    /**
+     * Translatable attributes.
+     *
+     * @var array
+     */
+    public $translatedAttributes = ['name'];
+    public $useTranslationFallback = true;
 
     /**
      * Fillable attributes.

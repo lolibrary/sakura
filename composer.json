@@ -12,6 +12,7 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-pdo": "*",
+        "astrotomic/laravel-translatable": "^11.9",
         "dillingham/nova-attach-many": "^1.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.18",
@@ -23,7 +24,8 @@
         "lolibrary/image-array": "*",
         "sentry/sentry-laravel": "^1.6",
         "stevebauman/purify": "^4.0",
-        "whitecube/nova-flexible-content": "^0.1.11"
+        "whitecube/nova-flexible-content": "^0.1.11",
+        "yeswedev/nova-translatable": "^0.9.0"
 
     },
     "require-dev": {

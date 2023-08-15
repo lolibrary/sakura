@@ -11,9 +11,12 @@ class Categories extends Composer
      */
     protected function load()
     {
-        return Category::select(['name', 'slug'])
-            ->orderBy('slug', 'asc')
+        return Category::select(['slug'])
+            ->orderByTranslation('name')
             ->get()
+            ->sortBy(function ($item, $key) {
+                return strtolower($item['name']);
+            })
             ->toSelectArray();
     }
 }

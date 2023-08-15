@@ -7,8 +7,10 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use YesWeDev\Nova\Translatable\Translatable;
 
-class Tag extends Resource
+
+class Tag extends TranslatableResource
 {
     /**
      * The model the resource corresponds to.
@@ -30,7 +32,7 @@ class Tag extends Resource
      * @var array
      */
     public static $search = [
-        'name', 'slug',
+        'slug',
     ];
 
     /**
@@ -50,9 +52,10 @@ class Tag extends Resource
                 ->updateRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/u', 'unique:tags,slug,{{resourceId}}')
                 ->hideFromIndex(),
 
-            Text::make('Name')
+            Translatable::make('Name')
+                ->indexLocale('en')
                 ->sortable()
-                ->rules('required', 'string', 'min:2', 'max:255'),
+                ->rules('required', 'min:2', 'max:255'),
 
             DateTime::make('Created', 'created_at')->onlyOnDetail(),
             DateTime::make('Updated', 'updated_at')->onlyOnDetail(),
