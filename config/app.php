@@ -110,7 +110,13 @@ return [
     'faker_locale' => 'en_US',
 
     // Available locales
-    'locales' => ['en' => 'English', 'en_US' => 'English', 'fr' => 'français', 'nb_NO' => 'norsk (bokmål)'],
+    'locales' => [
+        'en' => 'English', 
+        'en_US' => 'English', // Fallback locale fix, do not actually add tls
+        'fr' => 'français', 
+        'nb_NO' => 'norsk (bokmål)',
+        'nl' => 'Nederlands'
+    ],
 
     /*
     |--------------------------------------------------------------------------

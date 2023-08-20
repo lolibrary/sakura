@@ -10,7 +10,13 @@ return [
     | Contains an array with the applications available locales.
     |
     */
-    'locales' => ['en' => 'English', 'fr' => 'français', 'nb_NO' => 'norsk (bokmål)'],
+    'locales' => [
+        'en' => 'English', 
+        'en_US' => 'English', // Fallback locale fix, do not actually add tls
+        'fr' => 'français', 
+        'nb_NO' => 'norsk (bokmål)',
+        'nl' => 'Nederlands'
+    ],
 
     /*
     |--------------------------------------------------------------------------
