@@ -28,7 +28,7 @@ class PublicProfileController extends Controller
         $requestedUser = $request->get('requestedUser');
         $isOwner = $request->get('isOwner');
 
-        if (!$isOwner && !$requestedUser->public_closet) {
+        if (empty($requestedUser) || (!$isOwner && !$requestedUser->public_closet)) {
             abort(404);
         }
 
@@ -49,7 +49,7 @@ class PublicProfileController extends Controller
         $requestedUser = $request->get('requestedUser');
         $isOwner = $request->get('isOwner');
 
-        if (!$isOwner && !$requestedUser->public_wishlist) {
+        if (empty($requestedUser) || (!$isOwner && !$requestedUser->public_wishlist)) {
             abort(404);
         }
 

@@ -12,8 +12,11 @@ class AllowOwnerOrPublicViewEnabled
     {
         $currentUser = Auth::user();
         $username = $request->route('username');
-        $requestedUser = User::where('username', $username)->firstOrFail();
-        $isOwner = (!empty($currentUser) && $currentUser->id == $requestedUser->id);
+        $requestedUser = User::where('username', $username)->first();
+        $isOwner = (
+            !empty($currentUser) && !empty($requestedUser)
+            && $currentUser->id == $requestedUser->id
+        );
         $request->attributes->add(['isOwner' => $isOwner, 'requestedUser' => $requestedUser]);
 
         return $next($request);
