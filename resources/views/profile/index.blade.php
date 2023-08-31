@@ -37,6 +37,14 @@
         <input type="password" class="form-control" id="profile-password-confirm" placeholder="{{ __('ui.auth.pw') }}" name="password_confirmation">
         <small class="form-text text-muted">{{ __('ui.auth.pw_no_change') }}</small>
     </div>
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" name="public_wishlist" id="public-wishlist" value="1" @if ($user->public_wishlist) checked @endif/>
+        <label for="public-wishlist" class="form-check-label">{{ __('ui.auth.public_wishlist') }}</label>
+    </div>
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" name="public_closet" id="public-closet" value="1" @if ($user->public_closet) checked @endif/>
+        <label for="public-closet" class="form-check-label">{{ __('ui.auth.public_closet') }}</label>
+    </div>
 
     <div class="row">
         <div class="col-sm-6 offset-sm-3 col-md-4 offset-md-4">
