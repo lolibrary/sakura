@@ -6,7 +6,7 @@ use App\Models\User;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class AllowOwnerOrPublicViewEnabled
+class CheckIfOwnerIsLoggedIn
 {
     public function handle($request, Closure $next)
     {
