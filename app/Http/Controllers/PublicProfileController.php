@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class PublicProfileController extends Controller
 {
     /**
-     * Construct a new Profile Controller.
+     * Construct a new Public Profile Controller.
      *
      * @return void
      */
@@ -18,7 +18,7 @@ class PublicProfileController extends Controller
 
 
     /**
-     * Get a user's closet (owned items).
+     * Get a given user's closet (owned items).
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
@@ -39,7 +39,7 @@ class PublicProfileController extends Controller
     }
 
     /**
-     * Get a user's wishlist (favourited items).
+     * Get a given user's wishlist (favourited items).
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
