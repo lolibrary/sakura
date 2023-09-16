@@ -38,6 +38,8 @@ return [
         'pw_reset_btn' => 'Stuur een link voor het opnieuw instellen van mijn wachtwoord',
         'pw_no_change' => "Laat dit veld leeg als u uw wachtwoord niet wilt wijzigen.",
         'username_txt' => '<a class="text-info" href="#" data-toggle="tooltip" title="Het wijzigen van de gebruikersnaam wordt momenteel niet ondersteund, sorry!">Klik hier</a> om uw gebruikersnaam te wijzigen.',
+        'public_closet' => 'Kledingkast publiek maken?',
+        'public_wishlist' => 'Verlanglijstje publiek maken?',
     ],
     'blog' => [
         'anon' => 'Anoniem',
@@ -73,6 +75,8 @@ return [
         'remove' => 'Verwijderen van verlanglijst',
         'empty' => 'Er staan geen artikelen op uw verlanglijstje.',
         'add' => 'Wilt u <a href=":link">artikelen zoeken om toe te voegen</a>?',
+        'owner_title' => ":user's verlanglijstje",
+        'empty_guest' => "Er staan geen artikelen op :user's verlanglijstje",
     ],
     'closet' => [
         'added' => '":item" toegevoegd aan uw kledingkast',
@@ -82,6 +86,8 @@ return [
         'remove' => 'Van kledingkast verwijderen',
         'empty' => 'Uw kledingkast is leeg.',
         'add' => 'Wilt u <a href=":link">artikelen zoeken om toe te voegen</a>?',
+        'empty_guest' => "Er hangen geen artikelen in :user's kledingkast",
+        'owner_title' => ":user's kledingkast",
     ],
     'item' => [
         'brand' => 'Merk',
