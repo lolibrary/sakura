@@ -37,7 +37,9 @@ return [
         'pw_reset' => 'Återställ lösenord',
         'pw_reset_btn' => 'Skicka länk till återställning av lösenord',
         'pw_no_change' => "Lämna detta tomt om du inte vill ändra ditt lösenord.",
-        'username_txt' => '',
+        'username_txt' => 'För att ändra ditt användarnamn, <a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">klicka här</a>',
+        'public_closet' => 'Gör garderob publik?',
+        'public_wishlist' => 'Gör önskelista publik?',
     ],
     'blog' => [
         'anon' => 'Anonym',
@@ -73,6 +75,8 @@ return [
         'remove' => 'Ta bort från önskelista',
         'empty' => 'Det finns ingenting i din önskelista.',
         'add' => 'Varför inte <a href=":link">leta efter något att lägga till</a>?',
+        'owner_title' => ":user önskelista",
+        'empty_guest' => "Det finns inga objekt i :user önskelista",
     ],
     'closet' => [
         'added' => 'La till ":item" i din garderob',
@@ -82,6 +86,8 @@ return [
         'remove' => 'Ta bort från garderob',
         'empty' => 'Det finns ingenting i din garderob.',
         'add' => 'Varför inte <a href=":link">söka efter objekt att lägga till</a>?',
+        'empty_guest' => "Det finns inga objekt i :user garderob",
+        'owner_title' => ":user garderob",
     ],
     'item' => [
         'brand' => 'Märke',
