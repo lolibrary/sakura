@@ -114,6 +114,7 @@ return [
         'en' => 'English', 
         'en_US' => 'English', // Fallback locale fix, do not actually add tls
         'fr' => 'français', 
+        'it' => 'Italiano',
         'nb_NO' => 'norsk (bokmål)',
         'nl' => 'Nederlands'
     ],
