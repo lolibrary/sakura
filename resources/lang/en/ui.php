@@ -40,6 +40,8 @@ return [
         'pw_reset_btn' => 'Send Password Reset Link',
         'pw_no_change' => "Leave this blank if you don't want to change your password.",
         'username_txt' => 'To change your username, <a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">click here</a>',
+        'public_closet' => 'Make closet public?',
+        'public_wishlist' => 'Make wishlist public?',
     ],
 
     'blog' => [
@@ -76,8 +78,10 @@ return [
         'removed' => 'Removed ":item" from your wishlist',
         'stargazers' => 'Stargazer|Stargazers',
         'title' => 'Wishlist',
+        'owner_title' => ":user's Wishlist",
         'remove' => 'Remove from Wishlist',
         'empty' => 'There are no items in your wishlist.',
+        'empty_guest' => "There are no items in :user's wishlist",
         'add' => 'Why not <a href=":link">search for some items to add</a>?',
     ],
 
@@ -86,8 +90,10 @@ return [
         'removed' => 'Removed ":item" from your closet',
         'owners' => 'Owner|Owners',
         'title' => 'Closet',
+        'owner_title' => ":user's Closet",
         'remove' => 'Remove from Closet',
         'empty' => 'There are no items in your closet.',
+        'empty_guest' => "There are no items in :user's closet",
         'add' => 'Why not <a href=":link">search for some items to add</a>?',
     ],
 

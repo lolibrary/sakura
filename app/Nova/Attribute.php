@@ -7,8 +7,9 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use YesWeDev\Nova\Translatable\Translatable;
 
-class Attribute extends Resource
+class Attribute extends TranslatableResource
 {
     /**
      * The model the resource corresponds to.
@@ -50,9 +51,10 @@ class Attribute extends Resource
                 ->updateRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/', 'unique:attributes,slug,{{resourceId}}')
                 ->hideFromIndex(),
 
-            Text::make('Name')
+            Translatable::make('Name')
+                ->indexLocale('en')
                 ->sortable()
-                ->rules('required', 'string', 'min:2', 'max:255'),
+                ->rules('required', 'min:2', 'max:255'),
 
             Text::make('Value')
                 ->readonly(),

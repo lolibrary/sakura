@@ -8,8 +8,9 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use YesWeDev\Nova\Translatable\Translatable;
 
-class Category extends Resource
+class Category extends TranslatableResource
 {
     /**
      * The model the resource corresponds to.
@@ -31,8 +32,9 @@ class Category extends Resource
      * @var array
      */
     public static $search = [
-        'name', 'slug',
+        'slug',
     ];
+
 
     /**
      * Get the fields displayed by the resource.
@@ -50,9 +52,10 @@ class Category extends Resource
                 ->path('categories')
                 ->nullable(),
 
-            Text::make('Name')
+            Translatable::make('Name')
+                ->indexLocale('en')
                 ->sortable()
-                ->rules('required', 'string', 'min:2', 'max:255'),
+                ->rules('required', 'min:2', 'max:255'),
 
             Text::make('Slug')
                 ->sortable()

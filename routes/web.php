@@ -24,7 +24,9 @@ Route::prefix('profile')->group(function () {
     Route::get('/', 'ProfileController@profile')->name('profile');
     Route::post('/', 'ProfileController@update')->name('update');
     Route::get('closet', 'ProfileController@closet')->name('closet');
+    Route::get('{username}/closet', 'PublicProfileController@closet')->name('public_closet');
     Route::get('wishlist', 'ProfileController@wishlist')->name('wishlist');
+    Route::get('{username}/wishlist', 'PublicProfileController@wishlist')->name('public_wishlist');
 });
 
 // auth endpoint (for mediawiki)

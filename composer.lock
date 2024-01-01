@@ -4,8 +4,93 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "91458ad06298aa3ef8283258e08f8c8d",
+    "content-hash": "f1708edd25f3fe0e26c37fb023ae62ff",
     "packages": [
+        {
+            "name": "astrotomic/laravel-translatable",
+            "version": "v11.9.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Astrotomic/laravel-translatable.git",
+                "reference": "d853a3c34be42941dc83c5cddd9e1e98c71abae1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Astrotomic/laravel-translatable/zipball/d853a3c34be42941dc83c5cddd9e1e98c71abae1",
+                "reference": "d853a3c34be42941dc83c5cddd9e1e98c71abae1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/database": "5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/support": "5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "3.8.* || ^4.0 || ^5.0 || ^6.0",
+                "phpunit/phpunit": "^8.0 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Astrotomic\\Translatable\\TranslatableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Astrotomic\\Translatable\\": "src/Translatable/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tom Witkowski",
+                    "email": "gummibeer@astrotomic.info",
+                    "homepage": "https://gummibeer.de",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Dimitrios Savvopoulos",
+                    "email": "ds@dimsav.com",
+                    "homepage": "http://dimsav.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel package for multilingual models",
+            "homepage": "https://astrotomic.info",
+            "keywords": [
+                "database",
+                "language",
+                "laravel",
+                "translation"
+            ],
+            "support": {
+                "docs": "https://docs.astrotomic.info/laravel-translatable",
+                "email": "dev@astrotomic.info",
+                "issues": "https://github.com/Astrotomic/laravel-translatable/issues",
+                "source": "https://github.com/Astrotomic/laravel-translatable"
+            },
+            "funding": [
+                {
+                    "url": "https://offset.earth/treeware",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/Gummibeer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://issuehunt.io/r/astrotomic",
+                    "type": "issuehunt"
+                }
+            ],
+            "time": "2020-11-19T14:10:38+00:00"
+        },
         {
             "name": "aws/aws-sdk-php",
             "version": "3.147.7",
@@ -7388,6 +7473,53 @@
             "time": "2020-03-12T08:39:15+00:00"
         },
         {
+            "name": "yeswedev/nova-translatable",
+            "version": "0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yeswedev-team/ywd_nova-translatable.git",
+                "reference": "48aac4ec6b9526b3e04e2efc49f87ed9c8e2605a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yeswedev-team/ywd_nova-translatable/zipball/48aac4ec6b9526b3e04e2efc49f87ed9c8e2605a",
+                "reference": "48aac4ec6b9526b3e04e2efc49f87ed9c8e2605a",
+                "shasum": ""
+            },
+            "require": {
+                "astrotomic/laravel-translatable": "^11.1",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "YesWeDev\\Nova\\Translatable\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "YesWeDev\\Nova\\Translatable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field for dimsav/laravel-translatable.",
+            "keywords": [
+                "laravel",
+                "nova",
+                "translatable"
+            ],
+            "support": {
+                "issues": "https://github.com/yeswedev-team/ywd_nova-translatable/issues",
+                "source": "https://github.com/yeswedev-team/ywd_nova-translatable/tree/0.9"
+            },
+            "time": "2019-06-21T11:48:55+00:00"
+        },
+        {
             "name": "zendframework/zend-diactoros",
             "version": "2.2.1",
             "source": {
@@ -9756,7 +9888,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4",
+        "php": "^7.3",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-pdo": "*"

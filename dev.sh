@@ -18,6 +18,7 @@ else
     ln -s /srv/public/fonts /srv/fonts
     ln -s /srv/public/vendor /srv/vendor
     ln -s /srv/public/images /srv/images
+    ln -s /srv/public/vendor/nova /srv/vendor/nova
     ln -s /srv/public/categories /srv/categories
     php -S 0.0.0.0:3000 /srv/server.php
 fi

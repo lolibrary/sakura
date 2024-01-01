@@ -48,7 +48,9 @@
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @foreach(config('app.locales') as $key => $value)
+                                @if ($key != 'en')
                                 <a class="dropdown-item" href="{{ route('set_lang', ['lang' => $key]) }}">{{ $value }}</a>
+                                @endif
                                 @endforeach
                             </div>
                         </li>

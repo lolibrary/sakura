@@ -28,8 +28,9 @@ class ProfileController extends Controller
     public function profile()
     {
         $user = Auth::user();
+        $isOwner = true;
 
-        return view('profile.index', compact('user'));
+        return view('profile.index', compact('user', 'isOwner'));
     }
 
     /**
@@ -72,6 +73,9 @@ class ProfileController extends Controller
             $user->password = Hash::make($validatedData['password']);
         }
 
+        $user->public_closet = $request->has('public_closet') == '1' ? '1' : '0';
+        $user->public_wishlist = $request->has('public_wishlist') == '1' ? '1' : '0';
+
         $user->save();
         
         return redirect('profile')->with('status', $status);
@@ -86,9 +90,8 @@ class ProfileController extends Controller
     public function closet(Request $request)
     {
         $user = Auth::user();
-        $items = $user->closet($request->input('order'))->paginate(24);
 
-        return view('profile.closet', compact('user', 'items'));
+        return redirect()->route('public_closet', ['username' => $user->username]);
     }
 
     /**
@@ -100,8 +103,6 @@ class ProfileController extends Controller
     public function wishlist(Request $request)
     {
         $user = Auth::user();
-        $items = $user->wishlist($request->input('order'))->paginate(24);
-
-        return view('profile.wishlist', compact('user', 'items'));
+        return redirect()->route('public_wishlist', ['username' => $user->username]);
     }
 }

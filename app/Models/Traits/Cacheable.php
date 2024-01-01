@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models\Traits;
+use Illuminate\Support\Facades\App;
 
 trait Cacheable
 {
@@ -24,9 +25,10 @@ trait Cacheable
      */
     public static function cacheKey()
     {
+        $locale = App::getLocale();
         $key = mb_strtolower(class_basename(static::class));
 
-        return 'models:'.$key;
+        return 'models:'.$locale.':'.$key;
     }
 
     /**

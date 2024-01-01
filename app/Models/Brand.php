@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 use App\Models\Traits\Cacheable;
 
 /**
@@ -17,9 +19,18 @@ use App\Models\Traits\Cacheable;
  * @property \App\Models\Image $image The {@link \App\Image image} representing this brand, usually a logo.
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $items
  */
-class Brand extends Model
+class Brand extends Model implements TranslatableContract
 {
     use Cacheable;
+    use Translatable;
+
+    /**
+     * Translatable attributes.
+     *
+     * @var array
+     */
+    public $translatedAttributes = ['name'];
+    public $useTranslationFallback = true;
 
     /**
      * The attributes not protected against mass assignment.
