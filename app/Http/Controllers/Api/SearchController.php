@@ -70,7 +70,7 @@ class SearchController extends Base
 
         $query->where('status', Item::PUBLISHED);
 
-        $paginator = $query->paginate(24);
+        $paginator = $query->paginate(24)->appends(['search' => $search]);
 
         $paginator->each(function (Item $item) {
             $item->image = Storage::cloud()->url($item->image);
