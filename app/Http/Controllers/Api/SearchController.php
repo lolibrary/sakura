@@ -100,7 +100,12 @@ class SearchController extends Base
             return !(str_contains($key, '_matcher') && $value == 'OR');
         }
 
-        return array_filter($all_params, strip_def_match, ARRAY_FILTER_USE_BOTH);
+        function array_str($value) {
+            return is_array($value) ? implode(",", $value) : $value;
+        }
+        $filtered = array_filter($all_params, 'strip_def_match', ARRAY_FILTER_USE_BOTH);
+
+        return array_map(function($value){ return is_array($value) ? implode(",", $value) : $value; }, $filtered);
     }
 
     /**
