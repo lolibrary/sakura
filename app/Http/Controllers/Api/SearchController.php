@@ -70,7 +70,9 @@ class SearchController extends Base
 
         $query->where('status', Item::PUBLISHED);
 
-        $paginator = $query->paginate(24)->appends($request->all());
+        $params = form_to_query($request);
+
+        $paginator = $query->paginate(24)->appends($params);
 
         $paginator->each(function (Item $item) {
             $item->image = Storage::cloud()->url($item->image);
@@ -88,6 +90,17 @@ class SearchController extends Base
         });
 
         return $paginator;
+    }
+
+    protected function form_to_query(Request $request)
+    {
+        $all_params = $request->all();
+        
+        function strip_def_match($value, $key) {
+            return !(str_contains($key, '_matcher') && $value == 'OR');
+        }
+
+        return array_filter($all_params, strip_def_match, ARRAY_FILTER_USE_BOTH);
     }
 
     /**
