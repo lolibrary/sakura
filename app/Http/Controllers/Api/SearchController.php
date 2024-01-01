@@ -70,7 +70,7 @@ class SearchController extends Base
 
         $query->where('status', Item::PUBLISHED);
 
-        $params = form_to_query($request);
+        $params = $this->form_to_query($request);
 
         $paginator = $query->paginate(24)->appends($params);
 
