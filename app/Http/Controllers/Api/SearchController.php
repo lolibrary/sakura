@@ -103,7 +103,7 @@ class SearchController extends Base
         function array_str($value) {
             return is_array($value) ? implode(",", $value) : $value;
         }
-        $filtered = array_filter($all_params, 'strip_def_match', ARRAY_FILTER_USE_BOTH);
+        $filtered = array_filter($all_params, function($value, $key) { return !(str_contains($key, '_matcher') && $value == 'OR'); }, ARRAY_FILTER_USE_BOTH);
 
         return array_map(function($value){ return is_array($value) ? implode(",", $value) : $value; }, $filtered);
     }
