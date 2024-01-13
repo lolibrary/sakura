@@ -6,9 +6,9 @@
       @foreach ($sections as $name => $items)
         <div class="pb-2">
             <label class="control-label" for="{{$name}}">{{ __('ui.search.' . $name)}}</label>
-            <select style="width: 100%" name="{{$name}}" id="{{$name}}" data-placeholder="Tap to filter" multiple class="form-control form-control-chosen form-control-filter">
+            <select style="width: 100%" name="{{$name}}[]" id="{{$name}}" data-placeholder="Tap to filter" multiple class="form-control form-control-chosen form-control-filter">
               @foreach($items as $item)
-              <option value ="{{$item->slug}}" @if(str_contains(request($name, ""), $item->slug)) selected @endif> {{ __($item->name) }}</option>
+              <option value ="{{$item->slug}}" @if(in_array($item->slug, request($name, []) )) selected @endif> {{ __($item->name) }}</option>
               @endforeach
             </select>
             <div class="match_type"> {{__('ui.search.match_type')}}

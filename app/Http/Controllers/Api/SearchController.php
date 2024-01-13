@@ -98,7 +98,7 @@ class SearchController extends Base
         
         $filtered = array_filter($all_params, function($value, $key) { return !(str_contains($key, '_matcher') && $value == 'OR'); }, ARRAY_FILTER_USE_BOTH);
 
-        return array_map(function($value){ return is_array($value) ? implode(",", $value) : $value; }, $filtered);
+        return  $filtered;
     }
 
     /**
@@ -114,7 +114,7 @@ class SearchController extends Base
             [$singular, $plural] = [Str::singular($relation), Str::plural($relation)];
 
             $models = (array) $request->input($plural) ?? $request->input($singular);
-            $matcher = $request->input($singular . "_matcher") ?? "OR";
+            $matcher = $request->input($plural . "_matcher") ?? "OR";
 
             if (count($models) > 0) {
                 if ($matcher == "AND") {
