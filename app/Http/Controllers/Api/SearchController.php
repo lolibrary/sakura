@@ -96,13 +96,6 @@ class SearchController extends Base
     {
         $all_params = $request->all();
         
-        function strip_def_match($value, $key) {
-            return !(str_contains($key, '_matcher') && $value == 'OR');
-        }
-
-        function array_str($value) {
-            return is_array($value) ? implode(",", $value) : $value;
-        }
         $filtered = array_filter($all_params, function($value, $key) { return !(str_contains($key, '_matcher') && $value == 'OR'); }, ARRAY_FILTER_USE_BOTH);
 
         return array_map(function($value){ return is_array($value) ? implode(",", $value) : $value; }, $filtered);
