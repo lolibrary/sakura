@@ -55,7 +55,7 @@ class RegisterController extends Controller
                 'string',
                 'min:3',
                 'max:40',
-                'regex:/^[^-_][0-9a-z_-]+$/u',
+                'regex:/^[0-9a-z][0-9a-z_-]+$/u',
                 'unique:users',
             ],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
