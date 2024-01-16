@@ -13,15 +13,6 @@ $(() => {
         doSearch();
     })
 
-    function matchVisibility(filter) {
-        let matcher = filter.nextAll('.match_type');
-        if (filter.val().length > 0) {
-            matcher.show();
-        } else {
-            matcher.hide();
-        }
-    }
-
     $('button[name="action:search"]')
     .on('click', (evt) => {
         triggerSearch(evt)
@@ -69,6 +60,15 @@ const headers = {
 
 const results = $('#search-results');
 const loader = $('#search-results-loading');
+
+function matchVisibility(filter) {
+    let matcher = filter.nextAll('.match_type');
+    if (filter.val().length > 0) {
+        matcher.show();
+    } else {
+        matcher.hide();
+    }
+}
 
 function triggerSearch(evt) {
     evt.stopPropagation();
