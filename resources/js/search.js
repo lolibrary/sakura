@@ -31,7 +31,7 @@ $(() => {
         .on('click', (evt) => {
             $(evt.currentTarget).parent().parent().find('label').removeClass('active');
             $(evt.currentTarget).parent().addClass('active');
-            triggerSearch(evt)
+            doSearch();
         })
 
     $('#search').on('keypress', (evt) => {
