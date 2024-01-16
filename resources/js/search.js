@@ -8,7 +8,7 @@ $(() => {
     });
 
     $('.form-control-chosen').chosen().on('change', (evt) => {
-        let filter = $(evt.target);
+        let filter = $(evt.currentTarget);
         matchVisibility(filter);
         doSearch();
     })
@@ -22,10 +22,17 @@ $(() => {
         }
     }
 
-    $('button[name="action:search"], .match_type input:radio, .year_match_type input:radio')
+    $('button[name="action:search"]')
     .on('click', (evt) => {
         triggerSearch(evt)
     })
+
+    $('.match_type input:radio, .year_match_type input:radio')
+        .on('click', (evt) => {
+            $(evt.currentTarget).parent().parent().find('label').removeClass('active');
+            $(evt.currentTarget).parent().addClass('active');
+            triggerSearch(evt)
+        })
 
     $('#search').on('keypress', (evt) => {
         if (evt.which == 13) {
@@ -72,7 +79,7 @@ function triggerSearch(evt) {
 function getFormValues() {
     let form_values = $('#search-form').serializeArray();
     let exclude_matching = ['search'];
-    let filter_names = form_values.map((form_obj) => form_obj.name);
+    let filter_names = form_values.map((form_obj) => form_obj.name.replace('[]', ''));
     return form_values.filter((form_obj) => {
         let filter_name = form_obj.name.toLowerCase();
         if (filter_name === 'search' && form_obj.value == '') {
