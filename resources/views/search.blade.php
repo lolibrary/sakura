@@ -26,7 +26,11 @@
         <span id="search-results">
           @include('components.search-results')
         </span>
-
+        <div class="row text-center p-5" id="search-results-loading" style="display: none">
+          <div class="col text-center text-muted">
+            <i class="far fa-5x fa-spinner fa-pulse"></i>
+          </div>
+        </div>
       </div>
     </div>
     </form>

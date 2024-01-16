@@ -243,6 +243,19 @@
   }
 }
 .chosen-container-multi {
+  &:after {
+      display: block;
+      position: absolute;
+      top: 0.1rem;
+      right: 0;
+      width: 2rem;
+      height: 2rem;
+      content: "";
+      background-image: svg-uri("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='#{$chosen-svg-color}' d='#{$chosen-svg-down}'/></svg>");
+      background-size: 2rem 2rem;
+      background-position: center center;
+      background-repeat: no-repeat;
+  }
   .chosen-choices {
     background-color: $chosen-background;
     border: $chosen-border;

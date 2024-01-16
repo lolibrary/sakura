@@ -46,10 +46,12 @@ class SearchRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $years = explode(",", $this->year);
-        $this->merge([
-            'years' => array_map('intval', $years),
-        ]);
+        if (!empty($this->year)) {
+            $years = explode(",", $this->year);
+            $this->merge([
+                'years' => array_map('intval', $years),
+            ]);
+        }
     }
 
 

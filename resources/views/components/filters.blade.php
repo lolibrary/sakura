@@ -14,13 +14,13 @@
             <div class="match_type"> {{__('ui.search.match_type')}}
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-outline-secondary active btn-sm match-any">
-                    <input type="radio" name="{{ $name }}_matcher" value="OR" id="{{ $name }}_match_any" autocomplete="off" checked> {{__('ui.search.match_any')}}
+                    <input type="radio" name="{{ $name }}_matcher" value="OR" id="{{ $name }}_match_any" autocomplete="off" @if(request($name ."_matcher", "OR") == "OR") checked @endif> {{__('ui.search.match_any')}}
                   </label>
                   <label class="btn btn-outline-secondary btn-sm match-all">
-                    <input type="radio" name="{{ $name }}_matcher" value="AND" id="{{ $name }}_match_all" autocomplete="off"> {{__('ui.search.match_all')}}
+                    <input type="radio" name="{{ $name }}_matcher" value="AND" id="{{ $name }}_match_all" autocomplete="off" @if(request($name ."_matcher") == "AND") checked @endif> {{__('ui.search.match_all')}}
                   </label>
                   <label class="btn btn-outline-secondary btn-sm match-none">
-                    <input type="radio" name="{{ $name }}_matcher" value="NONE" id="{{ $name }}_match_none" autocomplete="off"> {{__('ui.search.match_none')}}
+                    <input type="radio" name="{{ $name }}_matcher" value="NONE" id="{{ $name }}_match_none" autocomplete="off" @if(request($name ."_matcher") == "NONE") checked @endif> {{__('ui.search.match_none')}}
                   </label>
                 </div>
             </div>
