@@ -37,6 +37,6 @@ class SearchController extends Controller
         $search = new ApiSearchController();
         $items = $search->search($request, $query);
 
-        return view('components.search-results', ['items' => $items]);
+        return view('components.search-results', ['items' => $items, 'max_year' => (date('Y') + 3)]);
     }
 }

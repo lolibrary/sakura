@@ -22,7 +22,7 @@ $(() => {
 
             $('button[name="action:search"]')
             .on('click', (evt) => {
-                searchJs.triggerSearch(evt)
+                searchJs.triggerSearch(evt);
             });
 
             $('.match_type input:radio, .year_match_type input:radio')
@@ -46,7 +46,9 @@ $(() => {
                 $('select.form-control-filter').val([]);
                 $('select.form-control-filter').trigger('chosen:updated');
                 $('.match_type').hide();
-                searchJs.year_slider.slider('setValue', [1970, 2023]);
+                let slider_min = parseInt($("#year-slider").data('slider-min'), 10);
+                let slider_max = parseInt($("#year-slider").data('slider-max'));
+                searchJs.year_slider.slider('setValue', [slider_min, slider_max]);
 
                 let any = $('.match-any');
                 any.find('input').prop('checked', true);

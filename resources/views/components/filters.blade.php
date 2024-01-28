@@ -33,21 +33,21 @@
                 type="text"
                 name="year"
                 id="year-slider"
-                data-slider-ticks="[1970, 2023]"
-                data-slider-ticks-labels='["1970", "2023"]'
+                data-slider-ticks="[1970, {{ (date('Y') + 3) }}]"
+                data-slider-ticks-labels='["1970", "{{ (date('Y') + 3) }}"]'
                 data-slider-min="1970"
-                data-slider-max="2023"
+                data-slider-max="{{ (date('Y') + 3) }}"
                 data-slider-step="1"
                 data-slider-tooltip-split="true"
-                data-slider-value="[{{ request('year', '1970,2023') }}]"
+                data-slider-value="[{{ request('year', '1970,' . (date('Y') + 3) ) }}]"
             >
             </div>
             <div class="year_match_type"> {{__('ui.search.match_type')}}
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-outline-secondary active btn-sm">
-                    <input type="radio" name="year_matcher" value="OR" id="year_match_any" autocomplete="off" @if(request("year_matcher") == "OR") checked @endif> {{__('ui.search.match_any')}}
+                  <label class="btn btn-outline-secondary active btn-sm match-any">
+                    <input type="radio" name="year_matcher" value="OR" id="year_match_any" autocomplete="off" @if(request("year_matcher") != "NOT") checked @endif> {{__('ui.search.match_any')}}
                   </label>
-                  <label class="btn btn-outline-secondary btn-sm">
+                  <label class="btn btn-outline-secondary btn-sm match-none">
                     <input type="radio" name="year_matcher" value="NOT" id="year_match_none" autocomplete="off" @if(request("year_matcher") == "NOT") checked @endif> {{__('ui.search.match_none')}}
                   </label>
                 </div>
