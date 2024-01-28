@@ -47,9 +47,12 @@ class SearchRequest extends FormRequest
     protected function prepareForValidation()
     {
         if (!empty($this->year)) {
-            $years = explode(",", $this->year);
+            $years = array_map('intval', explode(",", $this->year));
+            sort($years);
+            $multiple = count($years) > 1;
             $this->merge([
-                'years' => array_map('intval', $years),
+                'start_year' => $years[0],
+                'end_year' => ($multiple ? end($years) : date('Y') + 3)
             ]);
         }
     }
@@ -85,9 +88,8 @@ class SearchRequest extends FormRequest
             'tags' => 'sometimes|array',
             'tags.*' => 'required|string|exists:tags,slug',
 
-            // 'year' => 'sometimes|required|integer|min:1970|max:'.(date('Y') + 3),
-            // 'years' => 'sometimes|array',
-            // 'years.*' => 'required|integer|min:1970|max:'.(date('Y') + 3),
+            'start_year' => 'sometimes|required|integer|min:1970|max:'.(date('Y') + 3),
+            'end_year' => 'sometimes|required|integer|min:1970|max:'.(date('Y') + 3),
         ];
     }
 }

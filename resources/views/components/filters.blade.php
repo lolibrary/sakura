@@ -20,7 +20,7 @@
                     <input type="radio" name="{{ $name }}_matcher" value="AND" id="{{ $name }}_match_all" autocomplete="off" @if(request($name ."_matcher") == "AND") checked @endif> {{__('ui.search.match_all')}}
                   </label>
                   <label class="btn btn-outline-secondary btn-sm match-none">
-                    <input type="radio" name="{{ $name }}_matcher" value="NONE" id="{{ $name }}_match_none" autocomplete="off" @if(request($name ."_matcher") == "NONE") checked @endif> {{__('ui.search.match_none')}}
+                    <input type="radio" name="{{ $name }}_matcher" value="NOT" id="{{ $name }}_match_none" autocomplete="off" @if(request($name ."_matcher") == "NOT") checked @endif> {{__('ui.search.match_none')}}
                   </label>
                 </div>
             </div>
@@ -45,10 +45,10 @@
             <div class="year_match_type"> {{__('ui.search.match_type')}}
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-outline-secondary active btn-sm">
-                    <input type="radio" name="year_matcher" value="OR" id="year_match_any" autocomplete="off" checked> {{__('ui.search.match_any')}}
+                    <input type="radio" name="year_matcher" value="OR" id="year_match_any" autocomplete="off" @if(request("year_matcher") == "OR") checked @endif> {{__('ui.search.match_any')}}
                   </label>
                   <label class="btn btn-outline-secondary btn-sm">
-                    <input type="radio" name="year_matcher" value="NONE" id="year_match_none" autocomplete="off"> {{__('ui.search.match_none')}}
+                    <input type="radio" name="year_matcher" value="NOT" id="year_match_none" autocomplete="off" @if(request("year_matcher") == "NOT") checked @endif> {{__('ui.search.match_none')}}
                   </label>
                 </div>
             </div>
