@@ -23,16 +23,14 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
-        "vue": "2.6.11",
-        "vue-template-compiler": "2.6.11"
+        "vue-template-compiler": "^2.7.16"
     },
     "dependencies": {
         "@fortawesome/fontawesome-pro": "file:/../fortawesome-fontawesome-pro-5.15.1.tgz",
-        "bootstrap4c-chosen": "^1.1.1",
+        "bootstrap-slider": "11.0.2",
         "qs": "^6.8.0",
         "sass-svg-uri": "^1.0.0",
         "simple-lightbox": "^2.1.0",
-        "vue-select": "^3.1.0",
-        "bootstrap-slider": "11.0.2"
+        "tom-select": "^2.3.1"
     }
 }

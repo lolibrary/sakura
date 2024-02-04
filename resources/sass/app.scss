@@ -12,10 +12,11 @@
 @import '~bootstrap/scss/bootstrap';
 
 // Chosen
-@import '~sass-svg-uri/svg-uri';
-@import 'chosen/component-variables';
-@import 'chosen/component-chosen';
+// @import '~sass-svg-uri/svg-uri';
+// @import 'chosen/component-variables';
+// @import 'chosen/component-chosen';
 
+@import '~tom-select/dist/scss/tom-select.bootstrap4';
 // Bootstrap-slider
 @import 'slider/bootstrap-slider';
 
@@ -30,6 +31,8 @@
 @import "component/items";
 @import "component/forms";
 @import "component/footer";
+
+$select-arrow-color: $gray-500;
 
 .navbar-laravel {
   background-color: #fff;
@@ -71,4 +74,50 @@
 
 .year_match_type {
   display: block;
+}
+
+.ts-control:not(.rtl) {
+	padding-right:	max( var(--ts-pr-min), calc( var(--ts-pr-clear-button) + var(--ts-pr-caret)) ) !important;
+}
+
+.ts-control.rtl {
+	padding-left:	max( var(--ts-pr-min), calc( var(--ts-pr-clear-button) + var(--ts-pr-caret)) ) !important;
+}
+
+.ts-wrapper {
+  .ts-control {
+    --ts-pr-caret: 2rem;
+
+    &::after {
+      content: ' ';
+      display: block;
+      position: absolute;
+      top: 50%;
+      margin-top: round(-0.5 * $select-arrow-size);
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: $select-arrow-size $select-arrow-size 0 $select-arrow-size;
+      border-color: $select-arrow-color transparent transparent transparent;
+    }
+    
+    &:not(.rtl)::after {
+      right: $select-arrow-offset;
+    }
+    
+    &.rtl::after {
+      left: $select-arrow-offset;
+    }
+  }
+
+  &.dropdown-active .ts-control::after {
+    margin-top: $select-arrow-size * -0.8;
+    border-width: 0 $select-arrow-size $select-arrow-size $select-arrow-size;
+    border-color: transparent transparent $select-arrow-color transparent;
+  }
+
+  &.input-active .ts-control,
+  &.input-active .ts-control input {
+    cursor: text;
+  }
 }

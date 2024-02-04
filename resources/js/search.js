@@ -13,11 +13,16 @@ $(() => {
             searchJs.year_slider.on('slideStop', (evt) => {
                 searchJs.doSearch();
             });
+            searchJs.filters = [];
 
-            $('.form-control-chosen').chosen().on('change', (evt) => {
-                let filter = $(evt.currentTarget);
-                searchJs.matchVisibility(filter);
-                searchJs.doSearch();
+            let selectSettings = {closeAfterSelect: true, plugins: ['remove_button']};
+            document.querySelectorAll('.form-control-chosen').forEach((el)=>{
+                 let tom = new TomSelect(el, selectSettings);
+                 tom.on('change', (val) => {
+                    searchJs.matchVisibility(tom, val);
+                    searchJs.doSearch();
+                });
+                searchJs.filters.push(tom);
             });
 
             $('button[name="action:search"]')
@@ -43,8 +48,7 @@ $(() => {
                 evt.stopPropagation();
                 evt.preventDefault();
 
-                $('select.form-control-filter').val([]);
-                $('select.form-control-filter').trigger('chosen:updated');
+                searchJs.filters.forEach((filter) => filter.clear());
                 $('.match_type').hide();
                 let slider_min = parseInt($("#year-slider").data('slider-min'), 10);
                 let slider_max = parseInt($("#year-slider").data('slider-max'));
@@ -60,7 +64,7 @@ $(() => {
                 searchJs.doSearch();
             });
 
-            $('select.form-control-filter').each(function(){searchJs.matchVisibility($(this))});
+            searchJs.filters.forEach((filter) => {searchJs.matchVisibility(filter, filter.getValue());});
         },
 
         triggerSearch: (evt) => {
@@ -82,9 +86,9 @@ $(() => {
                     searchJs.results.html(text);
                 });
         },
-        matchVisibility: (filter) => {
-            let matcher = filter.nextAll('.match_type');
-            if (filter.val().length > 0) {
+        matchVisibility: (filter, val) => {
+            let matcher = $(filter.wrapper).nextAll('.match_type');
+            if (val.length > 0) {
                 matcher.show();
             } else {
                 matcher.hide();

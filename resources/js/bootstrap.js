@@ -19,7 +19,7 @@ try {
  * This will just attach itself to any .form-control-chosen element.
  */
 
-window.chosen = require('chosen-js');
+window.TomSelect = require('tom-select');
 
 /**
  * simple-lightbox is a lightweight lightbox interface, to make paging through
@@ -41,7 +41,6 @@ window.chosen = require('chosen-js');
  */
 
 $(() => {
-    $('.form-control-chosen').chosen()
     $('[data-toggle="tooltip"]').tooltip()
     let lightbox = new SimpleLightbox({elements: '[data-lightbox="show"]'});
 });
