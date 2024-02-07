@@ -11,6 +11,7 @@ $(() => {
             searchJs.loader = $('#search-results-loading');
             searchJs.results = $('#search-results');
             searchJs.year_slider.on('slideStop', (evt) => {
+                searchJs.yearMatchVisibility();
                 searchJs.doSearch();
             });
             searchJs.filters = [];
@@ -49,9 +50,9 @@ $(() => {
                 evt.preventDefault();
 
                 searchJs.filters.forEach((filter) => filter.clear());
-                $('.match_type').hide();
+                $('.match_type, .year_match_type').hide();
                 let slider_min = parseInt($("#year-slider").data('slider-min'), 10);
-                let slider_max = parseInt($("#year-slider").data('slider-max'));
+                let slider_max = parseInt($("#year-slider").data('slider-max'), 10);
                 searchJs.year_slider.slider('setValue', [slider_min, slider_max]);
 
                 let any = $('.match-any');
@@ -65,6 +66,7 @@ $(() => {
             });
 
             searchJs.filters.forEach((filter) => {searchJs.matchVisibility(filter, filter.getValue());});
+            searchJs.yearMatchVisibility();
         },
 
         triggerSearch: (evt) => {
@@ -94,7 +96,24 @@ $(() => {
                 matcher.hide();
             }
         },
-
+        useYear:() => {
+            const val = searchJs.year_slider.slider('getValue').sort();
+            const min = $("#year-slider").data('slider-min');
+            const max = $("#year-slider").data('slider-max');
+            if (val[0] == min && val[1] == max) {
+                return false;
+            } else {
+                return true;
+            }
+        },
+        yearMatchVisibility: () => {
+            let matcher = $(".year_match_type");
+            if (searchJs.useYear()) {
+                matcher.show();
+            } else {
+                matcher.hide();
+            }
+        },
         getFormValues: () => {
             let form_values = $('#search-form').serializeArray();
             let exclude_matching = ['search'];
@@ -106,6 +125,9 @@ $(() => {
                 }
                 if (exclude_matching.includes(filter_name)) {
                     return true;
+                }
+                if (filter_name === 'year' || filter_name == 'year_matcher') {
+                    return searchJs.useYear();
                 }
                 let match_index = filter_name.search('matcher');
                 if (match_index !== -1) {
