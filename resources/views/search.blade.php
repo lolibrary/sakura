@@ -31,6 +31,12 @@
             <i class="far fa-5x fa-spinner fa-pulse"></i>
           </div>
         </div>
+        <div class="row text-center p-5" id="search-results-error" style="display: none">
+          <div class="col text-center">
+          <img style="max-height: 300px; max-width: 100%" src="{{ cdn_link('assets/banners/banner01.png') }}" alt="">
+          <p>{{__('ui.search.error')}}</p>
+          </div>
+        </div>
       </div>
     </div>
     </form>

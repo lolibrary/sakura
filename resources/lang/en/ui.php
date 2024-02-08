@@ -108,6 +108,7 @@ return [
         'match_any' => 'Any',
         'match_all' => 'All',
         'match_none' => 'None',
+        'error' => 'Something went wrong, please try again later!'
     ],
 
     'item' => [

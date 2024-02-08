@@ -10,6 +10,7 @@ $(() => {
             searchJs.year_slider = $("#year-slider").slider();
             searchJs.loader = $('#search-results-loading');
             searchJs.results = $('#search-results');
+            searchJs.error = $('#search-results-error');
             searchJs.year_slider.on('slideStop', (evt) => {
                 searchJs.yearMatchVisibility();
                 searchJs.doSearch();
@@ -79,14 +80,24 @@ $(() => {
             let form_values = searchJs.getFormValues();
             searchJs.loader.css('display', 'block');
             searchJs.results.css('display', 'none');
+            searchJs.error.css('display', 'none');
             window.history.pushState(null, null, '/search/?' + $.param(form_values));
             fetch('/search', { method: "POST", headers: searchJs.headers, body: new FormData(form)})
-                .then((response) => response.text())
-                .then((text) => {
-                    searchJs.loader.css('display', 'none');
-                    searchJs.results.css('display', 'block');
-                    searchJs.results.html(text);
-                });
+                .then((response) => {
+                    if (response.ok()) {
+                        return response.text()
+                        .then((text) => {
+                            searchJs.loader.css('display', 'none');
+                            searchJs.results.css('display', 'block');
+                            searchJs.results.html(text);
+                        });
+
+                    } else {
+                        searchJs.loader.css('display', 'none');
+                        searchJs.error.css('display', 'block');
+                    }
+                })
+                
         },
         matchVisibility: (filter, val) => {
             let matcher = $(filter.wrapper).nextAll('.match_type');
@@ -101,7 +112,8 @@ $(() => {
             const min = $("#year-slider").data('slider-min');
             const max = $("#year-slider").data('slider-max');
             if (val[0] == min && val[1] == max) {
-                return false;
+                const match_type = $(".year_match_type input:checked").val();
+                return (match_type == "NOT");
             } else {
                 return true;
             }
@@ -111,6 +123,13 @@ $(() => {
             if (searchJs.useYear()) {
                 matcher.show();
             } else {
+                let any = $('.match-any');
+                any.find('input').prop('checked', true);
+                any.addClass('active');
+
+                let none = $('.match-none');
+                none.find('input').prop('checked', false);
+                none.removeClass('active');
                 matcher.hide();
             }
         },
