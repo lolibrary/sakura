@@ -84,7 +84,7 @@ $(() => {
             window.history.pushState(null, null, '/search/?' + $.param(form_values));
             fetch('/search', { method: "POST", headers: searchJs.headers, body: new FormData(form)})
                 .then((response) => {
-                    if (response.ok()) {
+                    if (response.ok) {
                         return response.text()
                         .then((text) => {
                             searchJs.loader.css('display', 'none');
