@@ -63,11 +63,11 @@
                             @include('components.navbar.dropdown')
                         @endguest
 
-                        <li class="d-sm-none"><a class="nav-link" href="{{ route('search') }}">{{ __('ui.search') }}</a></li>
+                        <li class="d-sm-none"><a class="nav-link" href="{{ route('search') }}">{{ __('ui.search.title') }}</a></li>
                     </ul>
 
                     <form class="form-inline pl-md-3 d-none d-sm-flex" action="{{ route('search') }}" method="get">
-                        <input class="form-control mr-sm-2" name="search" autocomplete="off" type="search" placeholder="{{ __('ui.search') }}" aria-label="{{ __('ui.search') }}">
+                        <input class="form-control mr-sm-2" name="search" autocomplete="off" type="search" placeholder="{{ __('ui.search.title') }}" aria-label="{{ __('ui.search.title') }}">
                         <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="far fa-search" aria-label="Search Icon"></i></button>
                     </form>
                 </div>
