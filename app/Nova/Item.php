@@ -118,8 +118,8 @@ class Item extends Resource
             BelongsTo::make('Brand')->sortable(),
             AttachMany::make('Category', 'categories', Category::class)->rules('min:1', 'required'),
 
-            Trix::make('Additional Details', 'notes')->alwaysShow(),
-            Trix::make('Sources & Notes', 'internal_notes')->alwaysShow()
+            Trix::make('Notes', 'notes')->alwaysShow(),
+            Trix::make('Internal Notes & Sources', 'internal_notes')->alwaysShow()
                 ->help('Please provide sources and credit images that aren\'t yours'),
 
             new Panel('Submission Details', [
