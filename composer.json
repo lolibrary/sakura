@@ -8,7 +8,7 @@
     ],
     "license": "BSD-3-Clause",
     "require": {
-        "php": "^7.3",
+        "php": "^8",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-pdo": "*",
@@ -21,7 +21,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "league/flysystem-aws-s3-v3": "^3.0",
-        "league/flysystem-cached-adapter": "^3.0",
+        "league/flysystem-cached-adapter": "^1.1.0",
         "lolibrary/image-array": "*",
         "sentry/sentry-laravel": "^4.3.1",
         "stevebauman/purify": "^4.0",
