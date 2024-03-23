@@ -34,7 +34,7 @@ jobs:
       - name: Install JS dependencies
         run: npm install --prefix cache
       - name: Build App
-        run: npm run production --prefix cache
+        run: npm run build --outDir cache
       - name: Docker Build & Push
         run: |
           docker build -t $DOCKER_SHA_TAG .
