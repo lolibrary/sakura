@@ -15,16 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout build tools
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: lolibrary/build
           token: ${{ secrets.PAT }}
       - name: Checkout Sakura
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: cache
       - name: GHCR login
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.PAT }}
