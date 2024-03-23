@@ -1,8 +1,7 @@
 
-import Popper from 'popper.js';
-import _ from 'lodash';
-import jQuery from 'jquery';
-import 'bootstrap';
+window._ = require('lodash');
+window.Popper = require('popper.js').default;
+
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
@@ -10,8 +9,9 @@ import 'bootstrap';
  */
 
 try {
-    window.$ = window.jQuery = jQuery;
+    window.$ = window.jQuery = require('jquery');
 
+    require('bootstrap');
 } catch (e) {}
 
 /**
@@ -20,9 +20,9 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-import axios from 'axios';
+window.axios = require('axios');
 
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -33,7 +33,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 const token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
@@ -43,13 +43,14 @@ if (token) {
  * This will just attach itself to any .form-control-chosen element.
  */
 
-import 'bootstrap4c-chosen';
+window.chosen = require('chosen-js');
+
 /**
  * simple-lightbox is a lightweight lightbox interface, to make paging through
  * item photos a little nicer. It will register on elements with 'data-lightbox="show"'
  */
 
-import SimpleLightbox from 'simple-lightbox';
+ window.SimpleLightbox = require('simple-lightbox');
 
 /**
  * Both chosen and simple-lightbox need to be initialized *after* the rest of the
@@ -57,8 +58,8 @@ import SimpleLightbox from 'simple-lightbox';
  */
 
 $(() => {
-    $('.form-control-chosen').chosen();
-    $('[data-toggle="tooltip"]').tooltip();
+    $('.form-control-chosen').chosen()
+    $('[data-toggle="tooltip"]').tooltip()
     let lightbox = new SimpleLightbox({elements: '[data-lightbox="show"]'});
 });
 

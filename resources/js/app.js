@@ -5,14 +5,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import './bootstrap.js';
+require('./bootstrap');
 
-import Vue from 'vue';
-import VueSelect from 'vue-select';
-import { BFormRadioGroup } from 'bootstrap-vue';
-import Pagination from './components/Pagination.vue';
-import Search from './components/Search.vue';
-import Result from './components/Result.vue';
+window.Vue = require('vue');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -20,11 +15,11 @@ import Result from './components/Result.vue';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('v-pagination', Pagination);
-Vue.component('search-page', Search);
-Vue.component('v-select', VueSelect);
-Vue.component('b-form-radio-group', BFormRadioGroup);
-Vue.component('search-result', Result);
+Vue.component('v-pagination', require('./components/Pagination.vue').default);
+Vue.component('search-page', require('./components/Search.vue').default);
+Vue.component('v-select', require('vue-select').VueSelect);
+Vue.component('b-form-radio-group', require('bootstrap-vue').BFormRadioGroup);
+Vue.component('search-result', require('./components/Result.vue').default);
 
 const app = new Vue({
     el: '#app'
