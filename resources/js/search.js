@@ -56,7 +56,7 @@ import Slider from "bootstrap-slider";
                 $('.match_type, .year_match_type').hide();
                 let slider_min = parseInt($("#year-slider").data('slider-min'), 10);
                 let slider_max = parseInt($("#year-slider").data('slider-max'), 10);
-                searchJs.year_slider.slider('setValue', [slider_min, slider_max]);
+                searchJs.year_slider.setValue([slider_min, slider_max]);
 
                 let any = $('.match-any');
                 any.find('input').prop('checked', true);
@@ -110,7 +110,7 @@ import Slider from "bootstrap-slider";
             }
         },
         useYear:() => {
-            const val = searchJs.year_slider.slider('getValue').sort();
+            const val = searchJs.year_slider.getValue().sort();
             const min = $("#year-slider").data('slider-min');
             const max = $("#year-slider").data('slider-max');
             if (val[0] == min && val[1] == max) {
