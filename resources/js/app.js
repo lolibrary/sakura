@@ -7,7 +7,12 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+import Vue from 'vue';
+import Pagination from './components/Pagination.vue';
+import Search from './components/Search.vue';
+import VueSelect from 'vue-select';
+import Result from './components/Result.vue';
+import { BFormRadioGroup } from 'bootstrap-vue';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,11 +20,11 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('v-pagination', require('./components/Pagination.vue').default);
-Vue.component('search-page', require('./components/Search.vue').default);
-Vue.component('v-select', require('vue-select').VueSelect);
-Vue.component('b-form-radio-group', require('bootstrap-vue').BFormRadioGroup);
-Vue.component('search-result', require('./components/Result.vue').default);
+Vue.component('v-pagination', Pagination);
+Vue.component('search-page', Search);
+Vue.component('v-select', VueSelect);
+Vue.component('b-form-radio-group', BFormRadioGroup);
+Vue.component('search-result', Result);
 
 const app = new Vue({
     el: '#app'
