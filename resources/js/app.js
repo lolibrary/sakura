@@ -1,8 +1,6 @@
 import "@fortawesome/fontawesome-pro/scss/fontawesome.scss";
 import "@fortawesome/fontawesome-pro/scss/light.scss";
 import "@fortawesome/fontawesome-pro/scss/regular.scss";
-import _ from 'lodash';
-import Popper from 'popper.js';
 import jQuery from 'jquery';
 import 'bootstrap';
 import axios from 'axios';
@@ -77,8 +75,9 @@ if (token) {
 
 $(() => {
     // $('.form-control-chosen').chosen();
+    console.log("debug testing;");
     $('[data-toggle="tooltip"]').tooltip();
-    let lightbox = new simpleLightbox({elements: '[data-lightbox="show"]'});
+    new simpleLightbox({elements: '[data-lightbox="show"]'});
 });
 
 const image = document.head.querySelector('meta[name="default-image"]');

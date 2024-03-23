@@ -104,7 +104,7 @@
         </footer>
     </div>
 
-    <!-- Scripts -->
-    @yield('script', '')
+    <!-- Scripts
+    @yield('script', '') -->
 </body>
 </html>
