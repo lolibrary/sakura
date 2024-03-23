@@ -66,6 +66,12 @@ services:
       - ./tests:/srv/tests
       - ./storage:/srv/storage
       - ./config:/srv/config
+      - ./composer.json:/srv/composer.json
+      - ./composer.lock:/srv/composer.lock
+      - ./dev.sh:/srv/dev.sh
+      - ./server.php:/srv/server.php
+      - ./package.json:/srv/package.json
+      - ./yarn.lock:/srv/yarn.lock
     ports:
       - "3000:3000"
     depends_on:

@@ -30,16 +30,26 @@ class SearchController extends Base
         Tag::class => 'tags',
     ];
 
-    /**
+        /**
      * Search for items.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\App\Item[]
      */
-    public function search(SearchRequest $request)
+    public function search_index(SearchRequest $request)
     {
         $query = Item::query();
-
+        return search($request, $query);
+    }
+    /**
+     * Search for items.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\App\Item[]
+     */
+    public function search(SearchRequest $request, Builder $query)
+    {
         $this->filters($request, $query);
         $this->years($request, $query);
 
@@ -60,7 +70,9 @@ class SearchController extends Base
 
         $query->where('status', Item::PUBLISHED);
 
-        $paginator = $query->paginate(24);
+        $params = $this->form_to_query($request);
+
+        $paginator = $query->paginate(24)->appends($params);
 
         $paginator->each(function (Item $item) {
             $item->image = Storage::cloud()->url($item->image);
@@ -80,6 +92,15 @@ class SearchController extends Base
         return $paginator;
     }
 
+    protected function form_to_query(Request $request)
+    {
+        $all_params = $request->all();
+        
+        $filtered = array_filter($all_params, function($value, $key) { return !(str_contains($key, '_matcher') && $value == 'OR'); }, ARRAY_FILTER_USE_BOTH);
+
+        return  $filtered;
+    }
+
     /**
      * Filter relationships.
      *
@@ -93,7 +114,7 @@ class SearchController extends Base
             [$singular, $plural] = [Str::singular($relation), Str::plural($relation)];
 
             $models = (array) $request->input($plural) ?? $request->input($singular);
-            $matcher = $request->input($singular . "_matcher") ?? "OR";
+            $matcher = $request->input($plural . "_matcher") ?? "OR";
 
             if (count($models) > 0) {
                 if ($matcher == "AND") {
@@ -131,22 +152,17 @@ class SearchController extends Base
      */
     protected function years(Request $request, Builder $query)
     {
-        $years = (array) ($request->input('years') ?? $request->input('year'));
+        $start_year = $request->input('start_year');
+        $end_year = $request->input('end_year');
         $matcher = $request->input("year_matcher") ?? "OR";
 
-        if (count($years) > 0) {
-            if ($matcher == "AND") { 
-                foreach ($years as $year) {
-                    $query->where('year', $year);
-                }
+        if ($start_year && $end_year) {
+            if ($matcher == "OR") { 
+                $query->whereBetween('year', [$start_year, $end_year]);
 
             } elseif ($matcher == "NOT") {
+                $query->whereNotBetween('year', [$start_year, $end_year]);
 
-                $not_query = Item::query()->whereIn('year', $years)->select('id')->distinct();
-                $query->whereNotIn('id', $not_query);
-
-            } elseif ($matcher == "OR") {
-                $query->whereIn('year', $years);
             }
         }
     }

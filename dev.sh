@@ -4,11 +4,11 @@ cd /srv
 if [[ "$1" == "SETUP" ]]; then
     composer config http-basic.nova.laravel.com "$NOVA_USERNAME" "$NOVA_API_KEY" --no-interaction
     COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction
-
     cp fortawesome* ../
     npm install
     npm run development
 else
+    COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction
     npm install
     npm run development
 

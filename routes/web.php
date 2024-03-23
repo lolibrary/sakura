@@ -17,6 +17,7 @@ Auth::routes(['verify' => true]);
 Route::get('/', 'HomeController@homepage')->name('home');
 Route::get('/lang', 'HomeController@set_lang')->name('set_lang');
 Route::get('/search', 'SearchController@index')->name('search');
+Route::post('/search', 'SearchController@post')->name('search_post');
 
 // User
 Route::prefix('profile')->group(function () {

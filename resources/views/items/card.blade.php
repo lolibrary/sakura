@@ -3,7 +3,9 @@
         <p class="mb-0"
             title="{{ $item->english_name }}"
             style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis;">
-            {{ $item->english_name }}
+            <a href="{{ $item->url }}">
+                {{ $item->english_name }}
+            </a>
         </p>
         <p class="text-muted small"
             title="{{ $item->foreign_name }}"

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Composers;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -52,5 +53,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('dev', function () {
             return auth()->check() && auth()->user()->developer();
         });
+
     }
 }
