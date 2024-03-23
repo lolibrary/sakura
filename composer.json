@@ -14,7 +14,6 @@
         "ext-pdo": "*",
         "astrotomic/laravel-translatable": "^11.9",
         "dillingham/nova-attach-many": "^1.0",
-        "fideloper/proxy": "^4.0",
         "laravel/framework": "^9.19.0",
         "laravel/nova": "^3.0",
         "laravel/passport": "^10.0",
