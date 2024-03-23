@@ -5,12 +5,7 @@ import jQuery from 'jquery';
 import 'bootstrap';
 import axios from 'axios';
 import simpleLightbox from 'simple-lightbox';
-import Vue from 'vue';
-import Pagination from './components/Pagination.vue';
-import Search from './components/Search.vue';
-import VueSelect from 'vue-select';
-import Result from './components/Result.vue';
-import { BFormRadioGroup } from 'bootstrap-vue';
+import { searchJs } from "./search";
 
 
 /**
@@ -78,6 +73,7 @@ $(() => {
     console.log("debug testing;");
     $('[data-toggle="tooltip"]').tooltip();
     new simpleLightbox({elements: '[data-lightbox="show"]'});
+    searchJs.init();
 });
 
 const image = document.head.querySelector('meta[name="default-image"]');

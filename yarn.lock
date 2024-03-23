@@ -1060,6 +1060,18 @@
     consola "^2.15.0"
     node-fetch "^2.6.7"
 
+"@orchidjs/sifter@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@orchidjs/sifter/-/sifter-1.0.3.tgz"
+  integrity sha512-zCZbwKegHytfsPm8Amcfh7v/4vHqTAaOu6xFswBYcn8nznBOuseu6COB2ON7ez0tFV0mKL0nRNnCiZZA+lU9/g==
+  dependencies:
+    "@orchidjs/unicode-variants" "^1.0.4"
+
+"@orchidjs/unicode-variants@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/@orchidjs/unicode-variants/-/unicode-variants-1.0.4.tgz"
+  integrity sha512-NvVBRnZNE+dugiXERFsET1JlKZfM5lJDEpSMilKW4bToYJ7pxf0Zne78xyXB2ny2c2aHfJ6WLnz1AaTNHAmQeQ==
+
 "@rollup/rollup-linux-x64-gnu@4.13.0":
   version "4.13.0"
   resolved "https://registry.npmjs.org/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.13.0.tgz"
@@ -1995,6 +2007,11 @@ boolbase@^1.0.0:
   resolved "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz"
   integrity sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==
 
+bootstrap-slider@11.0.2:
+  version "11.0.2"
+  resolved "https://registry.npmjs.org/bootstrap-slider/-/bootstrap-slider-11.0.2.tgz"
+  integrity sha512-CdwS+Z6X79OkLes9RfDgPB9UIY/+81wTkm6ktdSB6hdyiRbjJLFQIjZdnEr55tDyXZfgC7U6yeSXkNN9ZdGqjA==
+
 bootstrap-vue@^2.21.2:
   version "2.23.1"
   resolved "https://registry.npmjs.org/bootstrap-vue/-/bootstrap-vue-2.23.1.tgz"
@@ -2006,18 +2023,10 @@ bootstrap-vue@^2.21.2:
     portal-vue "^2.1.7"
     vue-functional-data-merge "^3.1.0"
 
-bootstrap@^4.1.1, bootstrap@^4.3.1, bootstrap@^4.6.1:
+bootstrap@^4.3.1, bootstrap@^4.6.1:
   version "4.6.2"
   resolved "https://registry.npmjs.org/bootstrap/-/bootstrap-4.6.2.tgz"
   integrity sha512-51Bbp/Uxr9aTuy6ca/8FbFloBUJZLHwnhTcnjIeRn2suQWsWzcuJhGjKDB5eppVte/8oCdOL3VuwxvZDUggwGQ==
-
-bootstrap4c-chosen@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/bootstrap4c-chosen/-/bootstrap4c-chosen-1.1.1.tgz"
-  integrity sha512-86FXRv632xWC0xGX/B3HJXNViQPuGsdd84bxb+21zO/4voVjbM5W/Z9LhhVxcgItteCLO4CBfHv3Oq19Y73jVA==
-  dependencies:
-    bootstrap "^4.1.1"
-    chosen-js "^1.8.3"
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -2328,11 +2337,6 @@ chokidar@^3.5.3:
     readdirp "~3.6.0"
   optionalDependencies:
     fsevents "~2.3.2"
-
-chosen-js@^1.8.3:
-  version "1.8.7"
-  resolved "https://registry.npmjs.org/chosen-js/-/chosen-js-1.8.7.tgz"
-  integrity sha512-eVdrZJ2U5ISdObkgsi0od5vIJdLwq1P1Xa/Vj/mgxkMZf14DlgobfB6nrlFi3kW4kkvKLsKk4NDqZj1MU1DCpw==
 
 chownr@^1.1.1:
   version "1.1.4"
@@ -6561,6 +6565,14 @@ toidentifier@1.0.1:
   resolved "https://registry.npmjs.org/toidentifier/-/toidentifier-1.0.1.tgz"
   integrity sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==
 
+tom-select@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/tom-select/-/tom-select-2.3.1.tgz"
+  integrity sha512-QS4vnOcB6StNGqX4sGboGXL2fkhBF2gIBB+8Hwv30FZXYPn0CyYO8kkdATRvwfCTThxiR4WcXwKJZ3cOmtI9eg==
+  dependencies:
+    "@orchidjs/sifter" "^1.0.3"
+    "@orchidjs/unicode-variants" "^1.0.4"
+
 tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz"
@@ -6765,11 +6777,6 @@ vue-functional-data-merge@^3.1.0:
   resolved "https://registry.npmjs.org/vue-functional-data-merge/-/vue-functional-data-merge-3.1.0.tgz"
   integrity sha512-leT4kdJVQyeZNY1kmnS1xiUlQ9z1B/kdBFCILIjYYQDqZgLqCLa0UhjSSeRX6c3mUe6U5qYeM8LrEqkHJ1B4LA==
 
-vue-select@^3.1.0:
-  version "3.20.2"
-  resolved "https://registry.npmjs.org/vue-select/-/vue-select-3.20.2.tgz"
-  integrity sha512-ZSzIDzyYsWZULGUxVp1h6u3yi9IZQBWX8r6kSudUI/I5J1HQKpBjRntvkrg6pr87xmm16kdChvHCDN+W84vTKw==
-
 vue-style-loader@^4.1.3:
   version "4.1.3"
   resolved "https://registry.npmjs.org/vue-style-loader/-/vue-style-loader-4.1.3.tgz"
@@ -6778,7 +6785,7 @@ vue-style-loader@^4.1.3:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-template-compiler@^2.7:
+vue-template-compiler@^2.7.16:
   version "2.7.16"
   resolved "https://registry.npmjs.org/vue-template-compiler/-/vue-template-compiler-2.7.16.tgz"
   integrity sha512-AYbUWAJHLGGQM7+cNTELw+KsOG9nl2CnSv467WobS5Cv9uk3wFcnr1Etsz2sEIHEZvw1U+o9mRlEO6QbZvUPGQ==
@@ -6786,7 +6793,7 @@ vue-template-compiler@^2.7:
     de-indent "^1.0.2"
     he "^1.2.0"
 
-vue@^2.5.18, vue@^2.7, vue@^2.7.0-0, vue@2.x:
+vue@^2.5.18, vue@^2.7, vue@^2.7.0-0:
   version "2.7.16"
   resolved "https://registry.npmjs.org/vue/-/vue-2.7.16.tgz"
   integrity sha512-4gCtFXaAA3zYZdTp5s4Hl2sozuySsgz4jy1EnpBHNfpMa9dK1ZCG7viqBPCwXtmgc8nHqUsAu3G4gtmXkkY3Sw==

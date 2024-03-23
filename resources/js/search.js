@@ -1,13 +1,15 @@
 const token = document.head.querySelector('meta[name="csrf-token"]');
 
-$(() => {
-    const searchJs = {
+import TomSelect from "tom-select";
+import Slider from "bootstrap-slider";
+
+    export const searchJs = {
         headers: {
             "X-CSRF-TOKEN": token.content,
             "X-Requested-With": "XMLHttpRequest",
         },
         init: () => {
-            searchJs.year_slider = $("#year-slider").slider();
+            searchJs.year_slider = new Slider("#year-slider");
             searchJs.loader = $('#search-results-loading');
             searchJs.results = $('#search-results');
             searchJs.error = $('#search-results-error');
@@ -42,7 +44,7 @@ $(() => {
 
             $('#search').on('keypress', (evt) => {
                 if (evt.which == 13) {
-                    searchJs.triggerSearch(evt)
+                    searchJs.triggerSearch(evt);
                 }
             });
 
@@ -96,7 +98,7 @@ $(() => {
                         searchJs.loader.css('display', 'none');
                         searchJs.error.css('display', 'block');
                     }
-                })
+                });
                 
         },
         matchVisibility: (filter, val) => {
@@ -158,7 +160,5 @@ $(() => {
                 return true;
             });
         }
-    }
+    };
 
-    searchJs.init();
-});
