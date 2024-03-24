@@ -36,6 +36,12 @@ import Slider from "bootstrap-slider";
 
             $('#search-results')
             .on('click', '.page-link', (evt) => {
+                let url = new URL($(evt.target).attr('href'));
+                let page = url.searchParams.get("page");
+                if (page) {
+                    $("#search-page").val(page);
+                }
+
                 searchJs.triggerSearch(evt);
             });
 
