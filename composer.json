@@ -23,7 +23,7 @@
         "lolibrary/image-array": "*",
         "sentry/sentry-laravel": "^4.3.1",
         "stevebauman/purify": "^4.0",
-        "whitecube/nova-flexible-content": "^0.1.11",
+        "whitecube/nova-flexible-content": "^1.1.0",
         "yeswedev/nova-translatable": "^0.9.0"
 
     },

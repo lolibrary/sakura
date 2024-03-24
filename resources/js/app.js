@@ -69,8 +69,6 @@ if (token) {
  */
 
 $(() => {
-    // $('.form-control-chosen').chosen();
-    console.log("debug testing;");
     $('[data-toggle="tooltip"]').tooltip();
     new simpleLightbox({elements: '[data-lightbox="show"]'});
     searchJs.init();
