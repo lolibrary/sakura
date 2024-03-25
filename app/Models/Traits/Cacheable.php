@@ -14,7 +14,7 @@ trait Cacheable
     public static function cached()
     {
         return cache()->rememberForever(static::cacheKey(), function () {
-            return static::all();
+            return static::with('translations')->get();
         });
     }
 
@@ -28,7 +28,7 @@ trait Cacheable
         $locale = App::getLocale();
         $key = mb_strtolower(class_basename(static::class));
 
-        return 'models:'.$locale.':'.$key;
+        return 'models:'.$key;
     }
 
     /**
