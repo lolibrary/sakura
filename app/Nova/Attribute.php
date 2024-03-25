@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use YesWeDev\Nova\Translatable\Translatable;
+use Laravel\Nova\Fields\BelongsToMany;
 
 class Attribute extends TranslatableResource
 {
@@ -56,8 +57,13 @@ class Attribute extends TranslatableResource
                 ->sortable()
                 ->rules('required', 'min:2', 'max:255'),
 
-            Text::make('Value')
-                ->readonly(),
+
+            BelongsToMany::make('Items', 'items', Item::class)
+                ->fields(function ($request, $relatedModel) {
+                    return [
+                        Text::make('Value')->readonly()
+                    ];
+                })->readonly(),
 
             DateTime::make('Created', 'created_at')->onlyOnDetail(),
             DateTime::make('Updated', 'updated_at')->onlyOnDetail(),
