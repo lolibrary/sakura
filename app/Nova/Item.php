@@ -173,7 +173,7 @@ class Item extends Resource
                 BelongsToMany::make('Attributes', 'attributes', Attribute::class)
                     ->fields(function ($request, $relatedModel) {
                         return [
-                            Text::make('Value')->nullable()->showOnUpdating()->showOnDetail()->showOnCreating()
+                            Text::make('Value')->nullable()->showOnCreating()
                         ];
                     })->showOnCreating(),
             ]),
