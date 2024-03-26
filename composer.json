@@ -71,7 +71,7 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",
-            "@php artisan nova:publish --force"
+            "@php artisan nova:publish"
         ]
     },
     "repositories": [
