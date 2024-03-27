@@ -14,7 +14,7 @@
   <form method="GET" id="search-form">
     <div class="row">
       <div class="col-sm-12 col-md-4 col-lg-3 mb-2 mb-3">
-        @include('components.filters')
+        {{ $filters }}
       </div>
 
       <div class="col-sm-12 col-md-8 col-lg-9">
@@ -24,7 +24,7 @@
           </div>
         </div>
         <span id="search-results">
-          @include('components.search-results')
+          {{ $items }}
         </span>
         <div class="row text-center p-5" id="search-results-loading" style="display: none">
           <div class="col text-center text-muted">

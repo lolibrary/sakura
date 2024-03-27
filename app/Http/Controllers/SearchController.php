@@ -19,17 +19,10 @@ class SearchController extends Controller
 {
     public function index(SearchRequest $request)
     {
-        $query = Item::query();
-        $search = new ApiSearchController();
-        $items = $search->search($request, $query);
+        $items = $this->post($request);
+        $filters = $this->get_or_make_filters($request);
 
-        return view('search', ['sections' => [
-            'categories' => Category::cached()->sortBy('name'), 
-            'brands' => Brand::cached()->sortBy('name'), 
-            'features' => Feature::cached()->sortBy('name'),
-            'colors' => Color::cached()->sortBy('name'),
-            'tags' => Tag::cached()->sortBy('name'),],
-            'items' => $items]);
+        return view('search', ['fitlers' => $filters,'items' => $items]);
     }
 
     public function post(SearchRequest $request) {
@@ -38,5 +31,32 @@ class SearchController extends Controller
         $items = $search->search($request, $query);
 
         return view('components.search-results', ['items' => $items, 'max_year' => (date('Y') + 3)]);
+    }
+
+    public function get_or_make_filters(SearchRequest $request) {
+        // Closure so we don't have to edit this multiple places if things change
+        $make_filters = function() {
+            return view('components.search-results', ['sections' => [
+                'categories' => Category::cached()->sortBy('name'), 
+                'brands' => Brand::cached()->sortBy('name'), 
+                'features' => Feature::cached()->sortBy('name'),
+                'colors' => Color::cached()->sortBy('name'),
+                'tags' => Tag::cached()->sortBy('name'),]
+            ]);
+        };
+        // Check if there are any filters set. If not, we can use cached renders.
+        if ($request) {
+            $locale = App::getLocale();
+            $filters = Cache::tags(['filters'])->get($locale);
+            if (!$filters) {
+                $filters = $make_filters();
+                Cache::tags(['filters'])->forever($locale, $filters);
+                return $filters;
+            } else {
+                return $filters;
+            }
+        } else {
+            return $make_filters();
+        }
     }
 }
