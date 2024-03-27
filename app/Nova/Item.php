@@ -158,24 +158,24 @@ class Item extends Resource
             new Panel('Tags and Features', [
                 AttachMany::make('Features', 'features', Feature::class),
                 AttachMany::make('Tags', 'tags', Tag::class),
-                AttachMany::make('Colors', 'colors', Color::class),
+                AttachMany::make('Colors', 'colors', Color::class)
             ]),
 
             // This panel is only shown on the view and edit page
             new Panel('Tags, Features and Colors', [
                 BelongsToMany::make('Item Features', 'features', Feature::class)->display('name'),
                 BelongsToMany::make('Item Tags', 'tags', Tag::class)->searchable(),
-                BelongsToMany::make('Item Colors', 'colors', Color::class)->display('name'),
+                BelongsToMany::make('Item Colors', 'colors', Color::class)->display('name')
             ]),
 
             new Panel('Attributes', [
                 // Need to make a custom attributes panel here to allow it on item creation.
                 BelongsToMany::make('Attributes', 'attributes', Attribute::class)
-                    ->fields(function () {
+                    ->fields(function ($request, $relatedModel) {
                         return [
-                            Text::make('Value')->nullable(),
+                            Text::make('Value')->nullable()->showOnCreating()
                         ];
-                    }),
+                    })->showOnCreating(),
             ]),
 
             Badge::make('Status', function () {

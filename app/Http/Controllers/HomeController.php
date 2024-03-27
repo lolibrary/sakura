@@ -25,8 +25,8 @@ class HomeController extends Controller
             ->orderBy('published_at', 'desc')
             ->get();
 
-        $brands = Brand::all();
-        $categories = Category::all();
+        $brands = Brand::with('translations')->get();
+        $categories = Category::with('translations')->get();
         $recent = Item::with(Item::PARTIAL_LOAD)
             ->drafts(false)
             ->orderBy('published_at', 'desc')
