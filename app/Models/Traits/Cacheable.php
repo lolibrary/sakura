@@ -49,8 +49,14 @@ trait Cacheable
      */
     protected static function bootCacheable()
     {
-        static::saving(function () {
+        static::saved(function () {
             static::bust();
+            cache()->tags('filters')->flush();
+        });
+
+        static::deleted(function () {
+            static::bust();
+            cache()->tags('filters')->flush();
         });
     }
 }
