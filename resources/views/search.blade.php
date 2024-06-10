@@ -41,4 +41,14 @@
     </div>
     </form>
   </div>
+
+
+@endsection
+
+@section('script')
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    searchJs.init();
+});
+    </script>
 @endsection

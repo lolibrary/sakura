@@ -35,6 +35,9 @@ return [
     'required' => 'The :attribute field is required.',
     'string' => 'The :attribute must be a string.',
     'unique' => 'The :attribute has already been taken.',
+    'gt' => [
+        'array' => 'The :attribute must have more than :value items.',
+    ]
 
     
 

@@ -139,5 +139,19 @@ return [
         'tags' => 'Tags',
         'tags_none' => 'No tags recorded!',
         'images' => 'Images',
+    ],
+
+
+    'admin' => [
+        'english_name' => 'English Name',
+        'foreign_name' => 'Foreign Name',
+        'product_number' => 'Product Number',
+        'price' => 'Item Price',
+        'currency' => 'Currency',
+        'help' => [
+            'english_name' => "An english or romanized version of this item's name. This will be used to identify the item in the search index.",
+            'foreign_name' => "The non-english version of this item's name. Usually the original.",
+            'price' => "Values should only be numbers - don't include commas or currency symbols!"
+        ]
     ]
 ];

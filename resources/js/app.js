@@ -5,6 +5,7 @@ import jQuery from 'jquery';
 import 'bootstrap';
 import axios from 'axios';
 import simpleLightbox from 'simple-lightbox';
+import TomSelect from "tom-select";
 import { searchJs } from "./search";
 
 
@@ -54,7 +55,7 @@ if (token) {
  * This will just attach itself to any .form-control-chosen element.
  */
 
-// window.chosen = require('chosen-js');
+window.TomSelect = TomSelect;
 
 /**
  * simple-lightbox is a lightweight lightbox interface, to make paging through
@@ -67,11 +68,12 @@ if (token) {
  * Both chosen and simple-lightbox need to be initialized *after* the rest of the
  * page has loaded - otherwise their elements may not be present yet.
  */
+window.searchJs = searchJs;
 
 $(() => {
     $('[data-toggle="tooltip"]').tooltip();
     new simpleLightbox({elements: '[data-lightbox="show"]'});
-    searchJs.init();
+    //searchJs.init();
 });
 
 const image = document.head.querySelector('meta[name="default-image"]');

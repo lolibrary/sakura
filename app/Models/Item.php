@@ -256,4 +256,12 @@ class Item extends Model
     {
         return $this->belongsToMany(Attribute::class)->withPivot('value');
     }
+
+    public function canEdit(User $user) {
+        if ($this->published()) {
+            return ($user->is($this->submitter) && $user->lolibrarian()) || $user->senior();
+        } else {
+            return $user->is($this->submitter) || $user->senior();
+        }
+    }
 }

@@ -106,5 +106,6 @@
 
     <!-- Scripts
     @yield('script', '') -->
+    @yield('script', '')
 </body>
 </html>
