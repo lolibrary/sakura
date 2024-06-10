@@ -13,8 +13,10 @@ return [
     |
     */
 
+    'array' => 'The :attribute must be an array.',
     'confirmed' => 'The :attribute confirmation does not match.',
     'email' => 'The :attribute must be a valid email address.',
+    'integer' => 'The :attribute must be an integer.',
     'max' => [
         'string' => 'The :attribute may not be greater than :max characters.',
 
@@ -24,8 +26,8 @@ return [
     ],
     'min' => [
         'string' => 'The :attribute must be at least :min characters.',
+        'numeric' => 'The :attribute must be at least :min.',
 
-        // 'numeric' => 'The :attribute must be at least :min.',
         // 'file' => 'The :attribute must be at least :min kilobytes.',
         // 'array' => 'The :attribute must have at least :min items.',
     ],
@@ -33,6 +35,9 @@ return [
     'required' => 'The :attribute field is required.',
     'string' => 'The :attribute must be a string.',
     'unique' => 'The :attribute has already been taken.',
+    'gt' => [
+        'array' => 'The :attribute must have more than :value items.',
+    ]
 
     
 
@@ -43,7 +48,6 @@ return [
     // 'alpha' => 'The :attribute may only contain letters.',
     // 'alpha_dash' => 'The :attribute may only contain letters, numbers, dashes and underscores.',
     // 'alpha_num' => 'The :attribute may only contain letters and numbers.',
-    // 'array' => 'The :attribute must be an array.',
     // 'before' => 'The :attribute must be a date before :date.',
     // 'before_or_equal' => 'The :attribute must be a date before or equal to :date.',
     // 'between' => [
@@ -80,7 +84,6 @@ return [
     // 'image' => 'The :attribute must be an image.',
     // 'in' => 'The selected :attribute is invalid.',
     // 'in_array' => 'The :attribute field does not exist in :other.',
-    // 'integer' => 'The :attribute must be an integer.',
     // 'ip' => 'The :attribute must be a valid IP address.',
     // 'ipv4' => 'The :attribute must be a valid IPv4 address.',
     // 'ipv6' => 'The :attribute must be a valid IPv6 address.',

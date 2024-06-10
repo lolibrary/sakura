@@ -13,4 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('search', 'Api\\SearchController@search')->name('search');
+Route::post('search_index', 'Api\\SearchController@search_index')->name('search');

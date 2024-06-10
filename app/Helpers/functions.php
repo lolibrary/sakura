@@ -21,6 +21,14 @@ const ORDER = [
     'ALPHA_REVERSE' => ['name' => 'English Name (Z to A)', 'key' => 'alpha_reverse'],
 ];
 
+const STATUS = [
+    0 => "Draft",
+    1 => "Published",
+    2 => "Pending",
+    4 => "Missing Images",
+    10 => "Shoe Drafts"
+];
+
 if (! function_exists('uuid')) {
     /**
      * Return a UUID without giving away our mac address.
@@ -129,7 +137,7 @@ if (! function_exists('add_s3_bucket')) {
 
         $uri = (new Uri($url));
 
-        return (string) $uri->withHost("${bucket}.".$uri->getHost());
+        return (string) $uri->withHost("{$bucket}.".$uri->getHost());
     }
 }
 
@@ -329,3 +337,15 @@ if (! function_exists('sorted')) {
 
 }
 
+if (! function_exists('item_status')) {
+    /**
+     * Return text run through Purify
+     *
+     * @param string $path
+     * @return string
+     */
+    function item_status(string $status)
+    {
+        return STATUS[$status];
+    }
+}

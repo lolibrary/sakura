@@ -17,6 +17,7 @@ Auth::routes(['verify' => true]);
 Route::get('/', 'HomeController@homepage')->name('home');
 Route::get('/lang', 'HomeController@set_lang')->name('set_lang');
 Route::get('/search', 'SearchController@index')->name('search');
+Route::post('/search', 'SearchController@post')->name('search_post');
 
 // User
 Route::prefix('profile')->group(function () {
@@ -33,6 +34,21 @@ Route::get('api/auth', 'Api\\IdentityController@show');
 
 // blog posts route.
 Route::get('blog/{post}', 'BlogController@show')->name('posts.show');
+
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('manage/items', 'Manage\\ItemController@dash')->name('items.dash');
+
+    Route::get('manage/items/{id}/edit', 'Manage\\ItemController@edit')->name('items.edit');
+    Route::post('manage/items/{id}/edit', 'Manage\\ItemController@update')->name('items.update');
+    Route::delete('manage/items/{id}/delete', 'Manage\\ItemController@destroy')->name('items.destroy');
+
+    Route::get('manage/items/{id}/{image_id}/delete', 'Manage\\ItemController@deleteImage')->name('items.images.destroy');
+
+    Route::get('manage/items/new', 'Manage\\ItemController@create')->name('items.create');
+    Route::post('manage/items/new', 'Manage\\ItemController@store')->name('items.store');
+});
+
 
 // categories/brands/features etc
 Route::group(['namespace' => 'Items\\'], function () {

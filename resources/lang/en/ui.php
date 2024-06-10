@@ -3,7 +3,6 @@
 return [
     'skip' => 'Skip to content',
     'login' => 'Login',
-    'search' => 'Search',
     'npo' => 'Lolibrary Inc is a 501(c)(3) non-profit incorporated in the USA.',
     'categories' => 'Categories',
     'recent_items' => 'Recent Items',
@@ -98,6 +97,20 @@ return [
         'add' => 'Why not <a href=":link">search for some items to add</a>?',
     ],
 
+    'search' => [
+        'title' => 'Search',
+        'brands' => 'Brands',
+        'categories' => 'Categories',
+        'tags' => 'Tags',
+        'features' => 'Features',
+        'colors' => 'Colors',
+        'match_type' => 'Match',
+        'match_any' => 'Any',
+        'match_all' => 'All',
+        'match_none' => 'None',
+        'error' => 'Something went wrong, please try again later!'
+    ],
+
     'item' => [
         'brand' => 'Brand',
         'category' => 'Category',
@@ -126,5 +139,19 @@ return [
         'tags' => 'Tags',
         'tags_none' => 'No tags recorded!',
         'images' => 'Images',
+    ],
+
+
+    'admin' => [
+        'english_name' => 'English Name',
+        'foreign_name' => 'Foreign Name',
+        'product_number' => 'Product Number',
+        'price' => 'Item Price',
+        'currency' => 'Currency',
+        'help' => [
+            'english_name' => "An english or romanized version of this item's name. This will be used to identify the item in the search index.",
+            'foreign_name' => "The non-english version of this item's name. Usually the original.",
+            'price' => "Values should only be numbers - don't include commas or currency symbols!"
+        ]
     ]
 ];
