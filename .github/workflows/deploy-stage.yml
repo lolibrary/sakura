@@ -5,10 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout build tools
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: lolibrary/build
           token: ${{ secrets.PAT }}
+          ref: cea7b09494c6541c8bdfc7d919e1d58428061117
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
