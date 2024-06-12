@@ -10,8 +10,10 @@ return [
         'stargazers' => 'Rêveur.se|Rêveur.se(s)|Rêveur.se(s)',
         'title' => 'Liste de souhaits',
         'remove' => 'Retirer de la liste de souhaits',
-        'empty' => 'Il n\'y a pas d\'objets dans votre liste de souhaits.',
+        'empty' => 'Il n\'y a pas d\'objet dans votre liste de souhaits.',
         'add' => 'Pourquoi ne pas <a href=":link">rechercher des objets à ajouter</a> ?',
+        'owner_title' => "Liste de souhaits de :user",
+        'empty_guest' => "Il n'y a pas d'article dans la liste de souhaits de :user",
     ],
     'closet' => [
         'added' => '":item" a été ajouté à votre garde robe',
@@ -21,6 +23,8 @@ return [
         'remove' => 'Retirer de la garde robe',
         'empty' => 'Il n\'y a pas d\'objets dans votre garde robe.',
         'add' => 'Pourquoi ne pas <a href=":link">rechercher des objets à ajouter</a> ?',
+        'empty_guest' => "Il n'y a pas d'articles dans la garde robe de :user",
+        'owner_title' => "Garde de robe de :user",
     ],
     'auth' => [
         'email_txt' => "Nous ne partagerons pas votre adresse email.",
@@ -51,6 +55,8 @@ return [
         'pw_guide' => 'Votre mot de passe doit contenir au moins 12 caractères.',
         'verify_update' => 'Les changements ont été sauvegardés ! Puisque vous avez mis à jour vote adresse email, vous devrez re vérifier votre nouvelle adresse email. Un nouveau lien de vérification a été envoyé sur votre adresse email.',
         'update' => 'Les changements ont été sauvegardés !',
+        'public_closet' => 'Voulez-vous rendre votre garde robe publique ?',
+        'public_wishlist' => 'Voulez-vous rendre votre liste de souhaits publique ?',
     ],
     'donate' => [
         'other' => 'Vous pouvez, par ailleurs faire des dons en utilisant le lien ci-dessous, où vous pouvez payer avec une carte bancaire, Paypal ou Apple Pay.',
@@ -91,7 +97,7 @@ return [
         'info' => 'Informations de l\'article',
         'year' => 'Sorti.e en <span class="text-regular">:year</span>',
         'year_unknown' => 'Année de sortie inconnue',
-        'prod_num' => 'Référence produit : <span class="text-regular"> :prod_num</span>',
+        'prod_num' => 'Référence produit : <span class="text-regular">:prod_num</span>',
         'prod_num_unknown' => 'Aucune référence produit enregistrée.',
         'price' => 'Originellement au prix de :<span class="text-regular">:price</span>',
         'price_unknown' => 'Aucun prix d\'origine enregistré.',
