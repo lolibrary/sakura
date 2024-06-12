@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Item;
@@ -28,8 +29,12 @@ class HomeController extends Controller
         $brands = Brand::all();
         $categories = Category::all();
         $recent = Item::with(Item::PARTIAL_LOAD)
-            ->drafts(false)
+            ->whereNotNull('published_at')
             ->orderBy('published_at', 'desc')
+            ->whereNotNull('image')
+            ->whereDoesntHave('tags', function (Builder $query) {
+                $query->whereIn('slug', ['partial', 'sensitive-content']);
+            })
             ->take(15)
             ->get();
 
