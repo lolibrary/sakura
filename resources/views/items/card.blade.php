@@ -34,7 +34,7 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item py-1 px-3">
             <div class="d-flex small">
-                <p class="p-0 m-0 text-center font-weight-bolder flex-fill" style="white-space: nowrap; overflow-x: ellipsis;">
+                <p class="p-0 m-0 text-center flex-fill" style="white-space: nowrap; overflow-x: ellipsis;">
                     <a href="{{ $item->brand->url }}" title="{{ $item->brand->name }}">
                         {{$item->brand->name}}
                         {{-- deliberately chose 21 as the cutoff since lots of brand names fit on word boundaries. --}}
@@ -42,7 +42,7 @@
                 </p>
             </div>
                 <div class="d-flex small">
-                <p class="p-0 m-0 text-center flex-fill" style="white-space: nowrap; overflow-x: hidden">
+                <p class="p-0 m-0 text-center small flex-fill" style="white-space: nowrap; overflow-x: hidden">
                 @foreach($item->categories as $category)
                     <a href="{{ $category->url }}" class="category">
                         {{ $category->name }}

@@ -5,7 +5,7 @@
             style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis;">
             <a :href="item.url">{{ item.english_name }}</a>
         </p>
-        <p class="text-muted small"
+        <p class="text-muted small mb-0"
             style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis;"
             :title="item.foreign_name">
             {{ item.foreign_name ? item.foreign_name : '&nbsp;' }}
