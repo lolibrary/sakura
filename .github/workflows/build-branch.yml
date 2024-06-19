@@ -19,6 +19,7 @@ jobs:
         with:
           repository: lolibrary/build
           token: ${{ secrets.PAT }}
+          ref: cea7b09494c6541c8bdfc7d919e1d58428061117
       - name: Checkout Sakura
         uses: actions/checkout@v2
         with:
