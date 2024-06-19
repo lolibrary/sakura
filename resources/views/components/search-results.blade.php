@@ -16,4 +16,5 @@
 
 @if ($items->count() > 0)
     {{ $items->links() }}
+    <input type="hidden" id="search-page" value="{{ $items->currentPage() }}">
 @endif

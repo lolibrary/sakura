@@ -32,6 +32,17 @@ $(() => {
                 searchJs.triggerSearch(evt);
             });
 
+            $('#search-results')
+            .on('click', '.page-link', (evt) => {
+                let url = new URL($(evt.target).attr('href'));
+                let page = url.searchParams.get("page");
+                if (page) {
+                    $("#search-page").val(page);
+                }
+
+                searchJs.triggerSearch(evt);
+            });
+
             $('.match_type input:radio, .year_match_type input:radio')
             .on('click', (evt) => {
                 $(evt.currentTarget).parent().parent().find('label').removeClass('active');
@@ -78,11 +89,14 @@ $(() => {
         doSearch: () => {
             let form = document.getElementById('search-form');
             let form_values = searchJs.getFormValues();
+            let page = document.getElementById('search-page').value;
             searchJs.loader.css('display', 'block');
             searchJs.results.css('display', 'none');
             searchJs.error.css('display', 'none');
+            let form_data = new FormData(form);
+            form_data.set('page', page); 
             window.history.pushState(null, null, '/search/?' + $.param(form_values));
-            fetch('/search', { method: "POST", headers: searchJs.headers, body: new FormData(form)})
+            fetch('/search', { method: "POST", headers: searchJs.headers, body: form_data})
                 .then((response) => {
                     if (response.ok) {
                         return response.text()
@@ -135,6 +149,10 @@ $(() => {
         },
         getFormValues: () => {
             let form_values = $('#search-form').serializeArray();
+            let page = $('#search-page').val();
+            if (page && page > 1) {
+                form_values.push({name: "page", value: page.toString()});
+            }
             let exclude_matching = ['search'];
             let filter_names = form_values.map((form_obj) => form_obj.name.replace('[]', ''));
             return form_values.filter((form_obj) => {

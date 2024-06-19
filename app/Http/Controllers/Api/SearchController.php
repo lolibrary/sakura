@@ -75,8 +75,11 @@ class SearchController extends Base
         $paginator = $query->paginate(24)->appends($params);
 
         $paginator->each(function (Item $item) {
-            $item->image = Storage::cloud()->url($item->image);
-            $item->makeVisible('image');
+            if ($item->image !== null) { 
+                $item->makeVisible('image');
+                    $item->image = Storage::cloud()->url($item->image);
+                    $item->makeVisible('image');
+                }
 
             if ($item->brand !== null) {
                 $item->brand->image = Storage::cloud()->url($item->brand->image);
