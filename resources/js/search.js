@@ -17,7 +17,11 @@ $(() => {
             });
             searchJs.filters = [];
 
-            let selectSettings = {closeAfterSelect: true, plugins: ['remove_button'], sortField:[{field:'$order'},{field:'$score'}]};
+            let selectSettings = {
+                closeAfterSelect: true, 
+                plugins: ['remove_button'], 
+                sortField:[{field:'$order'},{field:'$score'}],
+                maxOptions: null};
             document.querySelectorAll('.form-control-chosen').forEach((el)=>{
                  let tom = new TomSelect(el, selectSettings);
                  tom.on('change', (val) => {
