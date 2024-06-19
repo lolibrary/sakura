@@ -6,19 +6,20 @@ on:
 jobs:
   build-push-sakura:
     container:
-      image: ghcr.io/lolibrary/builder
+      image: ghcr.io/lolibrary/builder@sha256:80ca803642b16c17df149f402b4ea5d440eaef0fa19d54c9431dc4b9acfc6cb5
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.PAT }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout build tools
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: lolibrary/build
           token: ${{ secrets.PAT }}
+          ref: cea7b09494c6541c8bdfc7d919e1d58428061117
       - name: Checkout Sakura
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: cache
       - name: GHCR login

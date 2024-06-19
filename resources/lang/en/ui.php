@@ -28,7 +28,7 @@ return [
         'register' => 'Register',
         'name' => 'Name',
         'username' => 'Username',
-        'username_guide' => 'Your username can be english letters, numbers, hyphens (-) and underscores (_).',
+        'username_guide' => 'Your username can be lowercase english letters, numbers, hyphens (-) and underscores (_).',
         'email' => 'E-Mail Address',
         'email_txt' => "We'll never share your email with anyone else.",
         'pw' => 'Password',

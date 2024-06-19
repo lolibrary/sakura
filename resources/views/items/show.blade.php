@@ -180,6 +180,15 @@
         <div class="row">
             <h4 class="my-4 px-4">{{ __('ui.item.images') }}</h4>
             <div class="item-image-columns mb-5">
+                @if ($item->image)
+                    <a class="card m-0 p-0" href="{{ cdn_link($item->image) }}"
+                        data-lightbox="show">
+                        <img src="{{ cdn_thumbnail($item->image) }}"
+                                onerror="this.src = '{{ default_asset() }}'"
+                                data-original-url="{{  cdn_thumbnail($item->image) }}"
+                                class="mw-100">
+                    </a>
+                @endif
                 @foreach ($item->images as $image)
                     @isset ($image['attributes']['image'])
                         <a class="card m-0 p-0" href="{{ cdn_link($image['attributes']['image']) }}"

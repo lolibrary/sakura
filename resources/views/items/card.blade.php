@@ -7,11 +7,20 @@
                 {{ $item->english_name }}
             </a>
         </p>
-        <p class="text-muted small"
+        <p class="text-muted small mb-0"
             title="{{ $item->foreign_name }}"
             style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis;">
             @if ($item->foreign_name)
                 {{ $item->foreign_name }}
+            @else
+                &nbsp;
+            @endif
+        </p>
+        <p class="text-muted itemnum mb-0"
+            title="{{ $item->product_number }}"
+            style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis;">
+            @if ($item->product_number)
+                {{ $item->product_number }}
             @else
                 &nbsp;
             @endif
@@ -26,22 +35,16 @@
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item py-1 px-3">
-            <div class="row small text-muted">
-                <p class="col m-0 text-left">
-                    {{ __('ui.item.brand') }}
-                </p>
-                <p class="col m-0 text-right">
-                    {{ __('ui.item.category') }}
-                </p>
-            </div>
             <div class="d-flex small">
-                <p class="p-0 m-0 text-left flex-fill" style="white-space: nowrap; overflow-x: ellipsis;">
+                <p class="p-0 m-0 text-center flex-fill" style="white-space: nowrap; overflow-x: ellipsis;">
                     <a href="{{ $item->brand->url }}" title="{{ $item->brand->name }}">
-                        {{ Str::limit($item->brand->name, 21) }}
+                        {{$item->brand->name}}
                         {{-- deliberately chose 21 as the cutoff since lots of brand names fit on word boundaries. --}}
                     </a>
                 </p>
-                <p class="p-0 m-0 text-right flex-fill" style="white-space: nowrap; overflow-x: hidden">
+            </div>
+                <div class="d-flex small">
+                <p class="p-0 m-0 text-center small flex-fill" style="white-space: nowrap; overflow-x: hidden">
                 @foreach($item->categories as $category)
                     <a href="{{ $category->url }}" class="category">
                         {{ $category->name }}

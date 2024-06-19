@@ -5,10 +5,15 @@
             style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis;">
             <a :href="item.url">{{ item.english_name }}</a>
         </p>
-        <p class="text-muted small"
+        <p class="text-muted small mb-0"
             style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis;"
             :title="item.foreign_name">
             {{ item.foreign_name ? item.foreign_name : '&nbsp;' }}
+        </p>
+        <p class="text-muted itemnum"
+            style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis;"
+            :title="item.product_number">
+            {{ item.product_number ? item.product_number : '&nbsp;' }}
         </p>
 
         <div class="text-center item-image-container">
@@ -19,17 +24,15 @@
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item py-1 px-3">
-            <div class="row small text-muted">
-                <p class="col m-0 text-left">Brand</p>
-                <p class="col m-0 text-right">Category</p>
-            </div>
             <div class="d-flex small">
-                <p class="p-0 m-0 text-left flex-fill" style="white-space: nowrap; overflow-x: ellipsis;">
+                <p class="p-0 m-0 text-center flex-fill" style="white-space: nowrap; overflow-x: ellipsis;">
                     <a :href="item.brand.url" :title="item.brand.name">
-                        {{ item.brand.name.substring(0, 21) }}
+                        {{ item.brand.name }}
                     </a>
                 </p>
-                <p class="p-0 m-0 text-right flex-fill" style="white-space: nowrap; overflow-x: hidden;">
+            </div>
+            <div class="d-flex small">
+                <p class="p-0 m-0 text-center small flex-fill" style="white-space: nowrap; overflow-x: hidden;">
                     <a v-for="category in item.categories" :href="category.url" :title="category.name" class="category">
                         {{ category.name }}
                     </a>
