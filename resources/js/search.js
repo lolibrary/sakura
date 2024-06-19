@@ -89,12 +89,15 @@ $(() => {
         doSearch: () => {
             let form = document.getElementById('search-form');
             let form_values = searchJs.getFormValues();
-            let page = document.getElementById('search-page').value;
+            let pageEl = document.getElementById('search-page');
             searchJs.loader.css('display', 'block');
             searchJs.results.css('display', 'none');
             searchJs.error.css('display', 'none');
             let form_data = new FormData(form);
-            form_data.set('page', page); 
+            if (pageEl) {
+                let page = pageEl.value;
+                form_data.set('page', page); 
+            }
             window.history.pushState(null, null, '/search/?' + $.param(form_values));
             fetch('/search', { method: "POST", headers: searchJs.headers, body: form_data})
                 .then((response) => {

@@ -99,16 +99,22 @@ return [
 
     'search' => [
         'title' => 'Search',
+        'filters' => 'Filters',
+        'clear_filters' => 'Clear Filters',
+        'no_results' => 'No Results!',
+        'try_again' => 'Try another search?',
         'brands' => 'Brands',
         'categories' => 'Categories',
         'tags' => 'Tags',
         'features' => 'Features',
         'colors' => 'Colors',
+        'year' => 'Year',
         'match_type' => 'Match',
         'match_any' => 'Any',
         'match_all' => 'All',
         'match_none' => 'None',
-        'error' => 'Something went wrong, please try again later!'
+        'error' => 'Something went wrong, please try again later!',
+        'placeholder' => 'Type to search or filter'
     ],
 
     'item' => [

@@ -8,8 +8,8 @@
             <div style="height: 14rem">
                 <img src="/categories/other.svg" class="mw-100 mh-100">
             </div>
-            <p class="h4 text-center text-muted my-0">No Results!</p>
-            <p class="text-center">Try another search?</p>
+            <p class="h4 text-center text-muted my-0">{{__('ui.search.no_results')}}</p>
+            <p class="text-center">{{__('ui.search.try_again')}}</p>
         </div>
     @endforelse
 </div>

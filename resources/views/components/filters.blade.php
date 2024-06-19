@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        Filters
+      {{__('ui.search.filters')}}
     </div>
     <div class="card-body">
       @foreach ($sections as $name => $items)
@@ -27,7 +27,7 @@
         </div>
         @endforeach
         <div class="pb-2">
-            <label class="control-label" for="year-slider">Year</label>
+            <label class="control-label" for="year-slider">{{__('ui.search.year')}}</label>
             <div id="slider-wrapper">
             <input
                 type="text"
@@ -55,7 +55,7 @@
         </div>
 
         <div class="input-group pb-2">
-          <button class="btn btn-block btn-outline-primary" style="width: 100%" name="action:clear">Clear Filters</button>
+          <button class="btn btn-block btn-outline-primary" style="width: 100%" name="action:clear">{{__('ui.search.clear_filters')}}</button>
         </div>
     </div>
 </div>
