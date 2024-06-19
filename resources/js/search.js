@@ -44,7 +44,7 @@ $(() => {
                     $("#search-page").val(page);
                 }
 
-                searchJs.triggerSearch(evt);
+                searchJs.triggerSearch(evt), true;
             });
 
             $('.match_type input:radio, .year_match_type input:radio')
@@ -85,23 +85,25 @@ $(() => {
             searchJs.yearMatchVisibility();
         },
 
-        triggerSearch: (evt) => {
+        triggerSearch: (evt, includePage) => {
             evt.stopPropagation();
             evt.preventDefault();
-            searchJs.doSearch();
+            searchJs.doSearch(includePage);
         },
-        doSearch: () => {
+        doSearch: (includePage) => {
             let form = document.getElementById('search-form');
             let form_values = searchJs.getFormValues();
-            let pageEl = document.getElementById('search-page');
             searchJs.loader.css('display', 'block');
             searchJs.results.css('display', 'none');
             searchJs.error.css('display', 'none');
             let form_data = new FormData(form);
-            // if (pageEl) {
-            //     let page = pageEl.value;
-            //     form_data.set('page', page); 
-            // }
+            if (includePage) {
+                let pageEl = document.getElementById('search-page');
+                if (pageEl) {
+                    let page = pageEl.value;
+                    form_data.set('page', page); 
+                }
+            }            
             window.history.pushState(null, null, '/search/?' + $.param(form_values));
             fetch('/search', { method: "POST", headers: searchJs.headers, body: form_data})
                 .then((response) => {
