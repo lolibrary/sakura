@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\App;
 use App\Http\Requests\Api\SearchRequest;
 use App\Http\Controllers\Api\SearchController as ApiSearchController;
 
