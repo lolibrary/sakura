@@ -1,27 +1,24 @@
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-@import "~@fortawesome/fontawesome-pro/scss/fontawesome.scss";
-@import "~@fortawesome/fontawesome-pro/scss/light.scss";
-@import "~@fortawesome/fontawesome-pro/scss/regular.scss";
 
 // Variables
 @import "variables";
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/bootstrap';
 
 // Chosen
 // @import '~sass-svg-uri/svg-uri';
 // @import 'chosen/component-variables';
 // @import 'chosen/component-chosen';
 
-@import '~tom-select/dist/scss/tom-select.bootstrap4';
+@import 'tom-select/dist/scss/tom-select.bootstrap4';
 // Bootstrap-slider
 @import 'slider/bootstrap-slider';
 
 // simple-lightbox
-@import '~simple-lightbox/dist/simpleLightbox';
+@import 'simple-lightbox/dist/simpleLightbox';
 
 // @import '~vue-select/dist/vue-select.css';
 

@@ -1,13 +1,15 @@
 const token = document.head.querySelector('meta[name="csrf-token"]');
 
-$(() => {
-    const searchJs = {
+import TomSelect from "tom-select";
+import Slider from "bootstrap-slider";
+
+    export const searchJs = {
         headers: {
             "X-CSRF-TOKEN": token.content,
             "X-Requested-With": "XMLHttpRequest",
         },
         init: () => {
-            searchJs.year_slider = $("#year-slider").slider();
+            searchJs.year_slider = new Slider("#year-slider");
             searchJs.loader = $('#search-results-loading');
             searchJs.results = $('#search-results');
             searchJs.error = $('#search-results-error');
@@ -32,17 +34,28 @@ $(() => {
                 searchJs.triggerSearch(evt);
             });
 
+            $('#search-results')
+            .on('click', '.page-link', (evt) => {
+                let url = new URL($(evt.target).attr('href'));
+                let page = url.searchParams.get("page");
+                if (page) {
+                    $("#search-page").val(page);
+                }
+
+                searchJs.triggerSearch(evt);
+            });
+
             $('.match_type input:radio, .year_match_type input:radio')
             .on('click', (evt) => {
                 $(evt.currentTarget).parent().parent().find('label').removeClass('active');
                 $(evt.currentTarget).parent().addClass('active');
                 searchJs.doSearch();
-            })
+            });
 
 
             $('#search').on('keypress', (evt) => {
                 if (evt.which == 13) {
-                    searchJs.triggerSearch(evt)
+                    searchJs.triggerSearch(evt);
                 }
             });
 
@@ -54,7 +67,7 @@ $(() => {
                 $('.match_type, .year_match_type').hide();
                 let slider_min = parseInt($("#year-slider").data('slider-min'), 10);
                 let slider_max = parseInt($("#year-slider").data('slider-max'), 10);
-                searchJs.year_slider.slider('setValue', [slider_min, slider_max]);
+                searchJs.year_slider.setValue([slider_min, slider_max]);
 
                 let any = $('.match-any');
                 any.find('input').prop('checked', true);
@@ -78,11 +91,14 @@ $(() => {
         doSearch: () => {
             let form = document.getElementById('search-form');
             let form_values = searchJs.getFormValues();
+            let page = document.getElementById('search-page').value;
             searchJs.loader.css('display', 'block');
             searchJs.results.css('display', 'none');
             searchJs.error.css('display', 'none');
+            let form_data = new FormData(form);
+            form_data.set('page', page); 
             window.history.pushState(null, null, '/search/?' + $.param(form_values));
-            fetch('/search', { method: "POST", headers: searchJs.headers, body: new FormData(form)})
+            fetch('/search', { method: "POST", headers: searchJs.headers, body: form_data})
                 .then((response) => {
                     if (response.ok) {
                         return response.text()
@@ -96,7 +112,7 @@ $(() => {
                         searchJs.loader.css('display', 'none');
                         searchJs.error.css('display', 'block');
                     }
-                })
+                });
                 
         },
         matchVisibility: (filter, val) => {
@@ -108,7 +124,7 @@ $(() => {
             }
         },
         useYear:() => {
-            const val = searchJs.year_slider.slider('getValue').sort();
+            const val = searchJs.year_slider.getValue().sort();
             const min = $("#year-slider").data('slider-min');
             const max = $("#year-slider").data('slider-max');
             if (val[0] == min && val[1] == max) {
@@ -135,6 +151,10 @@ $(() => {
         },
         getFormValues: () => {
             let form_values = $('#search-form').serializeArray();
+            let page = $('#search-page').val();
+            if (page && page > 1) {
+                form_values.push({name: "page", value: page.toString()});
+            }
             let exclude_matching = ['search'];
             let filter_names = form_values.map((form_obj) => form_obj.name.replace('[]', ''));
             return form_values.filter((form_obj) => {
@@ -158,7 +178,5 @@ $(() => {
                 return true;
             });
         }
-    }
+    };
 
-    searchJs.init();
-});

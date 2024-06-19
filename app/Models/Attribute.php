@@ -75,6 +75,6 @@ class Attribute extends Model implements TranslatableContract
      */
     public function items()
     {
-        return $this->belongsToMany(Item::class);
+        return $this->belongsToMany(Item::class)->withPivot('value');
     }
 }

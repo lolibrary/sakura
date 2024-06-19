@@ -19,12 +19,14 @@
         </div>
     @endif
 
-    {{ Form::open(['route' => 'items.store', 'files' => true, 'method' => 'put']) }}
+    <form method="post">
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
                 <label for="image" class="col-form-label">Main Image</label>
-                {{ Form::file('image') }}
+                <div class="custom-file">
+  <input type="file" class="custom-file-input" id="customFile">
+  <label class="custom-file-label" for="customFile">Choose file</label>
                 <p class="form-text">
                     Try and find a somewhat decent quality image for the main image!<br>
                     <strong>Do not upload the default.png image. Leave this blank if you don't have a main image.</strong>
@@ -36,7 +38,9 @@
 
             <div class="form-group">
                 <label for="image" class="col-form-label">Additional Images</label>
-                {{ Form::file('images[]', ['id' => 'additional-image']) }}
+                <div class="custom-file">
+  <input type="file" class="custom-file-input" id="customFile">
+  <label class="custom-file-label" for="customFile">Choose file</label>
 
                 <div id="additional-container"></div>
 
@@ -92,17 +96,17 @@
             <div class="form-group">
                 <label for="category" class="col-form-label">Category <span class="text-danger">*</span></label>
 
-                <select id="category" name="category" class="form-control form-control-chosen" required>
+                <select id="category" name="category" class="form-control form-control-chosen" multiple required>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" @if ($category->id === old('category')) selected @endif>{{ $category->name }}</option>
+                    <option value="{{ $category->id }}" @if (in_array($category->id, old('category', []), true)) selected @endif>{{ $tag->slug }}</option>
                     @endforeach
                 </select>
             </div>
         </div>
         <div class="col-lg-8">
             <div class="form-label-group">
-                {{ Form::text('english_name', null, ['placeholder' => 'English Name', 'class' => 'form-control', 'required' => true]) }}
                 <label for="english_name">English Name <span class="text-danger">*</span></label>
+                <input type="text" id="english_name" name="english_name" class="form-control" required>
 
                 <p class="form-text">
                     An english or romanized version of this item's name. <span title="This will be used to identify the item in the search index. If a name is a duplicate, a -0 or -1 (etc). will be added to the generated URL for this item." data-placement="top" data-toggle="tooltip" class="far fa-info-circle"></span>
@@ -110,8 +114,9 @@
             </div>
 
             <div class="form-label-group">
-                {{ Form::text('foreign_name', null, ['placeholder' => 'Foreign Name', 'class' => 'form-control', 'required' => true]) }}
+
                 <label for="foreign_name">Foreign Name <span class="text-danger">*</span></label>
+                <input type="text" id="foreign_name" name="foreign_name" class="form-control" required>
 
                 <p class="form-text">The non-english version of this item's name. Usually the original.</p>
             </div>
@@ -129,11 +134,12 @@
                         <p class="form-text">The release year.</p>
                     </div>
                 </div>
-
+</div>
                 <div class="col-lg-8">
                     <div class="form-label-group">
-                        {{ Form::text('product_number', null, ['placeholder' => 'Product Number', 'class' => 'form-control']) }}
                         <label for="product_number">Product Number</label>
+                <input type="text" id="product_number" name="product_number" class="form-control" required>
+
 
                         <p class="form-text">The seller's product number for this item.</p>
                     </div>
@@ -155,8 +161,9 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="form-label-group">
-                        {{ Form::text('price', null, ['placeholder' => '1000', 'class' => 'form-control','required' => true]) }}
                         <label for="price">Item Price <span class="text-danger">*</span></label>
+                <input type="text" id="price" name="price" class="form-control" required>
+                        
 
                         <p class="form-text">Prices should be in whole numbers! If unknown, use 0.</p>
                     </div>
@@ -164,8 +171,10 @@
             </div>
 
             <div class="form-label-group">
-                {{ Form::textarea('notes', null, ['placeholder' => 'Item Notes. Note that this no longer supports HTML/bbcode, but may in the future!', 'class' => 'form-control']) }}
+                
                 <label for="notes">Item Notes</label>
+                <textarea id="notes" name="notes" class="form-control">
+                        </textarea>
             </div>
 
             <h2>Attributes</h2>
@@ -193,17 +202,15 @@
                 <div class="col-lg-12">
                     @foreach ($attributes as $attribute)
                         <div class="form-label-group" id="attribute-{{ $attribute->id }}" style="display: none">
-                            {{ Form::text(
-                                "attributes[{$attribute->id}]",
-                                null,
-                                [
-                                    'placeholder' => $attribute->name,
-                                    'class' => 'form-control',
-                                    'id' => "attribute.{$attribute->slug}",
-                                    'data-type' => 'attribute.input',
-                                    'data-id' => $attribute->id,
-                                ]
-                            ) }}
+                        <div class="form-label-group" id="attribute-{{ $attribute->id }}" style="display: none">
+                                    <label for="attribute.{{ $attribute->id }}" class="col-form-label">{{ $attribute->name }}</label>
+                                    <input type="text"
+                                    id = "attribute.{{ $attribute->id }}"
+                                    class="form-control"
+                                    data-type="attribute.input"
+                                    data-id="{{$attribute->id}}"
+                                    >
+                                </div>
                             <label for="attribute.{{ $attribute->slug }}">{{ $attribute->name }}</label>
                         </div>
                     @endforeach
@@ -217,7 +224,7 @@
         </div>
     </div>
 
-    {{ Form::close() }}
+                                    </form>
 </div>
 @endsection
 

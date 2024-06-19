@@ -13,7 +13,7 @@
     <meta name="default-image" content="{{ default_asset() }}">
 
     <!-- Styles -->
-    <link href="{{ mix('assets/app.css') }}" rel="stylesheet">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     @yield('meta', '')
 </head>
@@ -104,8 +104,8 @@
         </footer>
     </div>
 
-    <!-- Scripts -->
-    <script src="{{ mix('assets/app.js') }}"></script>
+    <!-- Scripts
+    @yield('script', '') -->
     @yield('script', '')
 </body>
 </html>
