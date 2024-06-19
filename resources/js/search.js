@@ -98,10 +98,10 @@ $(() => {
             searchJs.results.css('display', 'none');
             searchJs.error.css('display', 'none');
             let form_data = new FormData(form);
-            if (pageEl) {
-                let page = pageEl.value;
-                form_data.set('page', page); 
-            }
+            // if (pageEl) {
+            //     let page = pageEl.value;
+            //     form_data.set('page', page); 
+            // }
             window.history.pushState(null, null, '/search/?' + $.param(form_values));
             fetch('/search', { method: "POST", headers: searchJs.headers, body: form_data})
                 .then((response) => {
