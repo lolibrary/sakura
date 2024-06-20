@@ -44,7 +44,7 @@ $(() => {
                     $("#search-page").val(page);
                 }
 
-                searchJs.triggerSearch(evt), true;
+                searchJs.triggerSearch(evt, true);
             });
 
             $('.match_type input:radio, .year_match_type input:radio')
