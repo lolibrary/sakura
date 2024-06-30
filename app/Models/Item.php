@@ -66,6 +66,7 @@ class Item extends Model
         'chf' => 'Swiss Francs (CHF)',
         'rub' => 'Russian Rubles (₽)',
         'brl' => 'Brazilian Real (R$)',
+        'vnd' => 'Vietnamese đồng (₫)'
     ];
 
     /**

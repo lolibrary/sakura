@@ -115,6 +115,7 @@ class ItemStatusFilter extends Filter
         return [
             'My Items' => 'my-items',
             'My Drafts' => 'my-drafts',
+            'My Items (Pending)' => 'my-pending-items',
             'My Items (Published)' => 'my-published',
 
             'All Drafts' => 'drafts',
