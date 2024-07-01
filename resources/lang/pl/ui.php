@@ -2,7 +2,6 @@
 return [
     'skip' => '',
     'login' => '',
-    'search' => '',
     'npo' => '',
     'categories' => '',
     'recent_items' => '',

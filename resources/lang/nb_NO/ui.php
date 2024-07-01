@@ -2,7 +2,6 @@
 return [
     'skip' => 'Hopp til innhold',
     'login' => 'Logg inn',
-    'search' => 'Søk',
     'npo' => 'Lolibrary Inc er en veldedig 501(c)(3)-stiftelse registrert i USA.',
     'categories' => 'Kategorier',
     'recent_items' => 'Nylige varer',

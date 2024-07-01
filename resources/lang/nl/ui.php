@@ -2,7 +2,6 @@
 return [
     'skip' => 'Overslaan en naar inhoud',
     'login' => 'Inloggen',
-    'search' => 'Zoeken',
     'npo' => 'Lolibrary Inc is een 501(c)(3) non-profitorganisatie gevestigd in de VS.',
     'categories' => 'Categorieën',
     'recent_items' => 'Recente artikelen',

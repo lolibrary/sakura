@@ -2,7 +2,6 @@
 return [
     'skip' => 'Nhảy tới nội dung',
     'login' => 'Đăng nhập',
-    'search' => 'Tìm kiếm',
     'npo' => 'Lolibrary Inc là một tổ chức phi lợi nhuận tại Mỹ theo điều mục 501(c)(3).',
     'categories' => 'Danh mục',
     'recent_items' => 'Những bài đăng mới',

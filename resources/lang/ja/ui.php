@@ -2,7 +2,6 @@
 return [
     'skip' => '',
     'login' => 'ログイン',
-    'search' => '',
     'npo' => '',
     'wishlist' => [
         'added' => '',
