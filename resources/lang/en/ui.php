@@ -3,7 +3,6 @@
 return [
     'skip' => 'Skip to content',
     'login' => 'Login',
-    'search' => 'Search',
     'npo' => 'Lolibrary Inc is a 501(c)(3) non-profit incorporated in the USA.',
     'categories' => 'Categories',
     'recent_items' => 'Recent Items',
@@ -96,6 +95,26 @@ return [
         'empty' => 'There are no items in your closet.',
         'empty_guest' => "There are no items in :user's closet",
         'add' => 'Why not <a href=":link">search for some items to add</a>?',
+    ],
+
+    'search' => [
+        'title' => 'Search',
+        'filters' => 'Filters',
+        'clear_filters' => 'Clear Filters',
+        'no_results' => 'No Results!',
+        'try_again' => 'Try another search?',
+        'brands' => 'Brands',
+        'categories' => 'Categories',
+        'tags' => 'Tags',
+        'features' => 'Features',
+        'colors' => 'Colors',
+        'year' => 'Year',
+        'match_type' => 'Match',
+        'match_any' => 'Any',
+        'match_all' => 'All',
+        'match_none' => 'None',
+        'error' => 'Something went wrong, please try again later!',
+        'placeholder' => 'Type to search or filter'
     ],
 
     'item' => [

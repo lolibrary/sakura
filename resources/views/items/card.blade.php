@@ -3,7 +3,9 @@
         <p class="mb-0"
             title="{{ $item->english_name }}"
             style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis;">
-            {{ $item->english_name }}
+            <a href="{{ $item->url }}">
+                {{ $item->english_name }}
+            </a>
         </p>
         <p class="text-muted small mb-0"
             title="{{ $item->foreign_name }}"
@@ -26,7 +28,7 @@
 
         <div style="height: {{ ($type ?? null) === 'small' ? '7rem' : '14rem' }}" class="text-center">
             <a href="{{ $item->url }}">
-                <img src="{{ Storage::cloud()->url($item->image) }}" class="mw-100 mh-100 rounded"
+                <img src="{{ $item->image ? Storage::cloud()->url($item->image) : default_asset() }}" class="mw-100 mh-100 rounded"
                     onerror="if (this.src !== '{{ default_asset() }}') this.src = '{{ default_asset() }}'">
             </a>
         </div>
