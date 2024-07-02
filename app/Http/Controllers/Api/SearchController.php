@@ -164,7 +164,10 @@ class SearchController extends Base
                 $query->whereBetween('year', [$start_year, $end_year]);
 
             } elseif ($matcher == "NOT") {
-                $query->whereNotBetween('year', [$start_year, $end_year])->orWhereNull('year');
+                $query->where(function ($query) {
+                    $query->whereNotBetween('year', [$start_year, $end_year])
+                          ->orWhereNull('year');
+                });
 
             }
         }
