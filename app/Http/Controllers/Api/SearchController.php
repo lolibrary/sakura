@@ -159,12 +159,12 @@ class SearchController extends Base
         $end_year = $request->input('end_year');
         $matcher = $request->input("year_matcher") ?? "OR";
 
-        if ($start_year && $end_year) {
+        if ($start_year && $end_year && !($start_year == 1970 && $end_year == (date('Y') + 3))) {
             if ($matcher == "OR") { 
                 $query->whereBetween('year', [$start_year, $end_year]);
 
             } elseif ($matcher == "NOT") {
-                $query->whereNotBetween('year', [$start_year, $end_year]);
+                $query->whereNotBetween('year', [$start_year, $end_year])->orWhereNull('year');
 
             }
         }
