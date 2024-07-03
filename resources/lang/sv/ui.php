@@ -2,7 +2,6 @@
 return [
     'skip' => 'Hoppa över till innehåll',
     'login' => 'Logga in',
-    'search' => 'Sök',
     'npo' => 'Lolibrary Inc är en ideell organisation av typ 501(c)(3) baserat i USA.',
     'categories' => 'Kategorier',
     'recent_items' => 'Nyligen inlagda objekt',

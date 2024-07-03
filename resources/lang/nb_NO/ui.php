@@ -2,7 +2,6 @@
 return [
     'skip' => 'Hopp til innhold',
     'login' => 'Logg inn',
-    'search' => 'Søk',
     'npo' => 'Lolibrary Inc er en veldedig 501(c)(3)-stiftelse registrert i USA.',
     'categories' => 'Kategorier',
     'recent_items' => 'Nylige varer',
@@ -35,6 +34,11 @@ return [
         'pw_reset_btn' => 'Send lenke for tilbakestilling av passord',
         'pw_no_change' => "La stå tomt hvis du ikke vil endre passordet ditt.",
         'username_txt' => '<a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">Klikk her</a> for å endre brukernavnet ditt.',
+        'public_closet' => 'Gjør klesskap offentlig?',
+        'verify_update' => 'Endringer lagret. Fordi du har oppdatert din e-postadresse må du bekrefte den. En bekreftelseslenke har blitt sendt til din nye adresse.',
+        'update' => 'Endringer lagret.',
+        'public_wishlist' => 'Gjør ønskeliste offentlig?',
+        'pw_guide' => 'Passordet ditt må være minst 12 tegn',
     ],
     'blog' => [
         'anon' => 'Anonym',
@@ -70,6 +74,8 @@ return [
         'remove' => 'Fjern fra ønskelisten',
         'empty' => 'Det er ingen elementer i ønskelisten din.',
         'add' => 'Vil du <a href=":link">søke etter varer å legge til</a>?',
+        'owner_title' => ":user sin ønskeliste",
+        'empty_guest' => "Det er ikke noe på :user sin ønskeliste",
     ],
     'closet' => [
         'added' => 'La til ":item" i skapet ditt',
@@ -79,6 +85,8 @@ return [
         'remove' => 'Fjern fra skap',
         'empty' => 'Det er ingen elementer i skapet ditt.',
         'add' => 'Vil du <a href=":link">søke etter varer å legge til</a>?',
+        'empty_guest' => "Det finnes ikke noe i :user sitt klesskap",
+        'owner_title' => ":user sitt klesskap",
     ],
     'item' => [
         'brand' => 'Merke',
