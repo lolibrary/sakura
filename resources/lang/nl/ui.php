@@ -2,7 +2,6 @@
 return [
     'skip' => 'Overslaan en naar inhoud',
     'login' => 'Inloggen',
-    'search' => 'Zoeken',
     'npo' => 'Lolibrary Inc is een 501(c)(3) non-profitorganisatie gevestigd in de VS.',
     'categories' => 'Categorieën',
     'recent_items' => 'Recente artikelen',
@@ -26,7 +25,7 @@ return [
         'register' => 'Registreren',
         'name' => 'Naam',
         'username' => 'Gebruikersnaam',
-        'username_guide' => 'Uw gebruikersnaam kan bestaan uit Engelse letters, cijfers, koppeltekens (-) en underscores (_).',
+        'username_guide' => 'Uw gebruikersnaam kan bestaan uit kleine Engelse letters, cijfers, koppeltekens (-) en underscores (_).',
         'email' => 'E-mailadres',
         'email_txt' => "We zullen uw e-mailadres nooit met iemand anders delen.",
         'pw' => 'Wachtwoord',

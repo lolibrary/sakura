@@ -2,7 +2,6 @@
 return [
     'skip' => 'Vai al contenuto',
     'login' => 'Accedi',
-    'search' => 'Cerca',
     'npo' => 'Lolibrary Inc è una incorporazione 501(c)(3) non-profit negli Stati Uniti d\'America.',
     'categories' => 'Categorie',
     'recent_items' => 'Oggetti Recenti',
