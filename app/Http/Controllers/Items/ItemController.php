@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\App;
 
 class ItemController extends Controller
 {
@@ -55,6 +56,7 @@ class ItemController extends Controller
         $user = auth()->user();
         $attached = $user->updateWishlist($item);
         $status = $attached ? 'added' : 'removed';
+        cache()->tags(['wishlist'])->forget($item->getKey())
 
         return back()->withStatus(trans("ui.wishlist.{$status}", ['item' => Str::limit($item->english_name, 28)]));
     }
@@ -70,6 +72,7 @@ class ItemController extends Controller
         $user = auth()->user();
         $attached = $user->updateCloset($item);
         $status = $attached ? 'added' : 'removed';
+        cache()->tags(['closet'])->forget($item->getKey())
 
         return back()->withStatus(trans("ui.closet.{$status}", ['item' => Str::limit($item->english_name, 28)]));
     }
