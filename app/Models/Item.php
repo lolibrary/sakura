@@ -256,7 +256,7 @@ class Item extends Model
 
     public function wishlist() {
         $wishlist = cache()->tags(['wishlist'])->get($this->getKey());
-        if (!wishlist) {
+        if (!$wishlist) {
             $wishlist = $this->stargazers()->count();
             cache()->tags(['wishlist'])->forever($this->getKey(), $wishlist);
         }
@@ -265,7 +265,7 @@ class Item extends Model
 
     public function closet() {
         $closet = cache()->tags(['closet'])->get($this->getKey());
-        if (!closet) {
+        if (!$closet) {
             $closet = $this->owners()->count();
             cache()->tags(['closet'])->forever($this->getKey(), $closet);
         }
