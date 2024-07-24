@@ -102,12 +102,12 @@
                 <div class="row">
                     <div class="col p-1 list-group text-center small">
                         <div class="list-group-item">
-                            <i class="fal fa-star"></i> {{ $item->stargazers()->count() }} {{ trans_choice('ui.wishlist.stargazers', $item->stargazers()->count()) }}
+                            <i class="fal fa-star"></i> {{ $item->wishlist() }} {{ trans_choice('ui.wishlist.stargazers', $item->stargazers()->count()) }}
                         </div>
                     </div>
                     <div class="col p-1 list-group text-center small">
                         <div class="list-group-item">
-                            <i class="fal fa-shopping-bag"></i> {{ $item->owners()->count() }} {{ trans_choice('ui.closet.owners', $item->owners()->count()) }}
+                            <i class="fal fa-shopping-bag"></i> {{ $item->closet() }} {{ trans_choice('ui.closet.owners', $item->owners()->count()) }}
                         </div>
                     </div>
                 </div>
