@@ -117,4 +117,14 @@ return [
         'brand' => 'Marque',
         'view' => 'Voir l\'article',
     ],
+    'search' => [
+        'title' => 'Recherche',
+        'brands' => 'Marques',
+        'categories' => 'Catégories',
+        'features' => 'Attributs',
+        'no_results' => 'Aucun résultat !',
+        'try_again' => 'Essayer une autre recherche ?',
+        'colors' => 'Couleurs',
+        'year' => 'Année de sortie',
+    ],
 ];
