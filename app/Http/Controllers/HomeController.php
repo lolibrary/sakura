@@ -29,7 +29,7 @@ class HomeController extends Controller
         $brands = Brand::cached();
         $categories = Category::cached();
         $recent = Item::with(Item::PARTIAL_LOAD)
-            ->whereNotNull('published_at')
+            ->where('status', Item::PUBLISHED)
             ->orderBy('published_at', 'desc')
             ->whereNotNull('image')
             ->whereDoesntHave('tags', function (Builder $query) {
