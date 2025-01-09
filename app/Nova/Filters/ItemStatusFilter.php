@@ -46,6 +46,8 @@ class ItemStatusFilter extends Filter
                     ->where('status', BaseItem::PUBLISHED);
             case 'pending':
                 return $query->where('status', BaseItem::PENDING);
+            case 'changes-required':
+                return $query->where('status', BaseItem::CHANGES_REQUIRED);
             case 'drafts':
                 return $query->where('status', BaseItem::DRAFT);
             case 'my-drafts':
@@ -57,6 +59,9 @@ class ItemStatusFilter extends Filter
             case 'my-pending-items':
                 return $this->restrict($request, $query)
                     ->where('status', BaseItem::PENDING);
+            case 'my-changes-required-items':
+                return $this->restrict($request, $query)
+                    ->where('status', BaseItem::CHANGES_REQUIRED);
 
             case 'published-by-me':
                 return $query->where('publisher_id', $request->user()->id)
@@ -83,6 +88,7 @@ class ItemStatusFilter extends Filter
             return [
                 'My Items' => 'my-items',
                 'My Drafts' => 'my-drafts',
+                'My Items (Requiring Changes)' => 'my-changes-required-items',
                 'Published by Me' => 'published-by-me',
                 'My Items (Published by Others)' => 'published-by-others',
 
@@ -92,6 +98,7 @@ class ItemStatusFilter extends Filter
                 'Pending Review (status = 2)' => 'pending-items',
                 'All Published (status = 1)' => 'published',
                 'All Drafts (status = 0)' => 'drafts',
+                'All Requiring Changes' => 'changes-required'
             ];
         }
         
@@ -101,12 +108,15 @@ class ItemStatusFilter extends Filter
             return [
                 'My Items' => 'my-items',
                 'My Drafts' => 'my-drafts',
+                'My Items (Requiring Changes)' => 'my-changes-required-items',
                 'Published by Me' => 'published-by-me',
                 'My Items (Published by Others)' => 'published-by-others',
 
                 'All Drafts' => 'drafts',
                 'All Published' => 'published',
+                'All Requiring Changes' => 'changes-required',
                 'Pending Review' => 'pending',
+                ''
             ];
         }
 
@@ -115,6 +125,7 @@ class ItemStatusFilter extends Filter
         return [
             'My Items' => 'my-items',
             'My Drafts' => 'my-drafts',
+            'My Items (Requiring Changes)' => 'my-changes-required-items',
             'My Items (Pending)' => 'my-pending-items',
             'My Items (Published)' => 'my-published',
 

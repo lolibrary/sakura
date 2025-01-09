@@ -186,6 +186,8 @@ class Item extends Resource
                         return 'draft';
                     case BaseItem::PENDING:
                         return 'pending';
+                    case BaseItem::CHANGES_REQUIRED:
+                        return 'changes-required';
                     case BaseItem::MISSING_IMAGES:
                     case BaseItem::SHOE_DRAFTS:
                         return 'dev-only';
@@ -195,6 +197,7 @@ class Item extends Resource
             })->map([
                 'published' => 'success',
                 'draft' => 'danger',
+                'changes-required' => 'danger',
                 'pending' => 'info',
                 'dev-only' => 'warning',
                 'unknown' => 'warning',
@@ -283,6 +286,18 @@ class Item extends Resource
             }),
 
             (new DraftItem)->canSee(function (Request $request) {
+                /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
+                $model = $request->findModelQuery()->first();
+
+                /** @var \App\Models\Item $model */
+                if ($model === null) {
+                    return $request->user()->junior();
+                }
+
+                return ($model->pending() && $request->user()->can('update', $model) || $model->published()) && $request->user()->can('publish', $model);
+            }),
+
+            (new ChangesRequiredItem)->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
                 $model = $request->findModelQuery()->first();
 

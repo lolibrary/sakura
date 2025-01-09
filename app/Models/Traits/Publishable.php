@@ -59,6 +59,27 @@ trait Publishable
     }
 
     /**
+     * Make this item 'changes required'.
+     *
+     * @return void
+     */
+    public function setChangesRequired()
+    {
+        $this->status = static::CHANGES_REQUIRED;
+        $this->save();
+    }
+
+    /**
+     * Return if this item is pending.
+     *
+     * @return bool
+     */
+    public function changesRequired(): bool
+    {
+        return $this->status === static::CHANGES_REQUIRED;
+    }
+
+    /**
      * Return if this item is pending.
      *
      * @return bool
