@@ -1,0 +1,11 @@
+td.w-16 {
+    width: auto;
+}
+
+table.table td {
+    min-width: auto;
+}
+
+td.pr-6 {
+    padding-right: 0;
+}
