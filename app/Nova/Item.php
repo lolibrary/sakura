@@ -129,11 +129,10 @@ class Item extends Resource
                 BelongsTo::make('Publisher', 'publisher', User::class)->readonly()->nullable()->onlyOnDetail(),
 
                 DateTime::make('Created', 'created_at')->onlyOnDetail(),
+                Date::make("Updated", "updated_at")->readonly()->sortable()->onlyOnIndex(),
                 DateTime::make('Updated', 'updated_at')->onlyOnDetail(),
                 DateTime::make('Published', 'published_at')->onlyOnDetail(),
             ]),
-
-            Date::make("Updated At", "updated_at")->readonly()->sortable()->exceptOnForms(),
 
             new Panel('Price Details', [
                 Select::make('Currency')
