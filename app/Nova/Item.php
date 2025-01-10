@@ -7,7 +7,7 @@ use App\Nova\Actions\PublishItem;
 use App\Nova\Actions\UnpublishItem;
 use App\Nova\Actions\PendingItem;
 use App\Nova\Actions\DraftItem;
-use App\Nova\Actions\ChangesRequstedItem;
+use App\Nova\Actions\ChangesRequestedItem;
 use App\Nova\Filters\ItemStatusFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -40,6 +40,8 @@ class Item extends Resource
      * @var string
      */
     public static $title = 'english_name';
+
+    public static $tableStyle = 'tight';
 
     /**
      * The columns that should be searched.
@@ -300,7 +302,7 @@ class Item extends Resource
                 return ($model->pending() && $request->user()->can('update', $model) || $model->published()) && $request->user()->can('publish', $model);
             }),
 
-            (new ChangesRequstedItem)->canSee(function (Request $request) {
+            (new ChangesRequestedItem)->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
                 $model = $request->findModelQuery()->first();
 
