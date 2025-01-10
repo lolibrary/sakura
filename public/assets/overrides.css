@@ -9,3 +9,7 @@ table.table td {
 td.pr-6 {
     padding-right: 0;
 }
+
+div.w-sidebar {
+    width: 11rem;
+  }
