@@ -13,3 +13,7 @@ td.pr-6 {
 div.w-sidebar {
     width: 11rem;
   }
+
+div.content {
+    max-width: calc(100vw - 11rem);
+}

@@ -27,7 +27,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         parent::boot();
 
-        Nova::style("css-overrides", asset("asset/overrides.css"));
+        Nova::style("css-overrides", asset("assets/overrides.css"));
     }
 
     /**
