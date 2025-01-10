@@ -96,7 +96,7 @@ class Item extends Model
      *
      * @var int
      */
-    public const CHANGES_REQUIRED = 3;
+    public const CHANGES_REQUESTED = 3;
 
     /**
      * Test status for missing image imports.

@@ -7,7 +7,7 @@ use App\Nova\Actions\PublishItem;
 use App\Nova\Actions\UnpublishItem;
 use App\Nova\Actions\PendingItem;
 use App\Nova\Actions\DraftItem;
-use App\Nova\Actions\ChangesRequiredItem;
+use App\Nova\Actions\ChangesRequstedItem;
 use App\Nova\Filters\ItemStatusFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -20,6 +20,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Panel;
 use NovaAttachMany\AttachMany;
 use Whitecube\NovaFlexibleContent\Flexible;
@@ -132,6 +133,8 @@ class Item extends Resource
                 DateTime::make('Published', 'published_at')->onlyOnDetail(),
             ]),
 
+            Date::make("Updated At", "updated_at")->readonly()->sortable()->exceptOnForms(),
+
             new Panel('Price Details', [
                 Select::make('Currency')
                     ->options(BaseItem::CURRENCIES)
@@ -187,8 +190,8 @@ class Item extends Resource
                         return 'draft';
                     case BaseItem::PENDING:
                         return 'pending';
-                    case BaseItem::CHANGES_REQUIRED:
-                        return 'changes-required';
+                    case BaseItem::CHANGES_REQUESTED:
+                        return 'changes-requested';
                     case BaseItem::MISSING_IMAGES:
                     case BaseItem::SHOE_DRAFTS:
                         return 'dev-only';
@@ -198,7 +201,7 @@ class Item extends Resource
             })->map([
                 'published' => 'success',
                 'draft' => 'danger',
-                'changes-required' => 'danger',
+                'changes-requested' => 'danger',
                 'pending' => 'info',
                 'dev-only' => 'warning',
                 'unknown' => 'warning',
@@ -298,7 +301,7 @@ class Item extends Resource
                 return ($model->pending() && $request->user()->can('update', $model) || $model->published()) && $request->user()->can('publish', $model);
             }),
 
-            (new ChangesRequiredItem)->canSee(function (Request $request) {
+            (new ChangesRequstedItem)->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
                 $model = $request->findModelQuery()->first();
 

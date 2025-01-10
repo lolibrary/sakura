@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
-class ChangesRequiredItem extends Action
+class ChangesRequstedItem extends Action
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
@@ -24,7 +24,7 @@ class ChangesRequiredItem extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $models->each->setChangesRequired();
+        $models->each->setChangesRequested();
 
         return Action::message('Marked as requiring changes!');
     }

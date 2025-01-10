@@ -63,9 +63,9 @@ trait Publishable
      *
      * @return void
      */
-    public function setChangesRequired()
+    public function setChangesRequested()
     {
-        $this->status = static::CHANGES_REQUIRED;
+        $this->status = static::CHANGES_REQUESTED;
         $this->save();
     }
 
@@ -76,7 +76,7 @@ trait Publishable
      */
     public function changesRequired(): bool
     {
-        return $this->status === static::CHANGES_REQUIRED;
+        return $this->status === static::CHANGES_REQUESTED;
     }
 
     /**
