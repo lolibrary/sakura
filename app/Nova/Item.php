@@ -7,6 +7,7 @@ use App\Nova\Actions\PublishItem;
 use App\Nova\Actions\UnpublishItem;
 use App\Nova\Actions\PendingItem;
 use App\Nova\Actions\DraftItem;
+use App\Nova\Actions\ChangesRequiredItem;
 use App\Nova\Filters\ItemStatusFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
