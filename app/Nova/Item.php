@@ -287,7 +287,7 @@ class Item extends Resource
                     return $request->user()->junior();
                 }
 
-                return ($model->draft() || $model->published()) && $request->user()->can('update', $model);
+                return ($model->draft() || $model->changesRequired() || $model->published()) && $request->user()->can('update', $model);
             }),
 
             (new DraftItem)->canSee(function (Request $request) {
