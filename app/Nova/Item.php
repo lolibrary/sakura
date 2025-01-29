@@ -7,6 +7,7 @@ use App\Nova\Actions\PublishItem;
 use App\Nova\Actions\UnpublishItem;
 use App\Nova\Actions\PendingItem;
 use App\Nova\Actions\DraftItem;
+use App\Nova\Actions\ChangesRequestedItem;
 use App\Nova\Filters\ItemStatusFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -19,6 +20,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Panel;
 use NovaAttachMany\AttachMany;
 use Whitecube\NovaFlexibleContent\Flexible;
@@ -38,6 +40,8 @@ class Item extends Resource
      * @var string
      */
     public static $title = 'english_name';
+
+    public static $tableStyle = 'tight';
 
     /**
      * The columns that should be searched.
@@ -127,6 +131,7 @@ class Item extends Resource
                 BelongsTo::make('Publisher', 'publisher', User::class)->readonly()->nullable()->onlyOnDetail(),
 
                 DateTime::make('Created', 'created_at')->onlyOnDetail(),
+                Date::make("Updated", "updated_at")->readonly()->sortable()->onlyOnIndex(),
                 DateTime::make('Updated', 'updated_at')->onlyOnDetail(),
                 DateTime::make('Published', 'published_at')->onlyOnDetail(),
             ]),
@@ -186,6 +191,8 @@ class Item extends Resource
                         return 'draft';
                     case BaseItem::PENDING:
                         return 'pending';
+                    case BaseItem::CHANGES_REQUESTED:
+                        return 'changes-requested';
                     case BaseItem::MISSING_IMAGES:
                     case BaseItem::SHOE_DRAFTS:
                         return 'dev-only';
@@ -195,6 +202,7 @@ class Item extends Resource
             })->map([
                 'published' => 'success',
                 'draft' => 'danger',
+                'changes-requested' => 'danger',
                 'pending' => 'info',
                 'dev-only' => 'warning',
                 'unknown' => 'warning',
@@ -279,10 +287,22 @@ class Item extends Resource
                     return $request->user()->junior();
                 }
 
-                return ($model->draft() || $model->published()) && $request->user()->can('update', $model);
+                return ($model->draft() || $model->changesRequired() || $model->published()) && $request->user()->can('update', $model);
             }),
 
             (new DraftItem)->canSee(function (Request $request) {
+                /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
+                $model = $request->findModelQuery()->first();
+
+                /** @var \App\Models\Item $model */
+                if ($model === null) {
+                    return $request->user()->junior();
+                }
+
+                return ($model->pending() && $request->user()->can('update', $model) || $model->published()) && $request->user()->can('publish', $model);
+            }),
+
+            (new ChangesRequestedItem)->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
                 $model = $request->findModelQuery()->first();
 

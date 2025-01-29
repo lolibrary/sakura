@@ -1,0 +1,20 @@
+td.w-16 {
+    width: auto;
+}
+
+table.table td {
+    min-width: auto;
+    padding-right: 0;
+}
+
+td.pr-6 {
+    padding-right: 0;
+}
+
+div.w-sidebar {
+    width: 11rem;
+  }
+
+div.content {
+    max-width: calc(100vw - 11rem);
+}

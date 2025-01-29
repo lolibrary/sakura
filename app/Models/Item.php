@@ -92,6 +92,13 @@ class Item extends Model
     public const PENDING = 2;
 
     /**
+     * Indicates that an item is ready for review and publishing.
+     *
+     * @var int
+     */
+    public const CHANGES_REQUESTED = 3;
+
+    /**
      * Test status for missing image imports.
      *
      * @var int
