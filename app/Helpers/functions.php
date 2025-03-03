@@ -21,6 +21,8 @@ const ORDER = [
     'ALPHA_REVERSE' => ['name' => 'English Name (Z to A)', 'key' => 'alpha_reverse'],
 ];
 
+$ORDER_OPTS = array_map(function($a, $b){return $b['key'];}, ORDER);
+
 if (! function_exists('uuid')) {
     /**
      * Return a UUID without giving away our mac address.
@@ -322,10 +324,26 @@ if (! function_exists('sorted')) {
                 return ['year', 'desc'];
                 break;
             default:
-                return ['english_name', 'asc'];
+                $table = $relationship ? "$relationship.created_at" : 'created_at';
+                return [$table, 'desc'];
                 break;
             }
     }
 
 }
 
+if (! function_exists('valid_sort')) {
+    /**
+      * Takes a list of items and returns them sorted in a particular order
+      *
+      * @param \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[] $items
+      * @param string $order
+      * @param string $relationship
+      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
+      */
+     function valid_sort($order)
+     {
+         return in_array($order, $ORDER_OPTS);
+     }
+ 
+ }

@@ -46,7 +46,7 @@ class SearchRequest extends FormRequest
                 'end_year' => ($multiple ? end($years) : date('Y') + 3)
             ]);
         }
-        if (empty($this->sort)) {
+        if (empty($this->sort) || !valid_sort($this->sort)) {
             $this->merge(['sort' => 'added_new']);
         }
     }
