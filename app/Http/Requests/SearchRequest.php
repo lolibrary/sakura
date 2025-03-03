@@ -46,6 +46,9 @@ class SearchRequest extends FormRequest
                 'end_year' => ($multiple ? end($years) : date('Y') + 3)
             ]);
         }
+        if (empty($this->sort)) {
+            $this->merge(['sort' => 'added_new']);
+        }
     }
 
     /**
@@ -90,6 +93,7 @@ class SearchRequest extends FormRequest
 
             'start_year' => 'sometimes|required|integer|min:1970|max:'.(date('Y') + 3),
             'end_year' => 'sometimes|required|integer|min:1970|max:'.(date('Y') + 3),
+            'sort' => 'sometimes|required|string',
         ];
     }
 }

@@ -66,7 +66,7 @@ class SearchController extends Base
             });
         }
 
-        $query->orderBy(...(sorted('added_new')));
+        $query->orderBy(...(sorted($request->sort)));
 
         $query->where('status', Item::PUBLISHED);
 
@@ -161,7 +161,7 @@ class SearchController extends Base
 
         if ($start_year && $end_year && 
             !(($start_year == 1970 && $end_year == date('Y') + 3) ||
-            ($end_year == 1970 && $star_year == date('Y') + 3))) {
+            ($end_year == 1970 && $start_year == date('Y') + 3))) {
             if ($matcher == "OR") { 
                 $query->whereBetween('year', [$start_year, $end_year]);
 
