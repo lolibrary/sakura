@@ -10,22 +10,25 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-    'confirmed' => 'La confirmation de :attribute ne correspond pas.',
-    'email' => 'Le :attribute doit-être une adresse email valide.',
+    'confirmed' => 'La confirmation de :attribute ne correspond pas.',
+    'email' => 'L\' :attribute doit-être une adresse email valide.',
     'max' => [
-        'string' => 'Le :attribute ne doit pas dépasser :max caractères.',
+        'string' => 'Le :attribute ne doit pas dépasser :max caractères.',
     ],
     'min' => [
         // 'numeric' => 'The :attribute may not be greater than :max.',
         // 'file' => 'The :attribute may not be greater than :max kilobytes.',
         // 'array' => 'The :attribute may not have more than :max items.',
-        'string' => 'Le :attribute doit au moins contenir :min caractères.',
+        'string' => 'Le :attribute doit au moins contenir :min caractères.',
+        'numeric' => 'Le :attribute doit contenir au moins :min',
     ],
     // 'numeric' => 'The :attribute must be at least :min.',
     // 'file' => 'The :attribute must be at least :min kilobytes.',
     // 'array' => 'The :attribute must have at least :min items.',
-    'regex' => 'Le format de :attribute est invalide.',
-    'required' => 'Le champ :attribute est obligatoire.',
-    'string' => 'Le :attribute doit être une chaîne.',
-    'unique' => 'Le :attribute a déjà été pris.',
+    'regex' => 'Le format de :attribute est invalide.',
+    'required' => 'Le champ :attribute est obligatoire.',
+    'string' => 'Le :attribute doit être une chaîne.',
+    'unique' => 'Le :attribute a déjà été pris.',
+    'array' => 'L\' :attribute doit être un tableau.',
+    'integer' => 'L\' :attribute doit être un nombre entier.',
 ];
