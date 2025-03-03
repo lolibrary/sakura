@@ -134,5 +134,6 @@ return [
         'match_none' => 'Aucun.e',
         'error' => 'Une erreur est survenue, veuillez réessayer plus tard !',
         'placeholder' => 'Saisir la recherche ou filtrer',
+        'match_type' => 'Attribuer',
     ],
 ];
