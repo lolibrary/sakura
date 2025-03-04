@@ -21,7 +21,6 @@ const ORDER = [
     'ALPHA_REVERSE' => ['name' => 'English Name (Z to A)', 'key' => 'alpha_reverse'],
 ];
 
-$ORDER_OPTS = array_map(function($a){return $a['key'];}, ORDER);
 
 if (! function_exists('uuid')) {
     /**
@@ -343,7 +342,8 @@ if (! function_exists('valid_sort')) {
       */
      function valid_sort($order)
      {
-         return in_array($order, $ORDER_OPTS);
+        $order_opts = array_map(function($a){return $a['key'];}, ORDER);
+         return in_array($order, $order_opts);
      }
  
  }
