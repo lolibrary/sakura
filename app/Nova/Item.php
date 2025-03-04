@@ -151,7 +151,7 @@ class Item extends Resource
                 Flexible::make('Images')
                     ->addLayout('Image', 'image', [
                         Image::make('Image')
-                            ->acceptedTypes('.png, .jpeg, .jpg, .webp, .gif')
+                            ->acceptedTypes('.png, .jpeg, .jpg, .webp, .gif, .jfif')
                             ->path('images')
                             ->disk('s3public')
                             ->maxWidth(100)
