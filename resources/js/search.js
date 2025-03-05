@@ -38,7 +38,7 @@ $(() => {
             });
 
             document.querySelectorAll('.form-control-chosen:not([multiple])').forEach((el)=>{
-                let tom = new TomSelect(el, selectSettings);
+                let tom = new TomSelect(el, singleSelectSettings);
                 tom.on('change', (val) => {
                    searchJs.doSearch();
                });
