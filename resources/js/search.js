@@ -24,9 +24,8 @@ $(() => {
                 maxOptions: null};
             let singleSelectSettings = {
                 closeAfterSelect: true, 
-                plugins: ['remove_button'], 
                 controlInput: null,
-                maxOptions: 1
+                maxItems: 1
             };
             document.querySelectorAll('.form-control-chosen[multiple]').forEach((el)=>{
                  let tom = new TomSelect(el, selectSettings);
