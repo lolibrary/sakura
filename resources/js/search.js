@@ -22,7 +22,13 @@ $(() => {
                 plugins: ['remove_button'], 
                 sortField:[{field:'$order'},{field:'$score'}],
                 maxOptions: null};
-            document.querySelectorAll('.form-control-chosen').forEach((el)=>{
+            let singleSelectSettings = {
+                closeAfterSelect: true, 
+                plugins: ['remove_button'], 
+                controlInput: null,
+                maxOptions: 1
+            };
+            document.querySelectorAll('.form-control-chosen[multiple]').forEach((el)=>{
                  let tom = new TomSelect(el, selectSettings);
                  tom.on('change', (val) => {
                     searchJs.matchVisibility(tom, val);
@@ -30,6 +36,14 @@ $(() => {
                 });
                 searchJs.filters.push(tom);
             });
+
+            document.querySelectorAll('.form-control-chosen:not([multiple])').forEach((el)=>{
+                let tom = new TomSelect(el, selectSettings);
+                tom.on('change', (val) => {
+                   searchJs.doSearch();
+               });
+               searchJs.filters.push(tom);
+           });
 
             $('button[name="action:search"]')
             .on('click', (evt) => {

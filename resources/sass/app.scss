@@ -125,3 +125,7 @@ $select-arrow-color: $gray-500;
     cursor: text;
   }
 }
+
+.card-header label {
+  margin-bottom: 0;
+}
