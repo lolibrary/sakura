@@ -12,14 +12,7 @@ use GuzzleHttp\Psr7\Uri;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
-const ORDER = [
-    'YEAR_NEWEST' => ['name' => 'Year (newest first)', 'key' => 'year_new'],
-    'YEAR_OLDEST' => ['name' => 'Year (oldest first)', 'key' => 'year_old'],
-    'ADDED_NEWEST' => ['name' => 'Added (newest first)', 'key' => 'added_new'],
-    'ADDED_OLDEST' => ['name' => 'Added (oldest first)', 'key' => 'added_old'],
-    'ALPHA' => ['name' => 'English Name (A to Z)', 'key' => 'alpha'],
-    'ALPHA_REVERSE' => ['name' => 'English Name (Z to A)', 'key' => 'alpha_reverse'],
-];
+const ORDER = ['year_new', 'year_old', 'added_new', 'added_old', 'alpha', 'alpha_reverse'];
 
 
 if (! function_exists('uuid')) {
@@ -302,24 +295,24 @@ if (! function_exists('sorted')) {
     function sorted($order, $relationship = null)
     {
         switch($order) {
-            case ORDER['ADDED_OLDEST']['key']:
+            case 'added_old':
                 $table = $relationship ? "$relationship.created_at" : 'created_at';
                 return [$table, 'asc'];
                 break;
-            case ORDER['ADDED_NEWEST']['key']:
+            case 'added_new':
                 $table = $relationship ? "$relationship.created_at" : 'created_at';
                 return [$table, 'desc'];
                 break;
-            case ORDER['ALPHA']['key']:
+            case 'alpha':
                 return ['english_name', 'asc'];
                 break;
-            case ORDER['ALPHA_REVERSE']['key']:
+            case 'alpha_reverse':
                 return ['english_name', 'desc'];
                 break;
-            case ORDER['YEAR_OLDEST']['key']:
+            case 'year_old':
                 return ['year', 'asc'];
                 break;
-            case ORDER['YEAR_NEWEST']['key']:
+            case 'year_new':
                 return ['year', 'desc'];
                 break;
             default:
@@ -333,17 +326,27 @@ if (! function_exists('sorted')) {
 
 if (! function_exists('valid_sort')) {
     /**
-      * Takes a list of items and returns them sorted in a particular order
+      * Takes a sort string and returns whether it's valid or not
       *
-      * @param \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[] $items
       * @param string $order
-      * @param string $relationship
-      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
+      * @return boolean
       */
      function valid_sort($order)
      {
-        $order_opts = array_map(function($a){return $a['key'];}, ORDER);
-         return in_array($order, $order_opts);
+         return in_array($order, ORDER);
+     }
+ 
+ }
+
+ if (! function_exists('sort_options')) {
+    /**
+      * Returns the list of available sort options
+      *
+      * @return string[]
+      */
+     function sort_options()
+     {
+         return ORDER;
      }
  
  }

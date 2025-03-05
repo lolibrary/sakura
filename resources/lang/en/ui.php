@@ -116,7 +116,15 @@ return [
         'error' => 'Something went wrong, please try again later!',
         'placeholder' => 'Type to search or filter'
     ],
-
+    'sort' => [
+        'title' => 'Sort',
+        'year_new' => 'Year (newest first)',
+        'year_old' => 'Year (oldest first)',
+        'added_new' => 'Added (newest first)',
+        'added_old' => 'Added (oldest first)',
+        'alpha' => 'English Name (A to Z)',
+        'alpha_reverse' => 'English Name (Z to A)'
+    ],
     'item' => [
         'brand' => 'Brand',
         'category' => 'Category',

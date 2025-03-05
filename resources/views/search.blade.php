@@ -14,6 +14,7 @@
   <form method="GET" id="search-form">
     <div class="row">
       <div class="col-sm-12 col-md-4 col-lg-3 mb-2 mb-3">
+        @include('components.sort')
         {!! $filters !!}
       </div>
 

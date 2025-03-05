@@ -22,8 +22,9 @@ class SearchController extends Controller
     {
         $items = $this->post($request);
         $filters = $this->get_or_make_filters($request);
+        $sorts = sort_options();
 
-        return view('search', ['filters' => $filters,'items' => $items]);
+        return view('search', ['filters' => $filters,'items' => $items, 'sorts' => $sorts]);
     }
 
     public function post(SearchRequest $request) {
