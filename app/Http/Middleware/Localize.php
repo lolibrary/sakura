@@ -17,7 +17,7 @@ class Localize
     {
         $lang = $request->session()->get('lang');
         // TODO: add logic for checking if they have a stored value for language once that's implemented
-        if ($lang) {
+        if ($lang && array_key_exists($lang, config('translatable.locales'))) {
             App::setLocale($lang);
         }
         return $next($request);
