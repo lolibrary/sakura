@@ -58,6 +58,9 @@ class SearchRequest extends FormRequest
         if (empty($this->sort) || !valid_sort($this->sort)) {
             $this->merge(['sort' => 'added_new']);
         }
+        if (!mb_detect_encoding($this->search, 'utf-8', true)) {
+            $this->merge(['search' => null]);
+        }
     }
 
 
