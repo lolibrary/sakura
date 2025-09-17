@@ -23,7 +23,7 @@
                         @include('components.items.closet')
                     </div>
                 </div>                
-                @if (auth()->user() && auth()->user()->senior())
+                @if (auth()->user() && auth()->user()->can('update', $item))
                 <div class="row p-0 mx-0 my-3">
                     <div class="col p-1 list-group text-center small">
                     <a class="btn btn-outline-primary" href="{{ $item->edit_url }}">

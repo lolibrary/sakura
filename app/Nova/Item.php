@@ -80,6 +80,7 @@ class Item extends Resource
             Avatar::make('Image')
                 ->disk('s3public')
                 ->path('images')
+                ->acceptedTypes('.png, .jpeg, .jpg, .webp, .gif, .jfif')
                 ->nullable()
                 ->maxWidth(200),
 
