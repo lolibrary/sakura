@@ -67,7 +67,7 @@ trait ItemRelations
      */
     public function tags()
     {
-        return $this->belongsToMany(Tag::class)->withTimestamps()->orderBy('name');
+        return $this->belongsToMany(Tag::class)->withTimestamps()->sortBy('name');
     }
 
     /**
