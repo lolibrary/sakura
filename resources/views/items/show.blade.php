@@ -164,7 +164,7 @@
 
                 <h4 class="mt-4">{{ __('ui.item.tags') }}</h4>
                 <div class="row">
-                    @forelse ($item->tags()->orderBy('slug')->get() as $tag)
+                    @forelse ($item->tags()->orderByTranslation()>get() as $tag)
                         <div class="p-1 list-group text-center col-lg-4 col-6 small">
                             <a class="list-group-item" href="{{ $tag->url }}">
                                 {{ $tag->name }}
