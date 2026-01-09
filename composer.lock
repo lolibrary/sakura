@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1708edd25f3fe0e26c37fb023ae62ff",
+    "content-hash": "c1ad24859b2583d2b6cba9de9dcfb805",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -1704,6 +1704,66 @@
                 "source": "https://github.com/Jean85/pretty-package-versions/tree/1.5.0"
             },
             "time": "2020-06-23T06:23:06+00:00"
+        },
+        {
+            "name": "kraenkvisuell/nova-astrotranslatable",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kraenkvisuell/nova-astrotranslatable.git",
+                "reference": "0256a2a7be8b102edb19b0764c3cbbdb459e8db2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kraenkvisuell/nova-astrotranslatable/zipball/0256a2a7be8b102edb19b0764c3cbbdb459e8db2",
+                "reference": "0256a2a7be8b102edb19b0764c3cbbdb459e8db2",
+                "shasum": ""
+            },
+            "require": {
+                "astrotomic/laravel-translatable": "^11.5",
+                "laravel/nova": "^2.9 || ^3.0",
+                "php": "^7.4|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "KraenkVisuell\\NovaAstrotranslatable\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KraenkVisuell\\NovaAstrotranslatable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Optimist Digital",
+                    "homepage": "https://github.com/optimistdigital"
+                },
+                {
+                    "name": "Kraenk Visuell",
+                    "homepage": "https://github.com/kraenkvisuell"
+                }
+            ],
+            "description": "An Astrotomic Translatable extension for Laravel Nova.",
+            "keywords": [
+                "i18n",
+                "laravel",
+                "nova",
+                "translatable",
+                "translate"
+            ],
+            "support": {
+                "issues": "https://github.com/kraenkvisuell/nova-astrotranslatable/issues",
+                "source": "https://github.com/kraenkvisuell/nova-astrotranslatable/tree/v2.1.0"
+            },
+            "time": "2023-07-10T10:32:30+00:00"
         },
         {
             "name": "laravel/framework",
@@ -7473,53 +7533,6 @@
             "time": "2020-03-12T08:39:15+00:00"
         },
         {
-            "name": "yeswedev/nova-translatable",
-            "version": "0.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yeswedev-team/ywd_nova-translatable.git",
-                "reference": "48aac4ec6b9526b3e04e2efc49f87ed9c8e2605a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yeswedev-team/ywd_nova-translatable/zipball/48aac4ec6b9526b3e04e2efc49f87ed9c8e2605a",
-                "reference": "48aac4ec6b9526b3e04e2efc49f87ed9c8e2605a",
-                "shasum": ""
-            },
-            "require": {
-                "astrotomic/laravel-translatable": "^11.1",
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "YesWeDev\\Nova\\Translatable\\FieldServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "YesWeDev\\Nova\\Translatable\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova field for dimsav/laravel-translatable.",
-            "keywords": [
-                "laravel",
-                "nova",
-                "translatable"
-            ],
-            "support": {
-                "issues": "https://github.com/yeswedev-team/ywd_nova-translatable/issues",
-                "source": "https://github.com/yeswedev-team/ywd_nova-translatable/tree/0.9"
-            },
-            "time": "2019-06-21T11:48:55+00:00"
-        },
-        {
             "name": "zendframework/zend-diactoros",
             "version": "2.2.1",
             "source": {
@@ -9884,7 +9897,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -9893,6 +9906,6 @@
         "ext-json": "*",
         "ext-pdo": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

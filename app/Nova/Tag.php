@@ -52,10 +52,11 @@ class Tag extends TranslatableResource
                 ->updateRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/u', 'unique:tags,slug,{{resourceId}}')
                 ->hideFromIndex(),
 
-            Translatable::make('Name')
+            Text::make('Name')
                 ->indexLocale('en')
                 ->sortable()
-                ->rules('required', 'min:2', 'max:255'),
+                ->rules('required', 'min:2', 'max:255')
+                ->translatable(),
 
             DateTime::make('Created', 'created_at')->onlyOnDetail(),
             DateTime::make('Updated', 'updated_at')->onlyOnDetail(),

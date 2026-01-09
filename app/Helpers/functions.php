@@ -261,7 +261,7 @@ if (! function_exists('cdn_link')) {
 }
 
 if (! function_exists('cdn_thumbnail')) {
-    function cdn_thumbnail(string $path, array $options = []) {
+    function cdn_thumbnail($path, array $options = []) {
         if (is_null($path)) {
             $path = default_asset();
         };
