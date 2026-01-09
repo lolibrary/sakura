@@ -7,7 +7,6 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use YesWeDev\Nova\Translatable\Translatable;
 
 
 class Tag extends TranslatableResource
@@ -53,7 +52,6 @@ class Tag extends TranslatableResource
                 ->hideFromIndex(),
 
             Text::make('Name')
-                ->indexLocale('en')
                 ->sortable()
                 ->rules('required', 'min:2', 'max:255')
                 ->translatable(),
