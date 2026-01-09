@@ -27,6 +27,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         parent::boot();
 
+        Nova::serving(function (ServingNova $event) {
+            app()->setLocale('en_US');
+        });
+
         Nova::style("css-overrides", public_path("assets/overrides.css"));
     }
 
