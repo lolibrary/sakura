@@ -15,7 +15,7 @@
         "astrotomic/laravel-translatable": "^11.9",
         "dillingham/nova-attach-many": "^1.0",
         "fideloper/proxy": "^4.0",
-        "kraenkvisuell/nova-astrotranslatable": "^2.1",
+        "kraenkvisuell/nova-astrotranslatable": "^1.7",
         "laravel/framework": "^6.18",
         "laravel/nova": "^2.3",
         "laravel/passport": "^7.5",

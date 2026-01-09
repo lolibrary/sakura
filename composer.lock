@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1ad24859b2583d2b6cba9de9dcfb805",
+    "content-hash": "d16b66e6fdf4107b6460199e561960fe",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -1707,34 +1707,34 @@
         },
         {
             "name": "kraenkvisuell/nova-astrotranslatable",
-            "version": "v2.1.0",
+            "version": "1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kraenkvisuell/nova-astrotranslatable.git",
-                "reference": "0256a2a7be8b102edb19b0764c3cbbdb459e8db2"
+                "reference": "7b21152ceecb8fb5a88e07e12318e1470af80d62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kraenkvisuell/nova-astrotranslatable/zipball/0256a2a7be8b102edb19b0764c3cbbdb459e8db2",
-                "reference": "0256a2a7be8b102edb19b0764c3cbbdb459e8db2",
+                "url": "https://api.github.com/repos/kraenkvisuell/nova-astrotranslatable/zipball/7b21152ceecb8fb5a88e07e12318e1470af80d62",
+                "reference": "7b21152ceecb8fb5a88e07e12318e1470af80d62",
                 "shasum": ""
             },
             "require": {
-                "astrotomic/laravel-translatable": "^11.5",
                 "laravel/nova": "^2.9 || ^3.0",
-                "php": "^7.4|^8.0"
+                "php": ">=7.1.0",
+                "spatie/laravel-translatable": "^4.0"
             },
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
-                        "KraenkVisuell\\NovaAstrotranslatable\\FieldServiceProvider"
+                        "OptimistDigital\\NovaTranslatable\\FieldServiceProvider"
                     ]
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "KraenkVisuell\\NovaAstrotranslatable\\": "src/"
+                    "OptimistDigital\\NovaTranslatable\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1743,15 +1743,17 @@
             ],
             "authors": [
                 {
-                    "name": "Optimist Digital",
-                    "homepage": "https://github.com/optimistdigital"
+                    "name": "Tarvo Reinpalu",
+                    "email": "tarvoreinpalu@gmail.com",
+                    "role": "Developer"
                 },
                 {
-                    "name": "Kraenk Visuell",
-                    "homepage": "https://github.com/kraenkvisuell"
+                    "name": "Optimist Digital",
+                    "email": "info@optimistdigital.com",
+                    "role": "Maintainer"
                 }
             ],
-            "description": "An Astrotomic Translatable extension for Laravel Nova.",
+            "description": "A laravel-translatable extension for Laravel Nova.",
             "keywords": [
                 "i18n",
                 "laravel",
@@ -1760,10 +1762,9 @@
                 "translate"
             ],
             "support": {
-                "issues": "https://github.com/kraenkvisuell/nova-astrotranslatable/issues",
-                "source": "https://github.com/kraenkvisuell/nova-astrotranslatable/tree/v2.1.0"
+                "source": "https://github.com/kraenkvisuell/nova-astrotranslatable/tree/1.7.2"
             },
-            "time": "2023-07-10T10:32:30+00:00"
+            "time": "2021-02-08T10:04:41+00:00"
         },
         {
             "name": "laravel/framework",
@@ -4652,6 +4653,88 @@
                 }
             ],
             "time": "2020-06-02T12:39:20+00:00"
+        },
+        {
+            "name": "spatie/laravel-translatable",
+            "version": "4.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-translatable.git",
+                "reference": "5900d6002a5795712058a04c7ca7c2c44b3e0850"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/5900d6002a5795712058a04c7ca7c2c44b3e0850",
+                "reference": "5900d6002a5795712058a04c7ca7c2c44b3e0850",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^4.0|^5.0|^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Translatable\\TranslatableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Translatable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Mohamed Said",
+                    "email": "theMohamedSaid@gmail.com",
+                    "role": "Original idea"
+                }
+            ],
+            "description": "A trait to make an Eloquent model hold translations",
+            "homepage": "https://github.com/spatie/laravel-translatable",
+            "keywords": [
+                "eloquent",
+                "i8n",
+                "laravel-translatable",
+                "model",
+                "multilingual",
+                "spatie",
+                "translate"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-translatable/issues",
+                "source": "https://github.com/spatie/laravel-translatable/tree/4.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-11-19T14:19:29+00:00"
         },
         {
             "name": "spatie/once",
@@ -9907,5 +9990,5 @@
         "ext-pdo": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
