@@ -89,7 +89,7 @@
                     </p>
                 </div>
 
-                @foreach ($item->attributes as $attribute)
+                @foreach ($item->attributes()->orderByTranslation('name')->get() as $attribute)
                     <h4 class="mt-4">{{ $attribute->name }}</h4>
                     <p class="text-muted text-regular">{{ $attribute->pivot->value }}</p>
                 @endforeach
@@ -123,7 +123,7 @@
 
                 <h4 class="mt-4">{{ __('ui.item.category') }}</h4>
                 <div class="row">
-                    @forelse ($item->categories as $category)
+                    @forelse ($item->categories()->orderByTranslation('name')->get() as $category)
                         <div class="p-1 list-group text-center col small">
                             <a class="list-group-item" href="{{ $category->url }}">
                                 {{ $category->name }}
@@ -138,7 +138,7 @@
                         title="{{ __('ui.item.features_help') }}"
                         data-toggle="tooltip" class="fal fa-question-circle"></i></h4>
                 <div class="row">
-                    @forelse ($item->features as $feature)
+                    @forelse ($item->features()->orderByTranslation('name')->get() as $feature)
                         <div class="p-1 list-group text-center col-lg-4 col-6 small">
                             <a class="list-group-item" href="{{ $feature->url }}">
                                 {{ $feature->name }}
@@ -151,7 +151,7 @@
 
                 <h4 class="mt-4">{{ __('ui.item.colors') }}</h4>
                 <div class="row">
-                    @forelse ($item->colors as $color)
+                    @forelse ($item->colors()->orderByTranslation('name')->get() as $color)
                         <div class="p-1 list-group text-center col-lg-4 col-6 small">
                             <a class="list-group-item" href="{{ $color->url }}">
                                 {{ $color->name }}
