@@ -54,7 +54,8 @@ class Tag extends TranslatableResource
 
             Translatable::make('Name')
                 ->indexLocale('en')
-                ->sortable(),
+                ->sortable()
+                ->rules('max:255'),
 
             DateTime::make('Created', 'created_at')->onlyOnDetail(),
             DateTime::make('Updated', 'updated_at')->onlyOnDetail(),
