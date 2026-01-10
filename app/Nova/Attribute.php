@@ -54,7 +54,7 @@ class Attribute extends TranslatableResource
             Translatable::make('Name')
                 ->indexLocale('en')
                 ->sortable()
-                ->rules('required', 'min:2', 'max:255'),
+                ->rules('max:255'),
 
             Text::make('Value')
                 ->readonly(),
