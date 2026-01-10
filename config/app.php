@@ -107,11 +107,12 @@ return [
     |
     */
 
-    'faker_locale' => 'en',
+    'faker_locale' => 'en_US',
 
     // Available locales
     'locales' => [
         'en' => 'English', 
+        'en_US' => 'English', // Fallback locale fix, do not actually add tls
         'fr' => 'français', 
         'it' => 'Italiano',
         'nb_NO' => 'norsk (bokmål)',

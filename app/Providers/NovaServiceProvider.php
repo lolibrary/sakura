@@ -27,7 +27,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         parent::boot();
 
-        Nova::serving(function (ServingNova $event) {
+        Nova::serving(function ($event) {
             app()->setLocale('en_US');
         });
 
