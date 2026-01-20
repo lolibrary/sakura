@@ -75,7 +75,12 @@ class Item extends Resource
     {
         return [
             Text::make('ID')->onlyOnDetail(),
-            Text::make('Slug')->onlyOnDetail(),
+            Text::make('Slug', function () {
+                $slug = $this->slug;
+                $url = $this->url;
+            
+                return "<a href='{$url}'>{$slug}</a>";
+            })->asHtml()->onlyOnDetail(),
 
             Avatar::make('Image')
                 ->disk('s3public')

@@ -30,6 +30,12 @@
                         <i class="fal fa-fw fa-edit"></i>  {{ __('ui.item.edit') }}
                     </a>
                     </div>
+
+                    <div class="col p-1 list-group text-center small">
+                    <a class="btn btn-outline-primary" href="{{ $item->view_url }}">
+                        <i class="fal fa-fw fa-eye"></i>  {{ __('ui.item.view') }}
+                    </a>
+                    </div>
                 </div>
                 @elseif (auth()->user())
                 <div class="row p-0 mx-0 my-3">
