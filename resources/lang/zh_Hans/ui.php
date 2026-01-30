@@ -2,7 +2,7 @@
 return [
     'skip' => '跳转内容',
     'login' => '登录',
-    'npo' => '',
+    'npo' => '主页',
     'wishlist' => [
         'added' => '',
         'removed' => '',
