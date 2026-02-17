@@ -10,8 +10,8 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-    'array' => 'O :attribute precisa ser uma matriz',
-    'confirmed' => '',
+    'array' => 'O :attribute deve ser um array.',
+    'confirmed' => 'A confirmação de :attribute não corresponde.',
     'email' => 'O :attribute deve ser um email válido.',
     'integer' => 'O :attribute deve ser um número inteiro.',
     'max' => [
