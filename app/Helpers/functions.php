@@ -11,6 +11,7 @@ use App\Models\User;
 use GuzzleHttp\Psr7\Uri;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 const ORDER = [
     'YEAR_NEWEST' => ['name' => 'Year (newest first)', 'key' => 'year_new'],
@@ -256,15 +257,16 @@ if (! function_exists('cdn_link')) {
      */
     function cdn_link(string $path)
     {
+        if (Str::startsWith($path, 'https://')) {
+            return $path;
+        }
+
         return config('cdn.image.url').'/'.$path;
     }
 }
 
 if (! function_exists('cdn_thumbnail')) {
     function cdn_thumbnail(string $path, array $options = []) {
-        if (is_null($path)) {
-            $path = default_asset();
-        };
         static $defaults = [
             'width' => '300',
             'height' => '300',
@@ -345,5 +347,5 @@ if (! function_exists('valid_sort')) {
         $order_opts = array_map(function($a){return $a['key'];}, ORDER);
          return in_array($order, $order_opts);
      }
- 
+
  }

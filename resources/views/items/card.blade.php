@@ -28,8 +28,9 @@
 
         <div style="height: {{ ($type ?? null) === 'small' ? '7rem' : '14rem' }}" class="text-center">
             <a href="{{ $item->url }}">
-                <img src="{{ $item->image ? Storage::cloud()->url($item->image) : default_asset() }}" class="mw-100 mh-100 rounded"
-                    onerror="if (this.src !== '{{ default_asset() }}') this.src = '{{ default_asset() }}'">
+                <img src="{{ $item->image ? cdn_thumbnail($item->image) : default_asset() }}" class="mw-100 mh-100 rounded"
+                    onerror="if (this.src !== '{{ default_asset() }}') this.src = '{{ default_asset() }}'"
+                alt="">
             </a>
         </div>
     </div>

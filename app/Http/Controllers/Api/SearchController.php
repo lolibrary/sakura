@@ -75,11 +75,11 @@ class SearchController extends Base
         $paginator = $query->paginate(24)->appends($params);
 
         $paginator->each(function (Item $item) {
-            if ($item->image !== null) { 
+            if ($item->image !== null) {
                 $item->makeVisible('image');
-                    $item->image = Storage::cloud()->url($item->image);
-                    $item->makeVisible('image');
-                }
+                $item->image = Storage::cloud()->url($item->image);
+                $item->makeVisible('image');
+            }
 
             if ($item->brand !== null) {
                 $item->brand->image = Storage::cloud()->url($item->brand->image);
@@ -98,7 +98,7 @@ class SearchController extends Base
     protected function form_to_query(Request $request)
     {
         $all_params = $request->all();
-        
+
         $filtered = array_filter($all_params, function($value, $key) { return !(str_contains($key, '_matcher') && $value == 'OR'); }, ARRAY_FILTER_USE_BOTH);
 
         return  $filtered;
@@ -141,7 +141,7 @@ class SearchController extends Base
                         $query->whereIn('slug', $models);
                     });
                 }
-                
+
             }
         }
     }
@@ -159,10 +159,10 @@ class SearchController extends Base
         $end_year = $request->input('end_year');
         $matcher = $request->input("year_matcher") ?? "OR";
 
-        if ($start_year && $end_year && 
+        if ($start_year && $end_year &&
             !(($start_year == 1970 && $end_year == date('Y') + 3) ||
             ($end_year == 1970 && $start_year == date('Y') + 3))) {
-            if ($matcher == "OR") { 
+            if ($matcher == "OR") {
                 $query->whereBetween('year', [$start_year, $end_year]);
 
             } elseif ($matcher == "NOT") {
