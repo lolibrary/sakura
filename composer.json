@@ -24,8 +24,8 @@
         "lolibrary/image-array": "*",
         "sentry/sentry-laravel": "^1.6",
         "stevebauman/purify": "^4.0",
-        "symfony/postmark-mailer": "^5.2",
         "whitecube/nova-flexible-content": "^0.1.11",
+        "wildbit/swiftmailer-postmark": "^3.4",
         "yeswedev/nova-translatable": "^0.9.0"
     },
     "require-dev": {
