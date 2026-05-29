@@ -113,6 +113,9 @@ $(() => {
                             searchJs.loader.css('display', 'none');
                             searchJs.results.css('display', 'block');
                             searchJs.results.html(text);
+                            if (window.feather) {
+                                window.feather.replace();
+                            }
                         });
 
                     } else {

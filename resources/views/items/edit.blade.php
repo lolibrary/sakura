@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="col-6">
                                     <a onclick="event.preventDefault(); $('#delete-image-{{ $image->id }}').submit();" class="btn btn-sm btn-danger">
-                                        <i class="fal fa-fw fa-trash"></i> 
+                                        <i data-feather="trash-2" class="icon-fw"></i> 
                                         delete
                                     </a>
                                 </div>

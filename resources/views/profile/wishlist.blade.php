@@ -34,21 +34,21 @@
             <div class="col-4">
                 <div class="card bg-light text-muted">
                     <div class="card-body shadow-sm d-flex justify-content-center align-items-center">
-                        <i class="fal fa-plus-circle fa-5x"></i>
+                        <i data-feather="plus-circle" class="icon-5x"></i>
                     </div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="card bg-light text-muted">
                     <div class="card-body shadow-sm d-flex justify-content-center align-items-center">
-                        <i class="fal fa-plus-circle fa-5x"></i>
+                        <i data-feather="plus-circle" class="icon-5x"></i>
                     </div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="card bg-light text-muted">
                     <div class="card-body shadow-sm d-flex justify-content-center align-items-center">
-                        <i class="fal fa-plus-circle fa-5x"></i>
+                        <i data-feather="plus-circle" class="icon-5x"></i>
                     </div>
                 </div>
             </div>

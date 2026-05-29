@@ -27,13 +27,13 @@
                 <div class="row p-0 mx-0 my-3">
                     <div class="col p-1 list-group text-center small">
                     <a class="btn btn-outline-primary" href="{{ $item->edit_url }}">
-                        <i class="fal fa-fw fa-edit"></i>  {{ __('ui.item.edit') }}
+                        <i data-feather="edit-2" class="icon-fw"></i>  {{ __('ui.item.edit') }}
                     </a>
                     </div>
 
                     <div class="col p-1 list-group text-center small">
                     <a class="btn btn-outline-primary" href="{{ $item->view_url }}">
-                        <i class="fal fa-fw fa-eye"></i>  {{ __('ui.item.view') }}
+                        <i data-feather="eye" class="icon-fw"></i>  {{ __('ui.item.view') }}
                     </a>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                 <div class="row p-0 mx-0 my-3">
                     <div class="col p-1 list-group text-center small">
                     <a class="btn btn-outline-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeuCoQbM7cXwF2OAkljtlmALwdgUNCAkKGEDeQHomCySMhStQ/viewform?usp=pp_url&entry.1974464960={{ $item->url }}">
-                        <i class="fal fa-fw fa-edit"></i>  {{ __('ui.item.suggest') }}
+                        <i data-feather="edit-2" class="icon-fw"></i>  {{ __('ui.item.suggest') }}
                     </a>
                     </div>
                 </div>
@@ -108,12 +108,12 @@
                 <div class="row">
                     <div class="col p-1 list-group text-center small">
                         <div class="list-group-item">
-                            <i class="fal fa-star"></i> {{ $item->wishlist() }} {{ trans_choice('ui.wishlist.stargazers', $item->wishlist()) }}
+                            <i data-feather="star"></i> {{ $item->wishlist() }} {{ trans_choice('ui.wishlist.stargazers', $item->wishlist()) }}
                         </div>
                     </div>
                     <div class="col p-1 list-group text-center small">
                         <div class="list-group-item">
-                            <i class="fal fa-shopping-bag"></i> {{ $item->closet() }} {{ trans_choice('ui.closet.owners', $item->closet()) }}
+                            <i data-feather="shopping-bag"></i> {{ $item->closet() }} {{ trans_choice('ui.closet.owners', $item->closet()) }}
                         </div>
                     </div>
                 </div>
@@ -140,9 +140,7 @@
                     @endforelse
                 </div>
 
-                <h4 class="mt-4">{{ __('ui.item.features') }} <i
-                        title="{{ __('ui.item.features_help') }}"
-                        data-toggle="tooltip" class="fal fa-question-circle"></i></h4>
+                <h4 class="mt-4">{{ __('ui.item.features') }} <i data-feather="help-circle" title="{{ __('ui.item.features_help') }}" data-toggle="tooltip"></i></h4>
                 <div class="row">
                     @forelse ($item->features()->orderByTranslation('name')->get() as $feature)
                         <div class="p-1 list-group text-center col-lg-4 col-6 small">

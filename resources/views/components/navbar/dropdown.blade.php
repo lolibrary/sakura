@@ -5,20 +5,20 @@
 
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" href="{{ route('profile') }}">
-            <i class="fal fa-fw fa-user"></i> {{ __('Profile') }}
+            <i data-feather="user" class="icon-fw"></i> {{ __('Profile') }}
         </a>
 
         <a class="dropdown-item" href="{{ route('public_wishlist', ['username' => Auth::user()->username]) }}">
-            <i class="fal fa-fw fa-star"></i> {{ __('Wishlist') }}
+            <i data-feather="star" class="icon-fw"></i> {{ __('Wishlist') }}
         </a>
 
         <a class="dropdown-item" href="{{ route('public_closet', ['username' => Auth::user()->username]) }}">
-            <i class="fal fa-fw fa-tags"></i> {{ __('Closet') }}
+            <i data-feather="tag" class="icon-fw"></i> {{ __('Closet') }}
         </a>
 
         <a class="dropdown-item" href="{{ route('logout') }}"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="fal fa-fw fa-sign-out-alt"></i> {{ __('Logout') }}
+            <i data-feather="log-out" class="icon-fw"></i> {{ __('Logout') }}
         </a>
 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
