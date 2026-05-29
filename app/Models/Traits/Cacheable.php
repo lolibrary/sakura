@@ -2,6 +2,7 @@
 
 namespace App\Models\Traits;
 use Illuminate\Support\Facades\App;
+use BadMethodCallException;
 
 trait Cacheable
 {
@@ -51,13 +52,26 @@ trait Cacheable
     {
         static::saved(function () {
             static::bust();
-            static::bust();
-            cache()->tags('filters')->flush();
+            static::flushFilterCache();
         });
 
         static::deleted(function () {
             static::bust();
-            cache()->tags('filters')->flush();
+            static::flushFilterCache();
         });
+    }
+
+    /**
+     * Flush filter cache when the active store supports tags.
+     *
+     * @return void
+     */
+    protected static function flushFilterCache()
+    {
+        try {
+            cache()->tags('filters')->flush();
+        } catch (BadMethodCallException $exception) {
+            // Local file and array stores do not support tags.
+        }
     }
 }

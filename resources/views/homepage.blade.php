@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
     @include('components.hero')
+    @php($fallbackThumbnail = cdn_thumbnail('categories/other.svg'))
 
     {{-- todo: put brands in here with their images --}}
     {{-- todo: carousel these! (or scroll left/right) --}}
@@ -13,8 +14,9 @@
             <div class="card shadow-sm scrollbox-square">
                 <a href="{{ $brand->url }}">
                     <div class="scrollbox-img">
-                        <img src="{{ cdn_thumbnail($brand->image) }}" alt="" data-original-url="{{ cdn_thumbnail($brand->image) }}"
-                            onerror="if (this.src !== '{{ cdn_thumbnail('categories/other.svg') }}') this.src = '{{ cdn_thumbnail('categories/other.svg') }}'">
+                        <img src="{{ $brand->image ? cdn_thumbnail($brand->image) : $fallbackThumbnail }}" alt=""
+                            data-original-url="{{ $brand->image ? cdn_thumbnail($brand->image) : $fallbackThumbnail }}"
+                            onerror="if (this.src !== '{{ $fallbackThumbnail }}') this.src = '{{ $fallbackThumbnail }}'">
                     </div>
                     <div class="scrollbox-text">
                         <p class="text-muted small p-0 m-0">{{ $brand->name }}</p>
@@ -32,7 +34,9 @@
             <div class="card shadow-sm scrollbox-square">
                 <a href="{{ $category->url }}">
                     <div class="scrollbox-img">
-                        <img src="{{ cdn_thumbnail($category->image) }}" alt="">
+                        <img src="{{ $category->image ? cdn_thumbnail($category->image) : $fallbackThumbnail }}" alt=""
+                            data-original-url="{{ $category->image ? cdn_thumbnail($category->image) : $fallbackThumbnail }}"
+                            onerror="if (this.src !== '{{ $fallbackThumbnail }}') this.src = '{{ $fallbackThumbnail }}'">
                     </div>
                     <div class="scrollbox-text">
                         <p class="text-muted small p-0 m-0">{{ $category->name }}</p>

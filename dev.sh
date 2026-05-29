@@ -15,13 +15,14 @@ build_frontend_assets() {
     if npm install && npm run development; then
         :
     else
-        echo "Frontend asset build failed. Falling back to checked-in assets."
+        echo "Frontend asset build failed. Reusing any previously published assets."
     fi
 }
 
 run_migrations() {
     for attempt in 1 2 3 4 5; do
         if php artisan migrate --force; then
+            php artisan db:seed --force
             return 0
         fi
 

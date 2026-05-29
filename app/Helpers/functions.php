@@ -257,7 +257,7 @@ if (! function_exists('cdn_link')) {
      */
     function cdn_link(string $path)
     {
-        if (Str::startsWith($path, 'https://')) {
+        if (Str::startsWith($path, ['https://', 'http://', '/'])) {
             return $path;
         }
 
