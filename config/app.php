@@ -145,7 +145,7 @@ return [
     |
     */
 
-    'providers' => [
+    'providers' => array_values(array_filter([
 
         /*
          * Laravel Framework Service Providers...
@@ -184,11 +184,11 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\NovaServiceProvider::class,
+        class_exists(\Laravel\Nova\NovaApplicationServiceProvider::class) ? App\Providers\NovaServiceProvider::class : null,
         App\Providers\RouteServiceProvider::class,
         Stevebauman\Purify\PurifyServiceProvider::class,
 
-    ],
+    ])),
 
     /*
     |--------------------------------------------------------------------------

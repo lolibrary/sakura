@@ -13,8 +13,8 @@ class BlogPostTables extends Migration
      */
     public function up()
     {
-        (new CreatePostsTable)->down();
-        (new CreateTopicsTable)->down();
+        Schema::dropIfExists('posts');
+        Schema::dropIfExists('topics');
 
         Schema::create('posts', function (Blueprint $table) {
             $table->uuid('id')->primary();
@@ -43,7 +43,27 @@ class BlogPostTables extends Migration
     {
         Schema::dropIfExists('posts');
 
-        (new CreateTopicsTable)->up();
-        (new CreatePostsTable)->up();
+        Schema::create('topics', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->uuid('user_id')->index();
+            $table->string('slug')->unique();
+
+            $table->string('title');
+            $table->text('body');
+
+            $table->boolean('allow_comments')->default(true);
+
+            $table->timestampsTz();
+        });
+
+        Schema::create('posts', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->uuid('user_id')->index();
+            $table->uuid('topic_id')->index();
+
+            $table->text('body');
+
+            $table->timestampsTz();
+        });
     }
 }

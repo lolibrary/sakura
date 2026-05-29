@@ -1,60 +1,79 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
+
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-/* @var \Illuminate\Database\Eloquent\Factory $factory */
+class UserFactory extends Factory
+{
+    protected $model = User::class;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+    public function definition()
+    {
+        $username = $this->faker->unique()->userName;
 
-$factory->define(App\Models\User::class, function (Faker $faker) {
-    return [
-        'id' => uuid4(),
-        'name' => $faker->name,
-        'username' => $username = $faker->unique()->userName,
-        'email' => 'bikeshed+'.$username.'@lolibrary.org',
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-        'remember_token' => Str::random(10),
-        'email_verified_at' => now('UTC')->subHour(),
-        'banned' => false,
-        'level' => App\Models\User::REGULAR,
-    ];
-});
+        return [
+            'id' => uuid4(),
+            'name' => $this->faker->name,
+            'username' => $username,
+            'email' => 'bikeshed+'.$username.'@lolibrary.org',
+            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',
+            'remember_token' => Str::random(10),
+            'email_verified_at' => now('UTC')->subHour(),
+            'banned' => false,
+            'level' => User::REGULAR,
+        ];
+    }
 
-$factory->state(App\Models\User::class, 'junior', [
-    'level' => App\Models\User::JUNIOR_LOLIBRARIAN,
-]);
+    public function junior()
+    {
+        return $this->state([
+            'level' => User::JUNIOR_LOLIBRARIAN,
+        ]);
+    }
 
-$factory->state(App\Models\User::class, 'lolibrarian', [
-    'level' => App\Models\User::LOLIBRARIAN,
-]);
+    public function lolibrarian()
+    {
+        return $this->state([
+            'level' => User::LOLIBRARIAN,
+        ]);
+    }
 
-$factory->state(App\Models\User::class, 'senior', [
-    'level' => App\Models\User::SENIOR_LOLIBRARIAN,
-]);
+    public function senior()
+    {
+        return $this->state([
+            'level' => User::SENIOR_LOLIBRARIAN,
+        ]);
+    }
 
-$factory->state(App\Models\User::class, 'admin', [
-    'level' => App\Models\User::ADMIN,
-]);
+    public function admin()
+    {
+        return $this->state([
+            'level' => User::ADMIN,
+        ]);
+    }
 
-$factory->state(App\Models\User::class, 'developer', [
-    'level' => App\Models\User::DEVELOPER,
-]);
+    public function developer()
+    {
+        return $this->state([
+            'level' => User::DEVELOPER,
+        ]);
+    }
 
-$factory->state(App\Models\User::class, 'banned', [
-    'level' => App\Models\User::BANNED,
-    'banned' => true,
-]);
+    public function banned()
+    {
+        return $this->state([
+            'level' => User::BANNED,
+            'banned' => true,
+        ]);
+    }
 
-$factory->state(App\Models\User::class, 'unverified', [
-    'email_verified_at' => null,
-]);
+    public function unverified()
+    {
+        return $this->state([
+            'email_verified_at' => null,
+        ]);
+    }
+}

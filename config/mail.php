@@ -1,6 +1,24 @@
 <?php
 
+$configuredMailer = env('MAIL_MAILER', env('MAIL_DRIVER', 'smtp'));
+$defaultMailer = $configuredMailer === 'postmark' && ! class_exists(\Postmark\Transport::class)
+    ? 'smtp'
+    : $configuredMailer;
+
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Mailer
+    |--------------------------------------------------------------------------
+    |
+    | Laravel 11 uses the "default" mailer key instead of the older
+    | "driver" setting. We keep both here during the upgrade path so the
+    | current app and the future app can read the same environment.
+    |
+    */
+
+    'default' => $defaultMailer,
 
     /*
     |--------------------------------------------------------------------------
@@ -16,7 +34,49 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => $defaultMailer,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mailers
+    |--------------------------------------------------------------------------
+    |
+    | The modern mail configuration format defines named mailers. Keeping
+    | these entries in place now reduces the amount of config churn needed
+    | when the framework is upgraded to the Symfony Mailer-based stack.
+    |
+    */
+
+    'mailers' => [
+        'smtp' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('MAIL_USERNAME'),
+            'password' => env('MAIL_PASSWORD'),
+            'timeout' => null,
+            'auth_mode' => null,
+        ],
+
+        'sendmail' => [
+            'transport' => 'sendmail',
+            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs'),
+        ],
+
+        'log' => [
+            'transport' => 'log',
+            'channel' => env('MAIL_LOG_CHANNEL'),
+        ],
+
+        'array' => [
+            'transport' => 'array',
+        ],
+
+        'postmark' => [
+            'transport' => 'postmark',
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -99,7 +159,7 @@ return [
     |
     */
 
-    'sendmail' => '/usr/sbin/sendmail -bs',
+    'sendmail' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs'),
 
     /*
     |--------------------------------------------------------------------------

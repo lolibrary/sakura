@@ -40,7 +40,9 @@ abstract class Composer
         try {
             return cache()->remember($this->key(), static::DURATION, $default);
         } catch (Throwable $e) {
-            sentry($e);
+            if (function_exists('sentry')) {
+                sentry($e);
+            }
 
             return $default();
         }

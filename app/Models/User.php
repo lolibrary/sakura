@@ -3,16 +3,17 @@
 namespace App\Models;
 
 use App\Models\Traits\AccessLevels;
+use App\Models\Traits\Actionable;
 use App\Models\Traits\Closet;
 use App\Models\Traits\DateHandling;
 use App\Models\Traits\HasUuid;
 use App\Models\Traits\Wishlist;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
-use Laravel\Nova\Actions\Actionable;
 use Laravel\Passport\HasApiTokens;
 
 /**
@@ -37,7 +38,7 @@ use Laravel\Passport\HasApiTokens;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens, HasUuid, DateHandling, Wishlist, Closet, AccessLevels, Actionable;
+    use HasFactory, Notifiable, HasApiTokens, HasUuid, DateHandling, Wishlist, Closet, AccessLevels, Actionable;
 
     public const DEVELOPER = 1000;
     public const ADMIN = 500;
