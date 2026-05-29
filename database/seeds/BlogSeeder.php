@@ -38,7 +38,7 @@ BODY;
 
         if (! Post::where('slug', 'patreon-is-here')->exists()) {
             $body = <<<'BODY'
-We started a Patreon so that people could donate to Lolibrary much, much easier <i class="far fa-heart"></i>.
+We started a Patreon so that people could donate to Lolibrary much, much easier <span aria-hidden="true">&hearts;</span>.
 <br>
 If you could <a href="https://patreon.com/lolibrary" rel="external" target="_blank">support us on Patreon</a>, we'd greatly appreciate it - we're a pretty small team and we run entirely on donations!
 BODY;
