@@ -180,6 +180,14 @@ App work expected in this stage:
 - Revisit mail configuration after the earlier Postmark cleanup.
 - Review storage / filesystem behavior and any S3 integration assumptions.
 
+Stage 2 progress:
+
+- Bumped the repo targets to PHP `^8.0.2`, Laravel `^9.52`, Passport `^11.10`,
+  Laravel UI `^4.2`, Flysystem S3 `^3.0`, Purify `^5.1`, and
+  `astrotomic/laravel-translatable:^11.17`.
+- Updated the local dev Docker base image from `php:7.3-alpine` to
+  `php:8.0-alpine` so local validation matches the new platform baseline.
+
 ### Stage 3: Laravel 9 -> 10
 
 Target:

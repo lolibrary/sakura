@@ -1,4 +1,4 @@
-FROM php:7.3-alpine
+FROM php:8.0-alpine
 
 ARG NOVA_USERNAME
 ARG NOVA_API_KEY

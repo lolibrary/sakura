@@ -1,1 +1,8 @@
 dev
+node_modules
+vendor
+.git
+storage/logs
+storage/framework/cache
+storage/framework/sessions
+storage/framework/views
