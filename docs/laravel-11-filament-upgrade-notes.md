@@ -235,6 +235,19 @@ App work expected in this stage:
   needs them.
 - Revisit auth, mail, cache tags, and test infrastructure on the new stack.
 
+Stage 4 progress:
+
+- Bumped the repo targets to PHP `^8.2` and Laravel `^11`.
+- Updated direct package targets for Laravel 11 compatibility, including
+  Passport `^13.7`, Purify `^6.3`, Collision `^8.9`, and PHPUnit `^11.5.50`.
+- Updated the local dev Docker base image from `php:8.1-alpine` to
+  `php:8.2-alpine`.
+- Migrated `phpunit.xml` to the PHPUnit 11.5 schema and cleaned up PHP 8.2
+  string interpolation deprecations in helper, console, and migration code.
+- Verified the Stage 4 baseline on Docker with Laravel `11.54.0`, PHP `8.2`,
+  a clean `artisan route:list`, and a passing PHPUnit suite (`12 tests`,
+  `29 assertions`).
+
 ### Repo-Specific Hazards To Keep In View
 
 - The app still uses cache tags in several places, including `SearchController`
