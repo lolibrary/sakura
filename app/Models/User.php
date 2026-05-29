@@ -8,6 +8,8 @@ use App\Models\Traits\Closet;
 use App\Models\Traits\DateHandling;
 use App\Models\Traits\HasUuid;
 use App\Models\Traits\Wishlist;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -36,7 +38,7 @@ use Laravel\Passport\HasApiTokens;
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $closet   The {@link \App\Item items} this user owns.
  * @property \App\Models\Post[]|\Illuminate\Database\Eloquent\Collection $posts    The posts this user has created.
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     use HasFactory, Notifiable, HasApiTokens, HasUuid, DateHandling, Wishlist, Closet, AccessLevels, Actionable;
 
@@ -179,5 +181,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeEmail(Builder $query, string $email)
     {
         return $query->where(DB::raw('lower(email)'), mb_strtolower($email));
+    }
+
+    /**
+     * Determine whether the user can access the Filament admin panel.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->junior();
     }
 }
