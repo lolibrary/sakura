@@ -105,7 +105,7 @@
                 <label for="english_name">English Name <span class="text-danger">*</span></label>
 
                 <p class="form-text">
-                    An english or romanized version of this item's name. <span title="This will be used to identify the item in the search index. If a name is a duplicate, a -0 or -1 (etc). will be added to the generated URL for this item." data-placement="top" data-toggle="tooltip" class="far fa-info-circle"></span>
+                    An english or romanized version of this item's name. <span title="This will be used to identify the item in the search index. If a name is a duplicate, a -0 or -1 (etc). will be added to the generated URL for this item." data-placement="top" data-toggle="tooltip"><i data-feather="info"></i></span>
                 </p>
             </div>
 

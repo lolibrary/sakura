@@ -3,14 +3,11 @@
 # any changes to JS or SCSS files.
 
 # If you are building the web container from scratch, you will need to provide the email address and
-# license key for Nova, and put a Fontawesome tarball in the root directory (or supply a different way
-# of accessing it or a replacement in package.json). These two components are propriety and we can't
-# redistribute them, sorry!
+# license key for Nova. Nova is proprietary and we can't redistribute it, sorry!
 
 # The db container uses mounted storage, so it's not necessary to rerun imports and migrations every time.
 # Postgres will look in /dev/initdb the first time the container is started and run any sql or shell scripts in there.
 
-version: "3"
 services:
   db:
     container_name: db
@@ -29,15 +26,16 @@ services:
   web:
     container_name: web
     image: ghcr.io/lolibrary/sakura-dev:latest
-    # build:
-    #   context: .
-    #   dockerfile: ./dev-dockerfile
-    #   args:
-    #     NOVA_USERNAME: <email address for Nova license>
-    #     NOVA_API_KEY: <key for Nova license>
+    build:
+      context: .
+      dockerfile: ./dev-dockerfile
+      args:
+        NOVA_USERNAME: ${NOVA_USERNAME:-}
+        NOVA_API_KEY: ${NOVA_API_KEY:-}
     environment:
       - APP_DEBUG=true
       - APP_KEY=insecurerandomkey111111111111111
+      - CACHE_DRIVER=file
       - DB_CONNECTION=pgsql
       - DB_DATABASE=library
       - DB_USERNAME=postgres
@@ -49,6 +47,7 @@ services:
       - AWS_CDN_URL="https://lolibrary.nyc3.cdn.digitaloceanspaces.com"
       - APP_URL="http://0.0.0.0:3000"
       - HTTPS_OFF=1
+      - SESSION_DRIVER=file
     volumes:
       - ./app:/srv/app
       - ./database:/srv/database
@@ -58,6 +57,7 @@ services:
       - ./tests:/srv/tests
       - ./storage:/srv/storage
       - ./config:/srv/config
+      - ./public:/srv/public
       - ./composer.json:/srv/composer.json
       - ./composer.lock:/srv/composer.lock
       - ./dev.sh:/srv/dev.sh

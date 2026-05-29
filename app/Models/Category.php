@@ -31,7 +31,7 @@ class Category extends Model implements TranslatableContract
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['name', 'slug', 'image'];
 
     /**
      * Visible attributes.

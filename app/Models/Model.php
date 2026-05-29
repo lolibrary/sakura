@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\Collection;
 use App\Models\Traits\DateHandling;
 use App\Models\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Str;
 
@@ -24,7 +25,7 @@ use Illuminate\Support\Str;
  */
 abstract class Model extends Eloquent
 {
-    use HasUuid, DateHandling;
+    use HasFactory, HasUuid, DateHandling;
 
     /**
      * The namespace UUID used for {@see uuid5()}.

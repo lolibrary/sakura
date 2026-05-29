@@ -2,12 +2,12 @@
     @if (Auth::user()->wants($item))
         <a class="btn btn-outline-primary" href="{{ route('items.wishlist', $item) }}"
             onclick="event.preventDefault(); document.getElementById('wishlist-form').submit();">
-            <i class="fal fa-fw fa-star"></i>  {{ __('Add to Wishlist') }}
+            <i data-feather="star" class="icon-fw"></i>  {{ __('Add to Wishlist') }}
         </a>
     @else
         <a class="btn btn-outline-danger" href="{{ route('items.wishlist', $item) }}"
             onclick="event.preventDefault(); document.getElementById('wishlist-form').submit();">
-            <i class="fal fa-fw fa-star"></i>  {{ __('Remove from Wishlist') }}
+            <i data-feather="star" class="icon-fw"></i>  {{ __('Remove from Wishlist') }}
         </a>
     @endif
 

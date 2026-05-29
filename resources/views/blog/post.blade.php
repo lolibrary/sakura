@@ -3,7 +3,7 @@
 @section('content')
 <div class="col" style="height: 3rem">
     <a href="{{ route('home') }}" class="px-4 h5">
-        <i class="far fa-chevron-left"></i> {{ __('ui.back') }}
+        <i data-feather="chevron-left"></i> {{ __('ui.back') }}
     </a>
 </div>
 

@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
 /public/storage
+/public/css/filament
+/public/js/filament
+/public/fonts/filament
 /storage/*.key
 /vendor
 .env

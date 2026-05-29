@@ -28,7 +28,7 @@
         </span>
         <div class="row text-center p-5" id="search-results-loading" style="display: none">
           <div class="col text-center text-muted">
-            <i class="far fa-5x fa-spinner fa-pulse"></i>
+            <i data-feather="loader" class="icon-5x icon-spin"></i>
           </div>
         </div>
         <div class="row text-center p-5" id="search-results-error" style="display: none">

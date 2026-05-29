@@ -34,6 +34,17 @@ class UserPolicy
     }
 
     /**
+     * Can a user create another user?
+     *
+     * @param  \App\Models\User  $user
+     * @return bool
+     */
+    public function create(User $user)
+    {
+        return $user->admin();
+    }
+
+    /**
      * Can a user see an email address?
      *
      * @param  \App\Models\User  $user

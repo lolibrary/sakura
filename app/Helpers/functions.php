@@ -131,7 +131,7 @@ if (! function_exists('add_s3_bucket')) {
 
         $uri = (new Uri($url));
 
-        return (string) $uri->withHost("${bucket}.".$uri->getHost());
+        return (string) $uri->withHost("{$bucket}.".$uri->getHost());
     }
 }
 
@@ -257,7 +257,7 @@ if (! function_exists('cdn_link')) {
      */
     function cdn_link(string $path)
     {
-        if (Str::startsWith($path, 'https://')) {
+        if (Str::startsWith($path, ['https://', 'http://', '/'])) {
             return $path;
         }
 

@@ -16,6 +16,6 @@ class FeatureTranslation extends TranslationModel
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['locale', 'name'];
 
 }

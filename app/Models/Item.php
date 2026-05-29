@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
+use BadMethodCallException;
 use Illuminate\Support\Facades\App;
 use NumberFormatter;
 
@@ -211,6 +212,8 @@ class Item extends Model
      */
     public $casts = [
         'images' => 'json',
+        'published_at' => 'datetime',
+        'status' => 'integer',
     ];
 
     /**
@@ -262,20 +265,30 @@ class Item extends Model
     }
 
     public function wishlist() {
-        $wishlist = cache()->tags(['wishlist'])->get($this->getKey());
-        if (!$wishlist) {
-            $wishlist = $this->stargazers()->count();
-            cache()->tags(['wishlist'])->forever($this->getKey(), $wishlist);
+        try {
+            $wishlist = cache()->tags(['wishlist'])->get($this->getKey());
+            if (! $wishlist) {
+                $wishlist = $this->stargazers()->count();
+                cache()->tags(['wishlist'])->forever($this->getKey(), $wishlist);
+            }
+
+            return $wishlist;
+        } catch (BadMethodCallException $exception) {
+            return $this->stargazers()->count();
         }
-        return $wishlist;
     }
 
     public function closet() {
-        $closet = cache()->tags(['closet'])->get($this->getKey());
-        if (!$closet) {
-            $closet = $this->owners()->count();
-            cache()->tags(['closet'])->forever($this->getKey(), $closet);
+        try {
+            $closet = cache()->tags(['closet'])->get($this->getKey());
+            if (! $closet) {
+                $closet = $this->owners()->count();
+                cache()->tags(['closet'])->forever($this->getKey(), $closet);
+            }
+
+            return $closet;
+        } catch (BadMethodCallException $exception) {
+            return $this->owners()->count();
         }
-        return $closet;
     }
 }

@@ -21,7 +21,7 @@
 
         <div class="card-body text-right">
             <a href="{{ $post->url }}" class="card-link">
-                <i class="far fa-book"></i> {{ __('ui.blog.read_more')}}
+                <i data-feather="book-open"></i> {{ __('ui.blog.read_more')}}
             </a>
         </div>
     </div>

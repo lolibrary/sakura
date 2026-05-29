@@ -7,6 +7,13 @@
 
 require('./bootstrap');
 require('./search');
+const feather = require('feather-icons');
+
+window.feather = feather;
+
+$(() => {
+    feather.replace();
+});
 
 // window.Vue = require('vue');
 

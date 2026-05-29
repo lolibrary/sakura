@@ -2,43 +2,39 @@
     "name": "lolibrary/sakura",
     "type": "project",
     "description": "Lolibrary's web frontend",
-    "keywords": [
-        "framework",
-        "laravel"
-    ],
+    "keywords": ["framework", "laravel"],
     "license": "BSD-3-Clause",
     "require": {
-        "php": "^7.3",
+        "php": "^8.2",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-pdo": "*",
-        "astrotomic/laravel-translatable": "^11.9",
-        "dillingham/nova-attach-many": "^1.0",
-        "fideloper/proxy": "^4.0",
-        "laravel/framework": "^6.18",
-        "laravel/nova": "^2.3",
-        "laravel/passport": "^7.5",
+        "astrotomic/laravel-translatable": "^11.17",
+        "doctrine/dbal": "^3.10",
+        "filament/filament": "~5.0",
+        "laravel/framework": "^11.44",
+        "laravel/passport": "^13.7",
         "laravel/tinker": "^2.0",
-        "league/flysystem-aws-s3-v3": "^1.0",
-        "league/flysystem-cached-adapter": "^1.0",
-        "lolibrary/image-array": "*",
-        "sentry/sentry-laravel": "^1.6",
-        "stevebauman/purify": "^4.0",
-        "whitecube/nova-flexible-content": "^0.1.11",
-        "wildbit/swiftmailer-postmark": "^3.4",
-        "yeswedev/nova-translatable": "^0.9.0"
+        "laravel/ui": "^4.2",
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "stevebauman/purify": "^6.3"
     },
     "require-dev": {
-        "fzaninotto/faker": "^1.4",
+        "fakerphp/faker": "^1.20",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
-        "phpunit/phpunit": "^8.0",
-        "facade/ignition": "^1.4"
+        "nunomaduro/collision": "^8.9",
+        "phpunit/phpunit": "^11.5.50"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "audit": {
+            "block-insecure": false
+        },
+        "platform": {
+            "php": "8.2.0"
+        }
     },
     "extra": {
         "laravel": {
@@ -59,15 +55,16 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Database\\Factories\\": "database/factories/",
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -76,14 +73,5 @@
             "@php artisan key:generate --ansi"
         ]
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://nova.laravel.com"
-        },
-        {
-            "type": "path",
-            "url": "./nova-components/ImageArray"
-        }
-    ]
+    "repositories": []
 }

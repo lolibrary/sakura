@@ -43,12 +43,12 @@ class CreateTranslationTables extends Migration
             };
 
             $migrator = function($table) use ($single, $plural) {
-                DB::insert("insert into ${single}_translations (${single}_id, name, locale) select id, name, 'en' from $plural");
+                DB::insert("insert into {$single}_translations ({$single}_id, name, locale) select id, name, 'en' from $plural");
             };
 
 
-            Schema::create("${single}_translations", $creator); 
-            Schema::table("${single}_translations", $migrator);
+            Schema::create("{$single}_translations", $creator);
+            Schema::table("{$single}_translations", $migrator);
     
             Schema::table($plural, function ($table) {
                 $table->dropColumn('name');
@@ -69,7 +69,7 @@ class CreateTranslationTables extends Migration
                 $table->string('name');
             });
 
-            Schema::dropIfExists( "${single}_translations");
+            Schema::dropIfExists("{$single}_translations");
         }
 
     }
