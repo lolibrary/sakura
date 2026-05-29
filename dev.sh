@@ -10,6 +10,8 @@ install_php_dependencies() {
 }
 
 build_frontend_assets() {
+    export NODE_OPTIONS="--openssl-legacy-provider"
+
     if npm install && npm run development; then
         :
     else

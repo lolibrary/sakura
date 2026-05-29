@@ -207,6 +207,12 @@ App work expected in this stage:
 - Review deprecated testing helpers and PHPUnit config changes.
 - Review any manual date casting or `DB::raw` expression handling.
 
+Stage 3 progress:
+
+- Bumped the repo targets to PHP `^8.1` and Laravel `^10.48`.
+- Updated the local dev Docker base image from `php:8.0-alpine` to
+  `php:8.1-alpine` so local verification matches the new platform baseline.
+
 ### Stage 4: Laravel 10 -> 11
 
 Target:
