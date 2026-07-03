@@ -35,14 +35,17 @@ class backlogUpdate implements ShouldQueue
         $webhook = env("WEBHOOK");
         $published = DB::table('items')->where('status', '=', Item::PUBLISHED)->count();
         $pending = DB::table('items')->where('status', '=', Item::PENDING)->count();
-        $draft = DB::table('items')->where('status', '=', Item::DRAFT)
-                    ->orWhere('status', '=', Item::CHANGES_REQUESTED)->count();
+        $changes = DB::table('items')->where('status', '=', Item::CHANGES_REQUESTED)->count();
+        $draft = DB::table('items')->where('status', '=', Item::DRAFT)->count();
 
         $msg = <<<EOD
-        ## *Current Status*
-        **$published** items published
-        **$pending** items pending
-        **$draft** draft items
+        ## *Current Entries*
+        **$draft** drafts
+        **$pending** pending review
+        **$changes** post-review, changes requested
+        **$published** published
+        
+        
         EOD;
 
         $client = new Client();
