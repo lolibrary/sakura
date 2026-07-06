@@ -30,4 +30,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'discord' => [
+        'webhooks' => [
+            'updates' => env("DISCORD_UPDATE_WEBHOOK"),
+            'publish' => env("DISCORD_PUBLISH_WEBHOOK"),
+            'draft' => env("DISCORD_DRAFT_WEBHOOK"),
+        ],
+    ],
+
 ];
