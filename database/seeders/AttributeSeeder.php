@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 class AttributeSeeder extends Seeder
 {
     /**
@@ -7,7 +9,7 @@ class AttributeSeeder extends Seeder
      *
      * @var string
      */
-    protected static $model = App\Models\Attribute::class;
+    protected static $model = \App\Models\Attribute::class;
 
     /**
      * A list of attributes to seed.

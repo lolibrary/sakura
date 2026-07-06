@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 class ColorSeeder extends Seeder
 {
     /**
@@ -7,7 +9,7 @@ class ColorSeeder extends Seeder
      *
      * @var string
      */
-    protected static $model = App\Models\Color::class;
+    protected static $model = \App\Models\Color::class;
 
     /**
      * A list of colorways to seed.

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\SearchController;
 use Illuminate\Http\Request;
 
 /*
@@ -13,4 +14,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('search_index', 'Api\\SearchController@search_index')->name('search');
+Route::post('search_index', [SearchController::class, 'search_index'])->name('search');
