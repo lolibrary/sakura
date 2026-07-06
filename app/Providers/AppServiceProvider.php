@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Composers;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
@@ -27,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Paginator::useBootstrap();
+
         View::composer('components.categories', Composers\Categories::class);
         View::composer('components.brands', Composers\Brands::class);
         View::composer('components.features', Composers\Features::class);

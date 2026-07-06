@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 class FeatureSeeder extends Seeder
 {
     /**
@@ -7,7 +9,7 @@ class FeatureSeeder extends Seeder
      *
      * @var string
      */
-    protected static $model = App\Models\Feature::class;
+    protected static $model = \App\Models\Feature::class;
 
     /**
      * A list of features to seed.

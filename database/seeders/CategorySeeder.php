@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 class CategorySeeder extends Seeder
 {
     /**
@@ -7,7 +9,7 @@ class CategorySeeder extends Seeder
      *
      * @var string
      */
-    protected static $model = App\Models\Category::class;
+    protected static $model = \App\Models\Category::class;
 
     /**
      * A listing of item categories.

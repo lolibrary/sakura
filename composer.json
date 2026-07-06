@@ -16,11 +16,11 @@
         "dillingham/nova-attach-many": "^1.0",
         "fideloper/proxy": "^4.0",
         "fruitcake/laravel-cors": "^3.0",
-        "laravel/framework": "^7.0",
+        "laravel/framework": "^8.0",
         "laravel/nova": "^3.0",
-        "laravel/passport": "^9.0",
+        "laravel/passport": "^10.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.5",
+        "laravel/ui": "^3.0",
         "league/flysystem-aws-s3-v3": "^1.0",
         "league/flysystem-cached-adapter": "^1.0",
         "lolibrary/image-array": "*",
@@ -34,9 +34,9 @@
     "require-dev": {
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^4.1",
-        "phpunit/phpunit": "^8.5",
-        "facade/ignition": "^2.0"
+        "nunomaduro/collision": "^5.0",
+        "phpunit/phpunit": "^9.0",
+        "facade/ignition": "^2.3.6"
     },
     "config": {
         "optimize-autoloader": true,
@@ -61,12 +61,10 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Database\\Seeders\\": "database/seeders",
+            "Database\\Factories\\": "database/factories"
         },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ],
         "files": [
             "app/Helpers/functions.php"
         ]

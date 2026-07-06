@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 class InstructionSeeder extends Seeder
 {
     /**
@@ -7,7 +9,7 @@ class InstructionSeeder extends Seeder
      *
      * @var string
      */
-    protected static $model = App\Models\Instruction::class;
+    protected static $model = \App\Models\Instruction::class;
 
     /**
      * The name/value column.
