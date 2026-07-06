@@ -54,15 +54,8 @@ class BacklogUpdate implements ShouldQueue
         $client = new Client();
         $res = $client->request('POST', $webhook, ["json" => ["content" => $msg]]);
 
-        if ($res->getStatusCode() !== 200) {
-            $scope = new Scope();
-            $scope->setContext('response', [
-                'body' => $res->getBody()->getContents(),
-                'status_code' => $res->getStatusCode(),
-                'headers' => $res->getHeaders(),
-            ]);
-
-            app('sentry')->reportMessage('Failed to send discord webhook', Severity::error(), $scope);
+        if ($res->getStatusCode() > 399) {
+            throw new \RuntimeException("Failed to post webhook: {$res->getBody()->getContents()}", $res->getStatusCode());
         }
     }
 }

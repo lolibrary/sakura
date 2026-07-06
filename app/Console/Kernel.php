@@ -4,7 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Jobs\backlogUpdate;
+use App\Jobs\BacklogUpdate;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,7 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new backlogUpdate)->dailyAt('13:00');
+        $schedule->job(new BacklogUpdate)
+            ->dailyAt('13:00')
+            ->thenPing(config('services.heartbeat.updates'));
     }
 
     /**
