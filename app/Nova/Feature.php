@@ -7,7 +7,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use YesWeDev\Nova\Translatable\Translatable;
+use Kreatorij\Nova\Fields\Translatable;
 
 class Feature extends TranslatableResource
 {
@@ -52,10 +52,12 @@ class Feature extends TranslatableResource
                 ->updateRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/u', 'unique:features,slug,{{resourceId}}')
                 ->hideFromIndex(),
 
-            Translatable::make('Name')
+            Translatable::make(
+                Text::make('Name')
                 ->indexLocale('en')
                 ->sortable()
-                ->rules('max:255'),
+                ->rules('max:255')
+            ),
 
             DateTime::make('Created', 'created_at')->onlyOnDetail(),
             DateTime::make('Updated', 'updated_at')->onlyOnDetail(),
