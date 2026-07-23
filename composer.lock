@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "81164682754394bf112f268034fc2b77",
+    "content-hash": "166e97803c322cdb1bfa67bb35a3c32d",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -147,16 +147,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.388.12",
+            "version": "3.388.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "9eca8f6408501a47efe5dee2ce494b93eac983a6"
+                "reference": "45b9e9814f42cdeceb046434d068c9e77fd2a530"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/9eca8f6408501a47efe5dee2ce494b93eac983a6",
-                "reference": "9eca8f6408501a47efe5dee2ce494b93eac983a6",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/45b9e9814f42cdeceb046434d068c9e77fd2a530",
+                "reference": "45b9e9814f42cdeceb046434d068c9e77fd2a530",
                 "shasum": ""
             },
             "require": {
@@ -238,9 +238,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.388.12"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.388.13"
             },
-            "time": "2026-07-22T18:05:00+00:00"
+            "time": "2026-07-23T18:06:54+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -3832,11 +3832,11 @@
         },
         {
             "name": "lolibrary/image-array",
-            "version": "dev-upgrade/laravel-11",
+            "version": "1.0",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/ImageArray",
-                "reference": "c62f6389b4b1953cd455692ce5e552c62053ea6e"
+                "reference": "50f08e14f600ffb536dfd0893b9d923700fbf03d"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -12682,7 +12682,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,

@@ -4,7 +4,9 @@
         "build": "vite build",
         "dev": "vite",
         "build-image-array": "cd nova-components/ImageArray && npm run dev",
-        "build-image-array-prod": "cd nova-components/ImageArray && npm run prod"
+        "build-image-array-prod": "cd nova-components/ImageArray && npm run prod",
+        "build-metrics": "cd nova-components/Metrics && npm run dev",
+        "build-metrics-prod": "cd nova-components/Metrics && npm run prod"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.20",
