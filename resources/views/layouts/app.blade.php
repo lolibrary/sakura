@@ -12,8 +12,7 @@
     <meta name="search-endpoint" content="{{ route('api.search') }}">
     <meta name="default-image" content="{{ default_asset() }}">
 
-    <!-- Styles -->
-    <link href="{{ mix('assets/app.css') }}" rel="stylesheet">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/search.js'])
 
     @yield('meta', '')
 </head>
@@ -104,8 +103,6 @@
         </footer>
     </div>
 
-    <!-- Scripts -->
-    <script src="{{ mix('assets/app.js') }}"></script>
     @yield('script', '')
 </body>
 </html>
