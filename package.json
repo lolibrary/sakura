@@ -26,7 +26,7 @@
         "vue-template-compiler": "^0.1.0"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-pro": "file:/../fortawesome-fontawesome-pro-5.15.1.tgz",
+        "@fortawesome/fontawesome-pro": "file:/./fortawesome-fontawesome-pro-5.15.1.tgz",
         "bootstrap-slider": "11.0.2",
         "qs": "^6.8.0",
         "sass-svg-uri": "^1.0.0",
