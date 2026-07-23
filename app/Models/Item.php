@@ -168,13 +168,6 @@ class Item extends Model
     protected $appends = ['price_details', 'url', 'edit_url'];
 
     /**
-     * An array of keys to convert to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['published_at'];
-
-    /**
      * Visible attributes.
      *
      * @var array
@@ -211,6 +204,7 @@ class Item extends Model
      */
     public $casts = [
         'images' => 'json',
+        'published_at' => 'datetime',
     ];
 
     /**
