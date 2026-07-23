@@ -8,14 +8,16 @@
     ],
     "license": "BSD-3-Clause",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-pdo": "*",
-        "astrotomic/laravel-translatable": "^11.12",
-        "dillingham/nova-attach-many": "^1.0",
+        "astrotomic/laravel-translatable": "^11.17",
+        "blendbyte/nova-attach-many": "^2.0",
+        "kiritokatklian/nova-astrotranslatable": "^5.0",
+        "laravel/fortify": "^1.36",
         "laravel/framework": "^10.0",
-        "laravel/nova": "^4.0",
+        "laravel/nova": "^5.0",
         "laravel/passport": "^11.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^4.0",
@@ -26,8 +28,7 @@
         "stevebauman/purify": "^5.0",
         "symfony/http-client": "^6.4",
         "symfony/postmark-mailer": "^6.4",
-        "whitecube/nova-flexible-content": "^1.0",
-        "kreatorij/nova-translatable-field": "^2.0"
+        "whitecube/nova-flexible-content": "^2.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.0",

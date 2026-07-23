@@ -8,7 +8,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Kreatorij\Nova\Fields\Translatable;
+use Spatie\NovaTranslatable\Translatable;
 
 class Category extends TranslatableResource
 {
@@ -52,12 +52,10 @@ class Category extends TranslatableResource
                 ->path('categories')
                 ->nullable(),
 
-            Translatable::make(
-                Text::make('Name')
-                ->indexLocale('en')
+            Text::make('Name')
                 ->sortable()
                 ->rules('required', 'min:2', 'max:255')
-            ),
+                ->translatable(),
 
             Text::make('Slug')
                 ->sortable()

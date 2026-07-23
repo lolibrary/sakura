@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Kreatorij\Nova\Fields\Translatable;
 
 class Attribute extends TranslatableResource
 {
@@ -51,12 +49,10 @@ class Attribute extends TranslatableResource
                 ->updateRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/', 'unique:attributes,slug,{{resourceId}}')
                 ->hideFromIndex(),
 
-            Translatable::make(
-                Text::make('Name')
-                ->indexLocale('en')
+            Text::make('Name')
                 ->sortable()
                 ->rules('max:255')
-            ),
+                ->translatable(),
 
             Text::make('Value')
                 ->readonly(),

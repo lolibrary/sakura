@@ -104,6 +104,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function register()
     {
-        //
+        parent::register();
     }
 }
