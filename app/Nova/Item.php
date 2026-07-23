@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -74,11 +75,11 @@ class Item extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('ID')->onlyOnDetail(),
+            ID::make('ID')->onlyOnDetail(),
             Text::make('Slug', function () {
                 $slug = $this->slug;
                 $url = $this->url;
-            
+
                 return "<a href='{$url}'>{$slug}</a>";
             })->asHtml()->onlyOnDetail(),
 
@@ -87,7 +88,9 @@ class Item extends Resource
                 ->path('images')
                 ->acceptedTypes('.png, .jpeg, .jpg, .webp, .gif, .jfif')
                 ->nullable()
-                ->maxWidth(200),
+                ->aspect('aspect-square')
+                ->indexWidth(60)
+                ->detailWidth(200),
 
             Text::make('English Name')
                 ->sortable()
@@ -263,62 +266,61 @@ class Item extends Resource
         return [
             (new PublishItem)->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
-                $model = $request->findModelQuery()->first();
-
-                /** @var \App\Models\Item $model */
-                if ($model === null) {
-                    return $request->user()->lolibrarian();
+                if ($request->resourceId !== null) {
+                    /** @var \App\Models\Item $model */
+                    if ($model = $request->findModelQuery()->first()) {
+                        return !$model->published() && $request->user()->can('publish', $model);
+                    }
                 }
 
-                return !$model->published() && $request->user()->can('publish', $model);
+                return $request->user()->lolibrarian();
             }),
 
             (new UnpublishItem)->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
-                $model = $request->findModelQuery()->first();
-
-                /** @var \App\Models\Item $model */
-                if ($model === null) {
-                    return $request->user()->senior();
+                if ($request->resourceId !== null) {
+                    /** @var \App\Models\Item $model */
+                    if ($model = $request->findModelQuery()->first()) {
+                        return $model->published() && $request->user()->can('publish', $model);
+                    }
                 }
 
-                return $model->published() && $request->user()->can('publish', $model);
+                return $request->user()->senior();
             }),
 
             (new PendingItem)->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
-                $model = $request->findModelQuery()->first();
-
-                /** @var \App\Models\Item $model */
-                if ($model === null) {
-                    return $request->user()->junior();
+                if ($request->resourceId !== null) {
+                    if ($model = $request->findModelQuery()->first()) {
+                        return ($model->draft() || $model->changesRequired() || $model->published()) && $request->user()->can('update', $model);
+                    }
                 }
 
-                return ($model->draft() || $model->changesRequired() || $model->published()) && $request->user()->can('update', $model);
+                return $request->user()->junior();
             }),
 
             (new DraftItem)->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
-                $model = $request->findModelQuery()->first();
-
-                /** @var \App\Models\Item $model */
-                if ($model === null) {
-                    return $request->user()->junior();
+                if ($request->resourceId !== null) {
+                    /** @var \App\Models\Item $model */
+                    if ($model = $request->findModelQuery()->first()) {
+                        return ($model->pending() && $request->user()->can('update', $model) || $model->published()) && $request->user()->can('publish', $model);
+                    }
                 }
 
-                return ($model->pending() && $request->user()->can('update', $model) || $model->published()) && $request->user()->can('publish', $model);
+                return $request->user()->junior();
             }),
 
             (new ChangesRequestedItem)->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
-                $model = $request->findModelQuery()->first();
-
-                /** @var \App\Models\Item $model */
-                if ($model === null) {
-                    return $request->user()->junior();
+                if ($request->resourceId !== null) {
+                    /** @var \App\Models\Item $model */
+                    if ($model = $request->findModelQuery()->first()) {
+                        return ($model->pending() && $request->user()->can('update', $model) || $model->published()) && $request->user()->can('publish', $model);
+                    }
                 }
 
-                return ($model->pending() && $request->user()->can('update', $model) || $model->published()) && $request->user()->can('publish', $model);
+                return $request->user()->junior();
             }),
         ];
     }

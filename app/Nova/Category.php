@@ -50,7 +50,7 @@ class Category extends TranslatableResource
             Avatar::make('Image')
                 ->disk('s3public')
                 ->path('categories')
-                ->nullable(),
+                ->indexWidth(60),
 
             Text::make('Name')
                 ->sortable()

@@ -48,7 +48,9 @@ class Brand extends TranslatableResource
             Avatar::make('Image')
                 ->disk('s3public')
                 ->path('brands')
-                ->nullable(),
+                ->nullable()
+                ->aspect('aspect-square')
+                ->indexWidth(50),
 
             Text::make('Name')
                 ->sortable()
