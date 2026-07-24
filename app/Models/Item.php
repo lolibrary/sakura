@@ -67,7 +67,14 @@ class Item extends Model
         'chf' => 'Swiss Francs (CHF)',
         'rub' => 'Russian Rubles (₽)',
         'brl' => 'Brazilian Real (R$)',
-        'vnd' => 'Vietnamese đồng (₫)'
+        'vnd' => 'Vietnamese đồng (₫)',
+        'nzd' => 'New Zealand Dollar ($)',
+        'nok' => 'Norwegian Krone (kr)',
+        'sek' => 'Swedish Krona (kr)',
+        'dkk' => 'Danish Krone (kr)',
+        'isk' => 'Icelandic Króne (kr)',
+        'sgd' => 'Singapore Dollar ($)',
+        'inr' => 'Indian Rupees (₹)',
     ];
 
     /**
