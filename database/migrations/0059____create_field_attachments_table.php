@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFieldAttachmentsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -16,6 +16,7 @@ class CreateFieldAttachmentsTable extends Migration
         if (Schema::hasTable('nova_pending_trix_attachments')) {
             Schema::rename('nova_pending_trix_attachments', 'nova_pending_field_attachments');
         } else {
+            Schema::dropIfExists('nova_pending_field_attachments');
             Schema::create('nova_pending_field_attachments', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('draft_id')->index();
@@ -28,6 +29,7 @@ class CreateFieldAttachmentsTable extends Migration
         if (Schema::hasTable('nova_trix_attachments')) {
             Schema::rename('nova_trix_attachments', 'nova_field_attachments');
         } else {
+            Schema::dropIfExists('nova_field_attachments');
             Schema::create('nova_field_attachments', function (Blueprint $table) {
                 $table->increments('id');
                 $table->morphs('attachable');
@@ -49,4 +51,4 @@ class CreateFieldAttachmentsTable extends Migration
         Schema::dropIfExists('nova_pending_field_attachments');
         Schema::dropIfExists('nova_field_attachments');
     }
-}
+};
