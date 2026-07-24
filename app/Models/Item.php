@@ -224,10 +224,10 @@ class Item extends Model
     public function getFullPrice()
     {
         if (in_array($this->currency, ['jpy', 'krw', 'cny'])) {
-            return (string) round($this->price);
+            return (string) round($this->price ?? 0);
         }
 
-        return (string) round($this->price, 2);
+        return (string) round($this->price ?? 0, 2);
     }
 
     /**
