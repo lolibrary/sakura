@@ -214,6 +214,7 @@ class Item extends Model
         'images' => FlexibleCast::class,
         'additional_images' => 'json',
         'published_at' => 'datetime',
+        'price' => 'integer',
     ];
 
     /**
