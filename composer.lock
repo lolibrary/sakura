@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "166e97803c322cdb1bfa67bb35a3c32d",
+    "content-hash": "6d3f0adc38a70b81eefb07b2aa9b5499",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -3829,42 +3829,6 @@
                 }
             ],
             "time": "2026-03-08T20:05:35+00:00"
-        },
-        {
-            "name": "lolibrary/image-array",
-            "version": "1.0",
-            "dist": {
-                "type": "path",
-                "url": "./nova-components/ImageArray",
-                "reference": "50f08e14f600ffb536dfd0893b9d923700fbf03d"
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Lolibrary\\ImageArray\\FieldServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Lolibrary\\ImageArray\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova field.",
-            "keywords": [
-                "laravel",
-                "nova"
-            ],
-            "transport-options": {
-                "relative": true
-            }
         },
         {
             "name": "monolog/monolog",
