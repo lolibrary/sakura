@@ -196,14 +196,16 @@
                     </a>
                 @endif
                 @foreach ($item->images as $image)
-                    <a class="card m-0 p-0" href="{{ cdn_link($image->image) }}"
-                       data-lightbox="show">
-                        <img src="{{ cdn_thumbnail($image->image) }}"
-                             onerror="this.src = '{{ default_asset() }}'"
-                             data-original-url="{{  cdn_thumbnail($image->image) }}"
-                             data-key="{{ $image->image }}"
-                             class="mw-100">
-                    </a>
+                    @if ($image->image !== null)
+                        <a class="card m-0 p-0" href="{{ cdn_link($image->image) }}"
+                           data-lightbox="show">
+                            <img src="{{ cdn_thumbnail($image->image) }}"
+                                 onerror="this.src = '{{ default_asset() }}'"
+                                 data-original-url="{{  cdn_thumbnail($image->image) }}"
+                                 data-key="{{ $image->image }}"
+                                 class="mw-100">
+                        </a>
+                    @endif
                 @endforeach
             </div>
         </div>
