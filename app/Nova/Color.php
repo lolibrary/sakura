@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 
@@ -57,6 +58,8 @@ class Color extends TranslatableResource
 
             DateTime::make('Created', 'created_at')->onlyOnDetail(),
             DateTime::make('Updated', 'updated_at')->onlyOnDetail(),
+
+            HasMany::make('Items')->onlyOnDetail(),
         ];
     }
 

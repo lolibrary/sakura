@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -64,6 +65,8 @@ class Category extends TranslatableResource
 
             DateTime::make('Created', 'created_at')->onlyOnDetail(),
             DateTime::make('Updated', 'updated_at')->onlyOnDetail(),
+
+            HasMany::make('Items')->onlyOnDetail(),
         ];
     }
 
