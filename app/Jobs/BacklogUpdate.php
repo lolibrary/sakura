@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -11,10 +10,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use App\Models\Item;
 use GuzzleHttp\Client;
-use Sentry\Severity;
-use Sentry\State\Scope;
 
-class BacklogUpdate implements ShouldQueue
+class backlogUpdate implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -35,7 +32,7 @@ class BacklogUpdate implements ShouldQueue
      */
     public function handle()
     {
-        $webhook = config('services.discord.webhooks.updates');
+        $webhook = env("WEBHOOK");
         $published = DB::table('items')->where('status', '=', Item::PUBLISHED)->count();
         $pending = DB::table('items')->where('status', '=', Item::PENDING)->count();
         $changes = DB::table('items')->where('status', '=', Item::CHANGES_REQUESTED)->count();
@@ -47,15 +44,11 @@ class BacklogUpdate implements ShouldQueue
         **$pending** pending review
         **$changes** post-review, changes requested
         **$published** published
-
-
+        
+        
         EOD;
 
         $client = new Client();
         $res = $client->request('POST', $webhook, ["json" => ["content" => $msg]]);
-
-        if ($res->getStatusCode() > 399) {
-            throw new \RuntimeException("Failed to post webhook: {$res->getBody()->getContents()}", $res->getStatusCode());
-        }
     }
 }
