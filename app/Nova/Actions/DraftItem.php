@@ -27,7 +27,7 @@ class DraftItem extends Action
     {
         $models->each->unpublish();
 
-        return Action::message('Marked draft!');
+        return Action::message('Marked submissions as drafts!');
     }
 
     /**

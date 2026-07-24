@@ -27,7 +27,9 @@ class PendingItem extends Action
     {
         $models->each->setPending();
 
-        return Action::message('Marked pending!');
+        // todo: mark these items as pending in a discord channel?
+
+        return Action::message('Marked as ready for review (pending)!');
     }
 
     /**

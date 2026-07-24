@@ -287,7 +287,9 @@ class Item extends Resource
     public function actions(Request $request)
     {
         return [
-            (new PublishItem)->canSee(function (Request $request) {
+            (new PublishItem)
+                ->withName('Publish Item')
+                ->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
                 if ($request->resourceId !== null) {
                     /** @var \App\Models\Item $model */
@@ -299,7 +301,9 @@ class Item extends Resource
                 return $request->user()->lolibrarian();
             }),
 
-            (new UnpublishItem)->canSee(function (Request $request) {
+            (new UnpublishItem)
+                ->withName('Unpublish Item')
+                ->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
                 if ($request->resourceId !== null) {
                     /** @var \App\Models\Item $model */
@@ -311,7 +315,9 @@ class Item extends Resource
                 return $request->user()->senior();
             }),
 
-            (new PendingItem)->canSee(function (Request $request) {
+            (new PendingItem)
+                ->withName('Mark as ready (pending)')
+                ->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
                 if ($request->resourceId !== null) {
                     if ($model = $request->findModelQuery()->first()) {
@@ -322,7 +328,9 @@ class Item extends Resource
                 return $request->user()->junior();
             }),
 
-            (new DraftItem)->canSee(function (Request $request) {
+            (new DraftItem)
+                ->withName('Mark as draft')
+                ->canSee(function (Request $request) {
                 /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
                 if ($request->resourceId !== null) {
                     /** @var \App\Models\Item $model */
@@ -334,17 +342,19 @@ class Item extends Resource
                 return $request->user()->junior();
             }),
 
-            (new ChangesRequestedItem)->canSee(function (Request $request) {
-                /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
-                if ($request->resourceId !== null) {
-                    /** @var \App\Models\Item $model */
-                    if ($model = $request->findModelQuery()->first()) {
-                        return ($model->pending() && $request->user()->can('update', $model) || $model->published()) && $request->user()->can('publish', $model);
+            (new ChangesRequestedItem)
+                ->withName('Request Changes')
+                ->canSee(function (Request $request) {
+                    /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
+                    if ($request->resourceId !== null) {
+                        /** @var \App\Models\Item $model */
+                        if ($model = $request->findModelQuery()->first()) {
+                            return ($model->pending() && $request->user()->can('update', $model) || $model->published()) && $request->user()->can('publish', $model);
+                        }
                     }
-                }
 
-                return $request->user()->junior();
-            }),
+                    return $request->user()->junior();
+                }),
         ];
     }
 }

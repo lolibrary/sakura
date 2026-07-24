@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Notifications\NovaNotification;
 
 class PublishItem extends Action
 {
@@ -20,12 +21,24 @@ class PublishItem extends Action
      * Perform the action on the given models.
      *
      * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection  $models
+     * @param  \Illuminate\Support\Collection|\App\Models\Item[]  $models
      * @return mixed
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $models->each->publish(auth()->user());
+        foreach ($models as $model) {
+            $model->publish(auth()->user());
+
+            if (! auth()->user()->is($model->submitter)) {
+                $model->submitter->notify(
+                    NovaNotification::make()
+                        ->message("Your submission $model->english_name was just published to the site!")
+                        ->icon('check-circle')
+                        ->action('View Item', route('items.show', $model))
+                        ->openInNewTab()
+                );
+            }
+        }
 
         return Action::message($models->count().' Item(s) Published');
     }
