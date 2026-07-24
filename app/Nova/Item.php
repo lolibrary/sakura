@@ -14,7 +14,9 @@ use App\Nova\Metrics\ItemHelp;
 use App\Nova\Metrics\ItemsPublished;
 use App\Nova\Metrics\PublishedItems;
 use App\Nova\Metrics\UserSubmissions;
+use App\Nova\Repeaters\ItemImages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Badge;
@@ -23,6 +25,7 @@ use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Repeater;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
@@ -93,9 +96,11 @@ class Item extends Resource
                 ->path('images')
                 ->acceptedTypes('.png, .jpeg, .jpg, .webp, .gif, .jfif')
                 ->nullable()
-                ->aspect('aspect-square')
+                ->aspect('aspect-auto')
+                ->thumbnail(fn($value) => cdn_thumbnail($value))
+                ->squared()
                 ->indexWidth(60)
-                ->detailWidth(200),
+                ->detailWidth(250),
 
             Text::make('English Name')
                 ->sortable()
@@ -168,10 +173,18 @@ class Item extends Resource
                             ->acceptedTypes('.png, .jpeg, .jpg, .webp, .gif, .jfif')
                             ->path('images')
                             ->disk('s3public')
-                            ->maxWidth(100)
-                            ->disableDownload(),
+                            ->maxWidth(200)
+                            ->disableDownload()
+                            ->storeOriginalName('original_filename')
+                            ->storeSize('original_size')
+                            ->prunable()
+                            ->preview(function ($value, $disk) {
+                                return $value ? Storage::disk($disk)->url($value) : null;
+                            }),
                     ])
-                    ->button('Add images'),
+                    ->confirmRemove('Are you sure you want to remove this image?')
+                    ->button('Add images')
+                    ,
             ]),
 
             // this panel is only shown on the creation page.

@@ -22,7 +22,7 @@
                     <div class="col p-1 list-group text-center small">
                         @include('components.items.closet')
                     </div>
-                </div>                
+                </div>
                 @if (auth()->user() && auth()->user()->can('update', $item))
                 <div class="row p-0 mx-0 my-3">
                     <div class="col p-1 list-group text-center small">
@@ -196,16 +196,14 @@
                     </a>
                 @endif
                 @foreach ($item->images as $image)
-                    @isset ($image['attributes']['image'])
-                        <a class="card m-0 p-0" href="{{ cdn_link($image['attributes']['image']) }}"
-                           data-lightbox="show">
-                            <img src="{{ cdn_thumbnail($image['attributes']['image']) }}"
-                                 onerror="this.src = '{{ default_asset() }}'"
-                                 data-original-url="{{  cdn_thumbnail($image['attributes']['image']) }}"
-                                 data-key="{{ $image['key'] ?? '' }}"
-                                 class="mw-100">
-                        </a>
-                    @endif
+                    <a class="card m-0 p-0" href="{{ cdn_link($image->image) }}"
+                       data-lightbox="show">
+                        <img src="{{ cdn_thumbnail($image->image) }}"
+                             onerror="this.src = '{{ default_asset() }}'"
+                             data-original-url="{{  cdn_thumbnail($image->image) }}"
+                             data-key="{{ $image->image }}"
+                             class="mw-100">
+                    </a>
                 @endforeach
             </div>
         </div>

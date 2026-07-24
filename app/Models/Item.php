@@ -5,8 +5,9 @@ namespace App\Models;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
-use Illuminate\Support\Facades\App;
 use NumberFormatter;
+use Whitecube\NovaFlexibleContent\Value\FlexibleCast;
+use Whitecube\NovaFlexibleContent\Layouts\Collection;
 
 /**
  * An Item of Apparel.
@@ -20,6 +21,7 @@ use NumberFormatter;
  * @property string      $price           The price of this item, in a given currency.
  * @property float       $price_formatted The price of this item, formatted to the rules of the given currency (e.g. /100 for gbp/usd)
  * @property string      $currency        The currency of this item, as an ISO code.
+ * @property Collection  $images          The images attached to this item, as a flexible collection.
  *
  * @property \App\Models\Image $image     The primary {@link \App\Models\Image} for this Item.
  * @property \App\Models\User $submitter The {@link \App\Models\User} who originally submitted this Item.
@@ -27,7 +29,6 @@ use NumberFormatter;
  * @property \App\Models\Brand $brand     The {@link \App\Models\Brand} of this Item (e.g. Angelic Pretty).
  *
  * @property \App\Models\Category[]\Illuminate\Database\Eloquent\Collection $categories  The {@link \App\Models\Category categories} of this Item (e.g. JSK).
- * @property \App\Models\Image[]|\Illuminate\Database\Eloquent\Collection $images     The {@link \App\Models\Image images} for this Item.
  * @property \App\Models\Tag[]|\Illuminate\Database\Eloquent\Collection $tags       The {@link \App\Models\Tag search tags} for this Item.
  * @property \App\Models\Color[]|\Illuminate\Database\Eloquent\Collection $colors     The {@link \App\Models\Color colorways} this Item comes in (e.g. Black).
  * @property \App\Models\Feature[]|\Illuminate\Database\Eloquent\Collection $features   The {@link \App\Models\Feature features} of this item (e.g. Back Shirring).
@@ -210,7 +211,8 @@ class Item extends Model
      * @var array
      */
     public $casts = [
-        'images' => 'json',
+        'images' => FlexibleCast::class,
+        'additional_images' => 'json',
         'published_at' => 'datetime',
     ];
 
