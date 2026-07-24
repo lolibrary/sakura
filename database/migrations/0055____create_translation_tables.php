@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-const TABLES = [ 
+const TABLES = [
     'attribute' => 'attributes',
     'brand' => 'brands',
     'category' => 'categories',
@@ -37,19 +37,19 @@ class CreateTranslationTables extends Migration
                 $table->string('locale')->index();
                 $table->string('name');
                 $table->timestampsTz();
-            
+
                 $table->unique(["{$single}_id", 'locale']);
                 $table->foreign("{$single}_id")->references('id')->on($plural)->onDelete('cascade');
             };
 
             $migrator = function($table) use ($single, $plural) {
-                DB::insert("insert into ${single}_translations (${single}_id, name, locale) select id, name, 'en' from $plural");
+                DB::insert("insert into {$single}_translations ({$single}_id, name, locale) select id, name, 'en' from $plural");
             };
 
 
-            Schema::create("${single}_translations", $creator); 
-            Schema::table("${single}_translations", $migrator);
-    
+            Schema::create("{$single}_translations", $creator);
+            Schema::table("{$single}_translations", $migrator);
+
             Schema::table($plural, function ($table) {
                 $table->dropColumn('name');
             });

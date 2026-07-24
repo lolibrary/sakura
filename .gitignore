@@ -1,9 +1,14 @@
 /node_modules
 /public/hot
 /public/storage
+/public/assets/app.js
+/public/assets/app.css
+/public/mix-manifest.json
+/public/build
 /storage/*.key
 /vendor
 .env
+.env.prod
 .env.backup
 .phpunit.result.cache
 Homestead.json
@@ -12,3 +17,5 @@ npm-debug.log
 yarn-error.log
 /.idea
 fortawesome*
+.DS_Store
+*.iml

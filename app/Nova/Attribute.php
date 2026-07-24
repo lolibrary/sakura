@@ -4,10 +4,9 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use YesWeDev\Nova\Translatable\Translatable;
 
 class Attribute extends TranslatableResource
 {
@@ -31,7 +30,7 @@ class Attribute extends TranslatableResource
      * @var array
      */
     public static $search = [
-        'name', 'slug',
+        'slug',
     ];
 
     /**
@@ -51,16 +50,18 @@ class Attribute extends TranslatableResource
                 ->updateRules('required', 'string', 'regex:/[a-z0-9][a-z0-9\-]{1,50}/', 'unique:attributes,slug,{{resourceId}}')
                 ->hideFromIndex(),
 
-            Translatable::make('Name')
-                ->indexLocale('en')
+            Text::make('Name')
                 ->sortable()
-                ->rules('max:255'),
+                ->rules('max:255')
+                ->translatable(),
 
             Text::make('Value')
                 ->readonly(),
 
             DateTime::make('Created', 'created_at')->onlyOnDetail(),
             DateTime::make('Updated', 'updated_at')->onlyOnDetail(),
+
+            HasMany::make('Items')->onlyOnDetail(),
         ];
     }
 

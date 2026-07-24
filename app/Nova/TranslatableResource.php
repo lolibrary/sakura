@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource as NovaResource;
 
@@ -20,11 +21,11 @@ abstract class TranslatableResource extends NovaResource
          return $query->orderByTranslation('name');
      }
 
-     
+
     /**
      * Overrides to make search/filter work with translations.
      */
-    protected static function applySearch($query, $search)
+    protected static function applySearch(Builder $query, string $search): Builder
     {
         return $query->where(function ($query) use ($search) {
             $model = $query->getModel();

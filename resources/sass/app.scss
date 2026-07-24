@@ -1,9 +1,12 @@
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-@import "~@fortawesome/fontawesome-pro/scss/fontawesome.scss";
-@import "~@fortawesome/fontawesome-pro/scss/light.scss";
-@import "~@fortawesome/fontawesome-pro/scss/regular.scss";
+
+$fa-font-path: "~fontawesome/webfonts";
+
+@import "~fontawesome/scss/fontawesome.scss";
+@import "~fontawesome/scss/light.scss";
+@import "~fontawesome/scss/regular.scss";
 
 // Variables
 @import "variables";
@@ -104,11 +107,11 @@ $select-arrow-color: $gray-500;
       border-width: $select-arrow-size $select-arrow-size 0 $select-arrow-size;
       border-color: $select-arrow-color transparent transparent transparent;
     }
-    
+
     &:not(.rtl)::after {
       right: $select-arrow-offset;
     }
-    
+
     &.rtl::after {
       left: $select-arrow-offset;
     }

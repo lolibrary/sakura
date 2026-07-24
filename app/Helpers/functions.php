@@ -131,7 +131,7 @@ if (! function_exists('add_s3_bucket')) {
 
         $uri = (new Uri($url));
 
-        return (string) $uri->withHost("${bucket}.".$uri->getHost());
+        return (string) $uri->withHost("$bucket.{$uri->getHost()}");
     }
 }
 
@@ -142,7 +142,7 @@ if (! function_exists('search_route')) {
      * @param array $params
      * @return string
      */
-    function search_route(array $params)
+    function search_route(array $params): string
     {
         $results = [];
 
@@ -164,7 +164,7 @@ if (! function_exists('default_asset')) {
      *
      * @return string
      */
-    function default_asset()
+    function default_asset(): string
     {
         return Storage::url('assets/default.png');
     }

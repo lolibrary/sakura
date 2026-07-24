@@ -8,37 +8,53 @@
     ],
     "license": "BSD-3-Clause",
     "require": {
-        "php": "^7.3",
+        "php": "^8.2",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-pdo": "*",
-        "astrotomic/laravel-translatable": "^11.9",
-        "dillingham/nova-attach-many": "^1.0",
-        "fideloper/proxy": "^4.0",
-        "laravel/framework": "^6.18",
-        "laravel/nova": "^2.3",
-        "laravel/passport": "^7.5",
+        "astrotomic/laravel-translatable": "^11.17",
+        "kiritokatklian/nova-astrotranslatable": "^5.0",
+        "laravel/fortify": "^1.36",
+        "laravel/framework": "^11.0",
+        "laravel/nova": "^5.0",
+        "laravel/passport": "^12.0",
         "laravel/tinker": "^2.0",
-        "league/flysystem-aws-s3-v3": "^1.0",
-        "league/flysystem-cached-adapter": "^1.0",
-        "lolibrary/image-array": "*",
-        "sentry/sentry-laravel": "^1.6",
-        "stevebauman/purify": "^4.0",
-        "whitecube/nova-flexible-content": "^0.1.11",
-        "wildbit/swiftmailer-postmark": "^3.4",
-        "yeswedev/nova-translatable": "^0.9.0"
+        "laravel/ui": "^4.0",
+        "lolibrary/nova-attach-many": "^1.0",
+        "league/flysystem": "^3.0",
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "sentry/sentry-laravel": "^4.0",
+        "stevebauman/purify": "^6.0",
+        "symfony/http-client": "^6.4",
+        "symfony/postmark-mailer": "^6.4",
+        "whitecube/nova-flexible-content": "^2.0"
     },
     "require-dev": {
-        "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
-        "phpunit/phpunit": "^8.0",
-        "facade/ignition": "^1.4"
+        "nunomaduro/collision": "^8.1",
+        "phpunit/phpunit": "^10.0",
+        "spatie/laravel-ignition": "^2.0"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "policy": {
+            "advisories": {
+                "audit": "report",
+                "ignore-id": {
+                    "PKSA-3r5d-mb8f-1qw9": "unavoidable audit fail",
+                    "PKSA-mdq4-51ck-6kdq": "unavoidable audit fail",
+                    "PKSA-m5cs-t1y6-qpcs": "medium, no action yet"
+                }
+            }
+        },
+        "audit": {
+            "block-insecure": false
+        },
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "extra": {
         "laravel": {
@@ -47,12 +63,10 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Database\\Seeders\\": "database/seeders",
+            "Database\\Factories\\": "database/factories"
         },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ],
         "files": [
             "app/Helpers/functions.php"
         ]
@@ -62,7 +76,7 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
@@ -80,10 +94,6 @@
         {
             "type": "composer",
             "url": "https://nova.laravel.com"
-        },
-        {
-            "type": "path",
-            "url": "./nova-components/ImageArray"
         }
     ]
 }

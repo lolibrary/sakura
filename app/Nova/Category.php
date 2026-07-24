@@ -5,10 +5,11 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use YesWeDev\Nova\Translatable\Translatable;
+use Spatie\NovaTranslatable\Translatable;
 
 class Category extends TranslatableResource
 {
@@ -50,12 +51,12 @@ class Category extends TranslatableResource
             Avatar::make('Image')
                 ->disk('s3public')
                 ->path('categories')
-                ->nullable(),
+                ->indexWidth(60),
 
-            Translatable::make('Name')
-                ->indexLocale('en')
+            Text::make('Name')
                 ->sortable()
-                ->rules('required', 'min:2', 'max:255'),
+                ->rules('required', 'min:2', 'max:255')
+                ->translatable(),
 
             Text::make('Slug')
                 ->sortable()
@@ -64,6 +65,8 @@ class Category extends TranslatableResource
 
             DateTime::make('Created', 'created_at')->onlyOnDetail(),
             DateTime::make('Updated', 'updated_at')->onlyOnDetail(),
+
+            HasMany::make('Items')->onlyOnDetail(),
         ];
     }
 

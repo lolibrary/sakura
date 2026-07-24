@@ -5,23 +5,50 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-require('./search');
+import * as bootstrap from 'bootstrap';
+import _ from 'lodash';
+import $ from 'jquery';
+import Popper from 'popper.js';
+import TomSelect from 'tom-select';
+import SimpleLightbox from 'simple-lightbox';
+import Slider from 'bootstrap-slider';
 
-// window.Vue = require('vue');
+window._ = _;
+window.$ = window.jQuery = $;
+window.Popper = Popper;
 
-// /**
-//  * Next, we will create a fresh Vue application instance and attach it to
-//  * the page. Then, you may begin adding components to this application
-//  * or customize the JavaScript scaffolding to fit your unique needs.
-//  */
+/**
+ * Next we'll load chosen, for a nicer multi-select box with searching.
+ * This will just attach itself to any .form-control-chosen element.
+ */
 
-// Vue.component('v-pagination', require('./components/Pagination.vue').default);
-// Vue.component('search-page', require('./components/Search.vue').default);
-// Vue.component('v-select', require('vue-select').VueSelect);
-// Vue.component('b-form-radio-group', require('bootstrap-vue').BFormRadioGroup);
-// Vue.component('search-result', require('./components/Result.vue').default);
+window.TomSelect = TomSelect;
 
-// const app = new Vue({
-//     el: '#app'
-// });
+/**
+ * simple-lightbox is a lightweight lightbox interface, to make paging through
+ * item photos a little nicer. It will register on elements with 'data-lightbox="show"'
+ */
+
+window.SimpleLightbox = SimpleLightbox;
+
+/**
+ * simple-lightbox is a lightweight lightbox interface, to make paging through
+ * item photos a little nicer. It will register on elements with 'data-lightbox="show"'
+ */
+
+window.slider = Slider;
+
+/**
+ * Both chosen and simple-lightbox need to be initialized *after* the rest of the
+ * page has loaded - otherwise their elements may not be present yet.
+ */
+
+$(() => {
+    $('[data-toggle="tooltip"]').tooltip()
+    let lightbox = new SimpleLightbox({elements: '[data-lightbox="show"]'});
+});
+
+const image = document.head.querySelector('meta[name="default-image"]');
+
+window.defaultImage = image ? image.content : '/images/default.png';
+

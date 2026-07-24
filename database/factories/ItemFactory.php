@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Factories;
+
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -16,21 +18,21 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(App\Models\Feature::class, function (Faker $faker) {
+$factory->define(\App\Models\Feature::class, function (Faker $faker) {
     return [
         'name' => $name = $faker->unique()->domainWord,
         'slug' => Str::slug($name),
     ];
 });
 
-$factory->define(App\Models\Color::class, function (Faker $faker) {
+$factory->define(\App\Models\Color::class, function (Faker $faker) {
     return [
         'name' => $name = $faker->unique()->colorName,
         'slug' => Str::slug($name),
     ];
 });
 
-$factory->define(App\Models\Category::class, function (Faker $faker) {
+$factory->define(\App\Models\Category::class, function (Faker $faker) {
     return [
         'name' => $name = $faker->unique()->name,
         'slug' => Str::slug($name),
@@ -38,7 +40,7 @@ $factory->define(App\Models\Category::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Models\Brand::class, function (Faker $faker) {
+$factory->define(\App\Models\Brand::class, function (Faker $faker) {
     return [
         'name' => $name = $faker->unique()->name('female'),
         'slug' => Str::slug($name),
@@ -47,21 +49,21 @@ $factory->define(App\Models\Brand::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Models\Attribute::class, function (Faker $faker) {
+$factory->define(\App\Models\Attribute::class, function (Faker $faker) {
     return [
         'name' => $name = $faker->unique()->domainWord,
         'slug' => Str::slug($name),
     ];
 });
 
-$factory->define(App\Models\Tag::class, function (Faker $faker) {
+$factory->define(\App\Models\Tag::class, function (Faker $faker) {
     return [
         'name' => $name = $faker->unique()->word,
         'slug' => Str::slug($name),
     ];
 });
 
-$factory->define(App\Models\Item::class, function (Faker $faker) {
+$factory->define(\App\Models\Item::class, function (Faker $faker) {
     $englishName = $faker->unique()->sentence(4);
 
     return [
@@ -76,7 +78,7 @@ $factory->define(App\Models\Item::class, function (Faker $faker) {
         'year' => $faker->year,
         'product_number' => $faker->bothify('??#####'),
         'notes' => $faker->paragraphs(2),
-        'status' => App\Models\Item::DRAFT,
+        'status' => \App\Models\Item::DRAFT,
         'price' => $faker->numberBetween(100, 40000),
         'currency' => $faker->randomElement(array_keys(App\Models\Item::CURRENCIES)),
         'image' => 'images/default.png',
@@ -84,18 +86,18 @@ $factory->define(App\Models\Item::class, function (Faker $faker) {
     ];
 });
 
-$factory->state(App\Models\Item::class, 'published', []);
-$factory->state(App\Models\Item::class, 'draft', []);
+$factory->state(\App\Models\Item::class, 'published', []);
+$factory->state(\App\Models\Item::class, 'draft', []);
 
 // Hacks Ahoy - these fields are guarded.
-$factory->afterMakingState(App\Models\Item::class, 'draft', function ($item) {
-    $item->status = App\Models\Item::DRAFT;
+$factory->afterMakingState(\App\Models\Item::class, 'draft', function ($item) {
+    $item->status = \App\Models\Item::DRAFT;
     $item->published_at = null;
     $item->publisher_id = null;
 });
 
-$factory->afterMakingState(App\Models\Item::class, 'published', function ($item) {
-    $item->status = App\Models\Item::PUBLISHED;
+$factory->afterMakingState(\App\Models\Item::class, 'published', function ($item) {
+    $item->status = \App\Models\Item::PUBLISHED;
     $item->published_at = now('UTC');
     $item->publisher_id = uuid4();
 });

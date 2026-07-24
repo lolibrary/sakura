@@ -32,19 +32,6 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Core.SerializerPath
-        |--------------------------------------------------------------------------
-        |
-        | The HTML purifier serializer cache path.
-        |
-        | http://htmlpurifier.org/live/configdoc/plain.html#Cache.SerializerPath
-        |
-        */
-
-        'Cache.SerializerPath' => storage_path('app/purify'),
-
-        /*
-        |--------------------------------------------------------------------------
         | HTML.Doctype
         |--------------------------------------------------------------------------
         |
@@ -129,6 +116,12 @@ return [
         */
 
         'AutoFormat.RemoveEmpty' => false,
+
+        // use redis/valkey
+        'serializer' => [
+            'driver' => env('CACHE_DRIVER', 'file'),
+            'cache' => \Stevebauman\Purify\Cache\CacheDefinitionCache::class,
+        ],
 
     ],
 
