@@ -4,9 +4,8 @@ namespace App\Providers;
 
 use App\Nova\Dashboards\Main;
 use App\Nova\Metrics\ItemsPublished;
-use App\Nova\Metrics\MySubmissions;
+use App\Nova\Metrics\YourSubmissions;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -19,10 +18,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function boot()
     {
-        parent::boot();
-
-        Nova::ignoreMigrations();
-
         // report to sentry.
         Nova::report(function ($exception) {
             if (app()->bound('sentry')) {
@@ -35,6 +30,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         });
 
         Nova::style("css-overrides", public_path("assets/overrides.css"));
+
+        parent::boot(); // must come last to prevent migrations.
     }
 
     /**
@@ -76,7 +73,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ItemsPublished::make()
                 ->width('1/4')
                 ->help('Items published on Lolibrary to date.'),
-            MySubmissions::make()
+            YourSubmissions::make()
                 ->width('1/4')
                 ->help('All items you have created which are in the "draft", "pending" or "changes requested" states.'),
         ];
