@@ -30,7 +30,7 @@ class Attribute extends TranslatableResource
      * @var array
      */
     public static $search = [
-        'name', 'slug',
+        'slug',
     ];
 
     /**
