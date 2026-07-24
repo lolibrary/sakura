@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -11,8 +10,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use App\Models\Item;
 use GuzzleHttp\Client;
-use Sentry\Severity;
-use Sentry\State\Scope;
 
 class BacklogUpdate implements ShouldQueue
 {
@@ -53,9 +50,5 @@ class BacklogUpdate implements ShouldQueue
 
         $client = new Client();
         $res = $client->request('POST', $webhook, ["json" => ["content" => $msg]]);
-
-        if ($res->getStatusCode() > 399) {
-            throw new \RuntimeException("Failed to post webhook: {$res->getBody()->getContents()}", $res->getStatusCode());
-        }
     }
 }
