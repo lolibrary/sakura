@@ -103,9 +103,9 @@ class User extends Resource
     public function cards(Request $request)
     {
         return [
-            new NewUsers,
-            new TotalUsers,
-            new UsersByRole,
+            NewUsers::make()->dynamicHeight(),
+            TotalUsers::make()->dynamicHeight(),
+            UsersByRole::make()->dynamicHeight(),
             UserSubmissions::make()
                 ->onlyOnDetail()
                 ->help("This is only a user's non-published works"),

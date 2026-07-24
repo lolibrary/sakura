@@ -9,7 +9,7 @@ use App\Nova\Actions\PendingItem;
 use App\Nova\Actions\DraftItem;
 use App\Nova\Actions\ChangesRequestedItem;
 use App\Nova\Filters\ItemStatusFilter;
-use App\Nova\Metrics\EntriesWaiting;
+use App\Nova\Metrics\YourSubmissions;
 use App\Nova\Metrics\ItemHelp;
 use App\Nova\Metrics\ItemsPublished;
 use Illuminate\Http\Request;
@@ -136,7 +136,8 @@ class Item extends Resource
 
             BelongsTo::make('Brand')->sortable(),
             AttachMany::make('Category', 'categories', Category::class)
-                ->rules('min:1', 'required'),
+                ->rules('min:1', 'required')
+                ->sortable(),
 
             BelongsToMany::make('Category', 'categories', Category::class)
                 ->rules('min:1', 'required')
@@ -189,9 +190,9 @@ class Item extends Resource
 
             // this panel is only shown on the creation page.
             new Panel('Tags and Features', [
-                AttachMany::make('Features', 'features', Feature::class),
-                AttachMany::make('Tags', 'tags', Tag::class),
-                AttachMany::make('Colors', 'colors', Color::class),
+                AttachMany::make('Features', 'features', Feature::class)->sortable(),
+                AttachMany::make('Tags', 'tags', Tag::class)->sortable(),
+                AttachMany::make('Colors', 'colors', Color::class)->sortable(),
             ]),
 
             // This panel is only shown on the view and edit page
@@ -247,7 +248,7 @@ class Item extends Resource
     public function cards(Request $request)
     {
         return [
-            new EntriesWaiting,
+            YourSubmissions::make(),
             new ItemsPublished,
             new ItemHelp,
         ];

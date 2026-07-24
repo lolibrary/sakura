@@ -8,7 +8,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
 
-class EntriesWaiting extends Partition
+class YourSubmissions extends Partition
 {
     /**
      * Calculate the value of the metric.
@@ -17,7 +17,11 @@ class EntriesWaiting extends Partition
     {
         return $this->count(
             $request,
-            Item::whereIn('status', [Item::DRAFT, Item::PENDING, Item::CHANGES_REQUESTED]),
+            Item::query()
+                ->withoutEagerLoads()
+                ->orderBy('status')
+                ->whereIn('status', [Item::DRAFT, Item::PENDING, Item::CHANGES_REQUESTED, Item::PUBLISHED])
+                ->where('user_id', $request->user()->id),
             groupBy: 'status',
         )->label(fn (int $value) => match ($value) {
             Item::DRAFT => 'Drafts',
@@ -57,6 +61,6 @@ class EntriesWaiting extends Partition
      */
     public function name()
     {
-        return 'Entries Waiting';
+        return 'Your Submissions';
     }
 }

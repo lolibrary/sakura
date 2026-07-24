@@ -2,7 +2,8 @@
 
 namespace App\Nova\Dashboards;
 
-use Laravel\Nova\Cards\Help;
+use App\Nova\Metrics\ItemsPublished;
+use App\Nova\Metrics\MySubmissions;
 use Laravel\Nova\Dashboards\Main as Dashboard;
 
 class Main extends Dashboard
@@ -15,7 +16,12 @@ class Main extends Dashboard
     public function cards()
     {
         return [
-            new Help,
+            ItemsPublished::make()
+                ->width('1/4')
+                ->help('Items published on Lolibrary to date.'),
+            MySubmissions::make()
+                ->width('1/4')
+                ->help('All items you have created which are in the "draft", "pending" or "changes requested" states.'),
         ];
     }
 }

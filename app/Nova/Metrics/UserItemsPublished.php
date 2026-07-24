@@ -15,19 +15,21 @@ class UserItemsPublished extends Partition
      */
     public function calculate(NovaRequest $request): PartitionResult
     {
-        $selfPublished = Item::where('user_id', $request->resourceId)
+        $selfPublished = Item::query()
+            ->withoutEagerLoads()
+            ->where('user_id', $request->resourceId)
             ->where('publisher_id', $request->resourceId)
-            ->where('status', Item::PUBLISHED)
-            ->count();
+            ->where('status', Item::PUBLISHED);
 
-        $published = Item::where('user_id', $request->resourceId)
+        $published = Item::query()
+            ->withoutEagerLoads()
+            ->where('user_id', $request->resourceId)
             ->whereNot('publisher_id', $request->resourceId)
-            ->where('status', Item::PUBLISHED)
-            ->count();
+            ->where('status', Item::PUBLISHED);
 
         return $this->result([
-            'Published' => $published,
-            'Self-Published' => $selfPublished,
+            'Published' => $published->count(),
+            'Self-Published' => $selfPublished->count(),
         ])->colors([
             'Published' => '#ADEBB3',
             'Self-Published' => '#B19CD9',

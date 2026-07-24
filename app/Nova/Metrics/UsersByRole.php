@@ -7,6 +7,7 @@ use DateTimeInterface;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
+use Laravel\Nova\Notifications\NovaNotification;
 
 class UsersByRole extends Partition
 {
@@ -16,7 +17,11 @@ class UsersByRole extends Partition
     public function calculate(NovaRequest $request): PartitionResult
     {
         return $this->count(
-            $request, User::class, groupBy: 'level',
+            $request,
+            User::query()
+                ->orderBy('level')
+                ->where('level', '!=', User::JUNIOR_LOLIBRARIAN),
+            groupBy: 'level',
         )->label(fn (int $value) => match ($value) {
             User::DEVELOPER => 'Developer',
             User::ADMIN => 'Admin',
