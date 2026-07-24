@@ -12,9 +12,6 @@ use App\Nova\Filters\ItemStatusFilter;
 use App\Nova\Metrics\EntriesWaiting;
 use App\Nova\Metrics\ItemHelp;
 use App\Nova\Metrics\ItemsPublished;
-use App\Nova\Metrics\PublishedItems;
-use App\Nova\Metrics\UserSubmissions;
-use App\Nova\Repeaters\ItemImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -25,7 +22,6 @@ use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Repeater;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
@@ -97,7 +93,7 @@ class Item extends Resource
                 ->acceptedTypes('.png, .jpeg, .jpg, .webp, .gif, .jfif')
                 ->nullable()
                 ->aspect('aspect-auto')
-                ->thumbnail(fn($value) => cdn_thumbnail($value))
+                ->thumbnail(fn($value) => $value ? cdn_thumbnail($value) : null)
                 ->squared()
                 ->indexWidth(60)
                 ->detailWidth(250),
@@ -139,7 +135,12 @@ class Item extends Resource
                 ->hideFromIndex(),
 
             BelongsTo::make('Brand')->sortable(),
-            AttachMany::make('Category', 'categories', Category::class)->rules('min:1', 'required'),
+            AttachMany::make('Category', 'categories', Category::class)
+                ->rules('min:1', 'required'),
+
+            BelongsToMany::make('Category', 'categories', Category::class)
+                ->rules('min:1', 'required')
+                ->compact(),
 
             Trix::make('Notes', 'notes')->alwaysShow(),
             Trix::make('Internal Notes & Sources', 'internal_notes')->alwaysShow()
@@ -183,8 +184,7 @@ class Item extends Resource
                             }),
                     ])
                     ->confirmRemove('Are you sure you want to remove this image?')
-                    ->button('Add images')
-                    ,
+                    ->button('Add images'),
             ]),
 
             // this panel is only shown on the creation page.

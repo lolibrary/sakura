@@ -13,7 +13,6 @@
         "ext-json": "*",
         "ext-pdo": "*",
         "astrotomic/laravel-translatable": "^11.17",
-        "blendbyte/nova-attach-many": "^2.0",
         "kiritokatklian/nova-astrotranslatable": "^5.0",
         "laravel/fortify": "^1.36",
         "laravel/framework": "^11.0",
@@ -21,6 +20,7 @@
         "laravel/passport": "^12.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^4.0",
+        "lolibrary/nova-attach-many": "^1.0",
         "league/flysystem": "^3.0",
         "league/flysystem-aws-s3-v3": "^3.0",
         "sentry/sentry-laravel": "^4.0",
@@ -94,10 +94,6 @@
         {
             "type": "composer",
             "url": "https://nova.laravel.com"
-        },
-        {
-            "type": "path",
-            "url": "./nova-components/ImageArray"
         }
     ]
 }
