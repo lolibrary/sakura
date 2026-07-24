@@ -3,9 +3,15 @@
 namespace App\Nova;
 
 use App\Models\User as BaseUser;
+use App\Nova\Metrics\NewUsers;
+use App\Nova\Metrics\TotalUsers;
+use App\Nova\Metrics\UserItemsPublished;
+use App\Nova\Metrics\UserSubmissions;
+use App\Nova\Metrics\UsersByRole;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Select;
@@ -83,6 +89,8 @@ class User extends Resource
 
                 Boolean::make('Banned')->canSeeWhen('update', $this),
             ]),
+
+            HasMany::make('Items'),
         ];
     }
 
@@ -94,7 +102,17 @@ class User extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            new NewUsers,
+            new TotalUsers,
+            new UsersByRole,
+            UserSubmissions::make()
+                ->onlyOnDetail()
+                ->help("This is only a user's non-published works"),
+            UserItemsPublished::make()
+                ->onlyOnDetail()
+                ->help('Self-published (if applicable) means the user was also the approver for this item (as a Lolibrarian or Senior Lolibrarian)"'),
+        ];
     }
 
     /**

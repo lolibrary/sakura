@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Nova\Util;
 
-class CreateActionEventsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -51,4 +51,4 @@ class CreateActionEventsTable extends Migration
     {
         Schema::dropIfExists('action_events');
     }
-}
+};

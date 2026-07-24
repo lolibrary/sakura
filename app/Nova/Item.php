@@ -9,6 +9,11 @@ use App\Nova\Actions\PendingItem;
 use App\Nova\Actions\DraftItem;
 use App\Nova\Actions\ChangesRequestedItem;
 use App\Nova\Filters\ItemStatusFilter;
+use App\Nova\Metrics\EntriesWaiting;
+use App\Nova\Metrics\ItemHelp;
+use App\Nova\Metrics\ItemsPublished;
+use App\Nova\Metrics\PublishedItems;
+use App\Nova\Metrics\UserSubmissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Avatar;
@@ -228,7 +233,11 @@ class Item extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            new EntriesWaiting,
+            new ItemsPublished,
+            new ItemHelp,
+        ];
     }
 
     /**

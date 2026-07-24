@@ -111,9 +111,9 @@ return [
 
     // Available locales
     'locales' => [
-        'en' => 'English', 
+        'en' => 'English',
         'en_US' => 'English', // Fallback locale fix, do not actually add tls
-        'fr' => 'français', 
+        'fr' => 'français',
         'it' => 'Italiano',
         'nb_NO' => 'norsk (bokmål)',
         'nl' => 'Nederlands'
@@ -241,4 +241,7 @@ return [
 
     ],
 
+    'discord' => [
+        'invite-link' => env('DISCORD_INVITE_LINK'),
+    ],
 ];
