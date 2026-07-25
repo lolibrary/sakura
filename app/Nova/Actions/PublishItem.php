@@ -12,6 +12,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Notifications\NovaNotification;
+use Laravel\Nova\URL;
 
 class PublishItem extends Action
 {
@@ -34,7 +35,7 @@ class PublishItem extends Action
                     NovaNotification::make()
                         ->message("Your submission $model->english_name has been approved and is now live!")
                         ->icon('check-circle')
-                        ->action('View', route('items.show', $model))
+                        ->action('View', URL::remote(route('items.show', $model)))
                         ->openInNewTab()
                 );
             }

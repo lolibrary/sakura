@@ -11,6 +11,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Notifications\NovaNotification;
+use Laravel\Nova\URL;
 
 class ChangesRequestedItem extends Action
 {
@@ -30,10 +31,10 @@ class ChangesRequestedItem extends Action
 
             $model->submitter->notify(
                 NovaNotification::make()
-                    ->message("Your submission $model->english_name requires some changes in order to be approved.")
+                    ->message("Your submission $model->english_name requires some changes in order to be approved. test: ". route('nova.pages.detail', ['items', $model->id]))
                     ->type('warning')
                     ->icon('pencil-square')
-                    ->action('Go to submission', route('nova.pages.detail', ['items', $model->id])),
+                    ->action('Go to submission', URL::remote(route('nova.pages.detail', ['items', $model->id]))),
             );
         }
 
