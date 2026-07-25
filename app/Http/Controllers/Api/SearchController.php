@@ -39,7 +39,7 @@ class SearchController extends Base
     public function search_index(SearchRequest $request)
     {
         $query = Item::query();
-        return search($request, $query);
+        return $this->search($request, $query);
     }
     /**
      * Search for items.

@@ -72,30 +72,30 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'search' => 'sometimes|nullable|string|min:0,max:60',
+            'search' => 'sometimes|nullable|string|encoding:utf-8|min:0,max:60',
 
-            'category' => 'sometimes|required|exists:category,slug',
+            'category' => 'sometimes|required|string|ascii|exists:category,slug',
             'categories' => 'sometimes|array',
             'categories.*' => 'required|string|exists:categories,slug',
 
-            'brand' => 'sometimes|required|exists:brands,slug',
+            'brand' => 'sometimes|required|string|ascii|exists:brands,slug',
             'brands' => 'sometimes|array',
-            'brands.*' => 'required|string|exists:brands,slug',
+            'brands.*' => 'required|string|ascii|exists:brands,slug',
 
-            'color' => 'sometimes|required|exists:colors,slug',
+            'color' => 'sometimes|required|string|ascii|exists:colors,slug',
             'colors' => 'sometimes|array',
-            'colors.*' => 'required|string|exists:colors,slug',
+            'colors.*' => 'required|string|ascii|exists:colors,slug',
 
-            'feature' => 'sometimes|required|exists:features,slug',
+            'feature' => 'sometimes|required|string|ascii|exists:features,slug',
             'features' => 'sometimes|array',
-            'features.*' => 'required|string|exists:features,slug',
+            'features.*' => 'required|string|ascii|exists:features,slug',
 
-            'tag' => 'sometimes|required|exists:tags,slug',
+            'tag' => 'sometimes|required|string|ascii|exists:tags,slug',
             'tags' => 'sometimes|array',
-            'tags.*' => 'required|string|exists:tags,slug',
+            'tags.*' => 'required|string|ascii|exists:tags,slug',
 
-            'start_year' => 'sometimes|required|integer|min:1970|max:'.(date('Y') + 3),
-            'end_year' => 'sometimes|required|integer|min:1970|max:'.(date('Y') + 3),
+            'start_year' => 'sometimes|required|integer|min:1970|max:'.((int)date('Y') + 3),
+            'end_year' => 'sometimes|required|integer|min:1970|max:'.((int)date('Y') + 3),
             'sort' => 'sometimes|required|string',
         ];
     }
