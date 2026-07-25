@@ -9,6 +9,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Notifications\NovaNotification;
 use Laravel\Nova\URL;
@@ -48,7 +50,10 @@ class ChangesRequestedItem extends Action
      */
     public function fields(NovaRequest $request)
     {
-        return [];
+        return [
+            Trix::make('Comments')
+                ->fullWidth(),
+        ];
     }
 
     /**
