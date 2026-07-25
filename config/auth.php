@@ -46,6 +46,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'oauth2' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+        ],
     ],
 
     /*

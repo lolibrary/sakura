@@ -14,6 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Passport\HasApiTokens;
+use Laravel\Passport\Contracts\OAuthenticatable;
 
 /**
  * A user of this application.
@@ -35,7 +36,7 @@ use Laravel\Passport\HasApiTokens;
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $closet   The {@link \App\Item items} this user owns.
  * @property \App\Models\Post[]|\Illuminate\Database\Eloquent\Collection $posts    The posts this user has created.
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
 {
     use Notifiable, HasApiTokens, HasUuid, DateHandling, Wishlist, Closet, AccessLevels, Actionable;
 
