@@ -8,14 +8,14 @@
     ],
     "license": "BSD-3-Clause",
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-pdo": "*",
         "astrotomic/laravel-translatable": "^11.17",
         "kiritokatklian/nova-astrotranslatable": "^5.0",
         "laravel/fortify": "^1.36",
-        "laravel/framework": "^11.0",
+        "laravel/framework": "^12.0",
         "laravel/nova": "^5.0",
         "laravel/passport": "^12.0",
         "laravel/tinker": "^2.0",
@@ -32,7 +32,7 @@
     "require-dev": {
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^8.1",
-        "phpunit/phpunit": "^10.0",
+        "phpunit/phpunit": "^11.0",
         "spatie/laravel-ignition": "^2.0"
     },
     "config": {
