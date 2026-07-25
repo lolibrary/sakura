@@ -27,11 +27,11 @@ class ItemsPublished extends Value
     public function ranges(): array
     {
         return [
-            7 => Nova::__('Last Week'),
-            30 => Nova::__('Last Month'),
-            90 => Nova::__('Last 3 Months'),
-            180 => Nova::__('Last 6 Months'),
-            365 => Nova::__('Last Year'),
+            7 => Nova::__('7 Days'),
+            30 => Nova::__('30 Days'),
+            90 => Nova::__('3 Months'),
+            180 => Nova::__('6 Months'),
+            365 => Nova::__('1 Year'),
             36500 => Nova::__('All Time'), // 100 years
         ];
     }
