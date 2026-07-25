@@ -32,7 +32,7 @@ class ChangesRequestedItem extends Action
                 NovaNotification::make()
                     ->message("Your submission $model->english_name requires some changes in order to be approved.")
                     ->type('warning')
-                    ->icon('pancil-square')
+                    ->icon('pencil-square')
                     ->action('Go to submission', route('nova.pages.detail', ['items', $model->id])),
             );
         }
