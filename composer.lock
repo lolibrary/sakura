@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37748daa0e5ae9edb3c17bc2884ad7cc",
+    "content-hash": "164d00b523aa38b401d406a7cb8107bd",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -1158,6 +1158,64 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/v4.19.0"
             },
             "time": "2025-10-17T16:34:55+00:00"
+        },
+        {
+            "name": "fastly/fastly",
+            "version": "v14.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fastly/fastly-php.git",
+                "reference": "2ec8a4a24122148306eef824a77100157c5b1395"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fastly/fastly-php/zipball/2ec8a4a24122148306eef824a77100157c5b1395",
+                "reference": "2ec8a4a24122148306eef824a77100157c5b1395",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "guzzlehttp/guzzle": "^7.3",
+                "guzzlehttp/psr7": "^1.7 || ^2.0",
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.12"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fastly\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fastly",
+                    "email": "oss@fastly.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A PHP client library for interacting with most facets of the Fastly API.",
+            "homepage": "https://github.com/fastly/fastly-php",
+            "keywords": [
+                "api",
+                "fastly",
+                "php",
+                "rest",
+                "sdk"
+            ],
+            "support": {
+                "email": "oss@fastly.com",
+                "issues": "https://github.com/fastly/fastly-php/issues",
+                "source": "https://github.com/fastly/fastly-php/tree/v14.0.0"
+            },
+            "time": "2026-07-17T12:51:13+00:00"
         },
         {
             "name": "firebase/php-jwt",

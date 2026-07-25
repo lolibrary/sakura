@@ -40,6 +40,10 @@ return [
 
     'heartbeat' => [
         'updates' => env('HEARTBEAT_UPDATES_URL'),
-    ]
+    ],
+
+    'fastly' => [
+        'api-key' => env('FASTLY_API_KEY'),
+    ],
 
 ];
