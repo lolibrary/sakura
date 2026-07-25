@@ -32,9 +32,9 @@ class PublishItem extends Action
             if (! auth()->user()->is($model->submitter)) {
                 $model->submitter->notify(
                     NovaNotification::make()
-                        ->message("Your submission $model->english_name was just published to the site!")
+                        ->message("Your submission $model->english_name has been approved and is now live!")
                         ->icon('check-circle')
-                        ->action('View Item', route('items.show', $model))
+                        ->action('View', route('items.show', $model))
                         ->openInNewTab()
                 );
             }
