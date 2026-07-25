@@ -344,6 +344,8 @@ class Item extends Resource
 
             (new ChangesRequestedItem)
                 ->withName('Request Changes')
+                ->confirmButtonText('Request Changes')
+                ->confirmText("This will request changes for this user. This will notify them in the dashboard!")
                 ->canSee(function (Request $request) {
                     /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
                     if ($request->resourceId !== null) {
