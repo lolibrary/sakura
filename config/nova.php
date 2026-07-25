@@ -101,7 +101,7 @@ return [
     'storage_disk' => env('NOVA_STORAGE_DISK', env('FILESYSTEM_CLOUD', 'public')),
 
     'brand' => [
-        'logo' => public_path('/img/icon.svg'),
+        'logo' => resource_path('/img/file.svg'),
     ]
 
 ];
