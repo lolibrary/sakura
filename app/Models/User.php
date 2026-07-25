@@ -90,6 +90,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $visible = [
+        'name',
         'username',
         'profile',
         'created_at',
