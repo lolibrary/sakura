@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Models\Item as BaseItem;
 use App\Nova\Actions\PublishItem;
+use App\Nova\Actions\PurgeFastlyCache;
 use App\Nova\Actions\UnpublishItem;
 use App\Nova\Actions\PendingItem;
 use App\Nova\Actions\DraftItem;
@@ -357,6 +358,11 @@ class Item extends Resource
 
                     return $request->user()->junior();
                 }),
+
+            (new PurgeFastlyCache)
+                ->withName('Purge image cache')
+                ->confirmText('This will clear the image cache in Fastly for this item. Note this will NOT delete the images themselves. Please only do this if you cannot see the images when trying to edit this item!')
+                ->confirmButtonText('Purge Image Cache')
         ];
     }
 }
