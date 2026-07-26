@@ -25,9 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new BacklogUpdate)
-            ->dailyAt('13:00')
-            ->thenPing(config('services.heartbeat.updates'));
+        //
     }
 
     /**

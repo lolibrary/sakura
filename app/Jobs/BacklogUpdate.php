@@ -30,7 +30,7 @@ class BacklogUpdate implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function __invoke(): void
     {
         $webhook = config('services.discord.webhooks.updates');
         $published = DB::table('items')->where('status', '=', Item::PUBLISHED)->count();

@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
+use App\Jobs\BacklogUpdate;
+use Illuminate\Support\Facades\Schedule;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,10 @@ use Illuminate\Foundation\Inspiring;
 |
 */
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->describe('Display an inspiring quote');
+
+Schedule::call(new BacklogUpdate)
+    ->dailyAt('13:00')
+    ->name(BacklogUpdate::class)
+    ->description('Daily update to #queue-updates in Discord')
+    ->onOneServer();
+
