@@ -10,6 +10,7 @@ use App\Models\Traits\Wishlist;
 use App\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -93,6 +94,7 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
      */
     protected $visible = [
         'name',
+        'display_name',
         'username',
         'profile',
         'created_at',
@@ -191,5 +193,15 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
     public function sendEmailVerificationNotification(): void
     {
         $this->notify(new VerifyEmail);
+    }
+
+    public function name(): AttributeCast
+    {
+        return AttributeCast::make(get: fn () => $this->username, set: fn(string $value) => $this->attributes['name'] = $value);
+    }
+
+    public function displayName(): AttributeCast
+    {
+        return AttributeCast::make(get: fn () => $this->attributes['name']);
     }
 }

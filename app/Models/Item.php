@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
+use Laravel\Nova\Actions\Actionable;
 use NumberFormatter;
 use Whitecube\NovaFlexibleContent\Value\FlexibleCast;
 use Whitecube\NovaFlexibleContent\Layouts\Collection;
@@ -47,7 +48,7 @@ use Whitecube\NovaFlexibleContent\Layouts\Collection;
  */
 class Item extends Model
 {
-    use ItemRelations, Publishable, Sluggable;
+    use ItemRelations, Publishable, Sluggable, Actionable;
 
     /**
      * A list of supported currencies.

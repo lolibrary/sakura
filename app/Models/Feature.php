@@ -5,6 +5,7 @@ namespace App\Models;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use App\Models\Traits\Cacheable;
+use Laravel\Nova\Actions\Actionable;
 
 /**
  * A feature of an Item (e.g. Back Shirring).
@@ -17,6 +18,7 @@ class Feature extends Model implements TranslatableContract
 {
     use Cacheable;
     use Translatable;
+    use Actionable;
 
     /**
      * Translatable attributes.
