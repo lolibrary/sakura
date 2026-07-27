@@ -16,7 +16,7 @@
     @csrf
     <div class="form-group">
         <label for="profile-name">{{ __('ui.auth.name') }}</label>
-        <input type="text" class="form-control" id="profile-name" placeholder="Enter a name" value="{{ old('name') ?? $user->name }}" name="name">
+        <input type="text" class="form-control" id="profile-name" placeholder="Enter a name" value="{{ old('name') ?? $user->display_name }}" name="name">
     </div>
     <div class="form-group">
         <label for="profile-username">{{ __('ui.auth.username') }}</label>
