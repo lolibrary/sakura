@@ -7,6 +7,7 @@ use App\Models\Traits\Closet;
 use App\Models\Traits\DateHandling;
 use App\Models\Traits\HasUuid;
 use App\Models\Traits\Wishlist;
+use App\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -180,5 +181,15 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
     public function scopeEmail(Builder $query, string $email)
     {
         return $query->where(DB::raw('lower(email)'), mb_strtolower($email));
+    }
+
+    /**
+     * Send the email verification notification, but queued.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new VerifyEmail);
     }
 }

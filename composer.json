@@ -2,10 +2,7 @@
     "name": "lolibrary/sakura",
     "type": "project",
     "description": "Lolibrary's web frontend",
-    "keywords": [
-        "framework",
-        "laravel"
-    ],
+    "keywords": ["framework", "laravel"],
     "license": "BSD-3-Clause",
     "require": {
         "php": "^8.4",
@@ -14,6 +11,7 @@
         "ext-pdo": "*",
         "astrotomic/laravel-translatable": "^11.17",
         "fastly/fastly": "^14.0",
+        "filament/filament": "^5.0",
         "kiritokatklian/nova-astrotranslatable": "^5.0",
         "laravel/fortify": "^1.36",
         "laravel/framework": "^12.0",
@@ -84,7 +82,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
