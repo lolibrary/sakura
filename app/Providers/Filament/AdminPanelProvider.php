@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Settings;
+use Filament\Actions\Action;
+use Filament\Enums\UserMenuPosition;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -39,8 +42,8 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
             ])
+            ->databaseNotifications()
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -54,6 +57,20 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->userMenu(position: UserMenuPosition::Sidebar)
+            ->userMenuItems([
+                [
+                    Action::make('wiki')
+                        ->url('https://wiki.lolibrary.org')
+                        ->icon('heroicon-o-book-open')
+                        ->openUrlInNewTab(),
+                ],
+                [
+                    Action::make('settings')
+                        ->url(fn (): string => Settings::getUrl())
+                        ->icon('heroicon-o-cog-6-tooth'),
+                ],
             ]);
     }
 }
