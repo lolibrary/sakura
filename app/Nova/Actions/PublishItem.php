@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\Item;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Request;
@@ -28,6 +29,12 @@ class PublishItem extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
+            $model->load(Item::FULLY_LOAD);
+
+            if ($model->categories->count() === 0) {
+                throw new \RuntimeException("This item doesn't have a category");
+            }
+
             $model->publish(auth()->user());
 
             if (! auth()->user()->is($model->submitter)) {
