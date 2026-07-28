@@ -26,7 +26,8 @@ trait Publishable
      * @param \App\Models\User|null $user
      * @return void
      */
-    public function publish(User $user = null)
+    public function publish(?
+                            User $user = null)
     {
         $user = $user ?? auth()->user();
 

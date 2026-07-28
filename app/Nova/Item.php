@@ -288,19 +288,19 @@ class Item extends Resource
     public function actions(Request $request)
     {
         return [
-            (new PublishItem)
+            PublishItem::make()
                 ->withName('Publish Item')
                 ->canSee(function (Request $request) {
-                /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
-                if ($request->resourceId !== null) {
-                    /** @var \App\Models\Item $model */
-                    if ($model = $request->findModelQuery()->first()) {
-                        return !$model->published() && $request->user()->can('publish', $model);
+                    /** @var \Laravel\Nova\Http\Requests\NovaRequest $request */
+                    if ($request->resourceId !== null) {
+                        /** @var \App\Models\Item $model */
+                        if ($model = $request->findModelQuery()->first()) {
+                            return !$model->published() && $request->user()->can('publish', $model);
+                        }
                     }
-                }
 
-                return $request->user()->lolibrarian();
-            }),
+                    return $request->user()->lolibrarian();
+                }),
 
             (new UnpublishItem)
                 ->withName('Unpublish Item')

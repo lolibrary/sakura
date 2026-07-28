@@ -128,3 +128,8 @@ $select-arrow-color: $gray-500;
     cursor: text;
   }
 }
+
+.fi-fo-checkbox-list-options {
+    max-height: 350px !important;
+    overflow-y: scroll;
+}

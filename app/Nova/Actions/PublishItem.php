@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Actions\DestructiveAction;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Notifications\NovaNotification;
@@ -17,6 +19,8 @@ use Laravel\Nova\URL;
 class PublishItem extends Action
 {
     use InteractsWithQueue, Queueable, SerializesModels;
+
+    public function __construct(public User $publisher) {}
 
     /**
      * Perform the action on the given models.
@@ -28,7 +32,7 @@ class PublishItem extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $model->publish(auth()->user());
+            $model->publish($this->publisher);
 
             if (! auth()->user()->is($model->submitter)) {
                 $model->submitter->notify(

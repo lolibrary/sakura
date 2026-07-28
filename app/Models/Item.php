@@ -13,16 +13,16 @@ use Whitecube\NovaFlexibleContent\Layouts\Collection;
 /**
  * An Item of Apparel.
  *
- * @property string      $slug            The URL slug of an item.
- * @property string      $english_name    The English Title of an Item.
+ * @property string $slug            The URL slug of an item.
+ * @property string $english_name    The English Title of an Item.
  * @property string|null $foreign_name    The 'Japanese Title' of an Item.
- * @property int|null    $year            The year an Item was released.
+ * @property int|null $year            The year an Item was released.
  * @property string|null $product_number  An Item's product number.
- * @property int         $status          The status of an item (stored internally as an int).
- * @property string      $price           The price of this item, in a given currency.
- * @property float       $price_formatted The price of this item, formatted to the rules of the given currency (e.g. /100 for gbp/usd)
- * @property string      $currency        The currency of this item, as an ISO code.
- * @property Collection  $images          The images attached to this item, as a flexible collection.
+ * @property int $status          The status of an item (stored internally as an int).
+ * @property string $price           The price of this item, in a given currency.
+ * @property float $price_formatted The price of this item, formatted to the rules of the given currency (e.g. /100 for gbp/usd)
+ * @property string $currency        The currency of this item, as an ISO code.
+ * @property Collection $images          The images attached to this item, as a flexible collection.
  *
  * @property \App\Models\Image $image     The primary {@link \App\Models\Image} for this Item.
  * @property \App\Models\User $submitter The {@link \App\Models\User} who originally submitted this Item.
@@ -77,6 +77,21 @@ class Item extends Model
         'isk' => 'Icelandic Króne (kr)',
         'sgd' => 'Singapore Dollar ($)',
         'inr' => 'Indian Rupees (₹)',
+    ];
+
+    public const STATES = [
+        Item::DRAFT => 'draft',
+        Item::PUBLISHED => 'published',
+        Item::PENDING => 'pending',
+        Item::CHANGES_REQUESTED => 'changes requested',
+    ];
+
+    public const array COLORS = [
+        'draft' => 'info',
+        'published' => 'success',
+        'pending' => 'danger',
+        'changes requested' => 'warning',
+        'unknown' => 'primary',
     ];
 
     /**
@@ -212,7 +227,7 @@ class Item extends Model
      * @var array
      */
     public $casts = [
-        'images' => FlexibleCast::class,
+        'images' => 'json',
         'additional_images' => 'json',
         'published_at' => 'datetime',
         'price' => 'integer',
@@ -226,10 +241,10 @@ class Item extends Model
     public function getFullPrice()
     {
         if (in_array($this->currency, ['jpy', 'krw', 'cny'])) {
-            return (string) round($this->price ?? 0);
+            return (string)round($this->price ?? 0);
         }
 
-        return (string) round($this->price ?? 0, 2);
+        return (string)round($this->price ?? 0, 2);
     }
 
     /**
@@ -255,7 +270,7 @@ class Item extends Model
     {
         return [
             'currency' => $this->currency,
-            'price' => (int) $this->price,
+            'price' => (int)$this->price,
             'local_price' => $this->getFullPrice(),
             'formatted' => $this->price_formatted,
         ];
@@ -266,7 +281,8 @@ class Item extends Model
         return $this->belongsToMany('App\Models\Category');
     }
 
-    public function wishlist() {
+    public function wishlist()
+    {
         $wishlist = cache()->tags(['wishlist'])->get($this->getKey());
         if (!$wishlist) {
             $wishlist = $this->stargazers()->count();
@@ -275,7 +291,8 @@ class Item extends Model
         return $wishlist;
     }
 
-    public function closet() {
+    public function closet()
+    {
         $closet = cache()->tags(['closet'])->get($this->getKey());
         if (!$closet) {
             $closet = $this->owners()->count();
