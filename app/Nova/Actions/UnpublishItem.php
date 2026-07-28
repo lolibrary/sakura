@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\Item;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Request;
@@ -25,7 +26,13 @@ class UnpublishItem extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $models->each->unpublish();
+        $models->each(function (Item $item) {
+            $item->load(Item::FULLY_LOAD);
+
+            if ($item->categories->count() === 0) {
+                throw new \RuntimeException("This item doesn't have a category");
+            }
+        });
 
         return Action::message('Unpublished!');
     }
