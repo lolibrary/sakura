@@ -141,17 +141,17 @@ class ItemForm
                         FileUpload::make('image')
                             ->name('Main Image')
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+                            ->disk('s3public')
                             ->visibility('public')
                             ->directory('images')
-                            ->disk('s3public')
                             ->helperText('Required for publishing unless marked partial.'),
 
                         FileUpload::make('images')
                             ->multiple()
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+                            ->disk('s3public')
                             ->visibility('public')
-                            ->directory('images')
-                            ->disk('s3public'),
+                            ->directory('images'),
                     ]),
 
                 RichEditor::make('notes')

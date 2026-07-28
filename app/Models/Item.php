@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Status;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
@@ -77,21 +78,6 @@ class Item extends Model
         'isk' => 'Icelandic Króne (kr)',
         'sgd' => 'Singapore Dollar ($)',
         'inr' => 'Indian Rupees (₹)',
-    ];
-
-    public const STATES = [
-        Item::DRAFT => 'draft',
-        Item::PUBLISHED => 'published',
-        Item::PENDING => 'pending',
-        Item::CHANGES_REQUESTED => 'changes requested',
-    ];
-
-    public const array COLORS = [
-        'draft' => 'info',
-        'published' => 'success',
-        'pending' => 'danger',
-        'changes requested' => 'warning',
-        'unknown' => 'primary',
     ];
 
     public const array RGB_COLORS = [
@@ -239,6 +225,7 @@ class Item extends Model
         'additional_images' => 'json',
         'published_at' => 'datetime',
         'price' => 'integer',
+        'status' => Status::class,
     ];
 
     /**

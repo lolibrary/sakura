@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Brands;
 
+use App\Filament\RelationManagers\ItemsRelationManager;
 use App\Filament\Resources\Brands\Pages\CreateBrand;
 use App\Filament\Resources\Brands\Pages\EditBrand;
 use App\Filament\Resources\Brands\Pages\ListBrands;
@@ -46,7 +47,7 @@ class BrandResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ItemsRelationManager::make(),
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Enums\Status;
 use App\Models\Item;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Str;
@@ -25,11 +26,11 @@ class UserPublishedItems extends ChartWidget
             ->groupBy('status')
             ->map
             ->count()
-            ->mapWithKeys(function (int $value, int $key) {
-                return [Item::STATES[$key] ?? 'unknown' => $value];
+            ->mapWithKeys(function (int $value, Status $key) {
+                return [$key->getLabel() => $value];
             });
 
-        $colors = $items->keys()->map(fn (string $key) => Item::RGB_COLORS[$key] ?? 'danger');
+        $colors = $items->keys()->map(fn (Status $key) => Item::RGB_COLORS[$key->getLabel()] ?? 'danger');
 
         return [
             'labels' => $items->keys()->map(fn (string $label) => Str::title($label))->all(),

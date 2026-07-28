@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Features;
 
+use App\Filament\RelationManagers\ItemsRelationManager;
 use App\Filament\Resources\Features\Pages\CreateFeature;
 use App\Filament\Resources\Features\Pages\EditFeature;
 use App\Filament\Resources\Features\Pages\ListFeatures;
@@ -46,7 +47,7 @@ class FeatureResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ItemsRelationManager::make(),
         ];
     }
 

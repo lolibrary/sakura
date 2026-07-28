@@ -15,8 +15,9 @@ class FeaturesTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID'),
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('slug')
                     ->searchable(),
                 TextColumn::make('created_at')

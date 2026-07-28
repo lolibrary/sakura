@@ -32,7 +32,8 @@ class MyQueue extends TableWidget
                 ->getQuery()
             )
             ->columns([
-                ImageColumn::make('image')->disk('s3public')
+                ImageColumn::make('image')
+                    ->disk('s3public')
                     ->visibility('public')
                     ->alignCenter(),
                 TextColumn::make('english_name')
@@ -53,8 +54,6 @@ class MyQueue extends TableWidget
                 TextColumn::make('status')
                     ->sortable()
                     ->badge()
-                    ->state(fn (Item $record) => Item::STATES[$record->status] ?? 'unknown')
-                    ->colors(Item::COLORS)
                     ->visibleFrom('xl'),
             ])
             ->filters([

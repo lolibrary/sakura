@@ -16,12 +16,15 @@ class BrandsTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID'),
-                TextColumn::make('slug')
+                ImageColumn::make('image')
+                    ->disk('s3public')
+                    ->visibility('public')
+                    ->square(),
+                TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('short_name')
                     ->searchable(),
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -30,7 +33,6 @@ class BrandsTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                ImageColumn::make('image'),
             ])
             ->filters([
                 //

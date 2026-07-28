@@ -16,8 +16,13 @@ class CategoriesTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID'),
+                ImageColumn::make('image')
+                    ->disk('s3public')
+                    ->visibility('public')
+                    ->square(),
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('slug')
                     ->searchable(),
                 TextColumn::make('created_at')
@@ -28,7 +33,6 @@ class CategoriesTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                ImageColumn::make('image'),
             ])
             ->filters([
                 //

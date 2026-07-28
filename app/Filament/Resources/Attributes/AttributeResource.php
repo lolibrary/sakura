@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Attributes;
 
+use App\Filament\RelationManagers\ItemsRelationManager;
 use App\Filament\Resources\Attributes\Pages\CreateAttribute;
 use App\Filament\Resources\Attributes\Pages\EditAttribute;
 use App\Filament\Resources\Attributes\Pages\ListAttributes;
@@ -46,7 +47,7 @@ class AttributeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ItemsRelationManager::make(),
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Tags;
 
+use App\Filament\RelationManagers\ItemsRelationManager;
 use App\Filament\Resources\Tags\Pages\CreateTag;
 use App\Filament\Resources\Tags\Pages\EditTag;
 use App\Filament\Resources\Tags\Pages\ListTags;
@@ -24,7 +25,7 @@ class TagResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 6;
 
     protected static string | \UnitEnum | null $navigationGroup = 'Library';
 
@@ -46,7 +47,7 @@ class TagResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ItemsRelationManager::make(),
         ];
     }
 

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Features\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class FeatureInfolist
@@ -11,15 +12,19 @@ class FeatureInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('id')
-                    ->label('ID'),
-                TextEntry::make('slug'),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                Section::make()
+                    ->schema([
+                        TextEntry::make('name'),
+                        TextEntry::make('slug'),
+                        TextEntry::make('created_at')
+                            ->dateTime()
+                            ->disabled(),
+                        TextEntry::make('updated_at')
+                            ->dateTime()
+                            ->disabled()
+                            ->placeholder('-'),
+                    ])
+                    ->contained(false),
             ]);
     }
 }

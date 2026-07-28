@@ -15,8 +15,8 @@ class AttributesTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID'),
+                TextColumn::make('name')
+                    ->label('Name'),
                 TextColumn::make('slug')
                     ->searchable(),
                 TextColumn::make('created_at')

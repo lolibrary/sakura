@@ -18,14 +18,13 @@ class ItemInfolist
     {
         return $schema
             ->components([
-
                 Section::make()
                     ->columns(3)
                     ->columnSpanFull()
                     ->schema([
                         ImageEntry::make('image')
-                            ->visibility('public')
                             ->disk('s3public')
+                            ->visibility('public')
                             ->alignCenter()
                             ->imageWidth(250)
                             ->imageHeight(320)
@@ -40,10 +39,7 @@ class ItemInfolist
                                     ->name('Brand'),
                                 TextEntry::make('submitter.username')
                                     ->name('submitter'),
-                                TextEntry::make('status')
-                                    ->badge()
-                                    ->state(fn (Item $record) => Item::STATES[$record->status] ?? 'unknown')
-                                    ->colors(Item::COLORS),
+                                TextEntry::make('status')->badge(),
                                 TextEntry::make('created_at')
                                     ->name('Created')
                                     ->date(),
@@ -73,8 +69,8 @@ class ItemInfolist
                     ->columnSpanFull()
                     ->schema([
                         ImageEntry::make('images')
-                            ->columnSpanFull()
                             ->disk('s3public')
+                            ->columnSpanFull()
                             ->visibility('public'),
                     ]),
 
