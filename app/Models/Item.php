@@ -283,4 +283,14 @@ class Item extends Model
         }
         return $closet;
     }
+
+    public function getCacheKey(): string
+    {
+        return "items.backup.{$this->getKey()}";
+    }
+
+    protected function syncComponents()
+    {
+        //
+    }
 }

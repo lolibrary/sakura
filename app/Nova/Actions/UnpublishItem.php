@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Jobs\ItemMissingRelations;
 use App\Models\Item;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -26,13 +27,18 @@ class UnpublishItem extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $models->each(function (Item $item) {
+        foreach ($models as $item) {
             $item->load(Item::FULLY_LOAD);
 
             if ($item->categories->count() === 0) {
-                throw new \RuntimeException("This item doesn't have a category");
+                // attempt to restore from cache
+                dispatch(new ItemMissingRelations($item));
+
+                return Action::danger('Relations bug: check discord!');
+            } else {
+                $item->unpublish();
             }
-        });
+        }
 
         return Action::message('Unpublished!');
     }

@@ -21,3 +21,8 @@ Schedule::call(new BacklogUpdate)
     ->description('Daily update to #queue-updates in Discord')
     ->onOneServer();
 
+Schedule::call('item:cache')
+    ->name(BacklogUpdate::class)
+    ->description('Cache pending + changes requested items')
+    ->everyFiveMinutes();
+

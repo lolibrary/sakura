@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Jobs\ItemMissingRelations;
 use App\Models\Item;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,7 +33,10 @@ class PublishItem extends Action
             $model->load(Item::FULLY_LOAD);
 
             if ($model->categories->count() === 0) {
-                throw new \RuntimeException("This item doesn't have a category");
+                // attempt to restore from cache
+                dispatch(new ItemMissingRelations($model));
+
+                return Action::danger('Relations bug: check discord!');
             }
 
             $model->publish(auth()->user());
