@@ -24,6 +24,10 @@ class BrandResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?int $navigationSort = 2;
+
+    protected static string | \UnitEnum | null $navigationGroup = 'Library';
+
     public static function form(Schema $schema): Schema
     {
         return BrandForm::configure($schema);

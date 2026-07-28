@@ -94,6 +94,14 @@ class Item extends Model
         'unknown' => 'primary',
     ];
 
+    public const array RGB_COLORS = [
+        'draft' => 'rgb(186,225,255)',
+        'published' => 'rgb(186,255,201)',
+        'pending' => 'rgb(255,223,186)',
+        'changes requested' => 'rgb(255,179,186)',
+        'unknown' => 'rgb(207, 207, 196)',
+    ];
+
     /**
      * Indicates that an item is a draft and shouldn't be visible.
      *

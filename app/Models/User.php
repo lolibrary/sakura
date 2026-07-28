@@ -204,4 +204,24 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
     {
         return AttributeCast::make(get: fn () => $this->attributes['name']);
     }
+
+    public function publishedItems(): int
+    {
+        return $this->items()->withoutEagerLoads()->where('status', Item::PUBLISHED)->count();
+    }
+
+    public function changesRequested(): int
+    {
+        return $this->items()->withoutEagerLoads()->where('status', Item::CHANGES_REQUESTED)->count();
+    }
+
+    public function draftsWaiting(): int
+    {
+        return $this->items()->withoutEagerLoads()->where('status', Item::DRAFT)->count();
+    }
+
+    public function pendingItems(): int
+    {
+        return $this->items()->withoutEagerLoads()->where('status', Item::PENDING)->count();
+    }
 }

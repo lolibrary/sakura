@@ -24,6 +24,10 @@ class TagResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?int $navigationSort = 5;
+
+    protected static string | \UnitEnum | null $navigationGroup = 'Library';
+
     public static function form(Schema $schema): Schema
     {
         return TagForm::configure($schema);

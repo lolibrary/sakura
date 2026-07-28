@@ -24,6 +24,10 @@ class FeatureResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?int $navigationSort = 4;
+
+    protected static string | \UnitEnum | null $navigationGroup = 'Library';
+
     public static function form(Schema $schema): Schema
     {
         return FeatureForm::configure($schema);
