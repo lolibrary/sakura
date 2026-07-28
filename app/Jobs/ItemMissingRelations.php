@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Item;
 use GuzzleHttp\Client;
 
-class BacklogUpdate implements ShouldQueue
+class ItemMissingRelations implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -20,7 +20,7 @@ class BacklogUpdate implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(public Item $item)
     {
         //
     }
@@ -32,19 +32,23 @@ class BacklogUpdate implements ShouldQueue
      */
     public function __invoke(): void
     {
-        $webhook = config('services.discord.webhooks.updates');
-        $published = DB::table('items')->where('status', '=', Item::PUBLISHED)->count();
-        $pending = DB::table('items')->where('status', '=', Item::PENDING)->count();
-        $changes = DB::table('items')->where('status', '=', Item::CHANGES_REQUESTED)->count();
-        $draft = DB::table('items')->where('status', '=', Item::DRAFT)->count();
+        $webhook = config('services.discord.webhooks.missing-data');
+
+        $extra = "none (sorry!)";
+        if (! is_null($cached = cache()->get($this->item->getCacheKey()))) {
+            $extra = implode(", ", [
+                "categories: {$cached->categories->count()}",
+                "tags: {$cached->tags->count()}",
+                "features: {$cached->features->count()}",
+                "colors: {$cached->colors->count()}",
+                "attributes: {$cached->attributes->count()}",
+            ]) . "\nto fix: `php artisan item:fix {$cached->id}`";
+
+        }
 
         $msg = <<<EOD
-        ## *Current Entries*
-        **$draft** drafts
-        **$pending** pending review
-        **$changes** post-review, changes requested
-        **$published** published
-
+        ### relation bug: {$this->item->english_name}
+        cached data: $extra
 
         EOD;
 

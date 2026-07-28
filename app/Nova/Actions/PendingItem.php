@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\Item;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Request;
@@ -25,9 +26,11 @@ class PendingItem extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $models->each->setPending();
+        $models->each(function (Item $item) {
+            $item->load(Item::FULLY_LOAD);
 
-        // todo: mark these items as pending in a discord channel?
+            $item->setPending();
+        });
 
         return Action::message('Marked as ready for review (pending)!');
     }

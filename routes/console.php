@@ -1,5 +1,6 @@
 <?php
 
+use App\Console\Commands\ItemCache;
 use App\Jobs\BacklogUpdate;
 use Illuminate\Support\Facades\Schedule;
 
@@ -19,5 +20,10 @@ Schedule::call(new BacklogUpdate)
     ->dailyAt('13:00')
     ->name(BacklogUpdate::class)
     ->description('Daily update to #queue-updates in Discord')
+    ->onOneServer();
+
+Schedule::command('item:cache')
+    ->description('Cache pending + changes requested items')
+    ->everyFiveMinutes()
     ->onOneServer();
 

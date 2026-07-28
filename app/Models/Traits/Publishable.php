@@ -18,6 +18,14 @@ trait Publishable
         static::creating(function (Item $model) {
             $model->submitter()->associate(auth()->user());
         });
+
+        static::saved(function (Item $model) {
+            // first up: fully load the item
+            $model->load(static::FULLY_LOAD);
+
+            // next: backup cache this on update
+            cache()->forever($model->getCacheKey(), $model);
+        });
     }
 
     /**
@@ -26,8 +34,7 @@ trait Publishable
      * @param \App\Models\User|null $user
      * @return void
      */
-    public function publish(?
-                            User $user = null)
+    public function publish(?User $user = null)
     {
         $user = $user ?? auth()->user();
 
