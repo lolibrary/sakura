@@ -23,7 +23,6 @@ class Brand extends Model implements TranslatableContract
 {
     use Cacheable;
     use Translatable;
-    use Actionable;
 
     /**
      * Translatable attributes.

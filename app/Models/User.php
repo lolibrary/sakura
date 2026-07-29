@@ -35,8 +35,8 @@ use Laravel\Passport\Contracts\OAuthenticatable;
  * @property bool $banned   If the user is banned or not.
  * @property bool $verified Whether or not the user's email has been verified.
  *
- * @property \App\Models\Image $image The user's profile image.
- * @property string $image_id         The user's profile image ID.
+ * @property bool $public_closet
+ * @property bool $public_wishlist
  *
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $items    The {@link \App\Item items} this user has submitted.
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $wishlist The {@link \App\Item items} this user has favourited.
@@ -82,6 +82,8 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
         'banned' => 'boolean',
         'level' => Level::class,
         'email_verified_at' => 'datetime',
+        'public_closet' => 'boolean',
+        'public_wishlist' => 'boolean',
     ];
 
     /**
@@ -127,8 +129,12 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
      * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function wishlist(string $order = 'added_new')
+    public function wishlist(?string $order = null)
     {
+        if ($order === null) {
+            $order = 'added_new';
+        }
+
         return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy(...(sorted($order, 'wishlist')));
     }
 
@@ -138,8 +144,12 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
      * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function closet(string $order = 'added_new')
+    public function closet(?string $order = null)
     {
+        if ($order === null) {
+            $order = 'added_new';
+        }
+
         return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy(...(sorted($order, 'closet')));
     }
 
@@ -231,5 +241,10 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
         }
 
         return false;
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'username';
     }
 }

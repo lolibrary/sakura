@@ -6,7 +6,7 @@
         @foreach ($items as $item)
         <div class="col-lg-4 col-md-6 col-sm-6 p-2">
             @component('items.card', ['item' => $item, 'type' => 'small'])
-                @if ($isOwner)
+                @if ($user->is(auth()->user()))
                     <form action="{{ route('items.wishlist', $item) }}" method="post">
                         @csrf
                         <input type="hidden" name="_method" value="put">
@@ -25,7 +25,7 @@
 
     {{ $items->links() }}
 @else
-    @if ($isOwner)
+    @if ($user->is(auth()->user()))
         <div class="text-center mt-5">
             <p class="h2">{{ __('ui.wishlist.empty') }}</p>
             <p class="lead">@lang('ui.wishlist.add', ['link' => route('search')])</p>

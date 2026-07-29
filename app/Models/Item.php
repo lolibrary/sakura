@@ -31,7 +31,7 @@ use NumberFormatter;
  */
 class Item extends Model
 {
-    use ItemRelations, Publishable, Sluggable, Actionable;
+    use ItemRelations, Publishable, Sluggable;
 
     /**
      * A list of supported currencies.

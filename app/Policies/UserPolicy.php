@@ -48,4 +48,14 @@ class UserPolicy extends Policy
     {
         return $user->senior();
     }
+
+    public function closet(?User $user, User $target): bool
+    {
+        return $target->public_closet || $user?->is($target);
+    }
+
+    public function wishlist(?User $user, User $target): bool
+    {
+        return $target->public_wishlist || $user?->is($target);
+    }
 }

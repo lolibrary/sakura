@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PublicProfileController extends Controller
@@ -13,7 +14,7 @@ class PublicProfileController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth.owner');
+        //
     }
 
 
@@ -21,41 +22,35 @@ class PublicProfileController extends Controller
      * Get a given user's closet (owned items).
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function closet(Request $request)
+    public function closet(Request $request, User $user)
     {
-        $requestedUser = $request->get('requestedUser');
-        $isOwner = $request->get('isOwner');
-
-        if (empty($requestedUser) || (!$isOwner && !$requestedUser->public_closet)) {
-            abort(404);
+        if (! auth()->user()?->can('closet', $user)) {
+            abort(404); // nothing to see here
         }
 
-        $items = $requestedUser->closet($request->input('order'))->paginate(24);
-
-        $user = $requestedUser;
-        return view('profile.closet', compact('user', 'items', 'isOwner'));
+        return view('profile.closet', [
+            'user' => $user,
+            'items' => $user->closet($request->input('order'))->paginate(24)
+        ]);
     }
 
     /**
      * Get a given user's wishlist (favourited items).
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function wishlist(Request $request)
+    public function wishlist(Request $request, User $user)
     {
-        $requestedUser = $request->get('requestedUser');
-        $isOwner = $request->get('isOwner');
-
-        if (empty($requestedUser) || (!$isOwner && !$requestedUser->public_wishlist)) {
-            abort(404);
+        if (! auth()->user()?->can('closet', $user)) {
+            abort(404); // nothing to see here
         }
 
-        $items = $requestedUser->wishlist($request->input('order'))->paginate(24);
-
-        $user = $requestedUser;
-        return view('profile.wishlist', compact('user', 'items', 'isOwner'));
+        return view('profile.wishlist', [
+            'user' => $user,
+            'items' => $user->wishlist($request->input('order'))->paginate(24)
+        ]);
     }
 }
