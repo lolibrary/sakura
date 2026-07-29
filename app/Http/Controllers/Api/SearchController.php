@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\Status;
 use App\Http\Controllers\Controller as Base;
 use App\Http\Requests\Api\SearchRequest;
 use App\Models\Brand;
@@ -68,7 +69,7 @@ class SearchController extends Base
 
         $query->orderBy(...(sorted($request->sort)));
 
-        $query->where('status', Item::PUBLISHED);
+        $query->where('status', Status::Published);
 
         $params = $this->form_to_query($request);
 

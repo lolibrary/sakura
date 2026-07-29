@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Status;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Brand;
@@ -29,7 +30,7 @@ class HomeController extends Controller
         $brands = Brand::cached();
         $categories = Category::cached();
         $recent = Item::with(Item::PARTIAL_LOAD)
-            ->where('status', Item::PUBLISHED)
+            ->where('status', Status::Published)
             ->orderBy('published_at', 'desc')
             ->whereNotNull('image')
             ->whereDoesntHave('tags', function (Builder $query) {

@@ -21,7 +21,9 @@ class ItemsTable
             ->columns([
                 ImageColumn::make('image')
                     ->disk('s3public')
-                    ->visibility('public'),
+                    ->visibility('public')
+                    ->square()
+                    ->checkFileExistence(false),
                 TextColumn::make('english_name')
                     ->searchable()
                     ->sortable()

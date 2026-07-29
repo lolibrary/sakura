@@ -17,7 +17,7 @@ use NumberFormatter;
  * @property string|null $foreign_name    The 'Japanese Title' of an Item.
  * @property int|null $year            The year an Item was released.
  * @property string|null $product_number  An Item's product number.
- * @property int $status          The status of an item (stored internally as an int).
+ * @property Status $status The status of an item (stored internally as an int).
  * @property string $price           The price of this item, in a given currency.
  * @property float $price_formatted The price of this item, formatted to the rules of the given currency (e.g. /100 for gbp/usd)
  * @property string $currency        The currency of this item, as an ISO code.

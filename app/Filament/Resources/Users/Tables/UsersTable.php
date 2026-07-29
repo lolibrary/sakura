@@ -17,16 +17,14 @@ class UsersTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID'),
-                ImageColumn::make('image_id'),
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('username')
                     ->searchable(),
                 TextColumn::make('email')
                     ->label('Email address')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -36,22 +34,15 @@ class UsersTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('level')
-                    ->numeric()
+                    ->badge()
                     ->sortable(),
                 IconColumn::make('banned')
-                    ->boolean(),
-                TextColumn::make('verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('public_wishlist')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('public_closet')
-                    ->numeric()
-                    ->sortable(),
+                    ->boolean()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                IconColumn::make('verified')
+                    ->boolean()
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->filters([
                 //
@@ -62,7 +53,7 @@ class UsersTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    //
                 ]),
             ]);
     }

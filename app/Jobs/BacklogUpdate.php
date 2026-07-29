@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\Status;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -33,10 +34,10 @@ class BacklogUpdate implements ShouldQueue
     public function __invoke(): void
     {
         $webhook = config('services.discord.webhooks.updates');
-        $published = DB::table('items')->where('status', '=', Item::PUBLISHED)->count();
-        $pending = DB::table('items')->where('status', '=', Item::PENDING)->count();
-        $changes = DB::table('items')->where('status', '=', Item::CHANGES_REQUESTED)->count();
-        $draft = DB::table('items')->where('status', '=', Item::DRAFT)->count();
+        $published = DB::table('items')->where('status', '=', Status::Published)->count();
+        $pending = DB::table('items')->where('status', '=', Status::Pending)->count();
+        $changes = DB::table('items')->where('status', '=', Status::ChangesRequested)->count();
+        $draft = DB::table('items')->where('status', '=', Status::Draft)->count();
 
         $msg = <<<EOD
         ## *Current Entries*

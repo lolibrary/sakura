@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Enums\Status;
 use App\Models\Item;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -27,7 +28,7 @@ class MyQueue extends TableWidget
         return $table
             ->query(fn (): Builder => auth()->user()
                 ->items()
-                ->where('status', '!=', Item::PUBLISHED)
+                ->where('status', '!=', Status::Published)
                 //->orderByDesc('created_at')
                 ->getQuery()
             )
@@ -35,7 +36,8 @@ class MyQueue extends TableWidget
                 ImageColumn::make('image')
                     ->disk('s3public')
                     ->visibility('public')
-                    ->alignCenter(),
+                    ->alignCenter()
+                ->checkFileExistence(false),
                 TextColumn::make('english_name')
                     ->formatStateUsing(fn (Item $record) => Str::limit($record->english_name, 40))
                     ->sortable(),

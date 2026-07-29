@@ -2,6 +2,7 @@
 
 namespace App\Models\Traits;
 
+use App\Enums\Level;
 use App\Models\User;
 
 /**
@@ -14,16 +15,14 @@ trait AccessLevels
 {
     /**
      * Return the user's permission level.
-     *
-     * @return int
      */
     public function accessLevel(): int
     {
         if ($this->banned) {
-            return User::BANNED;
+            return Level::Banned->value;
         }
 
-        return $this->level;
+        return $this->level->value;
     }
 
     /**
@@ -32,31 +31,41 @@ trait AccessLevels
      * Used for guarding sensitive functions,
      *   e.g. debug info and feature flags.
      *
-     * @return bool
+     * Used for the 'Site Settings' feature flags menu.
      */
     public function developer(): bool
     {
-        return $this->accessLevel() >= User::DEVELOPER;
+        return $this->accessLevel() >= Level::Developer->value;
     }
 
     /**
      * Check if a user is a moderator (above admin).
      *
-     * @return bool
+     * Can promote users to senior and manage everyone.
      */
     public function admin(): bool
     {
-        return $this->accessLevel() >= User::ADMIN;
+        return $this->accessLevel() >= Level::Developer->value;
     }
 
     /**
      * Check if a user is an admin (senior lolibrarian).
      *
-     * @return bool
+     * Full control over the entire submission/entry process.
      */
     public function senior(): bool
     {
-        return $this->accessLevel() >= User::SENIOR_LOLIBRARIAN;
+        return $this->accessLevel() >= Level::Senior->value;
+    }
+
+    /**
+     * A level above regular lolibrarian with increased permissions, for trusted contributors.
+     *
+     * Has the ability to manage tags/features/colors/attributes, but not brands or users.
+     */
+    public function trusted(): bool
+    {
+        return $this->accessLevel() >= Level::Trusted->value;
     }
 
     /**
@@ -68,7 +77,7 @@ trait AccessLevels
      */
     public function lolibrarian(): bool
     {
-        return $this->accessLevel() >= User::LOLIBRARIAN;
+        return $this->accessLevel() >= Level::Lolibrarian->value;
     }
 
     /**
@@ -78,31 +87,16 @@ trait AccessLevels
      */
     public function junior(): bool
     {
-        return $this->accessLevel() >= User::JUNIOR_LOLIBRARIAN;
+        return $this->accessLevel() >= Level::Junior->value;
     }
 
     /**
-     * Check a user's access role.
+     * Mostly redundant check that a user can access the site while logged in.
      *
-     * @return string
+     * @return bool
      */
-    public function getRoleAttribute()
+    public function regular(): bool
     {
-        switch (true) {
-            case $this->developer():
-                return 'Developer';
-            case $this->admin():
-                return 'Administrator';
-            case $this->senior():
-                return 'Senior Lolibrarian';
-            case $this->lolibrarian():
-                return 'Lolibrarian';
-            case $this->junior():
-                return 'Junior Lolibrarian';
-            case $this->banned:
-                return 'Banned User';
-            default:
-                return 'Regular User';
-        }
+        return $this->accessLevel() >= Level::Regular->value;
     }
 }

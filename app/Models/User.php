@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Level;
+use App\Enums\Status;
 use App\Models\Traits\AccessLevels;
 use App\Models\Traits\Closet;
 use App\Models\Traits\DateHandling;
@@ -11,6 +13,8 @@ use App\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +30,7 @@ use Laravel\Passport\Contracts\OAuthenticatable;
  * @property string $username       The user's login username.
  * @property string $remember_token A strong random number that allows the user to use "remember me" sessions.
  *
- * @property int  $level    The user's level (permissions).
+ * @property Level  $level    The user's level (permissions).
  * @property bool $banned   If the user is banned or not.
  * @property bool $verified Whether or not the user's email has been verified.
  *
@@ -41,14 +45,6 @@ use Laravel\Passport\Contracts\OAuthenticatable;
 class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
 {
     use Notifiable, HasApiTokens, HasUuid, DateHandling, Wishlist, Closet, AccessLevels, Actionable;
-
-    public const DEVELOPER = 1000;
-    public const ADMIN = 500;
-    public const SENIOR_LOLIBRARIAN = 100;
-    public const LOLIBRARIAN = 50;
-    public const JUNIOR_LOLIBRARIAN = 10;
-    public const REGULAR = 0;
-    public const BANNED = -1;
 
     /**
      * Whether or not this model has an incrementing timestamp.
@@ -83,7 +79,7 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
      */
     protected $casts = [
         'banned' => 'boolean',
-        'level' => 'integer',
+        'level' => Level::class,
         'email_verified_at' => 'datetime',
     ];
 
@@ -95,10 +91,15 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
     protected $visible = [
         'name',
         'display_name',
+        'email',
         'username',
         'profile',
         'created_at',
-        'level'
+        'level',
+    ];
+
+    protected $appends = [
+        'display_name',
     ];
 
     /**
@@ -113,10 +114,8 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
 
     /**
      * The items a user has submitted.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function items()
+    public function items(): HasMany
     {
         return $this->hasMany(Item::class);
     }
@@ -127,7 +126,7 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
      * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function wishlist($order = 'added_new')
+    public function wishlist(string $order = 'added_new')
     {
         return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy(...(sorted($order, 'wishlist')));
     }
@@ -138,7 +137,7 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
      * @param string $order
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
      */
-    public function closet($order = 'added_new')
+    public function closet(string $order = 'added_new')
     {
         return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy(...(sorted($order, 'closet')));
     }
@@ -148,27 +147,15 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany|\App\Models\Post[]
      */
-    public function posts()
+    public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
 
     /**
-     * The profile image for a user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|\App\Models\Image
-     */
-    public function image()
-    {
-        return $this->belongsTo(Image::class);
-    }
-
-    /**
      * Get a user's profile.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne|\App\Models\Profile
      */
-    public function profile()
+    public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
     }
@@ -202,26 +189,34 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
 
     public function displayName(): AttributeCast
     {
-        return AttributeCast::make(get: fn () => $this->attributes['name']);
+        return AttributeCast::make(
+            get: fn () => $this->attributes['name'],
+            set: fn (string $value) => $this->attributes['name'] = $value,
+        );
     }
 
     public function publishedItems(): int
     {
-        return $this->items()->withoutEagerLoads()->where('status', Item::PUBLISHED)->count();
+        return $this->items()->withoutEagerLoads()->where('status', Status::Published)->count();
     }
 
     public function changesRequested(): int
     {
-        return $this->items()->withoutEagerLoads()->where('status', Item::CHANGES_REQUESTED)->count();
+        return $this->items()->withoutEagerLoads()->where('status', Status::ChangesRequested)->count();
     }
 
     public function draftsWaiting(): int
     {
-        return $this->items()->withoutEagerLoads()->where('status', Item::DRAFT)->count();
+        return $this->items()->withoutEagerLoads()->where('status', Status::Draft)->count();
     }
 
     public function pendingItems(): int
     {
-        return $this->items()->withoutEagerLoads()->where('status', Item::PENDING)->count();
+        return $this->items()->withoutEagerLoads()->where('status', Status::Pending)->count();
+    }
+
+    public function verified(): AttributeCast
+    {
+        return AttributeCast::get(fn() => $this->hasVerifiedEmail());
     }
 }

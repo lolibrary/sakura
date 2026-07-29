@@ -44,13 +44,6 @@ class UserResource extends Resource
         return UsersTable::configure($table);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            ItemsRelationManager::make(),
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
@@ -58,6 +51,13 @@ class UserResource extends Resource
             'create' => CreateUser::route('/create'),
             'view' => ViewUser::route('/{record}'),
             'edit' => EditUser::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            'entries' => ItemsRelationManager::make(),
         ];
     }
 }

@@ -20,7 +20,7 @@ class UserPublishedItems extends ChartWidget
         $items = auth()->user()
             ->items()
             ->withoutEagerLoads()
-            ->where('status', '!=', Item::PUBLISHED)
+            ->where('status', '!=', Status::Published)
             ->select('status')
             ->get()
             ->groupBy('status')

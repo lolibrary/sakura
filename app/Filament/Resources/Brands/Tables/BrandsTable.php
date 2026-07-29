@@ -19,7 +19,8 @@ class BrandsTable
                 ImageColumn::make('image')
                     ->disk('s3public')
                     ->visibility('public')
-                    ->square(),
+                    ->square()
+                    ->checkFileExistence(false),
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('short_name')

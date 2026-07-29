@@ -137,6 +137,8 @@ class ItemForm
                     ]),
 
                 Repeater::make('Attributes')
+                    ->helperText('Testing')
+                    ->label('Attributes')
                     ->columnSpanFull()
                     ->columns(2)
                     ->relationship('values')
@@ -161,7 +163,8 @@ class ItemForm
                     ])
                     ->addActionLabel('Add Attribute')
                     ->reorderable()
-                    ->reorderableWithButtons(),
+                    ->reorderableWithButtons()
+                    ->reorderableWithDragAndDrop(),
 
 
                 FileUpload::make('image')
