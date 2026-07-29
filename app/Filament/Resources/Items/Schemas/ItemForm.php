@@ -23,6 +23,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\EmptyState;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\FontFamily;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Livewire\Features\SupportFileUploads\FileUploadConfiguration;
@@ -54,6 +55,7 @@ class ItemForm
                 TextInput::make('slug')
                     ->readOnly()
                     ->disabled()
+                    ->copyable()
                     ->helperText('The url to this entry, items/{slug}. Cannot be changed.')
                     ->placeholder('Generated on save'),
 

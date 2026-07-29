@@ -17,6 +17,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\EmptyState;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\FontFamily;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Storage;
 
@@ -58,10 +59,15 @@ class ItemInfolist
                         Section::make()
                             ->schema([
                                 TextEntry::make('id')
-                                    ->label('ID'),
-                                TextEntry::make('slug'),
+                                    ->label('ID')
+                                    ->fontFamily( FontFamily::Mono)
+                                    ->copyable()
+                                    ->icon(Heroicon::OutlinedDocumentDuplicate),
+                                TextEntry::make('slug')
+                                    ->fontFamily( FontFamily::Mono)
+                                    ->copyable()
+                                    ->icon(Heroicon::OutlinedDocumentDuplicate),
                                 TextEntry::make('year')
-                                    ->numeric()
                                     ->placeholder('-'),
                                 TextEntry::make('product_number')
                                     ->placeholder('-'),
@@ -69,10 +75,10 @@ class ItemInfolist
                                     ->name('publisher')
                                     ->placeholder('-')
                                     ->badge(),
-                                TextEntry::make('published_at')
-                                    ->name('Published')
-                                    ->date()
-                                    ->placeholder('-'),
+                                TextEntry::make('url')
+                                    ->label('Preview Link')
+                                    ->url(fn(Item $record) => $record->url, shouldOpenInNewTab: true)
+                                    ->icon(Heroicon::OutlinedArrowTopRightOnSquare),
                             ])->contained(false),
                     ]),
 

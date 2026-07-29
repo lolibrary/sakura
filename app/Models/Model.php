@@ -148,6 +148,6 @@ abstract class Model extends Eloquent
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->logOnlyDirty();
+        return LogOptions::defaults()->logAll();
     }
 }
