@@ -2,14 +2,24 @@
 
 namespace App\Filament\Resources\Items\Schemas;
 
+use App\Models\Attribute;
+use App\Models\Category;
+use App\Models\Color;
+use App\Models\Feature;
 use App\Models\Image;
 use App\Models\Item;
+use App\Models\Tag;
+use Filament\Infolists\Components\CodeEntry;
 use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\KeyValueEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\EmptyState;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\SelectColumn;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\Select;
 
 class ItemInfolist
@@ -36,9 +46,11 @@ class ItemInfolist
                                 TextEntry::make('foreign_name')
                                     ->placeholder('-'),
                                 TextEntry::make('brand.name')
-                                    ->name('Brand'),
+                                    ->name('Brand')
+                                    ->badge(),
                                 TextEntry::make('submitter.username')
-                                    ->name('submitter'),
+                                    ->name('submitter')
+                                    ->badge(),
                                 TextEntry::make('status')->badge(),
                                 TextEntry::make('created_at')
                                     ->name('Created')
@@ -57,7 +69,8 @@ class ItemInfolist
                                     ->placeholder('-'),
                                 TextEntry::make('publisher.username')
                                     ->name('publisher')
-                                    ->placeholder('-'),
+                                    ->placeholder('-')
+                                    ->badge(),
                                 TextEntry::make('published_at')
                                     ->name('Published')
                                     ->date()
@@ -65,54 +78,130 @@ class ItemInfolist
                             ])->contained(false),
                     ]),
 
-                Section::make()
+                Section::make('Additional Images')
                     ->columnSpanFull()
-                    ->schema([
-                        ImageEntry::make('images')
-                            ->disk('s3public')
-                            ->columnSpanFull()
-                            ->visibility('public'),
-                    ]),
+                    ->columns(6)
+                    ->schema(function (Item $record) {
+                        return collect($record->images)
+                            ->map(fn(string $image) => ImageEntry::make('images')
+                                ->checkFileExistence(false)
+                                ->name('')
+                                ->columnSpan(1)
+                                ->state($image)
+                                ->disk('s3public')
+                                ->visibility('public')
+                                ->columnSpanFull()
+                                ->url(Storage::cloud()->url($image)),
+                            )->all();
+                    },),
 
-                Section::make()
+                Section::make('Relations')
                     ->columnSpanFull()
                     ->columns(2)
-                    ->schema([
-                        RepeatableEntry::make('categories')
-                            ->schema([
-                                TextEntry::make('name')->badge()->name('')]),
-                        RepeatableEntry::make('features')
-                            ->schema([TextEntry::make('name')->badge()->name('')]),
-                        RepeatableEntry::make('colors')
-                            ->schema([TextEntry::make('name')->badge()->name('')]),
-                        RepeatableEntry::make('tags')
-                            ->schema([TextEntry::make('name')->badge()->name('')]),
-                    ]),
+                    ->schema(function (Item $record) {
+                        return [
+                            Section::make('Categories')
+                                ->contained(false)
+                                ->columns(4)
+                                ->schema(fn () => [
+                                    TextEntry::make('name')
+                                        ->state($record->categories->map->name->all())
+                                        ->badge()
+                                        ->name(''),
+                                ]),
+                            Section::make('Features')
+                                ->contained(false)
+                                ->columns(4)
+                                ->schema(fn () => [
+                                    TextEntry::make('name')
+                                        ->state($record->features->map->name->all())
+                                        ->badge()
+                                        ->name(''),
+                                ]),
+                            Section::make('Tags')
+                                ->contained(false)
+                                ->columns(4)
+                                ->schema(fn () => [
+                                    TextEntry::make('name')
+                                        ->state($record->tags->map->name->all())
+                                        ->badge()
+                                        ->name(''),
+                                ]),
+                            Section::make('Colorways')
+                                ->contained(false)
+                                ->columns(4)
+                                ->schema(fn () => [
+                                    TextEntry::make('name')
+                                        ->state($record->colors->map->name->all())
+                                        ->badge()
+                                        ->name(''),
+                                ]),
+                        ];
+                    }),
 
                 Section::make()
+                    ->contained(false)
+                    ->columnSpanFull()
+                    ->schema(function (Item $record) {
+                        if ($record->attributes->count() === 0) {
+                            return [
+                                EmptyState::make('No Attributes')
+                                    ->icon(Heroicon::OutlinedDocumentText),
+                            ];
+                        }
+
+                        return [
+                            KeyValueEntry::make('attributes')
+                                ->name('')
+                                ->keyLabel('Attribute')
+                                ->valueLabel('Value')
+                                ->state(
+                                    $record->attributes
+                                        ->mapWithKeys(fn (Attribute $attr) => [
+                                            $attr->name => $attr->pivot->value,
+                                        ])
+                                )
+                        ];
+
+                    }),
+
+                Section::make('Notes')
                     ->columnSpanFull()
                     ->schema([
                         TextEntry::make('notes')
+                            ->name('')
                             ->html()
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ]),
 
-                Section::make()
+                Section::make('Internal Notes')
                     ->columnSpanFull()
                     ->schema([
                         TextEntry::make('internal_notes')
+                            ->name('')
                             ->html()
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ]),
 
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-
-                TextEntry::make('full_price')
-                    ->placeholder('-'),
+                Section::make('Timestamps')
+                    ->columnSpanFull()
+                    ->columns(3)
+                    ->schema([
+                        TextEntry::make('updated_at')
+                            ->dateTime()
+                            ->badge()
+                            ->placeholder('-'),
+                        TextEntry::make('created_at')
+                            ->badge()
+                            ->dateTime()
+                            ->placeholder('-'),
+                        TextEntry::make('published_at')
+                            ->badge()
+                            ->dateTime()
+                            ->placeholder('-'),
+                    ]),
 
 
             ]);

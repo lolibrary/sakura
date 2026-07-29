@@ -22,6 +22,8 @@ class BrandForm
                     ->default('')
                     ->columnSpanFull(),
                 FileUpload::make('image')
+                    ->disk('s3public')
+                    ->directory('')
                     ->image(),
             ]);
     }

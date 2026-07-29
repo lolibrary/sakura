@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Composers;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
@@ -54,6 +55,5 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('dev', function () {
             return auth()->check() && auth()->user()->developer();
         });
-
     }
 }

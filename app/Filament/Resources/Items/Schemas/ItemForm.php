@@ -3,22 +3,29 @@
 namespace App\Filament\Resources\Items\Schemas;
 
 use App\Filament\Query\TranslatedRelation;
+use App\Models\Attribute;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Item;
+use Filament\Actions\Action;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\EmptyState;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Livewire\Features\SupportFileUploads\FileUploadConfiguration;
 
 class ItemForm
 {
@@ -28,11 +35,11 @@ class ItemForm
             ->components([
                 TextInput::make('english_name')
                     ->required()
-                    ->helperText('The english name of this item.'),
+                    ->helperText('The english name of this entry.'),
 
 
                 TextInput::make('foreign_name')
-                    ->helperText('The original/native-language name of this item.'),
+                    ->helperText('The original/native-language name of this entry.'),
 
                 Select::make('brand_id')
                     ->name('Brand')
@@ -42,7 +49,37 @@ class ItemForm
                         titleAttribute: 'name',
                         modifyQueryUsing: TranslatedRelation::make('brand'),
                     )
-                    ->helperText('The brand of this item, e.g. Angelic Pretty.'),
+                    ->helperText('The brand of this entry, e.g. Angelic Pretty.'),
+
+                TextInput::make('slug')
+                    ->readOnly()
+                    ->disabled()
+                    ->helperText('The url to this entry, items/{slug}. Cannot be changed.')
+                    ->placeholder('Generated on save'),
+
+                Section::make('Metadata')
+                    ->columns(2)
+                    ->columnSpanFull()
+                    ->schema([
+                        TextInput::make('product_number')
+                            ->helperText('The original product number, if known.'),
+
+                        Select::make('year')
+                            ->placeholder('Unknown')
+                            ->options(
+                                array_reverse(range(1990, (int)date('Y') + 3))
+                            )
+                            ->helperText('The year of release, if known.'),
+
+                        Select::make('currency')
+                            ->placeholder('Unknown')
+                            ->options(Item::CURRENCIES),
+
+
+                        TextInput::make('price')
+                            ->numeric()
+                            ->helperText('Item price - enter 0 if the item is free.'),
+                    ]),
 
                 Section::make('Relationships')
                     ->columns(2)
@@ -99,60 +136,56 @@ class ItemForm
                             ->searchDebounce(500),
                     ]),
 
-                Section::make('Attributes')
+                Repeater::make('Attributes')
                     ->columnSpanFull()
-                    ->schema([
-                        KeyValue::make('attributes')
-                            ->reorderable()
-                            ->keyLabel('Attribute')
-                            ->addActionLabel('Add attribute')
-                            ->editableKeys(true),
-                    ]),
-
-                Section::make('Metadata')
                     ->columns(2)
-                    ->columnSpanFull()
+                    ->relationship('values')
                     ->schema([
-                        TextInput::make('product_number')
-                            ->helperText('The original product number, if known.'),
-
-                        Select::make('year')
-                            ->placeholder('Unknown')
-                            ->options(
-                                array_reverse(range(1990, (int)date('Y') + 3))
+                        Select::make('attribute_id')
+                            ->relationship(
+                                name: 'attribute',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: TranslatedRelation::make('attribute'),
                             )
-                            ->helperText('The year of release, if known. Can be in the future.'),
+                            ->options(fn() => Attribute::cached()
+                                ->mapWithKeys(fn (Attribute $attr) => [$attr->id => $attr->name])
+                            )
+                            ->searchable()
+                            ->searchDebounce(500)
+                            ->required()
+                            ->preload()
+                            ->live()
+                            ->disableOptionsWhenSelectedInSiblingRepeaterItems(),
+                        TextInput::make('value')
+                            ->required(),
+                    ])
+                    ->addActionLabel('Add Attribute')
+                    ->reorderable()
+                    ->reorderableWithButtons(),
 
-                        Select::make('currency')
-                            ->placeholder('Unknown')
-                            ->options(Item::CURRENCIES),
 
+                FileUpload::make('image')
+                    ->label('Main Image')
+                    ->disk('s3public')
+                    ->visibility('public')
+                    ->directory('images')
+                    ->previewable()
+                    ->openable()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif']),
 
-                        TextInput::make('price')
-                            ->numeric()
-                            ->helperText('Item price - enter 0 if the item is free.'),
-                    ]),
-
-
-                Section::make('Image Uploads')
-                    ->columns(2)
+                FileUpload::make('images')
                     ->columnSpanFull()
-                    ->schema([
-                        FileUpload::make('image')
-                            ->name('Main Image')
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
-                            ->disk('s3public')
-                            ->visibility('public')
-                            ->directory('images')
-                            ->helperText('Required for publishing unless marked partial.'),
-
-                        FileUpload::make('images')
-                            ->multiple()
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
-                            ->disk('s3public')
-                            ->visibility('public')
-                            ->directory('images'),
-                    ]),
+                    ->label('Additional Images')
+                    ->multiple()
+                    ->reorderable()
+                    ->appendFiles()
+                    ->openable()
+                    ->previewable()
+                    ->panelLayout('grid')
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+                    ->disk('s3public')
+                    ->visibility('public')
+                    ->directory('images'),
 
                 RichEditor::make('notes')
                     ->columnSpanFull(),

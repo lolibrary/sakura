@@ -15,7 +15,7 @@ class UserInfolist
             ->components([
                 TextEntry::make('id')
                     ->label('ID'),
-                ImageEntry::make('image_id')
+                ImageEntry::make('image')
                     ->placeholder('-'),
                 TextEntry::make('name'),
                 TextEntry::make('username'),
