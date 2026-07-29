@@ -5,7 +5,6 @@ namespace App\Models;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use App\Models\Traits\Cacheable;
-use Laravel\Nova\Actions\Actionable;
 
 /**
  * A lolita brand, e.g. Angelic Pretty.

@@ -10,7 +10,6 @@ use App\Models\Traits\DateHandling;
 use App\Models\Traits\HasUuid;
 use App\Models\Traits\Wishlist;
 use App\Notifications\VerifyEmail;
-use App\Providers\Filament\AdminPanelProvider;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -21,7 +20,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
-use Laravel\Nova\Actions\Actionable;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Passport\Contracts\OAuthenticatable;
 
@@ -47,7 +45,7 @@ use Laravel\Passport\Contracts\OAuthenticatable;
  */
 class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable, FilamentUser
 {
-    use Notifiable, HasApiTokens, HasUuid, DateHandling, Wishlist, Closet, AccessLevels, Actionable;
+    use Notifiable, HasApiTokens, HasUuid, DateHandling, Wishlist, Closet, AccessLevels;
 
     /**
      * Whether or not this model has an incrementing timestamp.

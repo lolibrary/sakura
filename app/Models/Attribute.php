@@ -5,10 +5,8 @@ namespace App\Models;
 use App\Models\Traits\Cacheable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Laravel\Nova\Actions\Actionable;
 
 
 /**
@@ -24,7 +22,6 @@ class Attribute extends Model implements TranslatableContract
 {
     use Cacheable;
     use Translatable;
-    use Actionable;
 
     /**
      * Translatable attributes.

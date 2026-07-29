@@ -6,7 +6,6 @@ use App\Enums\Status;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
-use Laravel\Nova\Actions\Actionable;
 use NumberFormatter;
 
 /**
