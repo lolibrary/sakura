@@ -8,28 +8,10 @@ use App\Models\User;
 use App\Traits\HasAttachPolicies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ItemPolicy
+class ItemPolicy extends Policy
 {
     use HandlesAuthorization, HasAttachPolicies;
 
-    /**
-     * Can a user view available items?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
-    public function viewAny(User $user): bool
-    {
-        return $user->junior();
-    }
-
-    /**
-     * Can a user view a item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @return bool
-     */
     public function view(User $user, Item $item): bool
     {
         if ($user->is($item->submitter)) {
@@ -39,24 +21,11 @@ class ItemPolicy
         return $user->lolibrarian();
     }
 
-    /**
-     * Can a user create an item draft?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
     public function create(User $user): bool
     {
         return $user->junior();
     }
 
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @return bool
-     */
     public function update(User $user, Item $item): bool
     {
         // lolibrarians can update their own published items
@@ -74,13 +43,7 @@ class ItemPolicy
         return $user->senior();
     }
 
-    /**
-     * Can a user delete an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @return bool
-     */
+
     public function delete(User $user, Item $item): bool
     {
         if ($item->published()) {
@@ -103,13 +66,6 @@ class ItemPolicy
         return $user->senior();
     }
 
-    /**
-     * Can a user publish an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @return bool
-     */
     public function publish(User $user, Item $item): bool
     {
         // cannot publish twice.

@@ -10,6 +10,9 @@ use App\Models\Traits\DateHandling;
 use App\Models\Traits\HasUuid;
 use App\Models\Traits\Wishlist;
 use App\Notifications\VerifyEmail;
+use App\Providers\Filament\AdminPanelProvider;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
@@ -42,7 +45,7 @@ use Laravel\Passport\Contracts\OAuthenticatable;
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $closet   The {@link \App\Item items} this user owns.
  * @property \App\Models\Post[]|\Illuminate\Database\Eloquent\Collection $posts    The posts this user has created.
  */
-class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
+class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable, FilamentUser
 {
     use Notifiable, HasApiTokens, HasUuid, DateHandling, Wishlist, Closet, AccessLevels, Actionable;
 
@@ -218,5 +221,17 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable
     public function verified(): AttributeCast
     {
         return AttributeCast::get(fn() => $this->hasVerifiedEmail());
+    }
+
+    /**
+     * Set up access to the admin panel for Filament.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if ($panel->getId() === 'admin') {
+            return $this->junior() && $this->hasVerifiedEmail();
+        }
+
+        return false;
     }
 }

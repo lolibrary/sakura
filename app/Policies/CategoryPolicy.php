@@ -6,64 +6,26 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CategoryPolicy
+class CategoryPolicy extends Policy
 {
     use HandlesAuthorization;
 
-    /**
-     * Can a user view available categories?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
-    public function viewAny(User $user)
+    public function view(User $user, Category $category): bool
     {
         return $user->junior();
     }
 
-    /**
-     * Can a user view a category?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Category $category
-     * @return bool
-     */
-    public function view(User $user, Category $category)
-    {
-        return $user->junior();
-    }
-
-    /**
-     * Can a user create a category?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->trusted();
     }
 
-    /**
-     * Can a user update a category?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Category $category
-     * @return bool
-     */
-    public function update(User $user, Category $category)
+    public function update(User $user, Category $category): bool
     {
         return $user->trusted();
     }
 
-    /**
-     * Can a user delete a category?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Category $category
-     * @return bool
-     */
-    public function delete(User $user, Category $category)
+    public function delete(User $user, Category $category): bool
     {
         if ($category->items()->count() > 0) {
             return false;

@@ -6,14 +6,9 @@ use App\Models\Brand;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class BrandPolicy
+class BrandPolicy extends Policy
 {
     use HandlesAuthorization;
-
-    public function viewAny(User $user): bool
-    {
-        return $user->junior();
-    }
 
     public function view(User $user, Brand $brand): bool
     {
