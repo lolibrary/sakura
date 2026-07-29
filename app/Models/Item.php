@@ -6,6 +6,7 @@ use App\Enums\Status;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 use NumberFormatter;
 
 /**

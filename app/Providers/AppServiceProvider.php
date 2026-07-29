@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Composers;
+use App\Models\User;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Nova;
+use Spatie\Activitylog\Facades\Activity;
+use Spatie\Activitylog\Support\ActivityLogger;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -55,5 +58,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('dev', function () {
             return auth()->check() && auth()->user()->developer();
         });
+
+        // if set, we log all activity without a user to the system user.
+        Activity::defaultCauser(User::where('username', config('app.system.default-user'))->first());
     }
 }

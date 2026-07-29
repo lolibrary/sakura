@@ -246,4 +246,8 @@ return [
     'discord' => [
         'invite-link' => env('DISCORD_INVITE_LINK'),
     ],
+
+    'system' => [
+        'default-user' => env('APP_DEFAULT_USER', 'lolibrary'), // username of the user we want to use.
+    ],
 ];

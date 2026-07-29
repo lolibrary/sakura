@@ -7,6 +7,8 @@ use App\Models\Traits\DateHandling;
 use App\Models\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 /**
  * A base model for this application.
@@ -24,7 +26,7 @@ use Illuminate\Support\Str;
  */
 abstract class Model extends Eloquent
 {
-    use HasUuid, DateHandling;
+    use HasUuid, DateHandling, LogsActivity;
 
     /**
      * The namespace UUID used for {@see uuid5()}.
@@ -142,5 +144,10 @@ abstract class Model extends Eloquent
     public function newCollection(array $models = [])
     {
         return new Collection($models);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logOnlyDirty();
     }
 }
