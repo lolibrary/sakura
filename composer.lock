@@ -212,16 +212,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.389.2",
+            "version": "3.389.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "784e0fb95e752e55c4654b5800b900c78f6d3990"
+                "reference": "09bbb4023a14316ff2c5e568301a382f7e3465f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/784e0fb95e752e55c4654b5800b900c78f6d3990",
-                "reference": "784e0fb95e752e55c4654b5800b900c78f6d3990",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/09bbb4023a14316ff2c5e568301a382f7e3465f5",
+                "reference": "09bbb4023a14316ff2c5e568301a382f7e3465f5",
                 "shasum": ""
             },
             "require": {
@@ -303,9 +303,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.389.2"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.389.3"
             },
-            "time": "2026-07-28T18:10:25+00:00"
+            "time": "2026-07-29T18:09:38+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -10757,16 +10757,16 @@
         },
         {
             "name": "symfony/serializer",
-            "version": "v8.1.1",
+            "version": "v8.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
-                "reference": "f911b744bc24658f435ea30439cfe536f0173a3a"
+                "reference": "6bd396438ba6c36800224e2beaf3f8f2d7439343"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/f911b744bc24658f435ea30439cfe536f0173a3a",
-                "reference": "f911b744bc24658f435ea30439cfe536f0173a3a",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/6bd396438ba6c36800224e2beaf3f8f2d7439343",
+                "reference": "6bd396438ba6c36800224e2beaf3f8f2d7439343",
                 "shasum": ""
             },
             "require": {
@@ -10778,7 +10778,7 @@
                 "phpdocumentor/reflection-docblock": "<5.2|>=7",
                 "phpdocumentor/type-resolver": "<1.5.1",
                 "symfony/property-access": "<8.1",
-                "symfony/property-info": "<7.4",
+                "symfony/property-info": "<7.4.15",
                 "symfony/type-info": "<7.4"
             },
             "require-dev": {
@@ -10797,7 +10797,7 @@
                 "symfony/messenger": "^7.4|^8.0",
                 "symfony/mime": "^7.4|^8.0",
                 "symfony/property-access": "^8.1",
-                "symfony/property-info": "^7.4|^8.0",
+                "symfony/property-info": "^7.4.15|~8.0.15|^8.1.2",
                 "symfony/translation-contracts": "^2.5|^3",
                 "symfony/type-info": "^7.4|^8.0",
                 "symfony/uid": "^7.4|^8.0",
@@ -10832,7 +10832,7 @@
             "description": "Handles serializing and deserializing data structures, including object graphs, into array structures or other formats like XML and JSON.",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/serializer/tree/v8.1.1"
+                "source": "https://github.com/symfony/serializer/tree/v8.1.3"
             },
             "funding": [
                 {
@@ -10852,7 +10852,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-27T09:05:56+00:00"
+            "time": "2026-07-29T14:11:26+00:00"
         },
         {
             "name": "symfony/service-contracts",
