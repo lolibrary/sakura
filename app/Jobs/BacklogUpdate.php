@@ -35,7 +35,7 @@ class BacklogUpdate implements ShouldQueue
     {
         $webhook = config('services.discord.webhooks.updates');
         $published = DB::table('items')->where('status', '=', Status::Published)->count();
-        $pending = DB::table('items')->where('status', '=', Status::Pending)->count();
+        $pending = DB::table('items')->where('status', '=', Status::ReadyForReview)->count();
         $changes = DB::table('items')->where('status', '=', Status::ChangesRequested)->count();
         $draft = DB::table('items')->where('status', '=', Status::Draft)->count();
 

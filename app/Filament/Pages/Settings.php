@@ -16,4 +16,6 @@ class Settings extends Page
     protected static ?int $navigationSort = PHP_INT_MAX;
 
     protected static string | UnitEnum | null $navigationGroup = 'Profile';
+
+    protected static bool $shouldRegisterNavigation = false;
 }

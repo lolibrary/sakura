@@ -4,8 +4,8 @@
     <div class="container">
         <div class="row mb-3">
             <div class="col text-center">
-                <h1 class="h3">{{ $item->english_name }}</h3>
-                    <h4 class="text-muted">{{ $item->foreign_name }}</h4>
+                <h1 class="h3">{{ $item->english_name }}</h1>
+                <h4 class="text-muted">{{ $item->foreign_name }}</h4>
             </div>
         </div>
 
@@ -196,13 +196,13 @@
                     </a>
                 @endif
                 @foreach ($item->images as $image)
-                    @if ($image->image !== null)
-                        <a class="card m-0 p-0" href="{{ cdn_link($image->image) }}"
+                    @if ($image !== null)
+                        <a class="card m-0 p-0" href="{{ cdn_link($image) }}"
                            data-lightbox="show">
-                            <img src="{{ cdn_thumbnail($image->image) }}"
+                            <img src="{{ cdn_thumbnail($image) }}"
                                  onerror="this.src = '{{ default_asset() }}'"
-                                 data-original-url="{{  cdn_thumbnail($image->image) }}"
-                                 data-key="{{ $image->image }}"
+                                 data-original-url="{{  cdn_thumbnail($image) }}"
+                                 data-key="{{ $image }}"
                                  class="mw-100">
                         </a>
                     @endif

@@ -223,7 +223,7 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
 
     public function pendingItems(): int
     {
-        return $this->items()->withoutEagerLoads()->where('status', Status::Pending)->count();
+        return $this->items()->withoutEagerLoads()->where('status', Status::ReadyForReview)->count();
     }
 
     public function verified(): AttributeCast

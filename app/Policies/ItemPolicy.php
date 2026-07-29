@@ -98,6 +98,51 @@ class ItemPolicy extends Policy
         return $user->senior();
     }
 
+    public function markAsDraft(User $user, Item $item): bool
+    {
+        // this requires the item to be in "ready for review" or "changes requested"
+        if (! in_array($item->status, [Status::ReadyForReview, Status::ChangesRequested])) {
+            return false;
+        }
+
+        if ($item->submitter->is($user)) {
+            return $user->junior();
+        }
+
+        return $user->senior();
+    }
+
+    public function readyForReview(User $user, Item $item): bool
+    {
+        // this is valid from "changes requested" and "draft" states on your own items.
+        if (! in_array($item->status, [Status::Draft, Status::ChangesRequested])) {
+            return false;
+        }
+
+        if ($item->submitter->is($user)) {
+            return $user->junior();
+        }
+
+        return $user->senior();
+    }
+
+    public function requestChanges(User $user, Item $item): bool
+    {
+        // you can request changes from "draft" or "ready for review"
+        // todo: possibly remove requesting changes on a draft.
+        if (! in_array($item->status, [Status::Draft, Status::ReadyForReview])) {
+            return false;
+        }
+
+        // can't request changes on your own submission
+        if ($item->submitter->is($user)) {
+            return false;
+        }
+
+        // senior and up can request changes.
+        return $user->senior();
+    }
+
     /**
      * Check if a user is allowed to view and write comments on an item.
      *

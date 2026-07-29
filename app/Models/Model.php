@@ -18,6 +18,7 @@ use Spatie\Activitylog\Support\LogOptions;
  * @property \Carbon\Carbon $updated_at
  *
  * @property string $url
+ * @property string $view_url
  * @property string $edit_url
  *
  * @method static Model find(string $id)
@@ -108,7 +109,7 @@ abstract class Model extends Eloquent
     {
         $class = Str::plural(Str::lower(class_basename($this)));
 
-        return '/library/resources/'.$class.'/'.$this->id.'/edit';
+        return route("filament.admin.resources.$class.edit", $this);
     }
 
         /**
@@ -120,7 +121,7 @@ abstract class Model extends Eloquent
     {
         $class = Str::plural(Str::lower(class_basename($this)));
 
-        return '/library/resources/'.$class.'/'.$this->id;
+        return route("filament.admin.resources.$class.view", $this);
     }
 
     /**

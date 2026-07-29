@@ -15,7 +15,7 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
     case Unknown = -1;
     case Draft = 0;
     case Published = 1;
-    case Pending = 2;
+    case ReadyForReview = 2;
     case ChangesRequested = 3;
     case MissingImages = 4;
     case ShoeDraft = 10;
@@ -25,7 +25,7 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
         return match($this) {
             self::Draft => 'draft',
             self::Published => 'published',
-            self::Pending => 'pending',
+            self::ReadyForReview => 'ready-for-review',
             self::ChangesRequested => 'changes-requested',
             self::MissingImages => 'missing-images',
             self::ShoeDraft => 'shoe-draft',
@@ -38,7 +38,7 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
         return match($this) {
             self::Draft => 'info',
             self::Published => 'success',
-            self::Pending => 'warning',
+            self::ReadyForReview => 'warning',
             self::ChangesRequested => 'danger',
             default => 'primary',
         };
@@ -49,7 +49,7 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
         return match($this) {
             self::Draft => Heroicon::OutlinedDocumentText,
             self::Published => Heroicon::OutlinedCheckCircle,
-            self::Pending => Heroicon::OutlinedQueueList,
+            self::ReadyForReview => Heroicon::OutlinedQueueList,
             self::ChangesRequested => Heroicon::OutlinedFlag,
             self::MissingImages => Heroicon::OutlinedArchiveBoxXMark,
             self::ShoeDraft => Heroicon::OutlinedArchiveBox,
@@ -61,8 +61,8 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
         return match($this) {
             self::Draft => 'This is a draft entry that has not been submitted for review yet',
             self::Published => 'This is a published entry, live on the website',
-            self::Pending => 'This is a draft entry that is ready for review',
-            self::ChangesRequested => 'This is a draft that has been rejected in review with changes requested',
+            self::ReadyForReview => 'This entry is ready for review',
+            self::ChangesRequested => 'This is an entry that has had changes requested',
             self::MissingImages => 'This entry is missing images (dev label)',
             self::ShoeDraft => 'This entry is a shoe draft from an import (dev label)',
             default => 'This entry has an unknown status',

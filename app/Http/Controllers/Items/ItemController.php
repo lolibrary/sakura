@@ -28,13 +28,15 @@ class ItemController extends Controller
      * Show an item.
      *
      * @param \App\Models\Item $item
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
     public function show(Item $item)
     {
         $item->load(Item::FULLY_LOAD);
 
-        if ($item->status !== Status::Published)
+        if ($item->status !== Status::Published && auth()->guest()) {
+            abort(404);
+        }
 
         return view('items.show', compact('item'));
     }

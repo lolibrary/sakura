@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -24,7 +25,8 @@ class UsersTable
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->visible(fn() => auth()->user()->admin()),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

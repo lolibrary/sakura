@@ -3,6 +3,11 @@
 namespace App\Models\Traits;
 
 use App\Enums\Status;
+use App\Events\ChangesRequested;
+use App\Events\ItemPublished;
+use App\Events\ItemUnpublished;
+use App\Events\MarkedAsDraft;
+use App\Events\ReadyForReview;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -36,10 +41,15 @@ trait Publishable
     {
         $user = $user ?? auth()->user();
 
-        $this->status = static::PUBLISHED;
+        $this->status = Status::Published;
         $this->publisher()->associate($user);
         $this->published_at = now();
-        return $this->save();
+
+        $result = $this->save();
+
+        event(new ItemPublished($this));
+
+        return $result;
     }
 
     /**
@@ -48,16 +58,28 @@ trait Publishable
     public function unpublish(): bool
     {
         $this->status = Status::Draft;
-        return $this->save();
+        $this->publisher()->dissociate();
+        $this->published_at = null;
+
+        $result = $this->save();
+
+        event(new ItemUnpublished($this));
+
+        return $result;
     }
 
     /**
      * Mark this item pending (ready for review).
      */
-    public function readyForReview(): bool
+    public function markReadyForReview(): bool
     {
-        $this->status = Status::Pending;
-        return $this->save();
+        $this->status = Status::ReadyForReview;
+
+        $result = $this->save();
+
+        event(new ReadyForReview($this));
+
+        return $result;
     }
 
     /**
@@ -66,7 +88,23 @@ trait Publishable
     public function requestChanges(): bool
     {
         $this->status = Status::ChangesRequested;
-        return $this->save();
+
+        $result = $this->save();
+
+        event(new ChangesRequested($this));
+
+        return $result;
+    }
+
+    public function markAsDraft(): bool
+    {
+        $this->status = Status::Draft;
+
+        $result = $this->save();
+
+        event(new MarkedAsDraft($this));
+
+        return $result;
     }
 
     /**
@@ -84,9 +122,9 @@ trait Publishable
      *
      * @return bool
      */
-    public function pending(): bool
+    public function readyForReview(): bool
     {
-        return $this->status === Status::Pending;
+        return $this->status === Status::ReadyForReview;
     }
 
     /**

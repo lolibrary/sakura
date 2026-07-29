@@ -1,3 +1,3 @@
 <x-filament-panels::page>
-    Coming soon!
+    {{-- Page content --}}
 </x-filament-panels::page>
