@@ -18,9 +18,7 @@ use Filament\Schemas\Components\EmptyState;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\SelectColumn;
 use Illuminate\Support\Facades\Storage;
-use Laravel\Nova\Fields\Select;
 
 class ItemInfolist
 {

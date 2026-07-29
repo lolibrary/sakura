@@ -17,4 +17,13 @@ class ViewUser extends ViewRecord
             EditAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        if (! auth()->user()?->can('viewEmail', $this->record)) {
+            $data['email'] = '[redacted]';
+        }
+
+        return $data;
+    }
 }
