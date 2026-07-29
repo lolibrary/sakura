@@ -200,6 +200,8 @@ class Item extends Model
         'internal_notes',
         'price_details',
         'product_number',
+        'image',
+        'images',
 
         'tags',
         'colors',
@@ -221,7 +223,7 @@ class Item extends Model
      * @var array
      */
     public $casts = [
-        'images' => 'json',
+        'images' => 'array',
         'additional_images' => 'json',
         'published_at' => 'datetime',
         'price' => 'integer',
@@ -247,11 +249,15 @@ class Item extends Model
      *
      * @return string
      */
-    public function getPriceFormattedAttribute()
+    public function getPriceFormattedAttribute(): string
     {
         $price = $this->getFullPrice();
 
         $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+
+        if ($price === null) {
+            return "";
+        }
 
         return $formatter->formatCurrency($price, $this->currency);
     }
