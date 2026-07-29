@@ -14,8 +14,8 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
 {
     case Developer = 1000;
     case Admin = 500;
+    case Trusted = 200;
     case Senior = 100;
-    case Trusted = 75;
     case Lolibrarian = 50;
     case Junior = 10;
     case Regular = 0;
@@ -40,10 +40,10 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
     {
         return match ($this) {
             self::Developer, self::Admin => 'gray',
-            self::Senior,  => 'primary',
             self::Trusted => 'success',
+            self::Senior,  => 'warning',
             self::Junior, self::Lolibrarian => 'info',
-            self::Regular => 'warning',
+            self::Regular => 'primary',
             self::Banned => 'danger',
         };
     }
@@ -66,8 +66,8 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
         return match ($this) {
             self::Developer => 'Developer for Lolibrary',
             self::Admin => 'Administrator',
+            self::Trusted => 'Trusted Senior Lolibrarian, with edit permissions for relations',
             self::Senior => 'Senior Lolibrarian, in charge of data accuracy',
-            self::Trusted => 'Lolibrarian, with edit permissions for relations',
             self::Lolibrarian => 'Lolibrarian, a trusted contributor to the site',
             self::Junior => 'Junior Lolibrarian, a regular contributor',
             self::Regular => 'Regular user of the site without contribution access',
@@ -80,6 +80,7 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
         return [
             self::Developer->value => 'Developer',
             self::Admin->value => 'Administrator',
+            self::Trusted->value => 'Trusted Senior',
             self::Senior->value => 'Senior Lolibrarian',
             self::Lolibrarian->value => 'Lolibrarian',
             self::Junior->value => 'Junior Lolibrarian',

@@ -16,7 +16,7 @@ class ColorPolicy
      * @param \App\Models\User $user
      * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->junior();
     }
@@ -28,7 +28,7 @@ class ColorPolicy
      * @param \App\Models\Color $color
      * @return bool
      */
-    public function view(User $user, Color $color)
+    public function view(User $user, Color $color): bool
     {
         return $user->junior();
     }
@@ -39,9 +39,9 @@ class ColorPolicy
      * @param \App\Models\User $user
      * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
     /**
@@ -51,9 +51,9 @@ class ColorPolicy
      * @param \App\Models\Color $color
      * @return bool
      */
-    public function update(User $user, Color $color)
+    public function update(User $user, Color $color): bool
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
     /**
@@ -63,12 +63,12 @@ class ColorPolicy
      * @param \App\Models\Color $color
      * @return bool
      */
-    public function delete(User $user, Color $color)
+    public function delete(User $user, Color $color): bool
     {
         if ($color->items()->count() > 0) {
             return false;
         }
 
-        return $user->admin();
+        return $user->trusted();
     }
 }

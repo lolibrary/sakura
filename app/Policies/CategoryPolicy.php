@@ -41,7 +41,7 @@ class CategoryPolicy
      */
     public function create(User $user)
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
     /**
@@ -53,7 +53,7 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category)
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
     /**
@@ -69,6 +69,6 @@ class CategoryPolicy
             return false;
         }
 
-        return $user->admin();
+        return $user->trusted();
     }
 }

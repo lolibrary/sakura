@@ -10,60 +10,27 @@ class BrandPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Can a user view available brands?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->junior();
     }
 
-    /**
-     * Can a user view a brand?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Brand $brand
-     * @return bool
-     */
-    public function view(User $user, Brand $brand)
+    public function view(User $user, Brand $brand): bool
     {
         return $user->junior();
     }
 
-    /**
-     * Can a user create a brand?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->admin();
     }
 
-    /**
-     * Can a user update a brand?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Brand $brand
-     * @return bool
-     */
-    public function update(User $user, Brand $brand)
+    public function update(User $user, Brand $brand): bool
     {
         return $user->admin();
     }
 
-    /**
-     * Can a user delete a brand?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Brand $brand
-     * @return bool
-     */
-    public function delete(User $user, Brand $brand)
+    public function delete(User $user, Brand $brand): bool
     {
         if ($brand->items()->count() > 0) {
             return false;

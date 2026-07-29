@@ -40,7 +40,7 @@ class AttributePolicy
      */
     public function create(User $user)
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
     /**
@@ -52,7 +52,7 @@ class AttributePolicy
      */
     public function update(User $user, Attribute $attribute)
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
     /**
@@ -68,6 +68,6 @@ class AttributePolicy
             return false;
         }
 
-        return $user->admin();
+        return $user->trusted();
     }
 }

@@ -41,7 +41,7 @@ class TagPolicy
      */
     public function create(User $user)
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
     /**
@@ -53,7 +53,7 @@ class TagPolicy
      */
     public function update(User $user, Tag $tag)
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
     /**
@@ -69,6 +69,6 @@ class TagPolicy
             return false;
         }
 
-        return $user->admin();
+        return $user->trusted();
     }
 }

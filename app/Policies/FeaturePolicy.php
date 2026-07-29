@@ -16,7 +16,7 @@ class FeaturePolicy
      * @param \App\Models\User $user
      * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->junior();
     }
@@ -28,7 +28,7 @@ class FeaturePolicy
      * @param \App\Models\Feature $feature
      * @return bool
      */
-    public function view(User $user, Feature $feature)
+    public function view(User $user, Feature $feature): bool
     {
         return $user->junior();
     }
@@ -39,9 +39,9 @@ class FeaturePolicy
      * @param \App\Models\User $user
      * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
     /**
@@ -51,9 +51,9 @@ class FeaturePolicy
      * @param \App\Models\Feature $feature
      * @return bool
      */
-    public function update(User $user, Feature $feature)
+    public function update(User $user, Feature $feature): bool
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
     /**
@@ -63,12 +63,12 @@ class FeaturePolicy
      * @param \App\Models\Feature $feature
      * @return bool
      */
-    public function delete(User $user, Feature $feature)
+    public function delete(User $user, Feature $feature): bool
     {
         if ($feature->items()->count() > 0) {
             return false;
         }
 
-        return $user->admin();
+        return $user->trusted();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models\Traits;
 
+use App\Enums\Status;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -30,51 +31,42 @@ trait Publishable
 
     /**
      * Publish this item.
-     *
-     * @param \App\Models\User|null $user
-     * @return void
      */
-    public function publish(?User $user = null)
+    public function publish(?User $user = null): bool
     {
         $user = $user ?? auth()->user();
 
         $this->status = static::PUBLISHED;
         $this->publisher()->associate($user);
         $this->published_at = now();
-        $this->save();
+        return $this->save();
     }
 
     /**
      * Make this item a draft.
-     *
-     * @return void
      */
-    public function unpublish()
+    public function unpublish(): bool
     {
-        $this->status = static::DRAFT;
-        $this->save();
+        $this->status = Status::Draft;
+        return $this->save();
     }
 
     /**
-     * Make this item pending.
-     *
-     * @return void
+     * Mark this item pending (ready for review).
      */
-    public function setPending()
+    public function readyForReview(): bool
     {
-        $this->status = static::PENDING;
-        $this->save();
+        $this->status = Status::Pending;
+        return $this->save();
     }
 
     /**
      * Make this item 'changes required'.
-     *
-     * @return void
      */
-    public function setChangesRequested()
+    public function requestChanges(): bool
     {
-        $this->status = static::CHANGES_REQUESTED;
-        $this->save();
+        $this->status = Status::ChangesRequested;
+        return $this->save();
     }
 
     /**
@@ -82,9 +74,9 @@ trait Publishable
      *
      * @return bool
      */
-    public function changesRequired(): bool
+    public function changesRequested(): bool
     {
-        return $this->status === static::CHANGES_REQUESTED;
+        return $this->status === Status::ChangesRequested;
     }
 
     /**
@@ -94,7 +86,7 @@ trait Publishable
      */
     public function pending(): bool
     {
-        return $this->status === static::PENDING;
+        return $this->status === Status::Pending;
     }
 
     /**
@@ -104,7 +96,7 @@ trait Publishable
      */
     public function published(): bool
     {
-        return $this->status === static::PUBLISHED;
+        return $this->status === Status::Published;
     }
 
     /**
@@ -114,7 +106,7 @@ trait Publishable
      */
     public function draft(): bool
     {
-        return $this->status === static::DRAFT;
+        return $this->status === Status::Draft;
     }
 
     /**
@@ -126,6 +118,6 @@ trait Publishable
      */
     public function scopeDrafts(EloquentBuilder $builder, bool $draft = true)
     {
-        return $builder->where('status', $draft ? static::DRAFT : static::PUBLISHED);
+        return $builder->where('status', $draft ? Status::Draft : Status::Published);
     }
 }

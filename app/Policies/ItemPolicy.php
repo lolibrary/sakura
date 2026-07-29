@@ -2,17 +2,15 @@
 
 namespace App\Policies;
 
-use App\Models\Attribute;
-use App\Models\Color;
-use App\Models\Feature;
+use App\Enums\Status;
 use App\Models\Item;
-use App\Models\Tag;
 use App\Models\User;
+use App\Traits\HasAttachPolicies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ItemPolicy
 {
-    use HandlesAuthorization;
+    use HandlesAuthorization, HasAttachPolicies;
 
     /**
      * Can a user view available items?
@@ -20,7 +18,7 @@ class ItemPolicy
      * @param \App\Models\User $user
      * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->junior();
     }
@@ -32,13 +30,13 @@ class ItemPolicy
      * @param \App\Models\Item $item
      * @return bool
      */
-    public function view(User $user, Item $item)
+    public function view(User $user, Item $item): bool
     {
-        if ($item->user_id !== $user->id) {
-            return $user->lolibrarian();
+        if ($user->is($item->submitter)) {
+            return $user->junior();
         }
 
-        return $user->junior();
+        return $user->lolibrarian();
     }
 
     /**
@@ -47,7 +45,7 @@ class ItemPolicy
      * @param \App\Models\User $user
      * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->junior();
     }
@@ -59,29 +57,20 @@ class ItemPolicy
      * @param \App\Models\Item $item
      * @return bool
      */
-    public function update(User $user, Item $item)
+    public function update(User $user, Item $item): bool
     {
-        if ($item->status === Item::PUBLISHED) {
-            // lolibrarians can update items they themselves published
-            if ($item->publisher_id === $user->id) {
-                return $user->lolibrarian();
-            }
-
-            return $user->senior();
+        // lolibrarians can update their own published items
+        // otherwise, only seniors can.
+        if ($item->status === Status::Published) {
+            return $user->is($item->publisher) ? $user->lolibrarian() : $user->senior();
         }
 
-        // otherwise, this is a draft:
-        // users can update their own drafts if junior.
-        // users can update other people's drafts if senior.
-
-        if ($item->user_id === $user->id) {
+        // draft: if the submitter, allow edits
+        if ($user->is($item->submitter)) {
             return $user->junior();
         }
 
-        if ($item->user_id === null) {
-            return $user->junior();
-        }
-
+        // if senior, allow edits anyway.
         return $user->senior();
     }
 
@@ -92,11 +81,11 @@ class ItemPolicy
      * @param \App\Models\Item $item
      * @return bool
      */
-    public function delete(User $user, Item $item)
+    public function delete(User $user, Item $item): bool
     {
-        if ($item->status === Item::PUBLISHED) {
+        if ($item->published()) {
             // lolibrarian can delete items they themselves published
-            if ($item->publisher_id === $user->id) {
+            if ($user->is($item->publisher)) {
                 return $user->lolibrarian();
             }
 
@@ -105,7 +94,7 @@ class ItemPolicy
         }
 
         // junior can delete their own drafts.
-        if ($item->user_id === $user->id) {
+        if ($user->is($item->submitter)) {
             return $user->junior();
         }
 
@@ -115,26 +104,37 @@ class ItemPolicy
     }
 
     /**
-     * Can a user update an item?
+     * Can a user publish an item?
      *
      * @param \App\Models\User $user
      * @param \App\Models\Item $item
      * @return bool
      */
-    public function publish(User $user, Item $item)
+    public function publish(User $user, Item $item): bool
     {
-        // must be senior to unpublish, or the original publisher
-        if ($item->status === Item::PUBLISHED) {
-            if ($item->publisher_id === $user->id) {
-                return $user->lolibrarian();
-            }
-
-            return $user->senior();
+        // cannot publish twice.
+        if ($item->published()) {
+            return false;
         }
 
-        // otherwise, this is a draft:
         // users can publish their own drafts if lolibrarian.
-        if ($item->user_id === $user->id) {
+        if ($user->is($item->submitter)) {
+            return $user->lolibrarian();
+        }
+
+        // otherwise senior can publish any draft.
+        return $user->senior();
+    }
+
+    public function unpublish(User $user, Item $item): bool
+    {
+        // cannot unpublish if it's not already published.
+        if (! $item->published()) {
+            return false;
+        }
+
+        // users can publish their own drafts if lolibrarian.
+        if ($user->is($item->submitter)) {
             return $user->lolibrarian();
         }
 
@@ -143,106 +143,17 @@ class ItemPolicy
     }
 
     /**
-     * Can a user update an item?
+     * Check if a user is allowed to view and write comments on an item.
      *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Tag $tag
-     * @return bool
+     * Both are tied to the same permission.
+     * These comments are not public.
      */
-    public function attachAnyTag(User $user, Item $item)
+    public function comment(User $user, Item $item): bool
     {
-        return $this->update($user, $item);
-    }
+        if (! $this->view($user, $item)) {
+            return false;
+        }
 
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Tag $tag
-     * @return bool
-     */
-    public function detachTag(User $user, Item $item, Tag $tag)
-    {
-        return $this->update($user, $item);
-    }
-
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Attribute $attribute
-     * @return bool
-     */
-    public function attachAnyAttribute(User $user, Item $item)
-    {
-        return $this->update($user, $item);
-    }
-
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Attribute $attribute
-     * @return bool
-     */
-    public function detachAttribute(User $user, Item $item, Attribute $attribute)
-    {
-        return $this->update($user, $item);
-    }
-
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Color $color
-     * @return bool
-     */
-    public function attachAnyColor(User $user, Item $item)
-    {
-        return $this->update($user, $item);
-    }
-
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Color $color
-     * @return bool
-     */
-    public function detachColor(User $user, Item $item, Color $color)
-    {
-        return $this->update($user, $item);
-    }
-
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Feature $feature
-     * @return bool
-     */
-    public function attachAnyFeature(User $user, Item $item)
-    {
-        return $this->update($user, $item);
-    }
-
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Feature $feature
-     * @return bool
-     */
-    public function detachFeature(User $user, Item $item, Feature $feature)
-    {
-        return $this->update($user, $item);
+        return $user->is($item->submitter) ? $user->junior() : $user->senior();
     }
 }
