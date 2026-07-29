@@ -54,7 +54,4 @@ $app->singleton(
 |
 */
 
-// i'm stubbornly putting this here.
-Nova::ignoreMigrations();
-
 return $app;
