@@ -28,7 +28,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path('library')
             ->login()
             ->brandLogo(asset('images/logo_horizontal.png'))
             ->darkModeBrandLogo(asset('images/logo_horizontal_white.png'))
