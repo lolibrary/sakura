@@ -73,7 +73,7 @@ class ViewItem extends ViewRecord
             Action::make('publish')
                 ->requiresConfirmation()
                 ->icon(Heroicon::OutlinedCheckBadge)
-                ->color('gray')
+                ->color('success')
                 ->authorize('publish')
                 ->action(fn() => dispatch(new PublishItem($this->record, auth()->user())) && $this->fillForm()),
             Action::make('unpublish')
@@ -83,17 +83,17 @@ class ViewItem extends ViewRecord
                 ->authorize('unpublish')
                 ->action(fn() => dispatch(new UnpublishItem($this->record, auth()->user())) && $this->fillForm()),
             Action::make('ready_for_review')
-                ->icon(Heroicon::OutlinedCheckBadge)
-                ->color('gray')
+                ->icon(Heroicon::OutlinedClipboardDocumentCheck)
+                ->color('info')
                 ->authorize('readyForReview')
                 ->action(fn() => dispatch(new ReadyForReview($this->record, auth()->user())) && $this->fillForm()),
             Action::make('mark_as_draft')
-                ->icon(Heroicon::OutlinedCheckBadge)
+                ->icon(Heroicon::OutlinedDocument)
                 ->color('gray')
                 ->authorize('markAsDraft')
                 ->action(fn() => dispatch(new MarkAsDraft($this->record, auth()->user())) && $this->fillForm()),
             Action::make('request_changes')
-                ->icon(Heroicon::OutlinedCheckBadge)
+                ->icon(Heroicon::OutlinedChatBubbleLeftEllipsis)
                 ->color('warning')
                 ->authorize('requestChanges')
                 ->action(fn() => dispatch(new RequestChanges($this->record, auth()->user())) && $this->fillForm()),

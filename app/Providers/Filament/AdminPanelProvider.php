@@ -39,7 +39,11 @@ class AdminPanelProvider extends PanelProvider
             ->darkModeBrandLogo(asset('images/logo_horizontal_white.png'))
             ->brandLogoHeight('1.3rem')
             ->colors([
-                'primary' => Color::Blue,
+                'primary' => Color::Indigo,
+                'info' => Color::Olive,
+                'success' => Color::Teal,
+                'warning' => Color::Orange,
+                'danger' => Color::Rose,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -94,7 +98,8 @@ class AdminPanelProvider extends PanelProvider
                         'en', 'fr', 'it', 'no', 'nl', // our usual
                         'de', 'ja', 'es', 'pt', // some more extras for the backend
                         ])
-                    ->rememberLocale(),
+                    ->rememberLocale()
+                    ->showFlags(false),
                 FilamentAstrotomicPlugin::make(),
             ])
             ->globalSearchResourceOptIn();
