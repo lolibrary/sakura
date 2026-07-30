@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Attributes\Pages;
 
-use Filament\Resources\Pages\EditRecord;
+use App\Filament\Records\EditRecord;
 use App\Filament\Resources\Attributes\AttributeResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;

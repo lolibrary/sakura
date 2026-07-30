@@ -61,4 +61,14 @@ class ItemResource extends Resource
             'edit' => EditItem::route('/{record}/edit'),
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return trans('ui.entry');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return trans('ui.entries');
+    }
 }

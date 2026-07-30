@@ -63,4 +63,14 @@ class TagResource extends Resource
             'edit' => EditTag::route('/{record}/edit'),
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return trans('ui.item.tag');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return trans('ui.item.tags');
+    }
 }

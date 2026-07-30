@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Colors\Pages;
 
-use Filament\Resources\Pages\ViewRecord;
+use App\Filament\Records\ViewRecord;
 use App\Filament\Resources\Colors\ColorResource;
 use Filament\Actions\EditAction;
 

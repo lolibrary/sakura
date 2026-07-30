@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Features\Pages;
 
-use Filament\Resources\Pages\ListRecords;
+use App\Filament\Records\ListRecords;
 use App\Filament\Resources\Features\FeatureResource;
 use Filament\Actions\CreateAction;
 

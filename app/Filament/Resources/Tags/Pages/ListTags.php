@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Tags\Pages;
 
-use Filament\Resources\Pages\ListRecords;
+use App\Filament\Records\ListRecords;
 use App\Filament\Resources\Tags\TagResource;
 use Filament\Actions\CreateAction;
 

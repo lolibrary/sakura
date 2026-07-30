@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Brands\Pages;
 
-use Filament\Resources\Pages\ViewRecord;
+use App\Filament\Records\ViewRecord;
 use App\Filament\Resources\Brands\BrandResource;
 use Filament\Actions\EditAction;
 

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Colors\Pages;
 
-use Filament\Resources\Pages\ListRecords;
+use App\Filament\Records\ListRecords;
 use App\Filament\Resources\Colors\ColorResource;
 use Filament\Actions\CreateAction;
 

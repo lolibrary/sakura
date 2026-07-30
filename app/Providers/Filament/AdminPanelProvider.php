@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Settings;
+use CraftForge\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin;
 use Doriiaan\FilamentAstrotomic\FilamentAstrotomicPlugin;
 use Filament\Actions\Action;
 use Filament\Enums\UserMenuPosition;
@@ -13,8 +14,8 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -61,7 +62,6 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->userMenu(position: UserMenuPosition::Sidebar)
             ->userMenuItems([
                 [
                     Action::make('wiki')
@@ -76,6 +76,12 @@ class AdminPanelProvider extends PanelProvider
                 ],
             ])
             ->plugins([
+                FilamentLanguageSwitcherPlugin::make()
+                    ->locales([
+                        'en', 'fr', 'it', 'no', 'nl', // our usual
+                        'de', 'ja', 'es', 'pl' // some more extras
+                        ])
+                    ->rememberLocale(),
                 FilamentAstrotomicPlugin::make(),
             ]);
     }

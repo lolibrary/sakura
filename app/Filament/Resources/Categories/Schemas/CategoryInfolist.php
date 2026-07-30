@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Categories\Schemas;
 
 use App\Models\Category;
+use Doriiaan\FilamentAstrotomic\Schemas\Components\TranslatableTabs;
+use Doriiaan\FilamentAstrotomic\TranslatableTab;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -16,7 +18,10 @@ class CategoryInfolist
             ->components([
                 Section::make()
                     ->schema([
-                        TextEntry::make('name'),
+                        TranslatableTabs::make('translations')
+                            ->localeTabSchema(fn (TranslatableTab $tab) => [
+                                TextEntry::make($tab->makeName('name')),
+                            ]),
                         TextEntry::make('slug'),
                         TextEntry::make('created_at')
                             ->dateTime()

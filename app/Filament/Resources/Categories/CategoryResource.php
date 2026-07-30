@@ -63,4 +63,14 @@ class CategoryResource extends Resource
             'edit' => EditCategory::route('/{record}/edit'),
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return trans('ui.item.category');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return trans('ui.categories');
+    }
 }

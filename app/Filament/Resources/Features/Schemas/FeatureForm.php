@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Features\Schemas;
 
+use Doriiaan\FilamentAstrotomic\Schemas\Components\TranslatableTabs;
+use Doriiaan\FilamentAstrotomic\TranslatableTab;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -11,6 +13,12 @@ class FeatureForm
     {
         return $schema
             ->components([
+                TranslatableTabs::make()
+                    ->localeTabSchema(fn (TranslatableTab $tab) => [
+                        TextInput::make($tab->makeName('name'))
+                            ->required($tab->isMainLocale())
+                            ->maxLength(100),
+                    ]),
                 TextInput::make('slug')
                     ->required(),
             ]);

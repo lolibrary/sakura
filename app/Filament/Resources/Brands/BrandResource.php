@@ -44,7 +44,7 @@ class BrandResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return BrandsTable::configure($table);
+        return BrandsTable::configure($table)->heading(trans('ui.brands'));
     }
 
     public static function getRelations(): array
@@ -62,5 +62,15 @@ class BrandResource extends Resource
             'view' => ViewBrand::route('/{record}'),
             'edit' => EditBrand::route('/{record}/edit'),
         ];
+    }
+
+    public static function getModelLabel(): string
+    {
+        return trans('ui.item.brand');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return trans('ui.brands');
     }
 }

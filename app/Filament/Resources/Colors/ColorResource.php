@@ -62,4 +62,14 @@ class ColorResource extends Resource
             'edit' => EditColor::route('/{record}/edit'),
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return trans('ui.item.color');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return trans('ui.item.colors');
+    }
 }

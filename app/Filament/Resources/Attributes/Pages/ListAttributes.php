@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Attributes\Pages;
 
-use Filament\Resources\Pages\ListRecords;
+use App\Filament\Records\ListRecords;
 use App\Filament\Resources\Attributes\AttributeResource;
 use Filament\Actions\CreateAction;
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\Collection;
 use App\Models\Traits\DateHandling;
+use Astrotomic\Translatable\Contracts\Translatable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Str;

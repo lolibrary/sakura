@@ -61,4 +61,14 @@ class UserResource extends Resource
             'entries' => ItemsRelationManager::make(),
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return trans('user');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return trans('ui.item.features');
+    }
 }

@@ -26,6 +26,7 @@ class MyQueue extends TableWidget
     public function table(Table $table): Table
     {
         return $table
+            ->heading(trans('ui.search.brands'))
             ->query(fn (): Builder => auth()->user()
                 ->items()
                 ->where('status', '!=', Status::Published)
@@ -73,7 +74,7 @@ class MyQueue extends TableWidget
             ->toolbarActions([
 
             ])
-            ->emptyStateHeading('No items right now!')
+            //->emptyStateHeading('No items right now!')
             ->emptyStateActions([
                 CreateAction::make()
                     ->url(fn (): string => route('filament.admin.resources.items.create')),

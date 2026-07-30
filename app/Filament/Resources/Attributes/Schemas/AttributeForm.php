@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Attributes\Schemas;
 
+use Doriiaan\FilamentAstrotomic\Schemas\Components\TranslatableTabs;
+use Doriiaan\FilamentAstrotomic\TranslatableTab;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -11,6 +13,11 @@ class AttributeForm
     {
         return $schema
             ->components([
+                TranslatableTabs::make()
+                    ->localeTabSchema(fn (TranslatableTab $tab) => [
+                        TextInput::make($tab->makeName('name'))
+                            ->required(),
+                    ]),
                 TextInput::make('slug')
                     ->required(),
             ]);

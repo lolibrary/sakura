@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Brands\Schemas;
 
+use Doriiaan\FilamentAstrotomic\Schemas\Components\TranslatableTabs;
+use Doriiaan\FilamentAstrotomic\TranslatableTab;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -13,6 +15,12 @@ class BrandForm
     {
         return $schema
             ->components([
+                TranslatableTabs::make()
+                    ->localeTabSchema(fn (TranslatableTab $tab) => [
+                        TextInput::make($tab->makeName('name'))
+                            ->required($tab->isMainLocale())
+                            ->maxLength(100),
+                    ]),
                 TextInput::make('slug')
                     ->required(),
                 TextInput::make('short_name')
