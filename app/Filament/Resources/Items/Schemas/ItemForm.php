@@ -160,7 +160,9 @@ class ItemForm
                     ->directory('images')
                     ->previewable()
                     ->openable()
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif']),
+                    ->maxSize(1024 * 5)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+                    ->helperText("Acceptable upload types: JPEG, PNG, GIF, WEBP. 5MB limit."),
 
                 FileUpload::make('images')
                     ->columnSpanFull()
@@ -170,6 +172,8 @@ class ItemForm
                     ->appendFiles()
                     ->openable()
                     ->previewable()
+                    ->maxSize(1024 * 5)
+                    ->maxFiles(40)
                     ->panelLayout('grid')
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
                     ->disk('s3public')
