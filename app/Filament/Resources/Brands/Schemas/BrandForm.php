@@ -18,13 +18,16 @@ class BrandForm
                 TextInput::make('short_name')
                     ->required(),
                 Textarea::make('description')
-                    ->required()
                     ->default('')
                     ->columnSpanFull(),
                 FileUpload::make('image')
+                    ->openable()
+                    ->previewable()
                     ->disk('s3public')
-                    ->directory('')
-                    ->image(),
+                    ->directory('brands')
+                    ->visibility('public')
+                    ->image()
+                    ->required(),
             ]);
     }
 }

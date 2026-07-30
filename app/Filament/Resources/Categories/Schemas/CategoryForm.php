@@ -12,9 +12,14 @@ class CategoryForm
     {
         return $schema
             ->components([
-                TextInput::make('slug')
-                    ->required(),
+                TextInput::make('slug')->required(),
                 FileUpload::make('image')
+                    ->openable()
+                    ->previewable()
+                    ->disk('s3public')
+                    ->visibility('public')
+                    ->directory('categories')
+                    ->required()
                     ->image(),
             ]);
     }

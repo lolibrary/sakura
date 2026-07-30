@@ -32,6 +32,7 @@ class BrandInfolist
                             ->disk('s3public')
                             ->label('Current Image')
                             ->visibility('public')
+                            ->checkFileExistence(false)
                             ->alt(fn(Brand $brand) => "Brand image for $brand->name"),
                     ]),
 
