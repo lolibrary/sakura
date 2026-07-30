@@ -26,7 +26,7 @@ class MyQueue extends TableWidget
     public function table(Table $table): Table
     {
         return $table
-            ->heading(trans('ui.search.brands'))
+            ->heading(trans('resources.queue.title'))
             ->query(fn (): Builder => auth()->user()
                 ->items()
                 ->where('status', '!=', Status::Published)

@@ -150,9 +150,7 @@ class ItemForm
                             ->required(),
                     ])
                     ->addActionLabel('Add Attribute')
-                    ->reorderable()
-                    ->reorderableWithButtons()
-                    ->reorderableWithDragAndDrop(),
+                    ->reorderableWithButtons(),
 
 
                 FileUpload::make('image')
