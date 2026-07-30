@@ -27,7 +27,8 @@
         "spatie/laravel-activitylog": "^5.0",
         "stevebauman/purify": "^6.0",
         "symfony/http-client": "^6.4",
-        "symfony/postmark-mailer": "^6.4"
+        "symfony/postmark-mailer": "^6.4",
+        "zohomail/laravel-zeptomail": "^1.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.0",
