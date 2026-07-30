@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Colors;
 
+use App\Filament\RelationManagers\ItemsRelationManager;
 use App\Filament\Resources\Colors\Pages\CreateColor;
 use App\Filament\Resources\Colors\Pages\EditColor;
 use App\Filament\Resources\Colors\Pages\ListColors;
@@ -52,7 +53,7 @@ class ColorResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ItemsRelationManager::make(),
         ];
     }
 

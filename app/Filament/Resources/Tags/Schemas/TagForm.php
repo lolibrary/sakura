@@ -16,6 +16,7 @@ class TagForm
                 TranslatableTabs::make()
                     ->localeTabSchema(fn (TranslatableTab $tab) => [
                         TextInput::make($tab->makeName('name'))
+                            ->inlineLabel()
                             ->required($tab->isMainLocale())
                             ->maxLength(100),
                     ]),

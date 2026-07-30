@@ -9,6 +9,9 @@ use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\FontFamily;
+use Filament\Support\Enums\IconPosition;
+use Filament\Support\Icons\Heroicon;
 
 class CategoryInfolist
 {
@@ -18,23 +21,6 @@ class CategoryInfolist
             ->components([
                 Section::make()
                     ->schema([
-                        TranslatableTabs::make('translations')
-                            ->localeTabSchema(fn (TranslatableTab $tab) => [
-                                TextEntry::make($tab->makeName('name')),
-                            ]),
-                        TextEntry::make('slug'),
-                        TextEntry::make('created_at')
-                            ->dateTime()
-                            ->disabled(),
-                        TextEntry::make('updated_at')
-                            ->dateTime()
-                            ->disabled()
-                            ->placeholder('-'),
-                    ])
-                    ->contained(false),
-
-                Section::make()
-                    ->schema([
                         ImageEntry::make('image')
                             ->alignCenter()
                             ->disk('s3public')
@@ -42,6 +28,30 @@ class CategoryInfolist
                             ->visibility('public')
                             ->alt(fn(Category $category) => "Brand image for $category->name"),
                     ]),
+
+                Section::make()
+                    ->schema([
+                        TextEntry::make('name')
+                            ->label('Localized Name'),
+                        TextEntry::make('slug')
+                            ->copyable()
+                            ->fontFamily(FontFamily::Mono)
+                            ->icon(Heroicon::OutlinedDocumentDuplicate)
+                            ->iconPosition(IconPosition::After),
+                    ])
+                    ->contained(false),
+
+                TextEntry::make('created_at')
+                    ->label('Created')
+                    ->dateTime()
+                    ->badge()
+                    ->disabled(),
+                TextEntry::make('updated_at')
+                    ->label('Updated')
+                    ->dateTime()
+                    ->badge()
+                    ->disabled()
+                    ->placeholder('-'),
             ]);
     }
 }

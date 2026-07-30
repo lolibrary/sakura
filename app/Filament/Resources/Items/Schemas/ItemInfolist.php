@@ -11,6 +11,7 @@ use Filament\Schemas\Components\EmptyState;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontFamily;
+use Filament\Support\Enums\IconPosition;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Storage;
 
@@ -58,19 +59,24 @@ class ItemInfolist
                                     ->label('ID')
                                     ->fontFamily(FontFamily::Mono)
                                     ->copyable()
-                                    ->icon(Heroicon::OutlinedDocumentDuplicate),
+                                    ->icon(Heroicon::OutlinedDocumentDuplicate)
+                                    ->iconPosition(IconPosition::After),
                                 TextEntry::make('slug')
                                     ->fontFamily(FontFamily::Mono)
                                     ->copyable()
-                                    ->icon(Heroicon::OutlinedDocumentDuplicate),
+                                    ->icon(Heroicon::OutlinedDocumentDuplicate)
+                                    ->iconPosition(IconPosition::After),
                                 TextEntry::make('year')
+                                    ->fontFamily(FontFamily::Mono)
                                     ->placeholder('-'),
                                 TextEntry::make('product_number')
+                                    ->fontFamily(FontFamily::Mono)
                                     ->placeholder('-'),
                                 TextEntry::make('url')
                                     ->label('Preview Link')
                                     ->url(fn(Item $record) => $record->url, shouldOpenInNewTab: true)
-                                    ->icon(Heroicon::OutlinedArrowTopRightOnSquare),
+                                    ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
+                                    ->iconPosition(IconPosition::After),
                             ])->contained(false),
                     ]),
 

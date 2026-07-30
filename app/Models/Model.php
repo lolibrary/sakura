@@ -152,4 +152,15 @@ abstract class Model extends Eloquent
     {
         return LogOptions::defaults()->logAll();
     }
+
+    public function attributesToArray()
+    {
+        $array = parent::attributesToArray();
+
+        if ($this instanceof Translatable) {
+            $array = array_merge($array, $this->getTranslationsArray());
+        }
+
+        return $array;
+    }
 }
