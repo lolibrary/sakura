@@ -14,7 +14,7 @@ return [
         'en',
         'fr',
         'it',
-        'no',
+        'nb_NO',
         'nl',
     ],
 
