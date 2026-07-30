@@ -17,6 +17,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class AttributeResource extends Resource
 {
@@ -31,6 +32,8 @@ class AttributeResource extends Resource
     protected static ?int $navigationSort = 7;
 
     protected static string|\UnitEnum|null $navigationGroup = 'Library';
+
+    protected static bool $isGloballySearchable = true;
 
     public static function form(Schema $schema): Schema
     {
@@ -63,4 +66,19 @@ class AttributeResource extends Resource
             'edit' => EditAttribute::route('/{record}/edit'),
         ];
     }
+
+    protected static function applyGlobalSearchAttributeConstraints(Builder $query, string $search): void
+    {
+        $query->whereTranslationLike('name', '%' . $search . '%');
+    }
+
+//    public static function getGlobalSearchEloquentQuery(): Builder
+//    {
+//        return parent::getGlobalSearchEloquentQuery();
+//    }
+//
+//    public static function modifyGlobalSearchQuery(Builder $query, string $search): void
+//    {
+//
+//    }
 }

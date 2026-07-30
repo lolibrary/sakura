@@ -96,6 +96,7 @@ class AdminPanelProvider extends PanelProvider
                         ])
                     ->rememberLocale(),
                 FilamentAstrotomicPlugin::make(),
-            ]);
+            ])
+            ->globalSearchResourceOptIn();
     }
 }

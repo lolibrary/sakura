@@ -17,6 +17,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class BrandResource extends Resource
 {
@@ -31,6 +32,8 @@ class BrandResource extends Resource
     protected static ?int $navigationSort = 2;
 
     protected static string|\UnitEnum|null $navigationGroup = 'Library';
+
+    protected static bool $isGloballySearchable = true;
 
     public static function form(Schema $schema): Schema
     {
@@ -72,5 +75,10 @@ class BrandResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return trans('ui.brands');
+    }
+
+    protected static function applyGlobalSearchAttributeConstraints(Builder $query, string $search): void
+    {
+        $query->whereTranslationLike('name', '%' . $search . '%');
     }
 }
