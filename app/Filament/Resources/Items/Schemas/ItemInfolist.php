@@ -3,16 +3,9 @@
 namespace App\Filament\Resources\Items\Schemas;
 
 use App\Models\Attribute;
-use App\Models\Category;
-use App\Models\Color;
-use App\Models\Feature;
-use App\Models\Image;
 use App\Models\Item;
-use App\Models\Tag;
-use Filament\Infolists\Components\CodeEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\KeyValueEntry;
-use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\EmptyState;
 use Filament\Schemas\Components\Section;
@@ -60,11 +53,11 @@ class ItemInfolist
                             ->schema([
                                 TextEntry::make('id')
                                     ->label('ID')
-                                    ->fontFamily( FontFamily::Mono)
+                                    ->fontFamily(FontFamily::Mono)
                                     ->copyable()
                                     ->icon(Heroicon::OutlinedDocumentDuplicate),
                                 TextEntry::make('slug')
-                                    ->fontFamily( FontFamily::Mono)
+                                    ->fontFamily(FontFamily::Mono)
                                     ->copyable()
                                     ->icon(Heroicon::OutlinedDocumentDuplicate),
                                 TextEntry::make('year')
@@ -107,7 +100,7 @@ class ItemInfolist
                             Section::make('Categories')
                                 ->contained(false)
                                 ->columns(4)
-                                ->schema(fn () => [
+                                ->schema(fn() => [
                                     TextEntry::make('name')
                                         ->state($record->categories->map->name->all())
                                         ->badge()
@@ -116,7 +109,7 @@ class ItemInfolist
                             Section::make('Features')
                                 ->contained(false)
                                 ->columns(4)
-                                ->schema(fn () => [
+                                ->schema(fn() => [
                                     TextEntry::make('name')
                                         ->state($record->features->map->name->all())
                                         ->badge()
@@ -125,7 +118,7 @@ class ItemInfolist
                             Section::make('Tags')
                                 ->contained(false)
                                 ->columns(4)
-                                ->schema(fn () => [
+                                ->schema(fn() => [
                                     TextEntry::make('name')
                                         ->state($record->tags->map->name->all())
                                         ->badge()
@@ -134,7 +127,7 @@ class ItemInfolist
                             Section::make('Colorways')
                                 ->contained(false)
                                 ->columns(4)
-                                ->schema(fn () => [
+                                ->schema(fn() => [
                                     TextEntry::make('name')
                                         ->state($record->colors->map->name->all())
                                         ->badge()
@@ -161,7 +154,7 @@ class ItemInfolist
                                 ->valueLabel('Value')
                                 ->state(
                                     $record->attributes
-                                        ->mapWithKeys(fn (Attribute $attr) => [
+                                        ->mapWithKeys(fn(Attribute $attr) => [
                                             $attr->name => $attr->pivot->value,
                                         ])
                                 )

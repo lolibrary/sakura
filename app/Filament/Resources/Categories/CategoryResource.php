@@ -12,6 +12,7 @@ use App\Filament\Resources\Categories\Schemas\CategoryInfolist;
 use App\Filament\Resources\Categories\Tables\CategoriesTable;
 use App\Models\Category;
 use BackedEnum;
+use Doriiaan\FilamentAstrotomic\Resources\Concerns\ResourceTranslatable;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,6 +20,8 @@ use Filament\Tables\Table;
 
 class CategoryResource extends Resource
 {
+    use ResourceTranslatable;
+
     protected static ?string $model = Category::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFolder;
@@ -27,7 +30,7 @@ class CategoryResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Library';
+    protected static string|\UnitEnum|null $navigationGroup = 'Library';
 
     public static function form(Schema $schema): Schema
     {

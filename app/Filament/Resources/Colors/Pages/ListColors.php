@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\Colors\Pages;
 
+use App\Filament\Records\ListRecords;
 use App\Filament\Resources\Colors\ColorResource;
 use Filament\Actions\CreateAction;
-use Filament\Resources\Pages\ListRecords;
 
 class ListColors extends ListRecords
 {

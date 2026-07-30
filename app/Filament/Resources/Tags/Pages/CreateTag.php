@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Tags\Pages;
 
+use App\Filament\Records\CreateRecord;
 use App\Filament\Resources\Tags\TagResource;
-use Filament\Resources\Pages\CreateRecord;
 
 class CreateTag extends CreateRecord
 {

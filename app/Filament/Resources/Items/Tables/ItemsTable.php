@@ -3,13 +3,11 @@
 namespace App\Filament\Resources\Items\Tables;
 
 use App\Models\Item;
-use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\Summarizers\Concerns\BelongsToColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -36,7 +34,7 @@ class ItemsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('submitter')
-                    ->state(fn (Item $record) => $record->submitter?->username ?? '')
+                    ->state(fn(Item $record) => $record->submitter?->username ?? '')
                     ->name('Submitter')
                     ->sortable()
                     ->searchable()

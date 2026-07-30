@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\Features\Pages;
 
+use App\Filament\Records\ViewRecord;
 use App\Filament\Resources\Features\FeatureResource;
 use Filament\Actions\EditAction;
-use Filament\Resources\Pages\ViewRecord;
 
 class ViewFeature extends ViewRecord
 {

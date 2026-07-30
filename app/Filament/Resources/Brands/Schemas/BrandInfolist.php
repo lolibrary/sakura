@@ -3,11 +3,8 @@
 namespace App\Filament\Resources\Brands\Schemas;
 
 use App\Models\Brand;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\Placeholder;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Schemas\Components\Image;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 

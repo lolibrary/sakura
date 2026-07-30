@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources\Colors\Schemas;
 
-use App\Models\Brand;
-use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;

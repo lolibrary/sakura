@@ -4,29 +4,15 @@ namespace App\Filament\Resources\Items\Schemas;
 
 use App\Filament\Query\TranslatedRelation;
 use App\Models\Attribute;
-use App\Models\Brand;
-use App\Models\Category;
 use App\Models\Item;
-use Filament\Actions\Action;
 use Filament\Forms\Components\CheckboxList;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\RepeatableEntry;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Schemas\Components\EmptyState;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Filament\Support\Enums\FontFamily;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
-use Livewire\Features\SupportFileUploads\FileUploadConfiguration;
 
 class ItemForm
 {
@@ -152,7 +138,7 @@ class ItemForm
                                 modifyQueryUsing: TranslatedRelation::make('attribute'),
                             )
                             ->options(fn() => Attribute::cached()
-                                ->mapWithKeys(fn (Attribute $attr) => [$attr->id => $attr->name])
+                                ->mapWithKeys(fn(Attribute $attr) => [$attr->id => $attr->name])
                             )
                             ->searchable()
                             ->searchDebounce(500)

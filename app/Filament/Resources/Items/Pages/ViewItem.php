@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Items\Pages;
 
+use App\Filament\Records\ViewRecord;
 use App\Filament\Resources\Items\ItemResource;
 use App\Jobs\MarkAsDraft;
 use App\Jobs\PublishItem;
@@ -11,7 +12,6 @@ use App\Jobs\UnpublishItem;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Actions\ReplicateAction;
-use Filament\Resources\Pages\ViewRecord;
 use Filament\Support\Icons\Heroicon;
 
 class ViewItem extends ViewRecord

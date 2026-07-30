@@ -19,7 +19,7 @@ class ViewUser extends ViewRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        if (! auth()->user()?->can('viewEmail', $this->record)) {
+        if (!auth()->user()?->can('viewEmail', $this->record)) {
             $data['email'] = '[redacted]';
         }
 

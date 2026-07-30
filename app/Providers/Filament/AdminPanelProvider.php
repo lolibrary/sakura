@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Settings;
+use Doriiaan\FilamentAstrotomic\FilamentAstrotomicPlugin;
 use Filament\Actions\Action;
 use Filament\Enums\UserMenuPosition;
 use Filament\Http\Middleware\Authenticate;
@@ -73,6 +74,9 @@ class AdminPanelProvider extends PanelProvider
                         ->url(fn (): string => Settings::getUrl())
                         ->icon('heroicon-o-cog-6-tooth'),
                 ],
+            ])
+            ->plugins([
+                FilamentAstrotomicPlugin::make(),
             ]);
     }
 }

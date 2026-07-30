@@ -19,7 +19,7 @@ class AttributesTable
                     ->label('Name')
                     ->limitList(1)
                     ->searchable(query: function ($query, string $search) {
-                        $query->whereTranslationLike('name', '%'.$search.'%');
+                        $query->whereTranslationLike('name', '%' . $search . '%');
                     }),
                 TextColumn::make('slug')
                     ->searchable()

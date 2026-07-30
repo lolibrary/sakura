@@ -12,6 +12,7 @@ use App\Filament\Resources\Features\Schemas\FeatureInfolist;
 use App\Filament\Resources\Features\Tables\FeaturesTable;
 use App\Models\Feature;
 use BackedEnum;
+use Doriiaan\FilamentAstrotomic\Resources\Concerns\ResourceTranslatable;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,6 +20,8 @@ use Filament\Tables\Table;
 
 class FeatureResource extends Resource
 {
+    use ResourceTranslatable;
+
     protected static ?string $model = Feature::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFlag;
@@ -27,7 +30,7 @@ class FeatureResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Library';
+    protected static string|\UnitEnum|null $navigationGroup = 'Library';
 
     public static function form(Schema $schema): Schema
     {

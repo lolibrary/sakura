@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\Attributes\Pages;
 
+use App\Filament\Records\ListRecords;
 use App\Filament\Resources\Attributes\AttributeResource;
 use Filament\Actions\CreateAction;
-use Filament\Resources\Pages\ListRecords;
 
 class ListAttributes extends ListRecords
 {

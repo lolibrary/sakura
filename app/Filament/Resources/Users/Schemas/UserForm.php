@@ -3,8 +3,6 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Enums\Level;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;

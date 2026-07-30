@@ -12,6 +12,7 @@ use App\Filament\Resources\Tags\Schemas\TagInfolist;
 use App\Filament\Resources\Tags\Tables\TagsTable;
 use App\Models\Tag;
 use BackedEnum;
+use Doriiaan\FilamentAstrotomic\Resources\Concerns\ResourceTranslatable;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,6 +20,8 @@ use Filament\Tables\Table;
 
 class TagResource extends Resource
 {
+    use ResourceTranslatable;
+
     protected static ?string $model = Tag::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
@@ -27,7 +30,7 @@ class TagResource extends Resource
 
     protected static ?int $navigationSort = 6;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Library';
+    protected static string|\UnitEnum|null $navigationGroup = 'Library';
 
     public static function form(Schema $schema): Schema
     {

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\Brands\Pages;
 
+use App\Filament\Records\ListRecords;
 use App\Filament\Resources\Brands\BrandResource;
 use Filament\Actions\CreateAction;
-use Filament\Resources\Pages\ListRecords;
 
 class ListBrands extends ListRecords
 {

@@ -9,7 +9,6 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class BrandsTable
 {
@@ -26,7 +25,7 @@ class BrandsTable
                     ->label('Name')
                     ->limitList(1)
                     ->searchable(query: function ($query, string $search) {
-                        $query->whereTranslationLike('name', '%'.$search.'%');
+                        $query->whereTranslationLike('name', '%' . $search . '%');
                     }),
                 TextColumn::make('short_name')
                     ->searchable()

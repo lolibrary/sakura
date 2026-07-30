@@ -11,6 +11,7 @@ use App\Filament\Resources\Items\Schemas\ItemInfolist;
 use App\Filament\Resources\Items\Tables\ItemsTable;
 use App\Models\Item;
 use BackedEnum;
+use Doriiaan\FilamentAstrotomic\Resources\Concerns\ResourceTranslatable;
 use Filament\Resources\Resource;
 use Filament\Schemas\Concerns\RestrictsFileUploadsToSchemaComponents;
 use Filament\Schemas\Schema;
@@ -19,7 +20,7 @@ use Filament\Tables\Table;
 
 class ItemResource extends Resource
 {
-    use RestrictsFileUploadsToSchemaComponents;
+    use RestrictsFileUploadsToSchemaComponents, ResourceTranslatable;
 
     protected static ?string $model = Item::class;
 
@@ -31,7 +32,7 @@ class ItemResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-       return ItemForm::configure($schema);
+        return ItemForm::configure($schema);
     }
 
     public static function infolist(Schema $schema): Schema

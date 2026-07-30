@@ -12,6 +12,7 @@ use App\Filament\Resources\Brands\Schemas\BrandInfolist;
 use App\Filament\Resources\Brands\Tables\BrandsTable;
 use App\Models\Brand;
 use BackedEnum;
+use Doriiaan\FilamentAstrotomic\Resources\Concerns\ResourceTranslatable;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,6 +20,8 @@ use Filament\Tables\Table;
 
 class BrandResource extends Resource
 {
+    use ResourceTranslatable;
+
     protected static ?string $model = Brand::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
@@ -27,7 +30,7 @@ class BrandResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Library';
+    protected static string|\UnitEnum|null $navigationGroup = 'Library';
 
     public static function form(Schema $schema): Schema
     {

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\Colors\Pages;
 
+use App\Filament\Records\ViewRecord;
 use App\Filament\Resources\Colors\ColorResource;
 use Filament\Actions\EditAction;
-use Filament\Resources\Pages\ViewRecord;
 
 class ViewColor extends ViewRecord
 {

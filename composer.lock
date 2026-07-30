@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "14d8d4100e8e20083530d8900c9415bd",
+    "content-hash": "1a4ff5bb4a8f9a63528838813c943786",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -1314,6 +1314,79 @@
                 }
             ],
             "time": "2024-02-05T11:56:58+00:00"
+        },
+        {
+            "name": "doriiaan/filament-astrotomic",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Doriiaan/filament-astrotomic.git",
+                "reference": "bb21e94eff2717cf4ccd04935f6be317d94e11f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Doriiaan/filament-astrotomic/zipball/bb21e94eff2717cf4ccd04935f6be317d94e11f1",
+                "reference": "bb21e94eff2717cf4ccd04935f6be317d94e11f1",
+                "shasum": ""
+            },
+            "require": {
+                "astrotomic/laravel-translatable": "^11.16",
+                "filament/filament": "^4.0 || ^5.0",
+                "filament/forms": "^4.0 || ^5.0",
+                "filament/tables": "^4.0 || ^5.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^8.0",
+                "orchestra/testbench": "^9.0|^10.0",
+                "pestphp/pest": "^3.0|^4.0",
+                "pestphp/pest-plugin-arch": "^3.0|^4.0",
+                "pestphp/pest-plugin-laravel": "^3.0|^4.0",
+                "pestphp/pest-plugin-livewire": "^3.0|^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "FilamentAstrotomic": "Doriiaan\\FilamentAstrotomic\\Facades\\FilamentAstrotomic"
+                    },
+                    "providers": [
+                        "Doriiaan\\FilamentAstrotomic\\FilamentAstrotomicServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doriiaan\\FilamentAstrotomic\\": "src/",
+                    "Doriiaan\\FilamentAstrotomic\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Doriiaan",
+                    "email": "alary.dorian81@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Filament plugin which allows translations to be added to Filament resources.",
+            "homepage": "https://github.com/Doriiaan/filament-astrotomic/",
+            "keywords": [
+                "doriiaan",
+                "filament-astrotomic",
+                "filamentphp",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/Doriiaan/filament-astrotomic/issues",
+                "source": "https://github.com/Doriiaan/filament-astrotomic"
+            },
+            "time": "2026-07-28T16:30:55+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",

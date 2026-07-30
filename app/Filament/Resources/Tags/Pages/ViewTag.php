@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\Tags\Pages;
 
+use App\Filament\Records\ViewRecord;
 use App\Filament\Resources\Tags\TagResource;
 use Filament\Actions\EditAction;
-use Filament\Resources\Pages\ViewRecord;
 
 class ViewTag extends ViewRecord
 {

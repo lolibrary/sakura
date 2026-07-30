@@ -11,6 +11,7 @@ use App\Filament\Resources\Colors\Schemas\ColorInfolist;
 use App\Filament\Resources\Colors\Tables\ColorsTable;
 use App\Models\Color;
 use BackedEnum;
+use Doriiaan\FilamentAstrotomic\Resources\Concerns\ResourceTranslatable;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,6 +19,8 @@ use Filament\Tables\Table;
 
 class ColorResource extends Resource
 {
+    use ResourceTranslatable;
+
     protected static ?string $model = Color::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPaintBrush;
@@ -26,7 +29,7 @@ class ColorResource extends Resource
 
     protected static ?int $navigationSort = 5;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Library';
+    protected static string|\UnitEnum|null $navigationGroup = 'Library';
 
     public static function form(Schema $schema): Schema
     {
