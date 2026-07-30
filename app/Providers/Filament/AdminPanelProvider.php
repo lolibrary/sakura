@@ -79,7 +79,7 @@ class AdminPanelProvider extends PanelProvider
                 FilamentLanguageSwitcherPlugin::make()
                     ->locales([
                         'en', 'fr', 'it', 'no', 'nl', // our usual
-                        'de', 'ja', 'es', 'pl' // some more extras
+                        'de', 'ja', 'es', 'pt', // some more extras for the backend
                         ])
                     ->rememberLocale(),
                 FilamentAstrotomicPlugin::make(),
