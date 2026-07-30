@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Fortify\Fortify;
 use Laravel\Nova\Nova;
 use Spatie\Activitylog\Facades\Activity;
 use Spatie\Activitylog\Support\ActivityLogger;
@@ -33,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Fortify::ignoreRoutes();
         Paginator::useBootstrap();
 
         View::composer('components.categories', Composers\Categories::class);
