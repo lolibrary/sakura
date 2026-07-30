@@ -64,11 +64,11 @@ class UserResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return trans('user');
+        return trans_choice('resources.user.title', 1);
     }
 
     public static function getPluralModelLabel(): string
     {
-        return trans('ui.item.features');
+        return trans_choice('resources.user.title', 2);
     }
 }
