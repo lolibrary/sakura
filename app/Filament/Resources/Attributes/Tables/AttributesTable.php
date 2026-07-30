@@ -15,10 +15,10 @@ class AttributesTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label('Name'),
+                TextColumn::make('name'),
                 TextColumn::make('slug')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

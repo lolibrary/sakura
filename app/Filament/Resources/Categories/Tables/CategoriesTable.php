@@ -21,10 +21,9 @@ class CategoriesTable
                     ->visibility('public')
                     ->square()
                     ->checkFileExistence(false),
-                TextColumn::make('name')
-                    ->searchable()
-                    ->sortable(),
+                TextColumn::make('name'),
                 TextColumn::make('slug')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()

@@ -9,6 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class BrandsTable
 {
@@ -21,11 +22,10 @@ class BrandsTable
                     ->visibility('public')
                     ->square()
                     ->checkFileExistence(false),
-                TextColumn::make('name')
-                    ->searchable(),
+                TextColumn::make('name'),
                 TextColumn::make('short_name')
-                    ->searchable(),
-
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
