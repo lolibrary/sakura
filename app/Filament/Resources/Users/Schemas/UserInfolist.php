@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Models\User;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -24,7 +25,8 @@ class UserInfolist
                             ->label('Email address')
                             ->inlineLabel()
                             ->copyable()
-                            ->icon(Heroicon::OutlinedDocumentDuplicate),
+                            ->icon(Heroicon::OutlinedDocumentDuplicate)
+                            ->visible(fn (User $record) => auth()->user()?->can('viewEmail', $record)),
                         TextEntry::make('level')
                             ->label('Access Level')
                             ->badge()
