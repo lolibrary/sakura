@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Level;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -36,7 +37,7 @@ class UserSeeder extends Seeder
             'username' => config('site.admin.username') ?? 'admin',
             'password' => bcrypt($password = Str::random(64)),
             'name' => config('site.admin.name') ?? 'Admin',
-            'level' => User::DEVELOPER,
+            'level' => Level::Developer,
         ]);
 
         User::setEventDispatcher($dispatcher);

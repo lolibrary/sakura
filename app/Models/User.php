@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
@@ -46,7 +47,7 @@ use Laravel\Passport\Contracts\OAuthenticatable;
  */
 class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable, FilamentUser
 {
-    use Notifiable, HasApiTokens, HasUuids, DateHandling, Wishlist, Closet, AccessLevels;
+    use Notifiable, HasApiTokens, HasUuids, DateHandling, Wishlist, Closet, AccessLevels, VerifiesEmails;
 
     /**
      * Whether or not this model has an incrementing timestamp.
