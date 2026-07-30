@@ -79,7 +79,7 @@ class ViewItem extends ViewRecord
             Action::make('unpublish')
                 ->requiresConfirmation()
                 ->icon(Heroicon::OutlinedArchiveBoxXMark)
-                ->color('gray')
+                ->color('danger')
                 ->authorize('unpublish')
                 ->action(fn() => dispatch(new UnpublishItem($this->record, auth()->user())) && $this->fillForm()),
             Action::make('ready_for_review')
@@ -94,7 +94,7 @@ class ViewItem extends ViewRecord
                 ->action(fn() => dispatch(new MarkAsDraft($this->record, auth()->user())) && $this->fillForm()),
             Action::make('request_changes')
                 ->icon(Heroicon::OutlinedCheckBadge)
-                ->color('gray')
+                ->color('warning')
                 ->authorize('requestChanges')
                 ->action(fn() => dispatch(new RequestChanges($this->record, auth()->user())) && $this->fillForm()),
         ];
