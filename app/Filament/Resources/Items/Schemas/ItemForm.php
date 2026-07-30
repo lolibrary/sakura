@@ -125,7 +125,6 @@ class ItemForm
                     ]),
 
                 Repeater::make('Attributes')
-                    ->helperText('Testing')
                     ->label('Attributes')
                     ->columnSpanFull()
                     ->columns(2)
