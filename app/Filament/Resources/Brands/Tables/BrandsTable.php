@@ -22,7 +22,12 @@ class BrandsTable
                     ->visibility('public')
                     ->square()
                     ->checkFileExistence(false),
-                TextColumn::make('name'),
+                TextColumn::make('name')
+                    ->label('Name')
+                    ->limitList(1)
+                    ->searchable(query: function ($query, string $search) {
+                        $query->whereTranslationLike('name', '%'.$search.'%');
+                    }),
                 TextColumn::make('short_name')
                     ->searchable()
                     ->sortable(),
