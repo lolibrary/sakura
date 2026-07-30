@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Attributes\Pages;
 
-use App\Filament\Records\ViewRecord;
+use Filament\Resources\Pages\ViewRecord;
 use App\Filament\Resources\Attributes\AttributeResource;
 use Filament\Actions\EditAction;
 

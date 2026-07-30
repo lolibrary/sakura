@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Attributes\Pages;
 
-use App\Filament\Records\CreateRecord;
+use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Resources\Attributes\AttributeResource;
 
 class CreateAttribute extends CreateRecord

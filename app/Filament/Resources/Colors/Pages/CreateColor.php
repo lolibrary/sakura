@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Colors\Pages;
 
-use App\Filament\Records\CreateRecord;
+use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Resources\Colors\ColorResource;
 
 class CreateColor extends CreateRecord

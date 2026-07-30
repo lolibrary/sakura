@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Items\Pages;
 
-use App\Filament\Records\ViewRecord;
+use Filament\Resources\Pages\ViewRecord;
 use App\Filament\Resources\Items\ItemResource;
 use App\Jobs\MarkAsDraft;
 use App\Jobs\PublishItem;

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Categories\Pages;
 
-use App\Filament\Records\CreateRecord;
+use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Resources\Categories\CategoryResource;
 
 class CreateCategory extends CreateRecord

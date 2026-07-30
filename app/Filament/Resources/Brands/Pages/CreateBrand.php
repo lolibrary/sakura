@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Brands\Pages;
 
-use App\Filament\Records\CreateRecord;
+use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Resources\Brands\BrandResource;
 
 class CreateBrand extends CreateRecord

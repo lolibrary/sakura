@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Tags\Pages;
 
-use App\Filament\Records\ViewRecord;
+use Filament\Resources\Pages\ViewRecord;
 use App\Filament\Resources\Tags\TagResource;
 use Filament\Actions\EditAction;
 

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Features\Pages;
 
-use App\Filament\Records\CreateRecord;
+use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Resources\Features\FeatureResource;
 
 class CreateFeature extends CreateRecord
