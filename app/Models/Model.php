@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\Collection;
 use App\Models\Traits\DateHandling;
-use App\Models\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
@@ -27,7 +27,7 @@ use Spatie\Activitylog\Support\LogOptions;
  */
 abstract class Model extends Eloquent
 {
-    use HasUuid, DateHandling, LogsActivity;
+    use HasUuids, DateHandling, LogsActivity;
 
     /**
      * The namespace UUID used for {@see uuid5()}.
@@ -83,7 +83,7 @@ abstract class Model extends Eloquent
      *
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
@@ -93,7 +93,7 @@ abstract class Model extends Eloquent
      *
      * @return string
      */
-    public function getUrlAttribute()
+    public function getUrlAttribute(): string
     {
         $route = $this->getRouteShowName();
 
@@ -105,19 +105,19 @@ abstract class Model extends Eloquent
      *
      * @return string
      */
-    public function getEditUrlAttribute()
+    public function getEditUrlAttribute(): string
     {
         $class = Str::plural(Str::lower(class_basename($this)));
 
         return route("filament.admin.resources.$class.edit", $this);
     }
 
-        /**
+    /**
      * Helper attribute for getting the URL to any model.
      *
      * @return string
      */
-    public function getViewUrlAttribute()
+    public function getViewUrlAttribute(): string
     {
         $class = Str::plural(Str::lower(class_basename($this)));
 
@@ -129,7 +129,7 @@ abstract class Model extends Eloquent
      *
      * @return string
      */
-    protected function getRouteShowName()
+    protected function getRouteShowName(): string
     {
         $class = class_basename($this);
 
@@ -142,7 +142,7 @@ abstract class Model extends Eloquent
      * @param  array  $models
      * @return \App\Models\Collection
      */
-    public function newCollection(array $models = [])
+    public function newCollection(array $models = []): Collection
     {
         return new Collection($models);
     }

@@ -8,38 +8,31 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Item;
-use App\Models\Post;
 
 class HomeController extends Controller
 {
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
     public function homepage()
     {
-        // todo: make this a static ::homepage() method
-        $posts = Post::query()
-            ->with('user')
-            ->whereNotNull('published_at')
-            ->take(3)
-            ->orderBy('published_at', 'desc')
-            ->get();
-
         $brands = Brand::cached();
         $categories = Category::cached();
-        $recent = Item::with(Item::PARTIAL_LOAD)
-            ->where('status', Status::Published)
-            ->orderBy('published_at', 'desc')
-            ->whereNotNull('image')
-            ->whereDoesntHave('tags', function (Builder $query) {
-                $query->whereIn('slug', ['partial', 'sensitive-content']);
-            })
-            ->take(15)
-            ->get();
+        $recent = cache()->remember('homepage.recent', 120, function () {
+            return Item::with(Item::PARTIAL_LOAD)
+                ->where('status', Status::Published)
+                ->orderBy('published_at', 'desc')
+                ->whereNotNull('image')
+                ->whereDoesntHave('tags', function (Builder $query) {
+                    $query->whereIn('slug', ['partial', 'sensitive-content']);
+                })
+                ->take(15)
+                ->get();
+        });
 
-        return view('homepage', compact('posts', 'brands', 'categories', 'recent'));
+        return view('homepage', compact('brands', 'categories', 'recent'));
     }
 
     public function set_lang(Request $request)

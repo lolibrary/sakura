@@ -7,7 +7,6 @@ use App\Enums\Status;
 use App\Models\Traits\AccessLevels;
 use App\Models\Traits\Closet;
 use App\Models\Traits\DateHandling;
-use App\Models\Traits\HasUuid;
 use App\Models\Traits\Wishlist;
 use App\Notifications\VerifyEmail;
 use Filament\Models\Contracts\FilamentUser;
@@ -15,6 +14,7 @@ use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,11 +41,12 @@ use Laravel\Passport\Contracts\OAuthenticatable;
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $items    The {@link \App\Item items} this user has submitted.
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $wishlist The {@link \App\Item items} this user has favourited.
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $closet   The {@link \App\Item items} this user owns.
- * @property \App\Models\Post[]|\Illuminate\Database\Eloquent\Collection $posts    The posts this user has created.
+ *
+ * @method static
  */
 class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable, FilamentUser
 {
-    use Notifiable, HasApiTokens, HasUuid, DateHandling, Wishlist, Closet, AccessLevels;
+    use Notifiable, HasApiTokens, HasUuids, DateHandling, Wishlist, Closet, AccessLevels;
 
     /**
      * Whether or not this model has an incrementing timestamp.
@@ -154,16 +155,6 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
     }
 
     /**
-     * The posts a user has.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany|\App\Models\Post[]
-     */
-    public function posts(): HasMany
-    {
-        return $this->hasMany(Post::class);
-    }
-
-    /**
      * Get a user's profile.
      */
     public function profile(): HasOne
@@ -173,14 +164,18 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
 
     /**
      * Scope a query to email address.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $email
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
-    public function scopeEmail(Builder $query, string $email)
+    public function scopeEmail(Builder $query, string $email): Builder
     {
         return $query->where(DB::raw('lower(email)'), mb_strtolower($email));
+    }
+
+    /**
+     * Scope a query to username.
+     */
+    public function scopeUsername(Builder $query, string $username): Builder
+    {
+        return $query->where('username', $username);
     }
 
     /**
