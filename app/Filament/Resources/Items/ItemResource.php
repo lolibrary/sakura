@@ -27,7 +27,7 @@ class ItemResource extends Resource
 
     protected static ?string $model = Item::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPencilSquare;
 
     protected static ?string $recordTitleAttribute = 'english_name';
 
