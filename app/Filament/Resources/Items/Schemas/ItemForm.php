@@ -180,7 +180,8 @@ class ItemForm
                     ->columnSpanFull(),
 
                 RichEditor::make('internal_notes')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->helperText("Please provide sources, and credit images that aren't yours!"),
             ]);
     }
 }

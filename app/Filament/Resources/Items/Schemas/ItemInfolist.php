@@ -188,18 +188,22 @@ class ItemInfolist
                     ->columnSpanFull()
                     ->columns(3)
                     ->schema([
+                        TextEntry::make('created_at')
+                            ->label('Created')
+                            ->badge()
+                            ->dateTime()
+                            ->placeholder('-')
+                            ->helperText("When a draft was initially made."),
                         TextEntry::make('updated_at')
                             ->dateTime()
                             ->badge()
-                            ->placeholder('-'),
-                        TextEntry::make('created_at')
-                            ->badge()
-                            ->dateTime()
-                            ->placeholder('-'),
+                            ->placeholder('-')
+                            ->helperText("When an entry was last edited (for any reason)."),
                         TextEntry::make('published_at')
                             ->badge()
                             ->dateTime()
-                            ->placeholder('-'),
+                            ->placeholder('Not Published')
+                            ->helperText("The time an entry was pushed live."),
                     ]),
 
 
