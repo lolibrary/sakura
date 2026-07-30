@@ -37,6 +37,7 @@ class ItemInfolist
                             ->schema([
                                 TextEntry::make('english_name'),
                                 TextEntry::make('foreign_name')
+                                    ->label('Original name')
                                     ->placeholder('-'),
                                 TextEntry::make('brand.name')
                                     ->name('Brand')
@@ -44,10 +45,11 @@ class ItemInfolist
                                 TextEntry::make('submitter.username')
                                     ->name('submitter')
                                     ->badge(),
+                                TextEntry::make('publisher.username')
+                                    ->name('publisher')
+                                    ->placeholder('No Publisher')
+                                    ->badge(),
                                 TextEntry::make('status')->badge(),
-                                TextEntry::make('created_at')
-                                    ->name('Created')
-                                    ->date(),
                             ])->contained(false),
 
                         Section::make()
@@ -65,10 +67,6 @@ class ItemInfolist
                                     ->placeholder('-'),
                                 TextEntry::make('product_number')
                                     ->placeholder('-'),
-                                TextEntry::make('publisher.username')
-                                    ->name('publisher')
-                                    ->placeholder('-')
-                                    ->badge(),
                                 TextEntry::make('url')
                                     ->label('Preview Link')
                                     ->url(fn(Item $record) => $record->url, shouldOpenInNewTab: true)
@@ -195,11 +193,13 @@ class ItemInfolist
                             ->placeholder('-')
                             ->helperText("When a draft was initially made."),
                         TextEntry::make('updated_at')
+                            ->label('Updated')
                             ->dateTime()
                             ->badge()
                             ->placeholder('-')
-                            ->helperText("When an entry was last edited (for any reason)."),
+                            ->helperText("When an entry was last edited."),
                         TextEntry::make('published_at')
+                            ->label('Published')
                             ->badge()
                             ->dateTime()
                             ->placeholder('Not Published')
