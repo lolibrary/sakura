@@ -2,17 +2,21 @@
 
 namespace App\Filament\Resources\Items\Pages;
 
-use Filament\Resources\Pages\ViewRecord;
 use App\Filament\Resources\Items\ItemResource;
 use App\Jobs\MarkAsDraft;
 use App\Jobs\PublishItem;
 use App\Jobs\ReadyForReview;
 use App\Jobs\RequestChanges;
 use App\Jobs\UnpublishItem;
+use App\Models\Attribute;
+use App\Models\Item;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Actions\ReplicateAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Pages\ViewRecord;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\DB;
 
 class ViewItem extends ViewRecord
 {
@@ -25,7 +29,47 @@ class ViewItem extends ViewRecord
                 ->icon(Heroicon::OutlinedPencilSquare),
             ReplicateAction::make()
                 ->icon(Heroicon::OutlinedClipboardDocument)
-                ->color('gray'),
+                ->color('gray')
+                ->schema([
+                    TextInput::make('english_name')
+                        ->maxLength(255)
+                        ->required()
+                ])
+                ->excludeAttributes([
+                    'image',
+                    'images',
+                    'slug',
+                    'publisher_id',
+                    'submitter_id',
+                    'published_at',
+                    'status',
+                    'created_at',
+                    'updated_at',
+                ])
+                ->mutateRecordDataUsing(function (array $data): array {
+                    $data['user_id'] = auth()->id();
+
+                    return $data;
+                })
+                ->after(function (Item $record, Item $replica): void {
+                    DB::transaction(function () use ($record, $replica) {
+                        $replica->categories()->sync($record->categories);
+                        $replica->features()->sync($record->features);
+                        $replica->colors()->sync($record->colors);
+                        $replica->tags()->sync($record->tags);
+                        $replica->attributes()->sync(
+                            $record->attributes
+                                ->mapWithKeys(fn(Attribute $attr) => [
+                                    $attr->id => [
+                                        'value' => $attr->value,
+                                    ],
+                                ])
+                        );
+                    });
+
+
+                })
+                ->successRedirectUrl(fn(Item $replica) => $replica->view_url),
             Action::make('publish')
                 ->requiresConfirmation()
                 ->icon(Heroicon::OutlinedCheckBadge)
