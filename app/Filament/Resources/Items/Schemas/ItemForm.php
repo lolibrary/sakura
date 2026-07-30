@@ -138,6 +138,7 @@ class ItemForm
                             )
                             ->options(fn() => Attribute::cached()
                                 ->mapWithKeys(fn(Attribute $attr) => [$attr->id => $attr->name])
+                                ->sort()
                             )
                             ->searchable()
                             ->searchDebounce(500)

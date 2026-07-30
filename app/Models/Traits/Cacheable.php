@@ -8,7 +8,7 @@ trait Cacheable
     /**
      * Get all cached instances of this model.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Collection<static>
      * @throws \Exception
      */
     public static function cached()
