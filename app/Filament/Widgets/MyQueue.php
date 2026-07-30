@@ -30,7 +30,6 @@ class MyQueue extends TableWidget
             ->query(fn (): Builder => auth()->user()
                 ->items()
                 ->where('status', '!=', Status::Published)
-                //->orderByDesc('created_at')
                 ->getQuery()
             )
             ->columns([
@@ -38,18 +37,18 @@ class MyQueue extends TableWidget
                     ->disk('s3public')
                     ->visibility('public')
                     ->alignCenter()
-                ->checkFileExistence(false),
+                    ->checkFileExistence(false),
                 TextColumn::make('english_name')
                     ->formatStateUsing(fn (Item $record) => Str::limit($record->english_name, 40))
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->name('Created')
+                    ->label('Created')
                     ->sortable()
                     ->dateTime()
                     ->placeholder('Never')
                     ->visibleFrom('xl'),
                 TextColumn::make('updated_at')
-                    ->name('Updated')
+                    ->label('Updated')
                     ->sortable()
                     ->dateTime()
                     ->placeholder('Never')

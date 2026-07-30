@@ -30,7 +30,8 @@ class ItemInfolist
                             ->alignCenter()
                             ->imageWidth(250)
                             ->imageHeight(320)
-                            ->defaultImageUrl(cdn_link('images/default.png')),
+                            ->defaultImageUrl(cdn_link('images/default.png'))
+                            ->checkFileExistence(false),
 
                         Section::make()
                             ->schema([
