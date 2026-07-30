@@ -76,7 +76,7 @@ class ItemForm
 
                         CheckboxList::make('categories')
                             ->extraAttributes([
-                                'style' => 'max-height: 330px; overflow-y: scroll'
+                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px;'
                             ])
                             ->required()
                             ->minItems(1)
@@ -89,7 +89,7 @@ class ItemForm
 
                         CheckboxList::make('features')
                             ->extraAttributes([
-                                'style' => 'max-height: 330px; overflow-y: scroll'
+                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px;'
                             ])
                             ->relationship(
                                 titleAttribute: 'name',
@@ -101,7 +101,7 @@ class ItemForm
 
                         CheckboxList::make('tags')
                             ->extraAttributes([
-                                'style' => 'max-height: 330px; overflow-y: scroll'
+                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px;'
                             ])
                             ->relationship(
                                 titleAttribute: 'name',
@@ -112,7 +112,7 @@ class ItemForm
 
                         CheckboxList::make('colors')
                             ->extraAttributes([
-                                'style' => 'max-height: 330px; overflow-y: scroll'
+                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px;'
                             ])
                             ->name('Colorways')
                             ->relationship(
