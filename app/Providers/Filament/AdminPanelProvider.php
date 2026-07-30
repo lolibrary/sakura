@@ -14,6 +14,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Size;
 use Filament\Support\Icons\Heroicon;
 use Filament\View\PanelsRenderHook;
 use Filament\Widgets\AccountWidget;
@@ -64,6 +65,13 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->userMenuItems([
+                [
+                    Action::make('level')
+                        ->badgeColor(fn() => auth()->user()->level->getColor())
+                        ->badge(fn() => auth()->user()->level->getLabel())
+                        ->label('Level')
+                        ->badgeTooltip(fn() => auth()->user()->level->getDescription()),
+                ],
                 [
                     Action::make('wiki')
                         ->url('https://wiki.lolibrary.org')

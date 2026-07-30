@@ -80,6 +80,7 @@ class ItemInfolist
                     ->columns(6)
                     ->schema(function (Item $record) {
                         return collect($record->images)
+                            ->filter()
                             ->map(fn(string $image) => ImageEntry::make('images')
                                 ->checkFileExistence(false)
                                 ->name('')

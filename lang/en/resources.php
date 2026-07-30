@@ -139,6 +139,10 @@ return [
 
     'queue' => [
         'title' => 'My Queue',
+        'published-items' => 'Published Entries',
+        'drafts' => 'Drafts',
+        'ready-for-review' => 'Ready for Review',
+        'changes-requested' => 'Changes Requested',
     ],
 
     'settings' => [

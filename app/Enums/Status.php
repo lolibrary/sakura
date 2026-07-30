@@ -33,6 +33,19 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
         };
     }
 
+    public function getName(): string
+    {
+        return match($this) {
+            self::Draft => 'Draft',
+            self::Published => 'Published',
+            self::ReadyForReview => 'Ready for Review',
+            self::ChangesRequested => 'Changes Requested',
+            self::MissingImages => 'Missing Images',
+            self::ShoeDraft => 'Shoe Draft',
+            default => 'Unknown',
+        };
+    }
+
     public function getColor(): string | array | null
     {
         return match($this) {
