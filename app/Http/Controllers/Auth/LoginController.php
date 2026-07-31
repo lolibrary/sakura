@@ -44,7 +44,7 @@ class LoginController extends Controller
     /**
      * Attempt to log the user into the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return bool
      */
     protected function attemptLogin(Request $request)
@@ -58,14 +58,20 @@ class LoginController extends Controller
         return $this->guard()->attempt($credentials, remember: true);
     }
 
+    protected function restricted(array $credentials): bool
+    {
+        return in_array($credentials['email'] ?? '', $this->getRestrictedEmails());
+    }
+
     protected function getRestrictedEmails(): array
     {
         return cache()->remember(
             key: 'system.restricted.emails',
             ttl: 1440,
-            callback: function(): array {
-                User::whereIn('username', SystemUser::cases())->select('email')->pluck('email')->all()
-            },
+            callback: fn(): array => User::whereIn('username', SystemUser::cases())
+                ->select('email')
+                ->pluck('email')
+                ->all(),
         );
     }
 }

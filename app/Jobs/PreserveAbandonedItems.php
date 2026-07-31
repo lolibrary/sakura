@@ -6,6 +6,7 @@ use App\Enums\Status;
 use App\Enums\SystemUser;
 use App\Models\Item;
 use App\Models\User;
+use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Queue\Queueable;
@@ -37,7 +38,6 @@ class PreserveAbandonedItems implements ShouldQueue
             return;
         }
 
-
         $query = Item::query()
             ->withoutEagerLoads()
             ->whereNotExists(function (Builder $query) {
@@ -49,11 +49,9 @@ class PreserveAbandonedItems implements ShouldQueue
             Log::info("found $count published items with no submitter, anonymising");
 
             $query->get()->each(function (Item $item) {
-                Log::info('anonymising post', [
+                Log::info('anonymising published post', [
                     'id' => $item->id,
                     'slug' => $item->slug,
-                    'name' => $item->english_name,
-                    'status' => $item->status->getName(),
                     'created_at' => $item->created_at->format(DateTimeInterface::RFC3339),
                     'updated_at' => $item->updated_at->format(DateTimeInterface::RFC3339),
                 ]);

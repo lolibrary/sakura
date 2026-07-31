@@ -7,7 +7,6 @@ use App\Enums\SystemUser;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
-use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Facades\Log;
 use NumberFormatter;
 
@@ -261,9 +260,12 @@ class Item extends Model
         }
 
         if (is_null($user = User::system(SystemUser::Anonymous))) {
-            Log::alert('anonymous system user not set, please run app:system anonymous')
+            Log::alert('anonymous system user not set, please run app:system anonymous');
+            return false;
         }
 
         $this->user_id = $user->id;
+
+        return $this->save();
     }
 }
