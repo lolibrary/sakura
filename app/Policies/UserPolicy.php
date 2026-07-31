@@ -58,4 +58,13 @@ class UserPolicy extends Policy
     {
         return $target->public_wishlist || $user?->is($target);
     }
+
+    public function verify(User $user, User $target): bool
+    {
+        if ($target->hasVerifiedEmail()) {
+            return false;
+        }
+
+        return $user->admin();
+    }
 }

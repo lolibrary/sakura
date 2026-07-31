@@ -41,7 +41,7 @@ class ItemsTable
                     ->label('Submitter')
                     ->sortable()
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->toggleable()
                     ->badge()
                     ->color(fn (Item $record) => $record->submitter?->level->getColor())
                     ->icon(fn (Item $record) => $record->submitter?->level->getIcon())

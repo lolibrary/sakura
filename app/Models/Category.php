@@ -42,6 +42,7 @@ class Category extends Model implements TranslatableContract
         'name',
         'slug',
         'url',
+        'image',
     ];
 
     /**

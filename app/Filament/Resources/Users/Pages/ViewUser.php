@@ -3,8 +3,12 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
+use App\Jobs\UnpublishItem;
+use App\Models\User;
+use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Support\Icons\Heroicon;
 
 class ViewUser extends ViewRecord
 {
@@ -14,6 +18,12 @@ class ViewUser extends ViewRecord
     {
         return [
             EditAction::make(),
+            Action::make('verify')
+                ->requiresConfirmation()
+                ->icon(Heroicon::OutlinedCheckBadge)
+                ->color('success')
+                ->authorize('verify')
+                ->action(fn(User $record) => $record->markEmailAsVerified()),
         ];
     }
 

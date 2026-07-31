@@ -2,11 +2,14 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Enums\Level;
+use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class UsersTable
@@ -34,6 +37,7 @@ class UsersTable
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('level')
                     ->badge()
+                    ->tooltip(fn (User $record) => $record->level->getDescription())
                     ->sortable(),
                 IconColumn::make('banned')
                     ->boolean()
@@ -44,7 +48,8 @@ class UsersTable
                     ->toggleable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('level')
+                    ->options(Level::options()),
             ])
             ->recordActions([
                 ViewAction::make(),

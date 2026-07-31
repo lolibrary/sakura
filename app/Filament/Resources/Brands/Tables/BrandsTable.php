@@ -24,6 +24,9 @@ class BrandsTable
                 TextColumn::make('name')
                     ->label('Name')
                     ->limitList(1)
+                    ->sortable(query: function ($query, string $direction) {
+                        $query->orderByTranslation('name', $direction);
+                    })
                     ->searchable(query: function ($query, string $search) {
                         $query->whereTranslationLike('name', '%' . $search . '%');
                     }),

@@ -87,6 +87,7 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
     public static function options(): array
     {
         return [
+            self::System->value => 'System User',
             self::Developer->value => 'Developer',
             self::Admin->value => 'Administrator',
             self::Trusted->value => 'Trusted Senior',

@@ -14,6 +14,7 @@ use App\Models\Brand;
 use BackedEnum;
 use Doriiaan\FilamentAstrotomic\Resources\Concerns\ResourceTranslatable;
 use Filament\Resources\Resource;
+use Filament\Schemas\Concerns\RestrictsFileUploadsToSchemaComponents;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
@@ -21,7 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class BrandResource extends Resource
 {
-    use ResourceTranslatable;
+    use ResourceTranslatable, RestrictsFileUploadsToSchemaComponents;
 
     protected static ?string $model = Brand::class;
 

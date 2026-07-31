@@ -49,6 +49,7 @@ class Brand extends Model implements TranslatableContract
         'short_name',
         'slug',
         'url',
+        'image',
     ];
 
     /**

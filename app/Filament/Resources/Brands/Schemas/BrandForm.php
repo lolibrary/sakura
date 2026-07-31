@@ -7,6 +7,7 @@ use Doriiaan\FilamentAstrotomic\TranslatableTab;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class BrandForm
@@ -21,21 +22,25 @@ class BrandForm
                             ->required($tab->isMainLocale())
                             ->maxLength(100),
                     ]),
-                TextInput::make('slug')
-                    ->required(),
-                TextInput::make('short_name')
-                    ->required(),
-                Textarea::make('description')
-                    ->default('')
-                    ->columnSpanFull(),
+                Section::make()
+                    ->contained(false)
+                    ->schema([
+                        TextInput::make('slug')
+                            ->required(),
+                        TextInput::make('short_name')
+                            ->required(),
+                    ]),
+
                 FileUpload::make('image')
-                    ->openable()
-                    ->previewable()
+                    ->label('Main Image')
                     ->disk('s3public')
-                    ->directory('brands')
                     ->visibility('public')
-                    ->image()
-                    ->required()
+                    ->directory('brands')
+                    ->previewable()
+                    ->openable()
+                    ->maxSize(1024 * 3)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg'])
+                    ->helperText("Acceptable upload types: JPEG, PNG, SVG, WEBP. 3MB limit.")
                     ->preventFilePathTampering(),
             ]);
     }
