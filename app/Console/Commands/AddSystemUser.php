@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Enums\Level;
+use App\Enums\SystemUser;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -20,9 +21,9 @@ class AddSystemUser extends Command
      */
     protected $signature = 'app:system-user {username}
         {--e|email= : Full email address for this user}
-        {--l|level=1000 : Access level - see App\\Enums\\Level}
-        {--r|replace : Delete the user and start again}
-        {--replace-id : Generate a new ID for the user, if replacing}';
+        {--l|level=2000 : Access level - see App\\Enums\\Level}
+        {--edit : Edit the user instead of deleting}
+        {--no-info : Do not output user info on create/edit}';
 
     /**
      * The console command description.
@@ -34,60 +35,105 @@ class AddSystemUser extends Command
     /**
      * Execute the console command.
      */
-    public function handle(): void
+    public function handle(): int
     {
-        $id = null;
-        $username = $this->argument('username');
-        $email = $this->option('email') ?? "admin+$username@lolibrary.org";
-        $level = Level::tryFrom((int)$this->option('level'));
+        $options = $this->validate();
+        if ($options === false) {
+            return 1; // exit with error.
+        }
 
-        if ($this->option('replace')) {
-            info("Replacing user $username");
-            if ($original = User::where('username', $username)->first()) {
-                info("Preserving ID: $original->id");
-                $id = $original->id;
+        $user = new User([
+            'username' => $options['username'],
+        ]);
+
+        if ($this->option('edit')) {
+            $user = User::username($options['username'])->first();
+
+            if ($this->option('email') !== null) {
+                $user->email = $this->option('email');
             }
-
-            User::where('username', $username)->delete();
+        } else {
+            $user->name = $options['username'];
+            $user->forceFill([
+                'name' => $options['username'],
+                'email' => $options['email'],
+            ]);
         }
-
-        if (User::where('username', $username)->exists()) {
-            error('A user already exists with that username');
-            return;
-        }
-
-        if (User::where('email', $email)->exists()) {
-            error('A user already exists with that email');
-            return;
-        }
-
-        if ($level === null) {
-            error('Invalid level, please try again');
-            return;
-        }
-
-        $user = new User;
 
         $user->forceFill([
-            'id' => $id,
-            'name' => $username,
-            'username' => $username,
-            'email' => $email,
-            'level' => $level,
+            'level' => $options['level'],
             'password' => bcrypt(Str::random(64)),
             'email_verified_at' => now(),
         ]);
 
         $user->save();
 
-        info("Created user");
-        table(['key', 'value'], collect([
-            'id' => $user->getKey(),
-            'email' => $user->email,
-            'username' => $user->username,
-            'level' => $user->level->getLabel(),
-            'verified' => 'true',
-        ])->map(fn (string $value, string $key) => compact('key', 'value'))
-            ->all());
+        info(($this->option('edit') ? 'Edited user' : 'Created user') . ' ' . $options['username']);
+
+        if (! $this->option('no-info')) {
+            table(['key', 'value'], collect([
+                'id' => $user->getKey(),
+                'email' => $user->email,
+                'username' => $user->username,
+                'level' => $user->level->getLabel(),
+                'verified' => 'true',
+            ])->map(
+                fn (string $value, string $key) =>
+                compact('key', 'value'))->all()
+            );
+        }
+
+        return 0;
+    }
+
+    protected function validate(): array | false
+    {
+        if (is_null($username = SystemUser::tryFrom($this->argument('username')))) {
+            error("{$this->argument('username')} is not a valid system user.");
+            return false;
+        }
+
+        if (is_null($level = Level::tryFrom((int) $this->option('level')))) {
+            error("{$this->option('level')} is not a valid level.");
+            return false;
+        }
+
+        $email = $this->option('email') ?? "admin+$username->value@lolibrary.org";
+        $user = User::username($username->value)->first();
+
+        if ($user !== null && ! $this->option('edit')) {
+            error("User already exists, please use --edit");
+            return false;
+        }
+
+        // if we're editing, make sure it exists.
+        // if we're creating, make sure it doesn't conflict
+        if ($user !== null) {
+            if ($this->option('email')) {
+                $check = User::email($this->option('email'))->first();
+
+                if ($check !== null && $check->username !== $username->value) {
+                    error("Cannot edit user - email already exists for user $user->username");
+                    return false;
+                }
+            }
+
+        } else {
+            if (User::email($email)->exists()) {
+                error('A user already exists with that email');
+                return false;
+            }
+
+            if (User::username($username->value)->exists()) {
+                error('A user already exists with that username');
+                return false;
+            }
+        }
+
+        return [
+            'username' => $username->value,
+            'email' => $email,
+            'level' => $level,
+        ];
     }
 }

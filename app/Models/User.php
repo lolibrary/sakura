@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Level;
 use App\Enums\Status;
+use App\Enums\SystemUser;
 use App\Models\Traits\AccessLevels;
 use App\Models\Traits\Closet;
 use App\Models\Traits\DateHandling;
@@ -242,5 +243,20 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
     public function getRouteKeyName(): string
     {
         return 'username';
+    }
+
+    /**
+     * Get a system user, with caching.
+     *
+     * @param SystemUser $user
+     * @return static
+     */
+    public static function system(SystemUser $user): static
+    {
+        return cache()->remember(
+            key: 'system.user.' . $user->value,
+            ttl: 1440,
+            callback: fn() => static::username($user->value)->firstOrFail(),
+        );
     }
 }

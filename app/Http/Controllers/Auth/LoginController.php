@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\SystemUser;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -36,5 +39,33 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Attempt to log the user into the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function attemptLogin(Request $request)
+    {
+        $credentials = $this->credentials($request);
+
+        if ($this->restricted($credentials)) {
+            return false; // reject logins for system users
+        }
+
+        return $this->guard()->attempt($credentials, remember: true);
+    }
+
+    protected function getRestrictedEmails(): array
+    {
+        return cache()->remember(
+            key: 'system.restricted.emails',
+            ttl: 1440,
+            callback: function(): array {
+                User::whereIn('username', SystemUser::cases())->select('email')->pluck('email')->all()
+            },
+        );
     }
 }

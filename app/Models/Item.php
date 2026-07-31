@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Enums\Status;
+use App\Enums\SystemUser;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Support\Facades\Log;
 use NumberFormatter;
 
 /**
@@ -22,6 +24,7 @@ use NumberFormatter;
  * @property float $price_formatted The price of this item, formatted to the rules of the given currency (e.g. /100 for gbp/usd)
  * @property string $currency        The currency of this item, as an ISO code.
  * @property array|string[] $images          The images attached to this item, as a flexible collection.
+ * @property array $metadata Metadata attached to this item.
  *
  * @property string $user_id  The ID of the {@link \App\Models\User user} who submitted this Item.
  * @property string $brand_id The ID of this Item's {@link \App\Models\Brand brand}.
@@ -70,48 +73,6 @@ class Item extends Model
         'changes requested' => 'rgb(255,179,186)',
         'unknown' => 'rgb(207, 207, 196)',
     ];
-
-    /**
-     * Indicates that an item is a draft and shouldn't be visible.
-     *
-     * @var int
-     */
-    public const DRAFT = 0;
-
-    /**
-     * Indicates that an item should be visible to everyone.
-     *
-     * @var int
-     */
-    public const PUBLISHED = 1;
-
-    /**
-     * Indicates that an item is ready for review and publishing.
-     *
-     * @var int
-     */
-    public const PENDING = 2;
-
-    /**
-     * Indicates that an item is ready for review and publishing.
-     *
-     * @var int
-     */
-    public const CHANGES_REQUESTED = 3;
-
-    /**
-     * Test status for missing image imports.
-     *
-     * @var int
-     */
-    public const MISSING_IMAGES = 4;
-
-    /**
-     * Test status for missing shoe drafts.
-     *
-     * @var int
-     */
-    public const SHOE_DRAFTS = 10;
 
     /**
      * A shortcut for fully eager loading an item.
@@ -283,5 +244,26 @@ class Item extends Model
     public function getCacheKey(): string
     {
         return "items.backup.{$this->getKey()}";
+    }
+
+    public function anonymize(bool $force = false): bool
+    {
+        // guard against running this with a user present
+        if ($this->submitter && !$force) {
+            Log::alert('tried to anonymize an item with a valid submitter', [
+                'item_id' => $this->id,
+                'user_id' => $this->user_id,
+                'submitter' => $this->submitter->username,
+                'slug' => $this->slug,
+            ]);
+
+            return false;
+        }
+
+        if (is_null($user = User::system(SystemUser::Anonymous))) {
+            Log::alert('anonymous system user not set, please run app:system anonymous')
+        }
+
+        $this->user_id = $user->id;
     }
 }

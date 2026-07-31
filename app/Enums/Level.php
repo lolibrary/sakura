@@ -12,6 +12,8 @@ use Illuminate\Contracts\Support\Htmlable;
 
 enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
 {
+    case Amy = 3000;
+    case System = 2000;
     case Developer = 1000;
     case Admin = 500;
     case Trusted = 200;
@@ -25,6 +27,8 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
     public function getLabel(): string|Htmlable|null
     {
         return match ($this) {
+            self::Amy => 'Creator',
+            self::System => 'System',
             self::Developer => 'Developer',
             self::Admin => 'Admin',
             self::Senior => 'Senior Lolibrarian',
@@ -39,11 +43,11 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
     public function getColor(): string|array|null
     {
         return match ($this) {
-            self::Developer, self::Admin => 'gray',
+            self::System, self::Developer, self::Admin => 'gray',
             self::Trusted => 'success',
             self::Senior,  => 'warning',
             self::Junior, self::Lolibrarian => 'info',
-            self::Regular => 'primary',
+            self::Amy, self::Regular => 'primary',
             self::Banned => 'danger',
         };
     }
@@ -51,8 +55,11 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
     public function getIcon(): string|BackedEnum|Htmlable|null
     {
         return match ($this) {
+            self::Amy => Heroicon::OutlinedSparkles,
+            self::System => Heroicon::OutlinedCommandLine,
             self::Developer => Heroicon::OutlinedCodeBracketSquare,
             self::Admin => Heroicon::OutlinedShieldCheck,
+            self::Trusted => Heroicon::OutlinedShieldExclamation,
             self::Senior => Heroicon::OutlinedUserPlus,
             self::Lolibrarian => Heroicon::OutlinedDocumentCheck,
             self::Junior => Heroicon::OutlinedPencilSquare,
@@ -64,6 +71,8 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
     public function getDescription(): string|Htmlable|null
     {
         return match ($this) {
+            self::Amy => 'amethystcitrine, the original creator of Lolibrary',
+            self::System => 'System User',
             self::Developer => 'Developer for Lolibrary',
             self::Admin => 'Administrator',
             self::Trusted => 'Trusted Senior Lolibrarian, with edit permissions for relations',

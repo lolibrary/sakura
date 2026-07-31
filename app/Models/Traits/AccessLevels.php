@@ -26,6 +26,16 @@ trait AccessLevels
     }
 
     /**
+     * Check if a user is an immutable system user.
+     *
+     * Used for preventing access to user edits.
+     */
+    public function immutable(): bool
+    {
+        return $this->accessLevel() >= Level::System->value;
+    }
+
+    /**
      * Check if a user is a developer.
      *
      * Used for guarding sensitive functions,
