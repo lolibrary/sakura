@@ -37,9 +37,8 @@ class ItemsTable
                 TextColumn::make('year')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('submitter')
-                    ->state(fn(Item $record) => $record->submitter?->username ?? '')
-                    ->name('Submitter')
+                TextColumn::make('submitter.username')
+                    ->label('Submitter')
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
