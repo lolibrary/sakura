@@ -45,11 +45,26 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'username' => [
                 'required',
-                'string',
-                'min:3',
-                'max:40',
-                'regex:/^[^-_][0-9a-z_-]+$/u',
-                Rule::unique('users')->ignore($user),
+                Rule::string()
+                    ->min(3)
+                    ->max(40)
+                    ->alphaDash()
+                    ->lowercase()
+                    ->doesntStartWith('-', '_')
+                    ->doesntEndWith('-', '_'),
+                    Rule::notIn([
+                        'admin',
+                        'administrator',
+                        'lolibrary',
+                        'official',
+                        'senior',
+                        'lolibrarian',
+                        'system',
+                        'user',
+                        'developer',
+                        'dev',
+                    ]),
+                Rule::unique('users'),
             ],
             'email' => ['required', 'string', 'max:255', 'email', Rule::unique('users')->ignore($user)],
             'password' => 'nullable|string|confirmed|min:12',

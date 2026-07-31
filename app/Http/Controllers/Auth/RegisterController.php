@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -54,11 +55,26 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'username' => [
                 'required',
-                'string',
-                'min:3',
-                'max:40',
-                'regex:/^[0-9a-z][0-9a-z_-]+$/u',
-                'unique:users',
+                Rule::string()
+                    ->min(3)
+                    ->max(40)
+                    ->alphaDash()
+                    ->lowercase()
+                    ->doesntStartWith('-', '_')
+                    ->doesntEndWith('-', '_'),
+                Rule::notIn([
+                    'admin',
+                    'administrator',
+                    'lolibrary',
+                    'official',
+                    'senior',
+                    'lolibrarian',
+                    'system',
+                    'user',
+                    'developer',
+                    'dev',
+                ]),
+                Rule::unique('users'),
             ],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:12', 'confirmed'],
