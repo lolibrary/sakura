@@ -88,7 +88,7 @@ class ItemForm
 
                         CheckboxList::make('categories')
                             ->extraAttributes([
-                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px; overflow-x: clip;'
+                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px; overflow-x: hidden;'
                             ])
                             ->required()
                             ->minItems(1)
@@ -101,7 +101,7 @@ class ItemForm
 
                         CheckboxList::make('features')
                             ->extraAttributes([
-                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px; overflow-x: clip;'
+                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px; overflow-x: hidden;'
                             ])
                             ->relationship(
                                 titleAttribute: 'name',
@@ -113,7 +113,7 @@ class ItemForm
 
                         CheckboxList::make('tags')
                             ->extraAttributes([
-                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px; overflow-x: clip;'
+                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px; overflow-x: hidden;'
                             ])
                             ->relationship(
                                 titleAttribute: 'name',
@@ -124,7 +124,7 @@ class ItemForm
 
                         CheckboxList::make('colors')
                             ->extraAttributes([
-                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px; overflow-x: clip;'
+                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px; overflow-x: hidden;'
                             ])
                             ->name('Colorways')
                             ->relationship(
