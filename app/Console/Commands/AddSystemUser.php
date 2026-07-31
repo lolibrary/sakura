@@ -47,13 +47,20 @@ class AddSystemUser extends Command
         ]);
 
         if ($this->option('edit')) {
-            $user = User::username($options['username'])->first();
+            if (! is_null($check = User::username($options['username'])->first())) {
+                $user = $check;
 
-            if ($this->option('email') !== null) {
-                $user->email = $this->option('email');
+                if ($this->option('email') !== null) {
+                    $user->email = $this->option('email');
+                }
+            } else {
+                $user->forceFill([
+                    'name' => $options['username'],
+                    'email' => $options['email'],
+                ]);
             }
+
         } else {
-            $user->name = $options['username'];
             $user->forceFill([
                 'name' => $options['username'],
                 'email' => $options['email'],
