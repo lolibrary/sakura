@@ -82,11 +82,17 @@ class ItemInfolist
 
                                 TextEntry::make('submitter.username')
                                     ->name('submitter')
-                                    ->badge(),
+                                    ->badge()
+                                    ->color(fn (Item $record) => $record->submitter?->level->getColor())
+                                    ->icon(fn (Item $record) => $record->submitter?->level->getIcon())
+                                    ->tooltip(fn (Item $record) => $record->submitter?->level->getDescription()),
                                 TextEntry::make('publisher.username')
                                     ->name('publisher')
                                     ->placeholder('No Publisher')
-                                    ->badge(),
+                                    ->badge()
+                                    ->color(fn (?Item $record) => $record?->publisher?->level->getColor())
+                                    ->icon(fn (?Item $record) => $record?->publisher?->level->getIcon())
+                                    ->tooltip(fn (?Item $record) => $record?->publisher?->level->getDescription()),
                             ])->contained(false),
                     ]),
 
