@@ -32,7 +32,7 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::Developer => 'Developer',
             self::Admin => 'Admin',
             self::Senior => 'Senior Lolibrarian',
-            self::Trusted => 'Lolibrarian (Trusted)',
+            self::Trusted => 'Senior (Trusted)',
             self::Lolibrarian => 'Lolibrarian',
             self::Junior => 'Junior Lolibrarian',
             self::Regular => 'Regular',
@@ -43,10 +43,13 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
     public function getColor(): string|array|null
     {
         return match ($this) {
-            self::System, self::Developer, self::Admin => 'gray',
-            self::Trusted => 'success',
+            self::System => 'light',
+            self::Developer => 'gray',
+            self::Admin => 'purple',
+            self::Trusted => 'cyan',
             self::Senior,  => 'warning',
-            self::Junior, self::Lolibrarian => 'info',
+            self::Lolibrarian => 'fuschia',
+            self::Junior => 'success',
             self::Amy, self::Regular => 'primary',
             self::Banned => 'danger',
         };
@@ -90,7 +93,7 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::System->value => 'System User',
             self::Developer->value => 'Developer',
             self::Admin->value => 'Administrator',
-            self::Trusted->value => 'Trusted Senior',
+            self::Trusted->value => 'Senior (Trusted)',
             self::Senior->value => 'Senior Lolibrarian',
             self::Lolibrarian->value => 'Lolibrarian',
             self::Junior->value => 'Junior Lolibrarian',
