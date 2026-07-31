@@ -165,7 +165,8 @@ class ItemForm
                             ->required(),
                     ])
                     ->addActionLabel('Add Attribute')
-                    ->reorderableWithButtons(),
+                    ->reorderableWithButtons()
+                    ->helperText('Attributes are not required and can be deleted, but are recommended!'),
 
 
                 FileUpload::make('image')
