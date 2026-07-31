@@ -28,7 +28,8 @@ class CategoryForm
                     ->visibility('public')
                     ->directory('categories')
                     ->required()
-                    ->image(),
+                    ->image()
+                    ->preventFilePathTampering(),
             ]);
     }
 }

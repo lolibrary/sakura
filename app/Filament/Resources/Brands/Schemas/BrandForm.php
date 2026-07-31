@@ -35,7 +35,8 @@ class BrandForm
                     ->directory('brands')
                     ->visibility('public')
                     ->image()
-                    ->required(),
+                    ->required()
+                    ->preventFilePathTampering(),
             ]);
     }
 }

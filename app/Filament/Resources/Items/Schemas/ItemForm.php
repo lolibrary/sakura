@@ -50,18 +50,30 @@ class ItemForm
                     ->columnSpanFull()
                     ->schema([
                         TextInput::make('product_number')
-                            ->helperText('The original product number, if known.'),
+                            ->helperText('The original product number, if known.')
+                            ->string()
+                            ->maxLength(100),
 
                         Select::make('year')
                             ->placeholder('Unknown')
                             ->options(
-                                array_reverse(range(1990, (int)date('Y') + 3))
+                                collect(range(1990, (int)date('Y') + 3))
+                                    ->reverse()
+                                    ->mapWithKeys(fn (int $value) => [$value => $value])
+                                    ->all()
                             )
+                            ->rules([
+                                'nullable',
+                                'integer',
+                                'min:1990',
+                                'max:' . (int)date('Y') + 3,
+                            ])
                             ->helperText('The year of release, if known.'),
 
                         Select::make('currency')
                             ->placeholder('Unknown')
-                            ->options(Item::CURRENCIES),
+                            ->options(Item::CURRENCIES)
+                            ->helperText('Unknown here hides the entire price.'),
 
 
                         TextInput::make('price')
@@ -69,7 +81,7 @@ class ItemForm
                             ->helperText('Item price - enter 0 if the item is free.'),
                     ]),
 
-                Section::make('Relationships')
+                Section::make()
                     ->columns(2)
                     ->columnSpanFull()
                     ->schema([
@@ -158,11 +170,13 @@ class ItemForm
                     ->disk('s3public')
                     ->visibility('public')
                     ->directory('images')
+                    ->deletable()
                     ->previewable()
                     ->openable()
                     ->maxSize(1024 * 5)
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
-                    ->helperText("Acceptable upload types: JPEG, PNG, GIF, WEBP. 5MB limit."),
+                    ->helperText("Acceptable upload types: JPEG, PNG, GIF, WEBP. 5MB limit.")
+                    ->preventFilePathTampering(),
 
                 FileUpload::make('images')
                     ->columnSpanFull()
@@ -172,13 +186,16 @@ class ItemForm
                     ->appendFiles()
                     ->openable()
                     ->previewable()
+                    ->deletable()
                     ->maxSize(1024 * 5)
                     ->maxFiles(40)
                     ->panelLayout('grid')
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
                     ->disk('s3public')
                     ->visibility('public')
-                    ->directory('images'),
+                    ->preventFilePathTampering()
+                    ->directory('images')
+                    ->helperText("Acceptable upload types: JPEG, PNG, GIF, WEBP. 5MB limit per file."),
 
                 RichEditor::make('notes')
                     ->columnSpanFull(),

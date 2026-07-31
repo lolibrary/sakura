@@ -22,6 +22,29 @@ class ItemInfolist
         return $schema
             ->components([
                 Section::make()
+                    ->contained(false)
+                    ->columnSpanFull()
+                    ->columns(3)
+                    ->schema([
+                        TextEntry::make('id')
+                            ->label('ID')
+                            ->fontFamily(FontFamily::Mono)
+                            ->copyable()
+                            ->icon(Heroicon::OutlinedDocumentDuplicate)
+                            ->iconPosition(IconPosition::After),
+                        TextEntry::make('slug')
+                            ->fontFamily(FontFamily::Mono)
+                            ->copyable()
+                            ->icon(Heroicon::OutlinedDocumentDuplicate)
+                            ->iconPosition(IconPosition::After),
+                        TextEntry::make('url')
+                            ->label('Preview Link')
+                            ->url(fn(Item $record) => $record->url, shouldOpenInNewTab: true)
+                            ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
+                            ->iconPosition(IconPosition::After),
+                    ]),
+
+                Section::make()
                     ->columns(3)
                     ->columnSpanFull()
                     ->schema([
@@ -35,14 +58,28 @@ class ItemInfolist
                             ->checkFileExistence(false),
 
                         Section::make()
+                            ->columns(2)
+                            ->columnSpan(2)
                             ->schema([
                                 TextEntry::make('english_name'),
                                 TextEntry::make('foreign_name')
                                     ->label('Original name')
-                                    ->placeholder('-'),
+                                    ->placeholder('None'),
                                 TextEntry::make('brand.name')
                                     ->name('Brand')
                                     ->badge(),
+                                TextEntry::make('status')->badge(),
+                                TextEntry::make('year')
+                                    ->fontFamily(FontFamily::Mono)
+                                    ->placeholder('Unknown'),
+                                TextEntry::make('price_details.formatted')
+                                    ->label('Price')
+                                    ->placeholder('Unknown'),
+                                TextEntry::make('product_number')
+                                    ->columnSpanFull()
+                                    ->fontFamily(FontFamily::Mono)
+                                    ->placeholder('Unknown'),
+
                                 TextEntry::make('submitter.username')
                                     ->name('submitter')
                                     ->badge(),
@@ -50,33 +87,6 @@ class ItemInfolist
                                     ->name('publisher')
                                     ->placeholder('No Publisher')
                                     ->badge(),
-                                TextEntry::make('status')->badge(),
-                            ])->contained(false),
-
-                        Section::make()
-                            ->schema([
-                                TextEntry::make('id')
-                                    ->label('ID')
-                                    ->fontFamily(FontFamily::Mono)
-                                    ->copyable()
-                                    ->icon(Heroicon::OutlinedDocumentDuplicate)
-                                    ->iconPosition(IconPosition::After),
-                                TextEntry::make('slug')
-                                    ->fontFamily(FontFamily::Mono)
-                                    ->copyable()
-                                    ->icon(Heroicon::OutlinedDocumentDuplicate)
-                                    ->iconPosition(IconPosition::After),
-                                TextEntry::make('year')
-                                    ->fontFamily(FontFamily::Mono)
-                                    ->placeholder('-'),
-                                TextEntry::make('product_number')
-                                    ->fontFamily(FontFamily::Mono)
-                                    ->placeholder('-'),
-                                TextEntry::make('url')
-                                    ->label('Preview Link')
-                                    ->url(fn(Item $record) => $record->url, shouldOpenInNewTab: true)
-                                    ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
-                                    ->iconPosition(IconPosition::After),
                             ])->contained(false),
                     ]),
 
@@ -98,7 +108,7 @@ class ItemInfolist
                             )->all();
                     },),
 
-                Section::make('Relations')
+                Section::make()
                     ->columnSpanFull()
                     ->columns(2)
                     ->schema(function (Item $record) {

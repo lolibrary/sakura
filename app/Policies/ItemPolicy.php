@@ -68,8 +68,8 @@ class ItemPolicy extends Policy
 
     public function publish(User $user, Item $item): bool
     {
-        // cannot publish twice.
-        if ($item->published()) {
+        // cannot publish twice, or publish if changes requested.
+        if (in_array($item->status, [Status::Published, Status::ChangesRequested])) {
             return false;
         }
 
@@ -130,7 +130,7 @@ class ItemPolicy extends Policy
     {
         // you can request changes from "draft" or "ready for review"
         // todo: possibly remove requesting changes on a draft.
-        if (! in_array($item->status, [Status::Draft, Status::ReadyForReview])) {
+        if (! in_array($item->status, [Status::ReadyForReview])) {
             return false;
         }
 
