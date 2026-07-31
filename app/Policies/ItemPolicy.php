@@ -69,7 +69,7 @@ class ItemPolicy extends Policy
     public function publish(User $user, Item $item): bool
     {
         // cannot publish twice, or publish if changes requested.
-        if (in_array($item->status, [Status::Published, Status::ChangesRequested])) {
+        if (in_array($item->status, [Status::Published])) {
             return false;
         }
 
