@@ -59,6 +59,7 @@ class ItemsTable
                     ->toggleable(isToggledHiddenByDefault: true),
 
             ])
+            ->paginationPageOptions([10, 25, 50, 100])
             ->filters([
                 SelectFilter::make('status')
                     ->options([

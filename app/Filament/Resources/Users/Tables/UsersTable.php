@@ -47,6 +47,7 @@ class UsersTable
                     ->sortable()
                     ->toggleable(),
             ])
+            ->paginationPageOptions([10, 25, 50, 100])
             ->filters([
                 SelectFilter::make('level')
                     ->options(Level::options()),

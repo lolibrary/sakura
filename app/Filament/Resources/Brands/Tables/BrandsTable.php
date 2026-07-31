@@ -42,6 +42,7 @@ class BrandsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->paginationPageOptions([10, 25, 50, 100])
             ->filters([
                 //
             ])
