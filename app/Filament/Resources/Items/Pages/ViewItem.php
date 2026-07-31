@@ -40,7 +40,7 @@ class ViewItem extends ViewRecord
                     'images',
                     'slug',
                     'publisher_id',
-                    'submitter_id',
+                    'user_id',
                     'published_at',
                     'status',
                     'created_at',
