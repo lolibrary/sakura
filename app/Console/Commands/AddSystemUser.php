@@ -18,7 +18,7 @@ class AddSystemUser extends Command
      *
      * @var string
      */
-    protected $signature = 'app:system-user {username} {--email=} {--level=1000}';
+    protected $signature = 'app:system-user {username} {--email=} {--level=1000} {--replace : Delete the user and start again}';
 
     /**
      * The console command description.
@@ -35,6 +35,11 @@ class AddSystemUser extends Command
         $username = $this->argument('username');
         $email = $this->option('email') ?? "admin+$username@lolibrary.org";
         $level = Level::tryFrom((int)$this->option('level'));
+
+        if ($this->option('replace')) {
+            info("Deleting user $username");
+            User::where('username', $username)->delete();
+        }
 
         if (User::where('username', $username)->exists()) {
             error('A user already exists with that username');
