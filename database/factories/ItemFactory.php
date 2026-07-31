@@ -82,7 +82,7 @@ $factory->define(Item::class, function (Faker $faker) {
         'year' => $faker->year,
         'product_number' => $faker->bothify('??#####'),
         'notes' => $faker->paragraphs(2),
-        'status' => Item::DRAFT,
+        'status' => Status::Draft,
         'price' => $faker->numberBetween(100, 40000),
         'currency' => $faker->randomElement(array_keys(App\Models\Item::CURRENCIES)),
         'image' => 'images/default.png',
