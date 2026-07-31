@@ -18,6 +18,13 @@ class ItemForm
 {
     public static function configure(Schema $schema): Schema
     {
+        $style = collect([
+            'max-height: 330px',
+            'overflow-y: auto',
+            'padding-left: 14px',
+            'overflow-x: hidden',
+        ])->join('; ');
+
         return $schema
             ->components([
                 TextInput::make('english_name')
@@ -87,9 +94,8 @@ class ItemForm
                     ->schema([
 
                         CheckboxList::make('categories')
-                            ->extraAttributes([
-                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px; overflow-x: hidden;'
-                            ])
+                            ->extraAttributes(['style' => $style])
+                            ->gridDirection('row')
                             ->required()
                             ->minItems(1)
                             ->relationship(
@@ -100,9 +106,8 @@ class ItemForm
                             ->searchDebounce(500),
 
                         CheckboxList::make('features')
-                            ->extraAttributes([
-                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px; overflow-x: hidden;'
-                            ])
+                            ->extraAttributes(['style' => $style])
+                            ->gridDirection('row')
                             ->relationship(
                                 titleAttribute: 'name',
                                 modifyQueryUsing: TranslatedRelation::make('feature'),
@@ -112,9 +117,8 @@ class ItemForm
 
 
                         CheckboxList::make('tags')
-                            ->extraAttributes([
-                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px; overflow-x: hidden;'
-                            ])
+                            ->extraAttributes(['style' => $style])
+                            ->gridDirection('row')
                             ->relationship(
                                 titleAttribute: 'name',
                                 modifyQueryUsing: TranslatedRelation::make('tag'),
@@ -123,9 +127,8 @@ class ItemForm
                             ->searchDebounce(500),
 
                         CheckboxList::make('colors')
-                            ->extraAttributes([
-                                'style' => 'max-height: 330px; overflow-y: scroll; padding-left: 10px; overflow-x: hidden;'
-                            ])
+                            ->extraAttributes(['style' => $style])
+                            ->gridDirection('row')
                             ->name('Colorways')
                             ->relationship(
                                 name: 'colors',
