@@ -102,6 +102,7 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
         'profile',
         'created_at',
         'level',
+        'banned',
     ];
 
     protected $appends = [

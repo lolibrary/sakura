@@ -7,6 +7,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
+use Illuminate\Validation\Rule;
 
 class UserForm
 {
@@ -14,18 +15,20 @@ class UserForm
     {
         return $schema
             ->components([
-                TextInput::make('display_name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
                 TextInput::make('username')
                     ->required()
                     ->rules([
                         'required',
-                        'string',
-                        'min:3',
-                        'max:40',
-                        'regex:/^[0-9a-z][0-9a-z_-]+$/u',
-                        'unique:users',
+                        Rule::string()
+                            ->min(3)
+                            ->max(40)
+                            ->alphaDash()
+                            ->lowercase()
+                            ->doesntStartWith('-', '_')
+                            ->doesntEndWith('-', '_'),
                     ]),
                 TextInput::make('email')
                     ->label('Email address')
