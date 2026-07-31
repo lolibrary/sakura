@@ -9,26 +9,19 @@ use App\Models\User;
 use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class PreserveAbandonedItems implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, Dispatchable;
 
     /**
      * Create a new job instance.
      */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Execute the job.
-     */
-    public function handle(): void
+    public function __invoke(): void
     {
         if (is_null($system = User::system(SystemUser::Anonymous))) {
             Log::alert('system user anonymous is not set, please run app:system-user anonymous', [

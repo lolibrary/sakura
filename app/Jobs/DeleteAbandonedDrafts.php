@@ -7,18 +7,19 @@ use App\Models\Item;
 use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class DeleteAbandonedDrafts implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, Dispatchable;
 
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function __invoke(): void
     {
         $query = Item::query()
             ->withoutEagerLoads()
