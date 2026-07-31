@@ -18,7 +18,11 @@ class AddSystemUser extends Command
      *
      * @var string
      */
-    protected $signature = 'app:system-user {username} {--email=} {--level=1000} {--replace : Delete the user and start again}';
+    protected $signature = 'app:system-user {username}
+        {--e|email= : Full email address for this user}
+        {--l|level=1000 : Access level - see App\\Enums\\Level}
+        {--r|replace : Delete the user and start again}
+        {--replace-id : Generate a new ID for the user, if replacing}';
 
     /**
      * The console command description.
@@ -32,12 +36,18 @@ class AddSystemUser extends Command
      */
     public function handle(): void
     {
+        $id = null;
         $username = $this->argument('username');
         $email = $this->option('email') ?? "admin+$username@lolibrary.org";
         $level = Level::tryFrom((int)$this->option('level'));
 
         if ($this->option('replace')) {
-            info("Deleting user $username");
+            info("Replacing user $username");
+            if ($original = User::where('username', $username)->first()) {
+                info("Preserving ID: $original->id");
+                $id = $original->id;
+            }
+
             User::where('username', $username)->delete();
         }
 
@@ -59,6 +69,7 @@ class AddSystemUser extends Command
         $user = new User;
 
         $user->forceFill([
+            'id' => $id,
             'name' => $username,
             'username' => $username,
             'email' => $email,
