@@ -38,7 +38,8 @@ class MyQueue extends TableWidget
                     ->visibleFrom('lg'),
                 TextColumn::make('english_name')
                     ->formatStateUsing(fn(Item $record) => Str::limit($record->english_name, 40))
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->label('Created')
                     ->sortable()
