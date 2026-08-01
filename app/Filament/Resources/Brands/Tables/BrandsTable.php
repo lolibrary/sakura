@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\Brands\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
+use App\Filament\Components\Table\DateColumn;
+use App\Filament\Components\Table\TranslatableTextColumn;
+use App\Filament\Components\Table\ImageColumn;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -16,31 +16,13 @@ class BrandsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image')
-                    ->disk('s3public')
-                    ->visibility('public')
-                    ->square()
-                    ->checkFileExistence(false),
-                TextColumn::make('name')
-                    ->label('Name')
-                    ->limitList(1)
-                    ->sortable(query: function ($query, string $direction) {
-                        $query->orderByTranslation('name', $direction);
-                    })
-                    ->searchable(query: function ($query, string $search) {
-                        $query->whereTranslationLike('name', '%' . $search . '%');
-                    }),
+                ImageColumn::make('image'),
+                TranslatableTextColumn::make(),
                 TextColumn::make('short_name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                DateColumn::make('created_at'),
+                DateColumn::make('updated_at'),
             ])
             ->paginationPageOptions([10, 25, 50, 100])
             ->filters([
@@ -51,9 +33,7 @@ class BrandsTable
                 EditAction::make(),
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 }

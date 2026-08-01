@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Features\Tables;
 
+use App\Filament\Components\Table\DateColumn;
+use App\Filament\Components\Table\TranslatableTextColumn;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -15,26 +17,12 @@ class FeaturesTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label('Name')
-                    ->limitList(1)
-                    ->sortable(query: function ($query, string $direction) {
-                        $query->orderByTranslation('name', $direction);
-                    })
-                    ->searchable(query: function ($query, string $search) {
-                        $query->whereTranslationLike('name', '%' . $search . '%');
-                    }),
+                TranslatableTextColumn::make(),
                 TextColumn::make('slug')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable(),
+                DateColumn::make('created_at'),
+                DateColumn::make('updated_at'),
             ])
             ->paginationPageOptions([10, 25, 50, 100])
             ->filters([
@@ -45,9 +33,7 @@ class FeaturesTable
                 EditAction::make(),
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 }

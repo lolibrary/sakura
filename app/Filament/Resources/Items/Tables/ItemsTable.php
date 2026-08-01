@@ -3,12 +3,14 @@
 namespace App\Filament\Resources\Items\Tables;
 
 use App\Enums\Status;
-use App\Models\Item;
+use App\Filament\Components\Filters\EnumFilter;
+use App\Filament\Components\Table\DateColumn;
+use App\Filament\Components\Table\ImageColumn;
+use App\Filament\Components\Table\UsernameColumn;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
@@ -21,11 +23,7 @@ class ItemsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image')
-                    ->disk('s3public')
-                    ->visibility('public')
-                    ->square()
-                    ->checkFileExistence(false),
+                ImageColumn::make('image'),
                 TextColumn::make('english_name')
                     ->searchable()
                     ->sortable()
@@ -37,39 +35,21 @@ class ItemsTable
                 TextColumn::make('year')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('submitter.username')
-                    ->label('Submitter')
-                    ->sortable()
-                    ->searchable()
-                    ->toggleable()
-                    ->badge()
-                    ->color(fn (Item $record) => $record->submitter?->level->getColor())
-                    ->icon(fn (Item $record) => $record->submitter?->level->getIcon())
-                    ->tooltip(fn (Item $record) => $record->submitter?->level->getDescription()),
-                TextColumn::make('status')
-                    ->sortable()
-                    ->badge(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
+                UsernameColumn::make('submitter.username')->label('Submitter'),
+                TextColumn::make('status')->sortable()->badge(),
+                DateColumn::make('created_at'),
+                DateColumn::make('updated_at'),
             ])
             ->paginationPageOptions([10, 25, 50, 100])
             ->filters([
-                SelectFilter::make('status')
-                    ->options([
-                        Status::Draft->value => Status::Draft->getName(),
-                        Status::ReadyForReview->value => Status::ReadyForReview->getName(),
-                        Status::ChangesRequested->value => Status::ChangesRequested->getName(),
-                        Status::Published->value => Status::Published->getName(),
-                    ]),
+                EnumFilter::make('status', [
+                    Status::Draft,
+                    Status::ReadyForReview,
+                    Status::ChangesRequested,
+                    Status::Published,
+                ]),
                 SelectFilter::make('published_by')
-                    ->query(fn (Builder $query, array $data) => match ($data['value']) {
+                    ->query(fn(Builder $query, array $data) => match ($data['value']) {
                         'me' => $query->where('publisher_id', auth()->id()),
                         'others' => $query->whereNot('publisher_id', auth()->id()),
                         default => $query,

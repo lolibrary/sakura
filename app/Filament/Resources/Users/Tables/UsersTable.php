@@ -3,8 +3,9 @@
 namespace App\Filament\Resources\Users\Tables;
 
 use App\Enums\Level;
+use App\Filament\Components\Filters\EnumFilter;
+use App\Filament\Components\Table\DateColumn;
 use App\Models\User;
-use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
@@ -27,14 +28,8 @@ class UsersTable
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->visible(fn() => auth()->user()->admin()),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                DateColumn::make('created_at'),
+                DateColumn::make('updated_at'),
                 TextColumn::make('level')
                     ->badge()
                     ->tooltip(fn (User $record) => $record->level->getDescription())
@@ -49,17 +44,14 @@ class UsersTable
             ])
             ->paginationPageOptions([10, 25, 50, 100])
             ->filters([
-                SelectFilter::make('level')
-                    ->options(Level::options()),
+                EnumFilter::make('level', Level::cases()),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    //
-                ]),
+                //
             ]);
     }
 }

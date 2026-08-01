@@ -2,12 +2,13 @@
 
 namespace App\Filament\Resources\Items\Schemas;
 
+use App\Filament\Components\AttributeSelect;
+use App\Filament\Components\CheckboxList;
+use App\Filament\Components\FileUpload;
+use App\Filament\Components\MultiFileUpload;
+use App\Filament\Components\YearSelect;
 use App\Filament\Query\TranslatedRelation;
-use App\Models\Attribute;
 use App\Models\Item;
-use Filament\Forms\Components\CheckboxList;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -18,13 +19,6 @@ class ItemForm
 {
     public static function configure(Schema $schema): Schema
     {
-        $style = collect([
-            'max-height: 330px',
-            'overflow-y: auto',
-            'padding-left: 14px',
-            'overflow-x: hidden',
-        ])->join('; ');
-
         return $schema
             ->components([
                 TextInput::make('english_name')
@@ -61,21 +55,7 @@ class ItemForm
                             ->string()
                             ->maxLength(100),
 
-                        Select::make('year')
-                            ->placeholder('Unknown')
-                            ->options(
-                                collect(range(1990, (int)date('Y') + 3))
-                                    ->reverse()
-                                    ->mapWithKeys(fn (int $value) => [$value => $value])
-                                    ->all()
-                            )
-                            ->rules([
-                                'nullable',
-                                'integer',
-                                'min:1990',
-                                'max:' . (int)date('Y') + 3,
-                            ])
-                            ->helperText('The year of release, if known.'),
+                        YearSelect::make(),
 
                         Select::make('currency')
                             ->placeholder('Unknown')
@@ -92,114 +72,19 @@ class ItemForm
                     ->columns(2)
                     ->columnSpanFull()
                     ->schema([
-
-                        CheckboxList::make('categories')
-                            ->extraAttributes(['style' => $style])
-                            ->gridDirection('row')
-                            ->required()
-                            ->minItems(1)
-                            ->relationship(
-                                titleAttribute: 'name',
-                                modifyQueryUsing: TranslatedRelation::make('category'),
-                            )
-                            ->searchable()
-                            ->searchDebounce(500),
-
-                        CheckboxList::make('features')
-                            ->extraAttributes(['style' => $style])
-                            ->gridDirection('row')
-                            ->relationship(
-                                titleAttribute: 'name',
-                                modifyQueryUsing: TranslatedRelation::make('feature'),
-                            )
-                            ->searchable()
-                            ->searchDebounce(500),
-
-
-                        CheckboxList::make('tags')
-                            ->extraAttributes(['style' => $style])
-                            ->gridDirection('row')
-                            ->relationship(
-                                titleAttribute: 'name',
-                                modifyQueryUsing: TranslatedRelation::make('tag'),
-                            )
-                            ->searchable()
-                            ->searchDebounce(500),
-
-                        CheckboxList::make('colors')
-                            ->extraAttributes(['style' => $style])
-                            ->gridDirection('row')
-                            ->name('Colorways')
-                            ->relationship(
-                                name: 'colors',
-                                titleAttribute: 'name',
-                                modifyQueryUsing: TranslatedRelation::make('color'),
-                            )
-                            ->searchable()
-                            ->searchDebounce(500),
+                        CheckboxList::make('categories')->required()->minItems(1),
+                        CheckboxList::make('features'),
+                        CheckboxList::make('tags'),
+                        CheckboxList::make('colors'),
                     ]),
 
-                Repeater::make('Attributes')
-                    ->label('Attributes')
+                AttributeSelect::make(),
+
+                FileUpload::make('image')->label('Main Image'),
+
+                MultiFileUpload::make('images')
                     ->columnSpanFull()
-                    ->columns(2)
-                    ->relationship('values')
-                    ->schema([
-                        Select::make('attribute_id')
-                            ->relationship(
-                                name: 'attribute',
-                                titleAttribute: 'name',
-                                modifyQueryUsing: TranslatedRelation::make('attribute'),
-                            )
-                            ->options(fn() => Attribute::cached()
-                                ->mapWithKeys(fn(Attribute $attr) => [$attr->id => $attr->name])
-                                ->sort()
-                            )
-                            ->searchable()
-                            ->searchDebounce(500)
-                            ->required()
-                            ->preload()
-                            ->live()
-                            ->disableOptionsWhenSelectedInSiblingRepeaterItems(),
-                        TextInput::make('value')
-                            ->required(),
-                    ])
-                    ->addActionLabel('Add Attribute')
-                    ->reorderableWithButtons()
-                    ->helperText('Attributes are not required and can be deleted, but are recommended!'),
-
-
-                FileUpload::make('image')
-                    ->label('Main Image')
-                    ->disk('s3public')
-                    ->visibility('public')
-                    ->directory('images')
-                    ->deletable()
-                    ->previewable()
-                    ->openable()
-                    ->maxSize(1024 * 5)
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
-                    ->helperText("Acceptable upload types: JPEG, PNG, GIF, WEBP. 5MB limit.")
-                    ->preventFilePathTampering(),
-
-                FileUpload::make('images')
-                    ->columnSpanFull()
-                    ->label('Additional Images')
-                    ->multiple()
-                    ->reorderable()
-                    ->appendFiles()
-                    ->openable()
-                    ->previewable()
-                    ->deletable()
-                    ->maxSize(1024 * 5)
-                    ->maxFiles(40)
-                    ->panelLayout('grid')
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
-                    ->disk('s3public')
-                    ->visibility('public')
-                    ->preventFilePathTampering()
-                    ->directory('images')
-                    ->helperText("Acceptable upload types: JPEG, PNG, GIF, WEBP. 5MB limit per file."),
+                    ->label('Additional Images'),
 
                 RichEditor::make('notes')
                     ->columnSpanFull(),
