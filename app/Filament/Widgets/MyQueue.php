@@ -34,7 +34,8 @@ class MyQueue extends TableWidget
                     ->disk('s3public')
                     ->visibility('public')
                     ->alignCenter()
-                    ->checkFileExistence(false),
+                    ->checkFileExistence(false)
+                    ->visibleFrom('lg'),
                 TextColumn::make('english_name')
                     ->formatStateUsing(fn(Item $record) => Str::limit($record->english_name, 40))
                     ->sortable(),
@@ -43,17 +44,16 @@ class MyQueue extends TableWidget
                     ->sortable()
                     ->dateTime()
                     ->placeholder('Never')
-                    ->visibleFrom('xl'),
+                    ->visibleFrom('lg'),
                 TextColumn::make('updated_at')
                     ->label('Updated')
                     ->sortable()
                     ->dateTime()
                     ->placeholder('Never')
-                    ->visibleFrom('lg'),
+                    ->visibleFrom('xl'),
                 TextColumn::make('status')
                     ->sortable()
-                    ->badge()
-                    ->visibleFrom('xl'),
+                    ->badge(),
             ])
             ->filters([
                 EnumFilter::make('status', [
