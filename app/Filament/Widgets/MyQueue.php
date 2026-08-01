@@ -3,14 +3,11 @@
 namespace App\Filament\Widgets;
 
 use App\Enums\Status;
+use App\Filament\Components\Filters\EnumFilter;
 use App\Models\Item;
-use Filament\Actions\Action;
-use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -21,13 +18,13 @@ use Illuminate\Support\Str;
 class MyQueue extends TableWidget
 {
     protected static ?int $sort = 5;
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     public function table(Table $table): Table
     {
         return $table
             ->heading(trans('resources.queue.title'))
-            ->query(fn (): Builder => auth()->user()
+            ->query(fn(): Builder => auth()->user()
                 ->items()
                 ->where('status', '!=', Status::Published)
                 ->getQuery()
@@ -39,7 +36,7 @@ class MyQueue extends TableWidget
                     ->alignCenter()
                     ->checkFileExistence(false),
                 TextColumn::make('english_name')
-                    ->formatStateUsing(fn (Item $record) => Str::limit($record->english_name, 40))
+                    ->formatStateUsing(fn(Item $record) => Str::limit($record->english_name, 40))
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Created')
@@ -59,16 +56,23 @@ class MyQueue extends TableWidget
                     ->visibleFrom('xl'),
             ])
             ->filters([
-                //
+                EnumFilter::make('status', [
+                    Status::Draft,
+                    Status::ReadyForReview,
+                    Status::ChangesRequested,
+                    Status::Published,
+                ]),
             ])
             ->headerActions([
-                //
+                CreateAction::make()
+                    ->label('New Entry')
+                    ->url(fn(): string => route('filament.admin.resources.items.create')),
             ])
             ->recordActions([
                 ViewAction::make()
-                    ->url(fn (Item $record): string => route('filament.admin.resources.items.view', $record)),
+                    ->url(fn(Item $record): string => route('filament.admin.resources.items.view', $record)),
                 EditAction::make()
-                    ->url(fn (Item $record): string => route('filament.admin.resources.items.edit', $record)),
+                    ->url(fn(Item $record): string => route('filament.admin.resources.items.edit', $record)),
             ])
             ->toolbarActions([
 
@@ -76,7 +80,7 @@ class MyQueue extends TableWidget
             //->emptyStateHeading('No items right now!')
             ->emptyStateActions([
                 CreateAction::make()
-                    ->url(fn (): string => route('filament.admin.resources.items.create')),
+                    ->url(fn(): string => route('filament.admin.resources.items.create')),
             ]);
     }
 }

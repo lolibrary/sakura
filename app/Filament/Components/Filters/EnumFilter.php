@@ -18,7 +18,7 @@ class EnumFilter
     public static function make(string $name, array $filters): SelectFilter
     {
         $enums = collect($filters)->mapWithKeys(fn (BackedEnum | HasLabel $e) => [
-            $e->value => $e->getLabel(),
+            $e->value => method_exists($e, 'getName') ? $e->getName() : $e->getLabel(),
         ]);
 
         return SelectFilter::make($name)
