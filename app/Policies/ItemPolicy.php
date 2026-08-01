@@ -14,7 +14,7 @@ class ItemPolicy extends Policy
 
     public function view(User $user, Item $item): bool
     {
-        if ($user->is($item->submitter)) {
+        if ($user->is($item->submitter) || $item->status === Status::Published) {
             return $user->junior();
         }
 
