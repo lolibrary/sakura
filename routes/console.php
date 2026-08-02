@@ -29,15 +29,15 @@ Schedule::command('item:cache')
     ->everyFiveMinutes()
     ->onOneServer();
 
-Schedule::call(new PreserveAbandonedItems)
-    ->name(PreserveAbandonedItems::class)
-    ->description('Anonymise any published entries where a user has deleted their account')
-    ->daily()
-    ->onOneServer();
-
-Schedule::call(new DeleteAbandonedDrafts)
-    ->name(DeleteAbandonedDrafts::class)
-    ->description('Delete any draft entries where a user has deleted their account')
-    ->daily()
-    ->onOneServer();
+//Schedule::call(new PreserveAbandonedItems)
+//    ->name(PreserveAbandonedItems::class)
+//    ->description('Anonymise any published entries where a user has deleted their account')
+//    ->daily()
+//    ->onOneServer();
+//
+//Schedule::call(new DeleteAbandonedDrafts)
+//    ->name(DeleteAbandonedDrafts::class)
+//    ->description('Delete any draft entries where a user has deleted their account')
+//    ->daily()
+//    ->onOneServer();
 
