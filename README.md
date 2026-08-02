@@ -9,7 +9,7 @@
 
 ### Technology
 
-This codebase is primarily written in PHP, using modern [Laravel](https://laravel.com/), [Filament](https://filamentphp.com). UI styling is done using Tailwind, with [Bootstrap 4](https://getbootstrap.com/docs/4.6/getting-started/introduction/) in there too.
+This codebase is primarily written in PHP, using modern [Laravel](https://laravel.com/) and [Filament](https://filamentphp.com). UI styling is done using Tailwind, with [Bootstrap 4](https://getbootstrap.com/docs/4.6/getting-started/introduction/) in there too.
 
 Translation of UI elements is in progress, using [Weblate](https://hosted.weblate.org/projects/lolibrary/).
 
