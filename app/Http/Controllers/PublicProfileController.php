@@ -26,8 +26,10 @@ class PublicProfileController extends Controller
      */
     public function closet(Request $request, User $user)
     {
-        if (! auth()->user()?->can('closet', $user)) {
-            abort(404); // nothing to see here
+        if (! $user->public_closet) {
+            if (! auth()->user()?->is($user)) {
+                abort(404);
+            }
         }
 
         return view('profile.closet', [
@@ -44,8 +46,10 @@ class PublicProfileController extends Controller
      */
     public function wishlist(Request $request, User $user)
     {
-        if (! auth()->user()?->can('closet', $user)) {
-            abort(404); // nothing to see here
+        if (! $user->public_wishlist) {
+            if (! auth()->user()?->is($user)) {
+                abort(404);
+            }
         }
 
         return view('profile.wishlist', [
