@@ -27,13 +27,13 @@
                 <div class="row p-0 mx-0 my-3">
                     <div class="col p-1 list-group text-center small">
                     <a class="btn btn-outline-primary" href="{{ $item->edit_url }}">
-                        <i class="fal fa-fw fa-edit"></i>  {{ __('ui.item.edit') }}
+                        <x-heroicon-o-pencil-square style="width: 1.2rem; height: 1.2rem; padding-bottom: 0.2rem;" />  {{ __('ui.item.edit') }}
                     </a>
                     </div>
 
                     <div class="col p-1 list-group text-center small">
                     <a class="btn btn-outline-primary" href="{{ $item->view_url }}">
-                        <i class="fal fa-fw fa-eye"></i>  {{ __('ui.item.view') }}
+                        <x-heroicon-o-eye style="width: 1.2rem; height: 1.2rem; padding-bottom: 0.2rem;" />  {{ __('ui.item.view') }}
                     </a>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                 <div class="row p-0 mx-0 my-3">
                     <div class="col p-1 list-group text-center small">
                     <a class="btn btn-outline-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeuCoQbM7cXwF2OAkljtlmALwdgUNCAkKGEDeQHomCySMhStQ/viewform?usp=pp_url&entry.1974464960={{ $item->url }}">
-                        <i class="fal fa-fw fa-edit"></i>  {{ __('ui.item.suggest') }}
+                        <x-heroicon-o-pencil-square style="width: 1.2rem; height: 1.2rem; padding-bottom: 0.2rem;" />  {{ __('ui.item.suggest') }}
                     </a>
                     </div>
                 </div>
@@ -108,12 +108,12 @@
                 <div class="row">
                     <div class="col p-1 list-group text-center small">
                         <div class="list-group-item">
-                            <i class="fal fa-star"></i> {{ $item->wishlist() }} {{ trans_choice('ui.wishlist.stargazers', $item->wishlist()) }}
+                            <x-heroicon-o-star style="width: 1.2rem; height: 1.2rem; padding-bottom: 0.2rem;" /> {{ $item->wishlist() }} {{ trans_choice('ui.wishlist.stargazers', $item->wishlist()) }}
                         </div>
                     </div>
                     <div class="col p-1 list-group text-center small">
                         <div class="list-group-item">
-                            <i class="fal fa-shopping-bag"></i> {{ $item->closet() }} {{ trans_choice('ui.closet.owners', $item->closet()) }}
+                            <x-heroicon-o-shopping-bag style="width: 1.2rem; height: 1.2rem; padding-bottom: 0.2rem;" /> {{ $item->closet() }} {{ trans_choice('ui.closet.owners', $item->closet()) }}
                         </div>
                     </div>
                 </div>
