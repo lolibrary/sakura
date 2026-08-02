@@ -2,110 +2,79 @@
 
 namespace App\Policies;
 
-use App\Models\Attribute;
-use App\Models\Color;
-use App\Models\Feature;
+use App\Enums\Status;
 use App\Models\Item;
-use App\Models\Tag;
 use App\Models\User;
+use App\Traits\HasAttachPolicies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ItemPolicy
+class ItemPolicy extends Policy
 {
-    use HandlesAuthorization;
+    use HandlesAuthorization, HasAttachPolicies;
 
-    /**
-     * Can a user view available items?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
-    public function viewAny(User $user)
+    public function view(User $user, Item $item): bool
     {
-        return $user->junior();
-    }
-
-    /**
-     * Can a user view a item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @return bool
-     */
-    public function view(User $user, Item $item)
-    {
-        if ($item->user_id !== $user->id) {
-            return $user->lolibrarian();
+        if ($user->is($item->submitter) || $item->status === Status::Published) {
+            return $user->junior();
         }
 
-        return $user->junior();
+        return $user->lolibrarian();
     }
 
-    /**
-     * Can a user create an item draft?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->junior();
     }
 
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @return bool
-     */
-    public function update(User $user, Item $item)
+    public function update(User $user, Item $item): bool
     {
-        if ($item->status === Item::PUBLISHED) {
-            // lolibrarians can update items they themselves published
-            if ($item->publisher_id === $user->id) {
+        // duplicate is a final state, but you can still edit.
+        // it will do precisely nothing, though.
+        if ($item->status === Status::Duplicate) {
+            return $user->senior();
+        }
+
+        // lolibrarians can update their own published items
+        // otherwise, only seniors can.
+        if ($item->status === Status::Published) {
+            if ($user->is($item->submitter) && $user->is($item->publisher)) {
                 return $user->lolibrarian();
             }
 
             return $user->senior();
         }
 
-        // otherwise, this is a draft:
-        // users can update their own drafts if junior.
-        // users can update other people's drafts if senior.
-
-        if ($item->user_id === $user->id) {
+        // draft: if the submitter, allow edits
+        if ($user->is($item->submitter)) {
             return $user->junior();
         }
 
-        if ($item->user_id === null) {
-            return $user->junior();
-        }
-
+        // if senior, allow edits anyway.
         return $user->senior();
     }
 
-    /**
-     * Can a user delete an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @return bool
-     */
-    public function delete(User $user, Item $item)
-    {
-        if ($item->status === Item::PUBLISHED) {
-            // lolibrarian can delete items they themselves published
-            if ($item->publisher_id === $user->id) {
-                return $user->lolibrarian();
-            }
 
-            // senior lolibrarians can delete published items.
-            return $user->senior();
+    public function delete(User $user, Item $item): bool
+    {
+        // you cannot delete a published item. it MUST be retracted first.
+        if ($item->status === Status::Published) {
+            return false;
+        }
+
+        // only trusted seniors can hard delete from redacted.
+        // this is to avoid data loss, if a dupe/mistake.
+        if ($item->status === Status::Retracted) {
+            return $user->trusted();
+        }
+
+        // duplicate is a final state - these should not be deleted for "cleanup"
+        // duplicated have redirects in place for search engines and user links.
+        if ($item->status === Status::Duplicate) {
+            return $user->trusted();
         }
 
         // junior can delete their own drafts.
-        if ($item->user_id === $user->id) {
+        if ($user->is($item->submitter)) {
             return $user->junior();
         }
 
@@ -114,27 +83,16 @@ class ItemPolicy
         return $user->senior();
     }
 
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @return bool
-     */
-    public function publish(User $user, Item $item)
+    public function publish(User $user, Item $item): bool
     {
-        // must be senior to unpublish, or the original publisher
-        if ($item->status === Item::PUBLISHED) {
-            if ($item->publisher_id === $user->id) {
-                return $user->lolibrarian();
-            }
-
-            return $user->senior();
+        // cannot publish twice
+        // also cannot publish a duplicate - it is a final state.
+        if (in_array($item->status, [Status::Published, Status::Duplicate])) {
+            return false;
         }
 
-        // otherwise, this is a draft:
         // users can publish their own drafts if lolibrarian.
-        if ($item->user_id === $user->id) {
+        if ($user->is($item->submitter)) {
             return $user->lolibrarian();
         }
 
@@ -143,106 +101,104 @@ class ItemPolicy
     }
 
     /**
-     * Can a user update an item?
+     * Can a user "retract" an item, aka "unpublish".
      *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Tag $tag
-     * @return bool
+     * Locks the item into the Retracted state, limiting deletion.
      */
-    public function attachAnyTag(User $user, Item $item)
+    public function retract(User $user, Item $item): bool
     {
-        return $this->update($user, $item);
+        if ($item->status !== Status::Published) {
+            return false; // must be published to retract
+        }
+
+        // safety check: must be the publisher *and* the submitter
+        // this covers cases where people have been promoted.
+        if ($user->is($item->publisher) && $user->is($item->submitter)) {
+            return $user->lolibrarian();
+        }
+
+        return $user->senior();
+    }
+
+    public function markAsDraft(User $user, Item $item): bool
+    {
+        // this requires the item to be in "ready for review" or "changes requested"
+        if (! in_array($item->status, [Status::ReadyForReview, Status::ChangesRequested], strict: true)) {
+            return false;
+        }
+
+        if ($item->submitter->is($user)) {
+            return $user->junior();
+        }
+
+        return $user->senior();
+    }
+
+    public function readyForReview(User $user, Item $item): bool
+    {
+        // this is valid from "changes requested" and "draft" states on your own items.
+        if (! in_array($item->status, [Status::Draft, Status::ChangesRequested], strict: true)) {
+            return false;
+        }
+
+        if ($item->submitter->is($user)) {
+            return $user->junior();
+        }
+
+        return $user->senior();
+    }
+
+    public function requestChanges(User $user, Item $item): bool
+    {
+        // you can request changes from "ready for review" or "retracted"
+        // on retracted:
+        if (! in_array($item->status, [Status::ReadyForReview, Status::Retracted], strict: true)) {
+            return false;
+        }
+
+        // senior and up can request changes.
+        return $user->senior();
+    }
+
+    public function markAsDuplicate(User $user, Item $item): bool
+    {
+        // if already a duplicate, can't do it again
+        if ($item->status === Status::Duplicate) {
+            return false;
+        }
+
+        // if not the submitter: always check senior
+        // this means senior can always mark as duplicate from any state.
+        if (! $user->is($item->submitter)) {
+            return $user->senior();
+        }
+
+        // lolibrarians can mark something as a duplicate if it has had changes requested
+        if ($item->status === Status::ChangesRequested) {
+            return $user->lolibrarian();
+        }
+
+        // juniors can mark their own drafts as duplicates (this does nothing but change the status/visibility)
+        if (in_array($item->status, [Status::Draft, Status::ReadyForReview], strict: true)) {
+            return $user->junior();
+        }
+
+        // any other status: senior+
+        return $user->senior();
     }
 
     /**
-     * Can a user update an item?
+     * Check if a user is allowed to view and write comments on an item.
      *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Tag $tag
-     * @return bool
+     * Both are tied to the same permission.
+     * These comments are not public.
      */
-    public function detachTag(User $user, Item $item, Tag $tag)
+    public function comment(User $user, Item $item): bool
     {
-        return $this->update($user, $item);
-    }
+        if (! $this->view($user, $item)) {
+            return false;
+        }
 
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Attribute $attribute
-     * @return bool
-     */
-    public function attachAnyAttribute(User $user, Item $item)
-    {
-        return $this->update($user, $item);
-    }
-
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Attribute $attribute
-     * @return bool
-     */
-    public function detachAttribute(User $user, Item $item, Attribute $attribute)
-    {
-        return $this->update($user, $item);
-    }
-
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Color $color
-     * @return bool
-     */
-    public function attachAnyColor(User $user, Item $item)
-    {
-        return $this->update($user, $item);
-    }
-
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Color $color
-     * @return bool
-     */
-    public function detachColor(User $user, Item $item, Color $color)
-    {
-        return $this->update($user, $item);
-    }
-
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Feature $feature
-     * @return bool
-     */
-    public function attachAnyFeature(User $user, Item $item)
-    {
-        return $this->update($user, $item);
-    }
-
-    /**
-     * Can a user update an item?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Item $item
-     * @param \App\Models\Feature $feature
-     * @return bool
-     */
-    public function detachFeature(User $user, Item $item, Feature $feature)
-    {
-        return $this->update($user, $item);
+        return $user->is($item->submitter) ? $user->junior() : $user->senior();
     }
 }

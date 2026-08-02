@@ -11,13 +11,23 @@ return [
     |
     */
     'locales' => [
-        'en' => 'English', 
-        'en_US' => 'English', // Fallback locale fix, do not actually add tls
-        'fr' => 'français', 
+        'en',
+        'fr',
+        'it',
+        'nb_NO',
+        'nl',
+    ],
+
+    /*
+     * 'locales' => [
+        'en' => 'English',
+        //'en_US' => 'English', // Fallback locale fix, do not actually add tls
+        'fr' => 'français',
         'it' => 'Italiano',
         'nb_NO' => 'norsk (bokmål)',
         'nl' => 'Nederlands'
     ],
+     */
 
     /*
     |--------------------------------------------------------------------------

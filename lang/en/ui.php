@@ -7,6 +7,13 @@ return [
     'categories' => 'Categories',
     'recent_items' => 'Recent Items',
     'brands' => 'Brands',
+    'entry' => 'Entry',
+    'entries' => 'Entries',
+    'attributes' => 'Attributes',
+    'colors' => 'Colorways',
+    'tags' => 'Tags',
+    'user' => 'User',
+    'users' => 'Users',
     'back' => 'Back to homepage',
     'profile' => 'Profile',
 
@@ -137,13 +144,24 @@ return [
         'published' => 'Published on',
         'draft' => 'This is a Draft Post',
         'notes' => 'Notes',
+        'attribute' => 'Attribute',
+        'feature' => 'Feature',
         'features' => 'Features',
         'features_help' => 'Features are things commonly found on an item, e.g. ruffles or elasticated linings.',
         'features_none' => 'No features recorded!',
+        'color' => 'Colorway',
         'colors' => 'Colorways',
         'colors_none' => 'No colors recorded!',
+        'tag' => 'Tag',
         'tags' => 'Tags',
         'tags_none' => 'No tags recorded!',
         'images' => 'Images',
-    ]
+    ],
+
+    'queue' => [
+        'heading' => 'My Queue',
+        'help' => 'Drafts, ready for review and pending entries',
+    ],
+
+
 ];

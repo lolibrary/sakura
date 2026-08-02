@@ -5,7 +5,6 @@ namespace App\Models;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use App\Models\Traits\Cacheable;
-use Laravel\Nova\Actions\Actionable;
 
 /**
  * A type of item, e.g. JSK.
@@ -18,7 +17,6 @@ class Category extends Model implements TranslatableContract
 {
     use Cacheable;
     use Translatable;
-    use Actionable;
 
     /**
      * Translatable attributes.
@@ -44,6 +42,7 @@ class Category extends Model implements TranslatableContract
         'name',
         'slug',
         'url',
+        'image',
     ];
 
     /**

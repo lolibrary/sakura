@@ -6,68 +6,31 @@ use App\Models\Attribute;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class AttributePolicy
+class AttributePolicy extends Policy
 {
     use HandlesAuthorization;
 
-    /**
-     * Can a user view available attributes?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
-    public function viewAny(User $user)
+    public function view(User $user, Attribute $attribute): bool
     {
         return $user->junior();
     }
 
-    /**
-     * Can a user view available attributes?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
-    public function view(User $user, Attribute $attribute)
+    public function create(User $user): bool
     {
-        return $user->junior();
+        return $user->trusted();
     }
 
-    /**
-     * Can a user create a attribute?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
-    public function create(User $user)
+    public function update(User $user, Attribute $attribute): bool
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
-    /**
-     * Can a user update a attribute?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Attribute $attribute
-     * @return bool
-     */
-    public function update(User $user, Attribute $attribute)
-    {
-        return $user->admin();
-    }
-
-    /**
-     * Can a user delete a attribute?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Attribute $attribute
-     * @return bool
-     */
-    public function delete(User $user, Attribute $attribute)
+    public function delete(User $user, Attribute $attribute): bool
     {
         if ($attribute->items()->count() > 0) {
             return false;
         }
 
-        return $user->admin();
+        return $user->trusted();
     }
 }

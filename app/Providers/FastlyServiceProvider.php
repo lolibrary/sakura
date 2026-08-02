@@ -2,16 +2,9 @@
 
 namespace App\Providers;
 
-use App\Composers;
 use App\Services\Fastly\ServiceProxy;
 use Fastly\Configuration;
-use Illuminate\Foundation\Application;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Nova\Nova;
 
 class FastlyServiceProvider extends ServiceProvider
 {
@@ -20,7 +13,7 @@ class FastlyServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->bind('fastly', function () {
             $config = Configuration::getDefaultConfiguration();
@@ -38,7 +31,7 @@ class FastlyServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }

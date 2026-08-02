@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\Status;
 use App\Models\Image;
 use App\Models\Item;
 use Exception;
@@ -78,9 +79,9 @@ class MigrateItemImages extends Command
             case 'all':
                 return Item::query();
             case 'published':
-                return Item::where('status', Item::PUBLISHED);
+                return Item::where('status', Status::Published);
             case 'draft':
-                return Item::where('status', Item::DRAFT);
+                return Item::where('status', Status::Draft);
         }
 
         if (is_numeric($status)) {

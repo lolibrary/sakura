@@ -23,19 +23,18 @@ class ProfileController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
     public function profile()
     {
-        $user = Auth::user();
-        $isOwner = true;
-
-        return view('profile.index', compact('user', 'isOwner'));
+        return view('profile.index', [
+            'user' => auth()->user(),
+        ]);
     }
 
     /**
      * Let users update their info.
-     * 
+     *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -46,10 +45,25 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'username' => [
                 'required',
-                'string',
-                'min:3',
-                'max:40',
-                'regex:/^[^-_][0-9a-z_-]+$/u',
+                Rule::string()
+                    ->min(3)
+                    ->max(40)
+                    ->alphaDash()
+                    ->lowercase()
+                    ->doesntStartWith('-', '_')
+                    ->doesntEndWith('-', '_'),
+                    Rule::notIn([
+                        'admin',
+                        'administrator',
+                        'lolibrary',
+                        'official',
+                        'senior',
+                        'lolibrarian',
+                        'system',
+                        'user',
+                        'developer',
+                        'dev',
+                    ]),
                 Rule::unique('users')->ignore($user),
             ],
             'email' => ['required', 'string', 'max:255', 'email', Rule::unique('users')->ignore($user)],
@@ -73,36 +87,33 @@ class ProfileController extends Controller
             $user->password = Hash::make($validatedData['password']);
         }
 
-        $user->public_closet = $request->has('public_closet') == '1' ? '1' : '0';
-        $user->public_wishlist = $request->has('public_wishlist') == '1' ? '1' : '0';
+        $user->public_closet = $request->has('public_closet');
+        $user->public_wishlist = $request->has('public_wishlist');
 
         $user->save();
-        
+
         return redirect('profile')->with('status', $status);
     }
 
     /**
      * Get a user's closet (owned items).
-     * 
+     *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function closet(Request $request)
     {
-        $user = Auth::user();
-
-        return redirect()->route('public_closet', ['username' => $user->username]);
+        return redirect()->route('closet.public', auth()->user());
     }
 
     /**
      * Get a user's wishlist (favourited items).
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function wishlist(Request $request)
     {
-        $user = Auth::user();
-        return redirect()->route('public_wishlist', ['username' => $user->username]);
+        return redirect()->route('wishlist.public', auth()->user());
     }
 }

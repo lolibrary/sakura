@@ -2,43 +2,31 @@
 
 namespace App\Models;
 
+use App\Enums\Status;
+use App\Enums\SystemUser;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
-use Laravel\Nova\Actions\Actionable;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
+use Illuminate\Support\Facades\Log;
 use NumberFormatter;
-use Whitecube\NovaFlexibleContent\Value\FlexibleCast;
-use Whitecube\NovaFlexibleContent\Layouts\Collection;
 
 /**
  * An Item of Apparel.
  *
- * @property string      $slug            The URL slug of an item.
- * @property string      $english_name    The English Title of an Item.
+ * @property string $slug            The URL slug of an item.
+ * @property string $english_name    The English Title of an Item.
  * @property string|null $foreign_name    The 'Japanese Title' of an Item.
- * @property int|null    $year            The year an Item was released.
+ * @property int|null $year            The year an Item was released.
  * @property string|null $product_number  An Item's product number.
- * @property int         $status          The status of an item (stored internally as an int).
- * @property string      $price           The price of this item, in a given currency.
- * @property float       $price_formatted The price of this item, formatted to the rules of the given currency (e.g. /100 for gbp/usd)
- * @property string      $currency        The currency of this item, as an ISO code.
- * @property Collection  $images          The images attached to this item, as a flexible collection.
+ * @property Status $status The status of an item (stored internally as an int).
+ * @property string $price           The price of this item, in a given currency.
+ * @property float $price_formatted The price of this item, formatted to the rules of the given currency (e.g. /100 for gbp/usd)
+ * @property string $currency        The currency of this item, as an ISO code.
+ * @property array|string[] $images          The images attached to this item, as a flexible collection.
+ * @property \Illuminate\Support\Collection $metadata Metadata attached to this item.
+ * @property string|null $duplicate_url URL to the item this one is a duplicate of, if applicable.
  *
- * @property \App\Models\Image $image     The primary {@link \App\Models\Image} for this Item.
- * @property \App\Models\User $submitter The {@link \App\Models\User} who originally submitted this Item.
- * @property \App\Models\User $publisher The {@link \App\Models\User} who published this Item.
- * @property \App\Models\Brand $brand     The {@link \App\Models\Brand} of this Item (e.g. Angelic Pretty).
- *
- * @property \App\Models\Category[]\Illuminate\Database\Eloquent\Collection $categories  The {@link \App\Models\Category categories} of this Item (e.g. JSK).
- * @property \App\Models\Tag[]|\Illuminate\Database\Eloquent\Collection $tags       The {@link \App\Models\Tag search tags} for this Item.
- * @property \App\Models\Color[]|\Illuminate\Database\Eloquent\Collection $colors     The {@link \App\Models\Color colorways} this Item comes in (e.g. Black).
- * @property \App\Models\Feature[]|\Illuminate\Database\Eloquent\Collection $features   The {@link \App\Models\Feature features} of this item (e.g. Back Shirring).
- * @property \App\Models\Attribute[]|\Illuminate\Database\Eloquent\Collection $attributes The {@link \App\Models\Attribute custom attributes} on this Item.
- * @property \App\Models\User[]|\Illuminate\Database\Eloquent\Collection $stargazers The {@link \App\Models\User users} who want to own this Item.
- * @property \App\Models\User[]|\Illuminate\Database\Eloquent\Collection $owners     The {@link \App\Models\Attribute users} who own this Item.
- *
- * @property string $image_id The ID of this Item's {@link \App\Models\Image image}.
- * @property string $category_id  The ID of this Item's {@link \App\Models\Category category}.
  * @property string $user_id  The ID of the {@link \App\Models\User user} who submitted this Item.
  * @property string $brand_id The ID of this Item's {@link \App\Models\Brand brand}.
  * @property string $submitter_id The ID of this Item's {@link \App\Models\User submitter}.
@@ -48,7 +36,7 @@ use Whitecube\NovaFlexibleContent\Layouts\Collection;
  */
 class Item extends Model
 {
-    use ItemRelations, Publishable, Sluggable, Actionable;
+    use ItemRelations, Publishable, Sluggable;
 
     /**
      * A list of supported currencies.
@@ -79,47 +67,13 @@ class Item extends Model
         'inr' => 'Indian Rupees (₹)',
     ];
 
-    /**
-     * Indicates that an item is a draft and shouldn't be visible.
-     *
-     * @var int
-     */
-    public const DRAFT = 0;
-
-    /**
-     * Indicates that an item should be visible to everyone.
-     *
-     * @var int
-     */
-    public const PUBLISHED = 1;
-
-    /**
-     * Indicates that an item is ready for review and publishing.
-     *
-     * @var int
-     */
-    public const PENDING = 2;
-
-    /**
-     * Indicates that an item is ready for review and publishing.
-     *
-     * @var int
-     */
-    public const CHANGES_REQUESTED = 3;
-
-    /**
-     * Test status for missing image imports.
-     *
-     * @var int
-     */
-    public const MISSING_IMAGES = 4;
-
-    /**
-     * Test status for missing shoe drafts.
-     *
-     * @var int
-     */
-    public const SHOE_DRAFTS = 10;
+    public const array RGB_COLORS = [
+        'draft' => 'rgb(186,225,255)',
+        'published' => 'rgb(186,255,201)',
+        'pending' => 'rgb(255,223,186)',
+        'changes requested' => 'rgb(255,179,186)',
+        'unknown' => 'rgb(207, 207, 196)',
+    ];
 
     /**
      * A shortcut for fully eager loading an item.
@@ -174,7 +128,7 @@ class Item extends Model
      *
      * @var array
      */
-    protected $appends = ['price_details', 'url', 'edit_url'];
+    protected $appends = ['price_details', 'url', 'edit_url', 'duplicate_url'];
 
     /**
      * Visible attributes.
@@ -190,7 +144,12 @@ class Item extends Model
         'notes',
         'internal_notes',
         'price_details',
+        'price',
+        'currency',
+        'year',
         'product_number',
+        'image',
+        'images',
 
         'tags',
         'colors',
@@ -212,10 +171,12 @@ class Item extends Model
      * @var array
      */
     public $casts = [
-        'images' => FlexibleCast::class,
+        'images' => 'array',
         'additional_images' => 'json',
         'published_at' => 'datetime',
         'price' => 'integer',
+        'status' => Status::class,
+        'metadata' => AsCollection::class,
     ];
 
     /**
@@ -226,22 +187,26 @@ class Item extends Model
     public function getFullPrice()
     {
         if (in_array($this->currency, ['jpy', 'krw', 'cny'])) {
-            return (string) round($this->price ?? 0);
+            return (string)round($this->price ?? 0);
         }
 
-        return (string) round($this->price ?? 0, 2);
+        return (string)round($this->price ?? 0, 2);
     }
 
     /**
      * Get formatted price for an item.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPriceFormattedAttribute()
+    public function getPriceFormattedAttribute(): ?string
     {
         $price = $this->getFullPrice();
 
         $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+
+        if ($this->currency === null) {
+            return null;
+        }
 
         return $formatter->formatCurrency($price, $this->currency);
     }
@@ -255,18 +220,14 @@ class Item extends Model
     {
         return [
             'currency' => $this->currency,
-            'price' => (int) $this->price,
+            'price' => (int)$this->price,
             'local_price' => $this->getFullPrice(),
             'formatted' => $this->price_formatted,
         ];
     }
 
-    public function categories()
+    public function wishlist()
     {
-        return $this->belongsToMany('App\Models\Category');
-    }
-
-    public function wishlist() {
         $wishlist = cache()->tags(['wishlist'])->get($this->getKey());
         if (!$wishlist) {
             $wishlist = $this->stargazers()->count();
@@ -275,7 +236,8 @@ class Item extends Model
         return $wishlist;
     }
 
-    public function closet() {
+    public function closet()
+    {
         $closet = cache()->tags(['closet'])->get($this->getKey());
         if (!$closet) {
             $closet = $this->owners()->count();
@@ -289,8 +251,40 @@ class Item extends Model
         return "items.backup.{$this->getKey()}";
     }
 
-    protected function syncComponents()
+    public function anonymize(bool $force = false): bool
     {
-        //
+        // guard against running this with a user present
+        if ($this->submitter && !$force) {
+            Log::alert('tried to anonymize an item with a valid submitter', [
+                'item_id' => $this->id,
+                'user_id' => $this->user_id,
+                'submitter' => $this->submitter->username,
+                'slug' => $this->slug,
+            ]);
+
+            return false;
+        }
+
+        if (is_null($user = User::system(SystemUser::Anonymous))) {
+            Log::alert('anonymous system user not set, please run app:system anonymous');
+            return false;
+        }
+
+        $this->user_id = $user->id;
+
+        return $this->save();
+    }
+
+    protected function getDuplicateUrlAttribute(): ?string
+    {
+        if (! $this->duplicate()) {
+            return null;
+        }
+
+        if (is_null($item = Item::find($this->metadata->get('duplicate_item_id')))) {
+            return null;
+        }
+
+        return $item->url;
     }
 }

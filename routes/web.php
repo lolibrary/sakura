@@ -1,6 +1,6 @@
 <?php
 
-/*
+/*;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -11,8 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\IdentityController;
-use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Items\BrandController;
@@ -24,8 +24,10 @@ use App\Http\Controllers\Items\TagController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\Auth\RegisterController;
 
 Auth::routes(['verify' => true]);
+Route::get('/auth/check', [RegisterController::class, 'check'])->name('auth.check');
 
 // Homepage
 Route::get('/', [HomeController::class, 'homepage'])->name('home');
@@ -38,16 +40,13 @@ Route::prefix('profile')->group(function () {
     Route::get('/', [ProfileController::class, 'profile'])->name('profile');
     Route::post('/', [ProfileController::class, 'update'])->name('update');
     Route::get('closet', [ProfileController::class, 'closet'])->name('closet');
-    Route::get('{username}/closet', [PublicProfileController::class, 'closet'])->name('public_closet');
+    Route::get('{user}/closet', [PublicProfileController::class, 'closet'])->name('closet.public');
     Route::get('wishlist', [ProfileController::class, 'wishlist'])->name('wishlist');
-    Route::get('{username}/wishlist', [PublicProfileController::class, 'wishlist'])->name('public_wishlist');
+    Route::get('{user}/wishlist', [PublicProfileController::class, 'wishlist'])->name('wishlist.public');
 });
 
 // auth endpoint (for mediawiki)
 Route::get('api/auth', [IdentityController::class, 'show']);
-
-// blog posts route.
-Route::get('blog/{post}', [BlogController::class, 'show'])->name('posts.show');
 
 // categories/brands/features etc
 Route::group([], function () {

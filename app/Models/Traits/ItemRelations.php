@@ -3,14 +3,31 @@
 namespace App\Models\Traits;
 
 use App\Models\Attribute;
+use App\Models\AttributeItem;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Feature;
-use App\Models\Item;
 use App\Models\Tag;
 use App\Models\User;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+/**
+ * @property Brand $brand
+ * @property Attribute[]|\Illuminate\Database\Eloquent\Collection $attributes
+ * @property Category[]|\Illuminate\Database\Eloquent\Collection $categories
+ * @property Color[]|\Illuminate\Database\Eloquent\Collection $colors
+ * @property Feature[]|\Illuminate\Database\Eloquent\Collection $features
+ * @property Tag[]|\Illuminate\Database\Eloquent\Collection $tags
+ * @property AttributeItem[]|\Illuminate\Database\Eloquent\Collection $values
+ * @property User[]|\Illuminate\Database\Eloquent\Collection $owners
+ * @property User[]|\Illuminate\Database\Eloquent\Collection $stargazers
+ * @property User|null $publisher
+ * @property User $submitter
+ */
 trait ItemRelations
 {
     /**
@@ -18,66 +35,81 @@ trait ItemRelations
      *
      * @return void
      */
-    protected static function bootItemRelations()
+    protected static function bootItemRelations(): void
     {
-        static::deleting(function (Item $item) {
-            $item->tags()->sync([]);
-            $item->attributes()->sync([]);
-            $item->colors()->sync([]);
-            $item->features()->sync([]);
-            $item->stargazers()->sync([]);
-            $item->owners()->sync([]);
-        });
+        //
     }
 
     /**
      * The brand of this item.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function brand()
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
     }
 
     /**
-     * The category of this item (shoes, etc).
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    /**
      * Get the user who submitted this item.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function submitter()
+    public function submitter(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
      * The tags for this item.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
     /**
      * The features of this Item.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function features()
+    public function features(): BelongsToMany
     {
         return $this->belongsToMany(Feature::class)->withTimestamps();
+    }
+
+    /**
+     * Get a list of the colors this item has.
+     */
+    public function colors(): BelongsToMany
+    {
+        return $this->belongsToMany(Color::class)->withTimestamps();
+    }
+
+    /**
+     * The users who have this item in their closet.
+     */
+    public function owners(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'closet')->withTimestamps();
+    }
+
+    /**
+     * The users who have this item on their wish list.
+     */
+    public function stargazers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'wishlist')->withTimestamps();
+    }
+
+    /**
+     * Get the publisher of this item.
+     */
+    public function publisher(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'publisher_id');
+    }
+
+    /**
+     * Categories (e.g. JSK, Blouse) this item belongs to.
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
     }
 
     /**
@@ -85,48 +117,16 @@ trait ItemRelations
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function attributes()
+    public function attributes(): BelongsToMany
     {
         return $this->belongsToMany(Attribute::class)->withPivot('value')->withTimestamps();
     }
 
     /**
-     * Get a list of the colors this item has.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Get a list of attributes this item has, with values on pivots.
      */
-    public function colors()
+    public function values(): HasMany
     {
-        return $this->belongsToMany(Color::class)->withTimestamps();
-    }
-
-    /**
-     * The users who have this item in their closet.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function owners()
-    {
-        return $this->belongsToMany(User::class, 'closet')->withTimestamps();
-    }
-
-    /**
-     * The users who have this item on their wish list.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function stargazers()
-    {
-        return $this->belongsToMany(User::class, 'wishlist')->withTimestamps();
-    }
-
-    /**
-     * Get the publisher of this item.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function publisher()
-    {
-        return $this->belongsTo(User::class, 'publisher_id');
+        return $this->hasMany(AttributeItem::class);
     }
 }

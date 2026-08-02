@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => env('FILESYSTEM_DRIVER', 's3public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
+    'cloud' => env('FILESYSTEM_CLOUD', 's3public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -71,8 +71,9 @@ return [
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
-            'endpoint' => env('AWS_URL'), // TODO: change this to AWS_ENDPOINT
-            'url' => env('AWS_CDN_URL'),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'url' => env('AWS_URL'),
+            'cdn_endpoint' => env('AWS_CDN_URL'),
             'visibility' => 'public',
         ],
 

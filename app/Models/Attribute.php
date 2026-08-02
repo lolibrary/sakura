@@ -5,7 +5,8 @@ namespace App\Models;
 use App\Models\Traits\Cacheable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
-use Laravel\Nova\Actions\Actionable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 /**
@@ -21,7 +22,6 @@ class Attribute extends Model implements TranslatableContract
 {
     use Cacheable;
     use Translatable;
-    use Actionable;
 
     /**
      * Translatable attributes.
@@ -70,13 +70,13 @@ class Attribute extends Model implements TranslatableContract
         return $this->pivot->value;
     }
 
-    /**
-     * Get the items that belong to an attribute.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function items()
+    public function items(): BelongsToMany
     {
         return $this->belongsToMany(Item::class);
+    }
+
+    public function values(): HasMany
+    {
+        return $this->hasMany(AttributeItem::class);
     }
 }

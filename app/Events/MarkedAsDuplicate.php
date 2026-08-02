@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Events;
+
+use App\Models\Item;
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class MarkedAsDuplicate
+{
+    use Dispatchable, SerializesModels;
+
+    /**
+     * Create a new event instance.
+     */
+    public function __construct(public Item $item)
+    {
+        //
+    }
+
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return array<int, Channel>
+     */
+    public function broadcastOn(): array
+    {
+        return [];
+    }
+}

@@ -33,7 +33,7 @@ trait Sluggable
      */
     public static function createSlug(Item $item)
     {
-        $candidate = $item->brand->short_name.'-'.Str::slug($item->english_name);
+        $candidate = $item->brand->short_name . '-' . Str::slug($item->english_name);
 
         if (! static::where('slug', $candidate)->exists()) {
             return $candidate;
@@ -42,11 +42,11 @@ trait Sluggable
         $attempts = -1;
 
         do {
-            if ($attempts > 255) {
+            if ($attempts > 30) {
                 throw new \RuntimeException("Too many items have the slug prefix [{$candidate}]");
             }
 
-            $try = $candidate.'-'.++$attempts;
+            $try = $candidate . '-' . ++$attempts;
         } while (static::where('slug', $try)->exists());
 
         return $try;

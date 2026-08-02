@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\Status;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -10,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use App\Models\Item;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class BacklogUpdate implements ShouldQueue
 {
@@ -32,11 +34,16 @@ class BacklogUpdate implements ShouldQueue
      */
     public function __invoke(): void
     {
+        if (! app()->isProduction()) {
+            Log::info('Not running BacklogUpdate: not running in production');
+            return;
+        }
+
         $webhook = config('services.discord.webhooks.updates');
-        $published = DB::table('items')->where('status', '=', Item::PUBLISHED)->count();
-        $pending = DB::table('items')->where('status', '=', Item::PENDING)->count();
-        $changes = DB::table('items')->where('status', '=', Item::CHANGES_REQUESTED)->count();
-        $draft = DB::table('items')->where('status', '=', Item::DRAFT)->count();
+        $published = DB::table('items')->where('status', '=', Status::Published)->count();
+        $pending = DB::table('items')->where('status', '=', Status::ReadyForReview)->count();
+        $changes = DB::table('items')->where('status', '=', Status::ChangesRequested)->count();
+        $draft = DB::table('items')->where('status', '=', Status::Draft)->count();
 
         $msg = <<<EOD
         ## *Current Entries*

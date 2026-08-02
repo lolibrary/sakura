@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Level;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ class AddLevelToUsersTable extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('level')->default(App\Models\User::JUNIOR_LOLIBRARIAN);
+            $table->integer('level')->default(Level::Junior);
             $table->boolean('banned')->default(false);
         });
     }

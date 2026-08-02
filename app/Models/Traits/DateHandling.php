@@ -36,7 +36,7 @@ trait DateHandling
      * @param bool $exists
      *
      * @param null $using
-     * @return \App\Pivot
+     * @return \App\Models\Pivot
      */
     public function newPivot(Eloquent $parent, array $attributes, $table, $exists, $using = null)
     {

@@ -2,11 +2,8 @@
 
 namespace App\Models;
 
-use Laravel\Nova\Actions\Actionable;
-
 class Instruction extends Model
 {
-    use Actionable;
 
     /**
      * The values we're allowed to fill here.

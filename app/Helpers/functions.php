@@ -242,7 +242,7 @@ if (! function_exists('cdn_path')) {
      * @param string $path
      * @return string
      */
-    function cdn_path(string $path)
+    function cdn_path(string $path): string
     {
         return config('cdn.image.url').'/'.config('cdn.image.folder').'/'.$path;
     }
@@ -255,8 +255,12 @@ if (! function_exists('cdn_link')) {
      * @param string $path
      * @return string
      */
-    function cdn_link(string $path)
+    function cdn_link(?string $path): string
     {
+        if ($path === null) {
+            $path = 'assets/default.png';
+        }
+
         if (Str::startsWith($path, 'https://')) {
             return $path;
         }
@@ -266,7 +270,7 @@ if (! function_exists('cdn_link')) {
 }
 
 if (! function_exists('cdn_thumbnail')) {
-    function cdn_thumbnail(string $path, array $options = []) {
+    function cdn_thumbnail(?string $path, array $options = []): string {
         static $defaults = [
             'width' => '300',
             'height' => '300',

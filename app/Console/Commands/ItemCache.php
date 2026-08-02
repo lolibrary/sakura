@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\Status;
 use App\Models\Item;
 use Illuminate\Console\Command;
 
@@ -30,7 +31,7 @@ class ItemCache extends Command
     public function handle()
     {
         $items = Item::with(Item::FULLY_LOAD)
-            ->whereIn('status', [Item::PENDING, Item::CHANGES_REQUESTED])
+            ->whereIn('status', [Status::ReadyForReview, Status::ChangesRequested])
             ->get();
 
         spin(fn() => $items->each(function (Item $item) {

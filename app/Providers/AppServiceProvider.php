@@ -3,12 +3,13 @@
 namespace App\Providers;
 
 use App\Composers;
+use App\Models\User;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Nova\Nova;
+use Laravel\Fortify\Fortify;
+use Spatie\Activitylog\Facades\Activity;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Fortify::ignoreRoutes();
         Paginator::useBootstrap();
 
         View::composer('components.categories', Composers\Categories::class);
@@ -55,5 +57,7 @@ class AppServiceProvider extends ServiceProvider
             return auth()->check() && auth()->user()->developer();
         });
 
+        // if set, we log all activity without a user to the system user.
+        Activity::defaultCauser(User::where('username', config('app.system.default-user'))->first());
     }
 }

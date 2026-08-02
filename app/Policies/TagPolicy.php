@@ -6,69 +6,31 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TagPolicy
+class TagPolicy extends Policy
 {
     use HandlesAuthorization;
 
-    /**
-     * Can a user view available tags?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
-    public function viewAny(User $user)
+    public function view(User $user, Tag $tag): bool
     {
         return $user->junior();
     }
 
-    /**
-     * Can a user view a tag?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Tag $tag
-     * @return bool
-     */
-    public function view(User $user, Tag $tag)
+    public function create(User $user): bool
     {
-        return $user->junior();
+        return $user->trusted();
     }
 
-    /**
-     * Can a user create a tag?
-     *
-     * @param \App\Models\User $user
-     * @return bool
-     */
-    public function create(User $user)
+    public function update(User $user, Tag $tag): bool
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
-    /**
-     * Can a user update a tag?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Tag $tag
-     * @return bool
-     */
-    public function update(User $user, Tag $tag)
-    {
-        return $user->admin();
-    }
-
-    /**
-     * Can a user delete a tag?
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Tag $tag
-     * @return bool
-     */
-    public function delete(User $user, Tag $tag)
+    public function delete(User $user, Tag $tag): bool
     {
         if ($tag->items()->count() > 0) {
             return false;
         }
 
-        return $user->admin();
+        return $user->trusted();
     }
 }

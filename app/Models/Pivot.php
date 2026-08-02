@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\DateHandling;
 use Illuminate\Database\Eloquent\Relations\Pivot as BasePivot;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
 /**
  * A custom pivot model for this application.
@@ -13,5 +14,5 @@ use Illuminate\Database\Eloquent\Relations\Pivot as BasePivot;
  */
 class Pivot extends BasePivot
 {
-    use DateHandling;
+    use DateHandling, LogsActivity;
 }

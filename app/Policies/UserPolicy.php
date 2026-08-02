@@ -5,75 +5,66 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class UserPolicy extends Policy
 {
     use HandlesAuthorization;
 
-    /**
-     * Can a user update an item?
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
-     * @return bool
-     */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->senior();
     }
 
-    /**
-     * Can a user view an item?
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
-     * @return bool
-     */
-    public function view(User $user, User $target)
+    public function view(User $user, User $target): bool
     {
         return $user->senior() || $user->is($target);
     }
 
-    /**
-     * Can a user see an email address?
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
-     * @return bool
-     */
-    public function viewEmail(User $user, User $target)
+    public function viewEmail(User $user, User $target): bool
     {
         return $user->admin() || $user->is($target);
     }
 
-    /**
-     * Can a user update an item?
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
-     * @return bool
-     */
-    public function update(User $user, User $target)
+    public function update(User $user, User $target): bool
     {
-        if ($user->level < $target->level) {
+        // cannot update someone of a higher or equal level than them
+        // This also means only developers can edit admins.
+        if ($user->developer()) {
+            return true;
+        }
+
+        if ($user->level->value <= $target->level->value) {
             return false;
         }
 
         return $user->admin();
     }
 
-    /**
-     * Can a user delete an item?
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
-     * @return bool
-     */
-    public function delete(User $user, User $target)
+    public function delete(User $user, User $target): bool
     {
-        if ($user->level < $target->level) {
+        return $this->update($user, $target) && $user->isNot($target);
+    }
+
+    public function comment(User $user, User $target): bool
+    {
+        return $user->senior();
+    }
+
+    public function closet(?User $user, User $target): bool
+    {
+        return $target->public_closet || $user?->is($target);
+    }
+
+    public function wishlist(?User $user, User $target): bool
+    {
+        return $target->public_wishlist || $user?->is($target);
+    }
+
+    public function verify(User $user, User $target): bool
+    {
+        if ($target->hasVerifiedEmail()) {
             return false;
         }
 
-        return $user->admin() && $user->isNot($target);
+        return $user->admin();
     }
 }

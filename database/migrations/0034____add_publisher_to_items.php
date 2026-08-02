@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Status;
 use App\Models\Item;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,7 +21,7 @@ class AddPublisherToItems extends Migration
         });
 
         DB::table('items')
-            ->where('status', Item::PUBLISHED)
+            ->where('status', Status::Published)
             ->update([
                 'published_at' => DB::raw('created_at'),
                 'publisher_id' => DB::raw('user_id'),

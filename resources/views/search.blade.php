@@ -28,7 +28,7 @@
         </span>
         <div class="row text-center p-5" id="search-results-loading" style="display: none">
           <div class="col text-center text-muted">
-            <i class="far fa-5x fa-spinner fa-pulse"></i>
+            <x-heroicon-s-sparkles style="width: 5rem; height: 5rem;" />
           </div>
         </div>
         <div class="row text-center p-5" id="search-results-error" style="display: none">
