@@ -7,6 +7,7 @@ use App\Enums\SystemUser;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Support\Facades\Log;
 use NumberFormatter;
 
@@ -23,7 +24,8 @@ use NumberFormatter;
  * @property float $price_formatted The price of this item, formatted to the rules of the given currency (e.g. /100 for gbp/usd)
  * @property string $currency        The currency of this item, as an ISO code.
  * @property array|string[] $images          The images attached to this item, as a flexible collection.
- * @property array $metadata Metadata attached to this item.
+ * @property \Illuminate\Support\Collection $metadata Metadata attached to this item.
+ * @property string|null $duplicate_url URL to the item this one is a duplicate of, if applicable.
  *
  * @property string $user_id  The ID of the {@link \App\Models\User user} who submitted this Item.
  * @property string $brand_id The ID of this Item's {@link \App\Models\Brand brand}.
@@ -126,7 +128,7 @@ class Item extends Model
      *
      * @var array
      */
-    protected $appends = ['price_details', 'url', 'edit_url'];
+    protected $appends = ['price_details', 'url', 'edit_url', 'duplicate_url'];
 
     /**
      * Visible attributes.
@@ -174,6 +176,7 @@ class Item extends Model
         'published_at' => 'datetime',
         'price' => 'integer',
         'status' => Status::class,
+        'metadata' => AsCollection::class,
     ];
 
     /**
@@ -193,16 +196,16 @@ class Item extends Model
     /**
      * Get formatted price for an item.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPriceFormattedAttribute(): string
+    public function getPriceFormattedAttribute(): ?string
     {
         $price = $this->getFullPrice();
 
         $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
 
-        if ($price === null) {
-            return "";
+        if ($this->currency === null) {
+            return null;
         }
 
         return $formatter->formatCurrency($price, $this->currency);
@@ -270,5 +273,18 @@ class Item extends Model
         $this->user_id = $user->id;
 
         return $this->save();
+    }
+
+    protected function getDuplicateUrlAttribute(): ?string
+    {
+        if (! $this->duplicate()) {
+            return null;
+        }
+
+        if (is_null($item = Item::find($this->metadata->get('duplicate_item_id')))) {
+            return null;
+        }
+
+        return $item->url;
     }
 }

@@ -14,8 +14,10 @@ enum EventType: string
     case RequestChanges = 'request-changes';
     case RequestReview = 'request-review';
     case MarkAsDraft = 'mark-as-draft';
+    case MarkAsDuplicate = 'mark-as-duplicate';
     case Publish = 'publish';
     case Unpublish = 'unpublish';
+    case Retract = 'retract';
     case Approve = 'approve';
     case Reject = 'reject';
     case PurgeCDNCache = 'purge-cdn-cache';

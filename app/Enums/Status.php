@@ -12,12 +12,13 @@ use Illuminate\Contracts\Support\Htmlable;
 
 enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
 {
-    case Unknown = -1;
     case Draft = 0;
     case Published = 1;
     case ReadyForReview = 2;
     case ChangesRequested = 3;
     case MissingImages = 4;
+    case Duplicate = 5;
+    case Retracted = 6;
     case ShoeDraft = 10;
 
     public function getLabel(): string| Htmlable | null
@@ -29,7 +30,8 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::ChangesRequested => 'changes-requested',
             self::MissingImages => 'missing-images',
             self::ShoeDraft => 'shoe-draft',
-            default => 'unknown',
+            self::Duplicate => 'duplicate',
+            self::Retracted => 'retracted',
         };
     }
 
@@ -42,7 +44,8 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::ChangesRequested => 'Changes Requested',
             self::MissingImages => 'Missing Images',
             self::ShoeDraft => 'Shoe Draft',
-            default => 'Unknown',
+            self::Duplicate => 'Duplicate',
+            self::Retracted => 'Retracted',
         };
     }
 
@@ -53,6 +56,8 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::Published => 'success',
             self::ReadyForReview => 'warning',
             self::ChangesRequested => 'danger',
+            self::Duplicate => 'gray',
+            self::Retracted => 'light',
             default => 'primary',
         };
     }
@@ -66,7 +71,8 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::ChangesRequested => Heroicon::OutlinedFlag,
             self::MissingImages => Heroicon::OutlinedArchiveBoxXMark,
             self::ShoeDraft => Heroicon::OutlinedArchiveBox,
-            default => Heroicon::OutlinedQuestionMarkCircle,
+            self::Duplicate => Heroicon::OutlinedDocumentDuplicate,
+            self::Retracted => Heroicon::OutlinedExclamationTriangle,
         };
     }
 
@@ -78,7 +84,8 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::ChangesRequested => 'This is an entry that has had changes requested',
             self::MissingImages => 'This entry is missing images (dev label)',
             self::ShoeDraft => 'This entry is a shoe draft from an import (dev label)',
-            default => 'This entry has an unknown status',
+            self::Duplicate => 'This entry is a duplicate of another',
+            self::Retracted => 'This entry is no longer published in searches',
         };
     }
 }

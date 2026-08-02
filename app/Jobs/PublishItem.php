@@ -28,15 +28,17 @@ class PublishItem
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(): bool
     {
         // first up: handle doing the actual task
         if ($this->item->published()) {
             // already published - no action needed
-            return;
+            return true;
         }
 
-        $this->item->publish($this->actor);
+        if (! $this->item->publish($this->actor)) {
+            return false;
+        }
 
         // next up, send a notification:
         Notification::make()
@@ -67,5 +69,7 @@ class PublishItem
                 ])
                 ->sendToDatabase($this->item->submitter);
         }
+
+        return true;
     }
 }

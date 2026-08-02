@@ -29,15 +29,17 @@ class ReadyForReview
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(): bool
     {
         // first up: handle doing the actual task
         if ($this->item->readyForReview()) {
             // already requested - no need to do it again
-            return;
+            return true;
         }
 
-        $this->item->markReadyForReview();
+       if (!  $this->item->markReadyForReview()) {
+           return false;
+       }
 
         // next up, send a notification:
         Notification::make()
@@ -65,5 +67,7 @@ class ReadyForReview
                 ])
                 ->sendToDatabase($this->item->submitter);
         }
+
+        return true;
     }
 }

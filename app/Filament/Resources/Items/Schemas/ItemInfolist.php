@@ -72,28 +72,40 @@ class ItemInfolist
                                 TextEntry::make('year')
                                     ->fontFamily(FontFamily::Mono)
                                     ->placeholder('Unknown'),
+                                TextEntry::make('duplicate_url')
+                                    ->label('Duplicate of')
+                                    ->iconPosition(IconPosition::After)
+                                    ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
+                                    ->state(fn(Item $record) => $record->duplicate_url)
+                                    ->url(fn(Item $record) => $record->duplicate_url)
+                                    ->visible(fn(Item $record) => $record->duplicate()),
                                 TextEntry::make('price_details.formatted')
                                     ->label('Price')
                                     ->placeholder('Unknown'),
                                 TextEntry::make('product_number')
-                                    ->columnSpanFull()
                                     ->fontFamily(FontFamily::Mono)
                                     ->placeholder('Unknown'),
 
-                                TextEntry::make('submitter.username')
-                                    ->name('submitter')
-                                    ->badge()
-                                    ->color(fn (Item $record) => $record->submitter?->level->getColor())
-                                    ->icon(fn (Item $record) => $record->submitter?->level->getIcon())
-                                    ->tooltip(fn (Item $record) => $record->submitter?->level->getDescription()),
-                                TextEntry::make('publisher.username')
-                                    ->name('publisher')
-                                    ->placeholder('No Publisher')
-                                    ->badge()
-                                    ->color(fn (?Item $record) => $record?->publisher?->level->getColor())
-                                    ->icon(fn (?Item $record) => $record?->publisher?->level->getIcon())
-                                    ->tooltip(fn (?Item $record) => $record?->publisher?->level->getDescription()),
-                            ])->contained(false),
+                                Section::make()
+                                    ->contained(false)
+                                    ->columnSpanFull()
+                                    ->columns(2)
+                                    ->schema([
+                                        TextEntry::make('submitter.username')
+                                            ->name('submitter')
+                                            ->badge()
+                                            ->color(fn (Item $record) => $record->submitter?->level->getColor())
+                                            ->icon(fn (Item $record) => $record->submitter?->level->getIcon())
+                                            ->tooltip(fn (Item $record) => $record->submitter?->level->getDescription()),
+                                        TextEntry::make('publisher.username')
+                                            ->name('publisher')
+                                            ->placeholder('No Publisher')
+                                            ->badge()
+                                            ->color(fn (?Item $record) => $record?->publisher?->level->getColor())
+                                            ->icon(fn (?Item $record) => $record?->publisher?->level->getIcon())
+                                            ->tooltip(fn (?Item $record) => $record?->publisher?->level->getDescription()),
+                                    ]),
+                                ])->contained(false),
                     ]),
 
                 Section::make('Additional Images')
@@ -203,6 +215,12 @@ class ItemInfolist
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ]),
+
+                KeyValueEntry::make('metadata')
+                    ->columnSpanFull()
+                    ->keyLabel('Key')
+                    ->valueLabel('Value')
+                    ->visible(fn() => auth()->user()->developer()),
 
                 Section::make('Timestamps')
                     ->columnSpanFull()

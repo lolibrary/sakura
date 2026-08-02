@@ -10,7 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\SerializesModels;
 
-class UnpublishItem
+class RetractItem
 {
     use Queueable, SerializesModels;
 
@@ -28,26 +28,28 @@ class UnpublishItem
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(): bool
     {
         // first up: handle doing the actual task
-        if (! $this->item->published()) {
-            // already unpublished - no action needed
-            return;
+        if (! $this->item->published() || $this->item->retracted()) {
+            // not published, or already retracted - no action needed
+            return true;
         }
 
-        $this->item->unpublish();
+        if (! $this->item->retract()) {
+            return false;
+        }
 
         // next up, send a notification:
         Notification::make()
             ->title('Entry removed from the site')
-            ->body("Entry {$this->item->english_name} was unpublished.")
+            ->body("Entry {$this->item->english_name} was retracted.")
             ->icon('heroicon-o-document-text')
             ->iconColor('warning')
             ->actions([
                 Action::make('view')
                     ->button()
-                    ->url($this->item->view_url, shouldOpenInNewTab: true),
+                    ->url($this->item->view_url),
             ])
             ->sendToDatabase($this->actor);
 
@@ -56,7 +58,9 @@ class UnpublishItem
         if ($this->item->submitter->isNot($this->actor)) {
             // next up, send a notification:
             // todo: do we send a notification for this?
-            // todo: feature flag
+            // todo: feature flag / toggle to notify with comments
         }
+
+        return true;
     }
 }

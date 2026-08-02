@@ -16,14 +16,7 @@ class ReplicateItemAction
         return ReplicateAction::make()
             ->icon(Heroicon::OutlinedClipboardDocument)
             ->color('gray')
-            ->schema([
-                TextInput::make('english_name')
-                    ->maxLength(255)
-                    ->required()
-            ])
             ->excludeAttributes([
-                'image',
-                'images',
                 'slug',
                 'publisher_id',
                 'user_id',

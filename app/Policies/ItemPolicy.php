@@ -28,10 +28,20 @@ class ItemPolicy extends Policy
 
     public function update(User $user, Item $item): bool
     {
+        // duplicate is a final state, but you can still edit.
+        // it will do precisely nothing, though.
+        if ($item->status === Status::Duplicate) {
+            return $user->senior();
+        }
+
         // lolibrarians can update their own published items
         // otherwise, only seniors can.
         if ($item->status === Status::Published) {
-            return $user->is($item->publisher) ? $user->lolibrarian() : $user->senior();
+            if ($user->is($item->submitter) && $user->is($item->publisher)) {
+                return $user->lolibrarian();
+            }
+
+            return $user->senior();
         }
 
         // draft: if the submitter, allow edits
@@ -46,14 +56,21 @@ class ItemPolicy extends Policy
 
     public function delete(User $user, Item $item): bool
     {
-        if ($item->published()) {
-            // lolibrarian can delete items they themselves published
-            if ($user->is($item->publisher)) {
-                return $user->lolibrarian();
-            }
+        // you cannot delete a published item. it MUST be retracted first.
+        if ($item->status === Status::Published) {
+            return false;
+        }
 
-            // senior lolibrarians can delete published items.
-            return $user->senior();
+        // only trusted seniors can hard delete from redacted.
+        // this is to avoid data loss, if a dupe/mistake.
+        if ($item->status === Status::Retracted) {
+            return $user->trusted();
+        }
+
+        // duplicate is a final state - these should not be deleted for "cleanup"
+        // duplicated have redirects in place for search engines and user links.
+        if ($item->status === Status::Duplicate) {
+            return $user->trusted();
         }
 
         // junior can delete their own drafts.
@@ -68,8 +85,9 @@ class ItemPolicy extends Policy
 
     public function publish(User $user, Item $item): bool
     {
-        // cannot publish twice, or publish if changes requested.
-        if (in_array($item->status, [Status::Published])) {
+        // cannot publish twice
+        // also cannot publish a duplicate - it is a final state.
+        if (in_array($item->status, [Status::Published, Status::Duplicate])) {
             return false;
         }
 
@@ -82,26 +100,30 @@ class ItemPolicy extends Policy
         return $user->senior();
     }
 
-    public function unpublish(User $user, Item $item): bool
+    /**
+     * Can a user "retract" an item, aka "unpublish".
+     *
+     * Locks the item into the Retracted state, limiting deletion.
+     */
+    public function retract(User $user, Item $item): bool
     {
-        // cannot unpublish if it's not already published.
-        if (! $item->published()) {
-            return false;
+        if ($item->status !== Status::Published) {
+            return false; // must be published to retract
         }
 
-        // users can publish their own drafts if lolibrarian.
-        if ($user->is($item->submitter)) {
+        // safety check: must be the publisher *and* the submitter
+        // this covers cases where people have been promoted.
+        if ($user->is($item->publisher) && $user->is($item->submitter)) {
             return $user->lolibrarian();
         }
 
-        // otherwise senior can publish any draft.
         return $user->senior();
     }
 
     public function markAsDraft(User $user, Item $item): bool
     {
         // this requires the item to be in "ready for review" or "changes requested"
-        if (! in_array($item->status, [Status::ReadyForReview, Status::ChangesRequested])) {
+        if (! in_array($item->status, [Status::ReadyForReview, Status::ChangesRequested], strict: true)) {
             return false;
         }
 
@@ -115,7 +137,7 @@ class ItemPolicy extends Policy
     public function readyForReview(User $user, Item $item): bool
     {
         // this is valid from "changes requested" and "draft" states on your own items.
-        if (! in_array($item->status, [Status::Draft, Status::ChangesRequested])) {
+        if (! in_array($item->status, [Status::Draft, Status::ChangesRequested], strict: true)) {
             return false;
         }
 
@@ -128,18 +150,40 @@ class ItemPolicy extends Policy
 
     public function requestChanges(User $user, Item $item): bool
     {
-        // you can request changes from "draft" or "ready for review"
-        // todo: possibly remove requesting changes on a draft.
-        if (! in_array($item->status, [Status::ReadyForReview])) {
-            return false;
-        }
-
-        // can't request changes on your own submission
-        if ($item->submitter->is($user)) {
+        // you can request changes from "ready for review" or "retracted"
+        // on retracted:
+        if (! in_array($item->status, [Status::ReadyForReview, Status::Retracted], strict: true)) {
             return false;
         }
 
         // senior and up can request changes.
+        return $user->senior();
+    }
+
+    public function markAsDuplicate(User $user, Item $item): bool
+    {
+        // if already a duplicate, can't do it again
+        if ($item->status === Status::Duplicate) {
+            return false;
+        }
+
+        // if not the submitter: always check senior
+        // this means senior can always mark as duplicate from any state.
+        if (! $user->is($item->submitter)) {
+            return $user->senior();
+        }
+
+        // lolibrarians can mark something as a duplicate if it has had changes requested
+        if ($item->status === Status::ChangesRequested) {
+            return $user->lolibrarian();
+        }
+
+        // juniors can mark their own drafts as duplicates (this does nothing but change the status/visibility)
+        if (in_array($item->status, [Status::Draft, Status::ReadyForReview], strict: true)) {
+            return $user->junior();
+        }
+
+        // any other status: senior+
         return $user->senior();
     }
 

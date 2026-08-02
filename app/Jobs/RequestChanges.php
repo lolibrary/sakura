@@ -29,15 +29,17 @@ class RequestChanges
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(): bool
     {
         // first up: handle doing the actual task
         if ($this->item->changesRequested()) {
             // already requested - no need to do it again
-            return;
+            return true;
         }
 
-        $this->item->requestChanges();
+        if (! $this->item->requestChanges()) {
+            return false;
+        }
 
         // next up, send a notification:
         Notification::make()
@@ -71,5 +73,7 @@ class RequestChanges
                 ])
                 ->sendToDatabase($this->item->submitter);
         }
+
+        return true;
     }
 }

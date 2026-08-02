@@ -5,11 +5,13 @@ namespace App\Models\Traits;
 use App\Enums\Status;
 use App\Events\ChangesRequested;
 use App\Events\ItemPublished;
-use App\Events\ItemUnpublished;
+use App\Events\ItemRetracted;
 use App\Events\MarkedAsDraft;
+use App\Events\MarkedAsDuplicate;
 use App\Events\ReadyForReview;
 use App\Models\Item;
 use App\Models\User;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 trait Publishable
@@ -41,6 +43,10 @@ trait Publishable
     {
         $user = $user ?? auth()->user();
 
+        $this->metadata->put('previous_status', $this->status->value);
+        $this->metadata->put('published_by', auth()->id());
+        $this->metadata->put('published_at', now()->format(DateTimeInterface::RFC3339));
+
         $this->status = Status::Published;
         $this->publisher()->associate($user);
         $this->published_at = now();
@@ -55,15 +61,21 @@ trait Publishable
     /**
      * Make this item a draft.
      */
-    public function unpublish(): bool
+    public function retract(): bool
     {
-        $this->status = Status::Draft;
-        $this->publisher()->dissociate();
+        $this->metadata->put('previous_status', $this->status->value);
+        $this->metadata->put('previous_publisher_id', $this->publisher_id);
+        $this->metadata->put('retracted_at', now()->format(DateTimeInterface::RFC3339));
+        $this->metadata->put('retracted_by', auth()->id());
+
+        $this->status = Status::Retracted;
         $this->published_at = null;
+
+        $this->publisher()->dissociate();
 
         $result = $this->save();
 
-        event(new ItemUnpublished($this));
+        event(new ItemRetracted($this));
 
         return $result;
     }
@@ -73,6 +85,9 @@ trait Publishable
      */
     public function markReadyForReview(): bool
     {
+        $this->metadata->put('previous_status', $this->status->value);
+        $this->metadata->put('ready_for_review_by', auth()->id());
+        $this->metadata->put('ready_for_review_at', now()->format(DateTimeInterface::RFC3339));
         $this->status = Status::ReadyForReview;
 
         $result = $this->save();
@@ -87,6 +102,9 @@ trait Publishable
      */
     public function requestChanges(): bool
     {
+        $this->metadata->put('previous_status', $this->status->value);
+        $this->metadata->put('changes_requested_by', auth()->id());
+        $this->metadata->put('changes_requested_at', now()->format(DateTimeInterface::RFC3339));
         $this->status = Status::ChangesRequested;
 
         $result = $this->save();
@@ -98,11 +116,29 @@ trait Publishable
 
     public function markAsDraft(): bool
     {
+        $this->metadata->put('previous_status', $this->status->value);
+        $this->metadata->put('marked_as_draft_by', auth()->id());
+        $this->metadata->put('marked_as_draft_at', now()->format(DateTimeInterface::RFC3339));
         $this->status = Status::Draft;
 
         $result = $this->save();
 
         event(new MarkedAsDraft($this));
+
+        return $result;
+    }
+
+    public function markAsDuplicate(Item $of): bool
+    {
+        $this->metadata->put('previous_status', $this->status->value);
+        $this->metadata->put('marked_as_duplicate_by', auth()->id());
+        $this->metadata->put('marked_as_duplicate_at', now()->format(DateTimeInterface::RFC3339));
+        $this->metadata->put('duplicate_item_id', $of->getKey());
+        $this->status = Status::Duplicate;
+
+        $result = $this->save();
+
+        event(new MarkedAsDuplicate($this));
 
         return $result;
     }
@@ -157,5 +193,15 @@ trait Publishable
     public function scopeDrafts(EloquentBuilder $builder, bool $draft = true)
     {
         return $builder->where('status', $draft ? Status::Draft : Status::Published);
+    }
+
+    public function duplicate(): bool
+    {
+        return $this->status === Status::Duplicate;
+    }
+
+    public function retracted(): bool
+    {
+        return $this->status === Status::Retracted;
     }
 }

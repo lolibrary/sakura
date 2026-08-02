@@ -29,15 +29,17 @@ class MarkAsDraft
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(): bool
     {
         // first up: handle doing the actual task
         if ($this->item->draft()) {
             // already requested - no need to do it again
-            return;
+            return true;
         }
 
-        $this->item->markAsDraft();
+        if (! $this->item->markAsDraft()) {
+            return false;
+        }
 
         // next up, send a notification:
         Notification::make()
@@ -65,5 +67,7 @@ class MarkAsDraft
                 ])
                 ->sendToDatabase($this->item->submitter);
         }
+
+        return true;
     }
 }
