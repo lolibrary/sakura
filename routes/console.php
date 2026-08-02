@@ -24,11 +24,6 @@ Schedule::call(new BacklogUpdate)
     ->description('Daily update to #queue-updates in Discord')
     ->onOneServer();
 
-Schedule::command('item:cache')
-    ->description('Cache pending + changes requested items')
-    ->everyFiveMinutes()
-    ->onOneServer();
-
 //Schedule::call(new PreserveAbandonedItems)
 //    ->name(PreserveAbandonedItems::class)
 //    ->description('Anonymise any published entries where a user has deleted their account')
