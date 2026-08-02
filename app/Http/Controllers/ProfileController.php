@@ -64,7 +64,7 @@ class ProfileController extends Controller
                         'developer',
                         'dev',
                     ]),
-                Rule::unique('users'),
+                Rule::unique('users')->ignore($user),
             ],
             'email' => ['required', 'string', 'max:255', 'email', Rule::unique('users')->ignore($user)],
             'password' => 'nullable|string|confirmed|min:12',
