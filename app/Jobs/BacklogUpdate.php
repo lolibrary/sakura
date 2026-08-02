@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use App\Models\Item;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class BacklogUpdate implements ShouldQueue
 {
@@ -33,6 +34,11 @@ class BacklogUpdate implements ShouldQueue
      */
     public function __invoke(): void
     {
+        if (! app()->isProduction()) {
+            Log::info('Not running BacklogUpdate: not running in production');
+            return;
+        }
+
         $webhook = config('services.discord.webhooks.updates');
         $published = DB::table('items')->where('status', '=', Status::Published)->count();
         $pending = DB::table('items')->where('status', '=', Status::ReadyForReview)->count();
