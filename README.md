@@ -19,11 +19,6 @@ The majority of this repository is offered under [the BSD 3-Clause license](http
 
   * Image files under [/public](https://github.com/lolibrary/sakura/tree/master/public) are not licensed for reuse. They contain images and branding created specifically for the main Lolibrary instance, and are included here for volunteers working on the codebase and to show what filenames the templates expect.
 
-In addition, the codebase currently relies on a non-free component, [Font Awesome Pro](https://fontawesome.com/).
-It is not distributed with the project, and anyone wishing to reuse the codebase will need to provide their own copy.
-
-Volunteers working on the main lolibrary.org codebase who need copies for local development work only should speak to one of the head devs.
-
 ### Getting Started
 
 You will need a working development environment - at minimum, this is:
