@@ -116,6 +116,10 @@ return [
         'category' => 'Catégorie',
         'brand' => 'Marque',
         'view' => 'Voir l\'article',
+        'attribute' => 'Attribut',
+        'feature' => 'Caractéristique',
+        'color' => 'Coloris',
+        'tag' => 'Label',
     ],
     'search' => [
         'title' => 'Rechercher',
@@ -143,4 +147,8 @@ return [
     'users' => 'Utilisateurs',
     'entry' => 'Entrée',
     'entries' => 'Entrées',
+    'queue' => [
+        'heading' => 'Ma Queue',
+        'help' => 'Brouillons, prêt•es pour la vérification et entrées en attente',
+    ],
 ];
