@@ -102,7 +102,9 @@
 
                 @if ($item->notes)
                     <h4 class="mt-4">{{ __('ui.item.notes') }}</h4>
-                    <p class="text-muted text-regular">{!! purify($item->notes) !!}</p>
+                    <div class="text-muted text-regular">
+                        {!! purify($item->notes) !!}
+                    </div>
                 @endif
 
                 <div class="row">
