@@ -9,9 +9,8 @@ use Filament\Actions\ViewAction;
 
 class EditColor extends EditRecord
 {
-
-
     protected static string $resource = ColorResource::class;
+    protected static array $translatedFields = ['name'];
 
     protected function getHeaderActions(): array
     {

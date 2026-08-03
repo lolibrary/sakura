@@ -10,6 +10,7 @@ use Filament\Actions\ViewAction;
 class EditBrand extends EditRecord
 {
     protected static string $resource = BrandResource::class;
+    protected static array $translatedFields = ['name'];
 
     protected function getHeaderActions(): array
     {
