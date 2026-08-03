@@ -35,7 +35,8 @@ class MyQueue extends TableWidget
                     ->visibility('public')
                     ->alignCenter()
                     ->checkFileExistence(false)
-                    ->visibleFrom('lg'),
+                    ->toggleable()
+                    ->visibleFrom('sm'),
                 TextColumn::make('english_name')
                     ->formatStateUsing(fn(Item $record) => Str::limit($record->english_name, 40))
                     ->sortable()
