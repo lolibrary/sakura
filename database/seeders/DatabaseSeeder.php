@@ -2,24 +2,24 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(Kernel $kernel): void
     {
-        $this->call(BrandSeeder::class);
-        $this->call(ColorSeeder::class);
-        $this->call(CategorySeeder::class);
-        $this->call(FeatureSeeder::class);
-        $this->call(AttributeSeeder::class);
-        $this->call(UserSeeder::class);
+        // seed the system users.
+        $kernel->call('app:setup-system-users');
+
+        // next, seed relations
+        DB::unprepared(file_get_contents(database_path('queries/relations.sql')));
+
+        // misc seeders
         $this->call(InstructionSeeder::class);
-        $this->call(TagSeeder::class);
     }
 }
