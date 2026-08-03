@@ -7,7 +7,7 @@ use Filament\Pages\Page;
 use Filament\Schemas\Concerns\RestrictsFileUploadsToSchemaComponents;
 use Filament\Support\Icons\Heroicon;
 
-class Settings extends Page
+class Settings extends Page 
 {
     use RestrictsFileUploadsToSchemaComponents;
 
