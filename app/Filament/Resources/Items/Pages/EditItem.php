@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\Items\Pages;
 
+use App\Models\Item;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Resources\Pages\EditRecord;
 use App\Filament\Resources\Items\ItemResource;
 use Filament\Actions\DeleteAction;
@@ -16,6 +19,22 @@ class EditItem extends EditRecord
         return [
             ViewAction::make(),
             DeleteAction::make(),
+        ];
+    }
+
+
+    /**
+     * @return array<Action | ActionGroup>
+     */
+    protected function getFormActions(): array
+    {
+        return [
+            $this->getSaveFormAction(),
+            $this->getCancelFormAction(),
+            Action::make('view')
+                ->label('Back to Entry')
+                ->color('fuschia')
+                ->successRedirectUrl(fn (Item $record) => $record->view_url),
         ];
     }
 }

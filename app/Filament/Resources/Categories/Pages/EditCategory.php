@@ -9,9 +9,8 @@ use Filament\Actions\ViewAction;
 
 class EditCategory extends EditRecord
 {
-
-
     protected static string $resource = CategoryResource::class;
+    protected static array $translatedFields = ['name'];
 
     protected function getHeaderActions(): array
     {

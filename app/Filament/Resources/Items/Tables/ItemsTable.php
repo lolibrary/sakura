@@ -7,6 +7,7 @@ use App\Filament\Components\Filters\EnumFilter;
 use App\Filament\Components\Table\DateColumn;
 use App\Filament\Components\Table\ImageColumn;
 use App\Filament\Components\Table\UsernameColumn;
+use App\Filament\Query\TranslatedRelation;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -23,10 +24,16 @@ class ItemsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image'),
+                ImageColumn::make('image')->toggleable(),
                 TextColumn::make('english_name')
                     ->searchable()
                     ->sortable()
+                    ->limit(40),
+                TextColumn::make('brand.slug')
+                    ->badge()
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
                     ->limit(40),
                 TextColumn::make('foreign_name')
                     ->searchable()
@@ -36,7 +43,7 @@ class ItemsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 UsernameColumn::make('submitter.username')->label('Submitter'),
-                TextColumn::make('status')->sortable()->badge(),
+                TextColumn::make('status')->sortable()->badge()->toggleable(),
                 DateColumn::make('created_at'),
                 DateColumn::make('updated_at'),
             ])
@@ -58,6 +65,12 @@ class ItemsTable
                         'me' => 'Me',
                         'others' => 'Others',
                     ]),
+                SelectFilter::make('brand')
+                    ->relationship(
+                        name: 'brand',
+                        titleAttribute: 'name',
+                        modifyQueryUsing: TranslatedRelation::make('brand'),
+                    ),
                 Filter::make('only_my_entries')
                     ->toggle()
                     ->query(fn(Builder $query) => $query->where('user_id', auth()->id())),
