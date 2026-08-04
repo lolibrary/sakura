@@ -19,6 +19,11 @@ class ItemController extends Controller
     public function show(Item $item)
     {
         if ($item->status === Status::Duplicate && $item->duplicate_url !== null) {
+            // sanity check: make sure it was once published
+            if ($item->metadata['previous_status'] !== Status::Published->value) {
+                abort(404);
+            }
+
             return redirect($item->duplicate_url, status: 308); // permanent redirect.
         }
 
