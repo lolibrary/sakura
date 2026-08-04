@@ -26,7 +26,7 @@ class MyQueue extends TableWidget
             ->heading(trans('resources.queue.title'))
             ->query(fn(): Builder => auth()->user()
                 ->items()
-                ->where('status', '!=', Status::Published)
+                ->whereNotIn('status', [Status::Published, Status::Duplicate])
                 ->getQuery()
             )
             ->columns([
@@ -59,10 +59,10 @@ class MyQueue extends TableWidget
             ])
             ->filters([
                 EnumFilter::make('status', [
+                    Status::Inactive,
                     Status::Draft,
                     Status::ReadyForReview,
                     Status::ChangesRequested,
-                    Status::Published,
                 ]),
             ])
             ->headerActions([
