@@ -3,10 +3,13 @@
 namespace App\Jobs;
 
 use App\Enums\Status;
+use App\Enums\SystemUser;
 use App\Models\Item;
+use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Queue\Queueable;
+use RuntimeException;
 
 class MarkInactiveEntries implements ShouldQueue
 {
@@ -25,8 +28,11 @@ class MarkInactiveEntries implements ShouldQueue
 
     public function query(): Builder
     {
+        $user = User::system(SystemUser::Amy);
+
         return Item::query()
             ->withoutEagerLoads()
+            ->where('user_id', '!=', $user->getKey())
             ->where('status', Status::Draft)
             ->where('updated_at', '<', now()->subYear())
             ->orWhere(function (Builder $builder) {
