@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\Enums\Status;
+use App\Enums\SystemUser;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -39,11 +41,16 @@ class BacklogUpdate implements ShouldQueue
             return;
         }
 
+        $amy = User::system(SystemUser::Amy);
+
         $webhook = config('services.discord.webhooks.updates');
         $published = DB::table('items')->where('status', '=', Status::Published)->count();
         $pending = DB::table('items')->where('status', '=', Status::ReadyForReview)->count();
         $changes = DB::table('items')->where('status', '=', Status::ChangesRequested)->count();
-        $draft = DB::table('items')->where('status', '=', Status::Draft)->count();
+        $draft = DB::table('items')
+            ->whereNot('user_id', $amy->id)
+            ->where('status', '=', Status::Draft)
+            ->count();
 
         $msg = <<<EOD
         ## *Current Entries*
