@@ -6,6 +6,7 @@ use App\Enums\Status;
 use App\Events\ChangesRequested;
 use App\Events\ItemPublished;
 use App\Events\ItemRetracted;
+use App\Events\MarkedAsActive;
 use App\Events\MarkedAsDraft;
 use App\Events\MarkedAsDuplicate;
 use App\Events\ReadyForReview;
@@ -128,6 +129,20 @@ trait Publishable
         return $result;
     }
 
+    public function markAsActive(): bool
+    {
+        $this->metadata->put('previous_status', $this->status->value);
+        $this->metadata->put('marked_as_active_by', auth()->id());
+        $this->metadata->put('marked_as_active_at', now()->format(DateTimeInterface::RFC3339));
+        $this->status = Status::Draft;
+
+        $result = $this->save();
+
+        event(new MarkedAsActive($this));
+
+        return $result;
+    }
+
     public function markAsDuplicate(Item $of): bool
     {
         $this->metadata->put('previous_status', $this->status->value);
@@ -181,6 +196,11 @@ trait Publishable
     public function draft(): bool
     {
         return $this->status === Status::Draft;
+    }
+
+    public function inactive(): bool
+    {
+        return $this->status === Status::Inactive;
     }
 
     /**

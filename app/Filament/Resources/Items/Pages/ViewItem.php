@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Items\Pages;
 use App\Enums\Status;
 use App\Filament\Components\Actions\ReplicateItemAction;
 use App\Filament\Resources\Items\ItemResource;
+use App\Jobs\MarkAsActive;
 use App\Jobs\MarkAsDraft;
 use App\Jobs\MarkAsDuplicate;
 use App\Jobs\PublishItem;
@@ -109,6 +110,13 @@ class ViewItem extends ViewRecord
 
                         $action->success();
                     })
+                    ->successRedirectUrl(fn(Item $record) => $record->view_url),
+                Action::make('mark_as_active')
+                    ->icon(Heroicon::OutlinedClock)
+                    ->color('gray')
+                    ->tooltip('Mark an inactive draft as active')
+                    ->authorize('markAsActive')
+                    ->action(fn(Item $record) => dispatch_sync(new MarkAsActive($record, auth()->user())))
                     ->successRedirectUrl(fn(Item $record) => $record->view_url),
                 DeleteAction::make(),
             ]),

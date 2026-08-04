@@ -19,6 +19,7 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
     case MissingImages = 4;
     case Duplicate = 5;
     case Retracted = 6;
+    case Inactive = 7;
     case ShoeDraft = 10;
 
     public function getLabel(): string| Htmlable | null
@@ -31,6 +32,7 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::MissingImages => 'missing-images',
             self::ShoeDraft => 'shoe-draft',
             self::Duplicate => 'duplicate',
+            self::Inactive => 'inactive',
             self::Retracted => 'retracted',
         };
     }
@@ -45,6 +47,7 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::MissingImages => 'Missing Images',
             self::ShoeDraft => 'Shoe Draft',
             self::Duplicate => 'Duplicate',
+            self::Inactive => 'Inactive',
             self::Retracted => 'Retracted',
         };
     }
@@ -56,7 +59,7 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::Published => 'success',
             self::ReadyForReview => 'warning',
             self::ChangesRequested => 'danger',
-            self::Duplicate => 'gray',
+            self::Duplicate, self::Inactive => 'gray',
             self::Retracted => 'light',
             default => 'primary',
         };
@@ -72,6 +75,7 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::MissingImages => Heroicon::OutlinedArchiveBoxXMark,
             self::ShoeDraft => Heroicon::OutlinedArchiveBox,
             self::Duplicate => Heroicon::OutlinedDocumentDuplicate,
+            self::Inactive => Heroicon::OutlinedClock,
             self::Retracted => Heroicon::OutlinedExclamationTriangle,
         };
     }
@@ -85,6 +89,7 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::MissingImages => 'This entry is missing images (dev label)',
             self::ShoeDraft => 'This entry is a shoe draft from an import (dev label)',
             self::Duplicate => 'This entry is a duplicate of another',
+            self::Inactive => 'This draft has not been active for more than a year',
             self::Retracted => 'This entry is no longer published in searches',
         };
     }
