@@ -50,10 +50,13 @@ class ItemsTable
             ->paginationPageOptions([10, 25, 50, 100])
             ->filters([
                 EnumFilter::make('status', [
+                    Status::Duplicate,
+                    Status::Inactive,
                     Status::Draft,
                     Status::ReadyForReview,
                     Status::ChangesRequested,
                     Status::Published,
+                    Status::Retracted,
                 ]),
                 SelectFilter::make('published_by')
                     ->query(fn(Builder $query, array $data) => match ($data['value']) {
