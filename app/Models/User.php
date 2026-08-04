@@ -44,7 +44,7 @@ use Laravel\Passport\Contracts\OAuthenticatable;
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $wishlist The {@link \App\Item items} this user has favourited.
  * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $closet   The {@link \App\Item items} this user owns.
  *
- * @method static
+ * @property string $id
  */
 class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable, FilamentUser
 {
