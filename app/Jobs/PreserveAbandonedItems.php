@@ -3,9 +3,7 @@
 namespace App\Jobs;
 
 use App\Enums\Status;
-use App\Enums\SystemUser;
 use App\Models\Item;
-use App\Models\User;
 use DateTimeInterface;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Query\Builder;
@@ -23,14 +21,6 @@ class PreserveAbandonedItems implements ShouldQueue
      */
     public function __invoke(): void
     {
-        if (is_null($system = User::system(SystemUser::Anonymous))) {
-            Log::alert('system user anonymous is not set, please run app:system-user anonymous', [
-                'job' => static::class,
-                'user' => SystemUser::Anonymous,
-            ]);
-            return;
-        }
-
         $query = Item::query()
             ->withoutEagerLoads()
             ->whereNotExists(function (Builder $query) {
@@ -49,7 +39,6 @@ class PreserveAbandonedItems implements ShouldQueue
                     'updated_at' => $item->updated_at->format(DateTimeInterface::RFC3339),
                 ]);
 
-                // allow all of the relationship deletes to occur.
                 $item->anonymize();
             });
         }

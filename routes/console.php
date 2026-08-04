@@ -3,6 +3,7 @@
 use App\Console\Commands\ItemCache;
 use App\Jobs\BacklogUpdate;
 use App\Jobs\DeleteAbandonedDrafts;
+use App\Jobs\MarkInactiveEntries;
 use App\Jobs\PreserveAbandonedItems;
 use Illuminate\Support\Facades\Schedule;
 
@@ -24,15 +25,21 @@ Schedule::call(new BacklogUpdate)
     ->description('Daily update to #queue-updates in Discord')
     ->onOneServer();
 
-//Schedule::call(new PreserveAbandonedItems)
-//    ->name(PreserveAbandonedItems::class)
-//    ->description('Anonymise any published entries where a user has deleted their account')
-//    ->daily()
-//    ->onOneServer();
-//
-//Schedule::call(new DeleteAbandonedDrafts)
-//    ->name(DeleteAbandonedDrafts::class)
-//    ->description('Delete any draft entries where a user has deleted their account')
-//    ->daily()
-//    ->onOneServer();
+Schedule::call(new MarkInactiveEntries)
+    ->dailyAt('00:00')
+    ->name(MarkInactiveEntries::class)
+    ->description('Mark drafts updated over a year ago as inactive')
+    ->onOneServer();
+
+Schedule::call(new PreserveAbandonedItems)
+    ->name(PreserveAbandonedItems::class)
+    ->description('Anonymise any published entries where a user has deleted their account')
+    ->daily()
+    ->onOneServer();
+
+Schedule::call(new DeleteAbandonedDrafts)
+    ->name(DeleteAbandonedDrafts::class)
+    ->description('Delete any draft entries where a user has deleted their account')
+    ->daily()
+    ->onOneServer();
 

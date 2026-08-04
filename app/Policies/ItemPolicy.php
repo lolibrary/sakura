@@ -28,6 +28,11 @@ class ItemPolicy extends Policy
 
     public function update(User $user, Item $item): bool
     {
+        // nobody can edit inactive - reactivate it first
+        if ($item->status === Status::Inactive) {
+            return false;
+        }
+
         // duplicate is a final state, but you can still edit.
         // it will do precisely nothing, though.
         if ($item->status === Status::Duplicate) {
@@ -87,7 +92,7 @@ class ItemPolicy extends Policy
     {
         // cannot publish twice
         // also cannot publish a duplicate - it is a final state.
-        if (in_array($item->status, [Status::Published, Status::Duplicate])) {
+        if (in_array($item->status, [Status::Published, Status::Duplicate, Status::Inactive])) {
             return false;
         }
 
@@ -184,6 +189,19 @@ class ItemPolicy extends Policy
         }
 
         // any other status: senior+
+        return $user->senior();
+    }
+
+    public function markAsActive(User $user, Item $item): bool
+    {
+        if ($item->status !== Status::Inactive) {
+            return false;
+        }
+
+        if ($user->is($item->submitter)) {
+            return $user->junior();
+        }
+
         return $user->senior();
     }
 
