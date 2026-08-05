@@ -12,7 +12,7 @@ class MultiFileUpload
             ->multiple()
             ->reorderable()
             ->appendFiles()
-            ->maxFiles(40)
+            ->maxFiles(100)
             ->panelLayout('grid')
             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
             ->helperText("Acceptable upload types: JPEG, PNG, GIF, WEBP. 5MB limit per file.");
