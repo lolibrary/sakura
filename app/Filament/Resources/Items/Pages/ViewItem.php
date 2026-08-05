@@ -50,6 +50,14 @@ class ViewItem extends ViewRecord
                 ->requiresConfirmation(fn() => $this->record->status === Status::ChangesRequested)
                 ->action(fn(Item $record) => dispatch_sync(new RequestChanges($record, auth()->user()))),
 
+            Action::make('mark_as_active')
+                ->icon(Heroicon::OutlinedClock)
+                ->color('gray')
+                ->tooltip('Mark an inactive draft as active')
+                ->authorize('markAsActive')
+                ->action(fn(Item $record) => dispatch_sync(new MarkAsActive($record, auth()->user())))
+                ->successRedirectUrl(fn(Item $record) => $record->view_url),
+
             ActionGroup::make([
                 ReplicateItemAction::make()
                     ->color('fuschia')
@@ -110,13 +118,6 @@ class ViewItem extends ViewRecord
 
                         $action->success();
                     })
-                    ->successRedirectUrl(fn(Item $record) => $record->view_url),
-                Action::make('mark_as_active')
-                    ->icon(Heroicon::OutlinedClock)
-                    ->color('gray')
-                    ->tooltip('Mark an inactive draft as active')
-                    ->authorize('markAsActive')
-                    ->action(fn(Item $record) => dispatch_sync(new MarkAsActive($record, auth()->user())))
                     ->successRedirectUrl(fn(Item $record) => $record->view_url),
                 DeleteAction::make(),
             ]),
