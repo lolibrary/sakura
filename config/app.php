@@ -187,6 +187,7 @@ return [
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FastlyServiceProvider::class,
+        App\Providers\ScoutPostgresServiceProvider::class,
         Stevebauman\Purify\PurifyServiceProvider::class,
 
     ],

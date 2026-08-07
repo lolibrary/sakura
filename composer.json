@@ -14,11 +14,13 @@
         "doriiaan/filament-astrotomic": "^1.2",
         "fastly/fastly": "^14.0",
         "filament/filament": "^5.0",
+        "jonaspauleta/scout-postgres": "^2.0",
         "laravel/fortify": "^1.36",
         "laravel/framework": "^12.0",
         "laravel/nightwatch": "^1.28",
         "laravel/octane": "^2.18",
         "laravel/passport": "^13.0",
+        "laravel/scout": "^11.5",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^4.0",
         "league/flysystem": "^3.0",
@@ -59,7 +61,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "jonaspauleta/scout-postgres"
+            ]
         }
     },
     "autoload": {
