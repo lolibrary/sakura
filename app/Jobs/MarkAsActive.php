@@ -32,7 +32,7 @@ class MarkAsActive
     public function handle(): bool
     {
         // first up: handle doing the actual task
-        if ($this->item->inactive()) {
+        if (! $this->item->inactive()) {
             // already requested - no need to do it again
             return true;
         }
