@@ -9,6 +9,7 @@ use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\Password;
 
 class ViewUser extends ViewRecord
 {
@@ -24,6 +25,12 @@ class ViewUser extends ViewRecord
                 ->color('success')
                 ->authorize('verify')
                 ->action(fn(User $record) => $record->markEmailAsVerified()),
+            Action::make('reset_password')
+                ->requiresConfirmation()
+                ->icon(Heroicon::OutlinedEnvelopeOpen)
+                ->color('light')
+                ->authorize('reset')
+                ->action(fn(User $record) => Password::broker()->sendResetLink(['id' => $record->id])),
         ];
     }
 

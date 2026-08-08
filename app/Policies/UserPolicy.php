@@ -67,4 +67,10 @@ class UserPolicy extends Policy
 
         return $user->admin();
     }
+
+    public function reset(User $user, User $target): bool
+    {
+        return $user->admin();
+    }
+
 }
