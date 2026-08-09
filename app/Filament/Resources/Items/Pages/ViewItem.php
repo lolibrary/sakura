@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Items\Pages;
 use App\Enums\Status;
 use App\Filament\Components\Actions\ReplicateItemAction;
 use App\Filament\Resources\Items\ItemResource;
+use App\Jobs\ChangeEntrySlug;
 use App\Jobs\MarkAsActive;
 use App\Jobs\MarkAsDraft;
 use App\Jobs\MarkAsDuplicate;
@@ -67,9 +68,7 @@ class ViewItem extends ViewRecord
                             ->maxLength(255)
                             ->required()
                             ->live()
-                            ->afterStateUpdated(
-                                fn($state, callable $set) => $set('slug', $this->record->brand->short_name . '-' . str($state)->slug())
-                            ),
+                            ->afterStateUpdated(fn($state, callable $set) => $set('slug', $this->slugify($state))),
                         TextInput::make('slug')
                             ->disabled()
                             ->required()
@@ -110,7 +109,7 @@ class ViewItem extends ViewRecord
                             $action->halt();
                         }
 
-                        if (dispatch_sync(new MarkAsDuplicate($record, $item))) {
+                        if (! dispatch_sync(new MarkAsDuplicate($record, $item))) {
                             $this->fillForm();
 
                             $action->cancel();
@@ -119,8 +118,48 @@ class ViewItem extends ViewRecord
                         $action->success();
                     })
                     ->successRedirectUrl(fn(Item $record) => $record->view_url),
+                Action::make('change_slug')
+                    ->icon(Heroicon::OutlinedGlobeAlt)
+                    ->color('gray')
+                    ->tooltip('Change the URL to this entry')
+                    ->authorize('changeSlug')
+                    ->schema([
+                        TextInput::make('input')
+                            ->maxLength(100)
+                            ->label(__('Slug'))
+                            ->helperText("Enter a new slug for this entry.")
+                            ->live()
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                $set('slug', $this->record->brand->short_name . '-' . str($state)->slug());
+                                $set('url',
+                                    route('items.show', [
+                                        'item' => $this->record->brand->short_name . '-' . str($state)->slug(),
+                                    ])
+                                );
+                            }),
+
+                        TextInput::make('slug')
+                            ->hidden()
+                            ->required()
+                            ->unique(Item::class, column: 'slug'),
+
+                        TextInput::make('url')
+                            ->label(__('New URL'))
+                            ->disabled()
+                            ->helperText("https://lolibrary.org/item/{slug}"),
+
+                    ])
+                    ->action(fn(Item $record, array $data, $state) => dispatch_sync(
+                        new ChangeEntrySlug($record, $this->slugify($data['input']), auth()->user()),
+                    ))
+                    ->successRedirectUrl(fn(Item $record) => $record->view_url),
                 DeleteAction::make(),
             ]),
         ];
+    }
+
+    protected function slugify(string $input): string
+    {
+        return $this->record->brand->short_name . '-' . str($input)->slug();
     }
 }
