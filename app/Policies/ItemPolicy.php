@@ -219,4 +219,9 @@ class ItemPolicy extends Policy
 
         return $user->is($item->submitter) ? $user->junior() : $user->senior();
     }
+
+    public function changeSlug(User $user, Item $item): bool
+    {
+        return $user->trusted();
+    }
 }
