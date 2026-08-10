@@ -71,3 +71,14 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::put('items/{item}/closet', [ItemController::class, 'closet'])->name('items.closet');
     Route::put('items/{item}/wishlist', [ItemController::class, 'wishlist'])->name('items.wishlist');
 });
+
+// stick this in here for now - moved from nova to filament
+Route::redirect('library/resources/items/new', '/library/items/create');
+Route::redirect('library/resources/items', '/library/items');
+Route::redirect('library/resources/users', '/library/users');
+Route::redirect('library/resources/tags', '/library/tags');
+Route::redirect('library/resources/categories', '/library/categories');
+Route::redirect('library/resources/colors', '/library/colors');
+Route::redirect('library/resources/features', '/library/features');
+Route::redirect('library/resources/attributes', '/library/attributes');
+Route::redirect('library/dashboard', '/library');
