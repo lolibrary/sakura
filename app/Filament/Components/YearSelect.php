@@ -19,7 +19,7 @@ class YearSelect
             ->rules([
                 'nullable',
                 'integer',
-                'min:1990',
+                'min:1970',
                 'max:' . (int)date('Y') + 3,
             ])
             ->helperText('The year of release, if known.');
