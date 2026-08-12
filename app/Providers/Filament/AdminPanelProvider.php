@@ -30,6 +30,20 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
+    public const Zinc = [
+        50 => 'oklch(0.985 0 0)',
+        100 => 'oklch(0.967 0.001 286.375)',
+        200 => 'oklch(0.92 0.004 286.32)',
+        300 => 'oklch(0.871 0.006 286.286)',
+        400 => 'oklch(0.705 0.015 286.067)',
+        500 => 'oklch(0.552 0.016 285.938)',
+        600 => 'oklch(0.442 0.017 285.786)',
+        700 => 'oklch(0.37 0.013 285.805)',
+        800 => 'oklch(0.274 0.006 286.033)',
+        900 => 'oklch(0.21 0.006 285.885)',
+        950 => 'oklch(0.215 0.005 285.8)',
+    ];
+
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -41,7 +55,7 @@ class AdminPanelProvider extends PanelProvider
             ->darkModeBrandLogo(asset('images/logo_horizontal_white.png'))
             ->brandLogoHeight('1.3rem')
             ->colors([
-                'gray' => Color::Zinc,
+                'gray' => static::Zinc,
                 'primary' => Color::Indigo,
                 'info' => Color::Olive,
                 'success' => Color::Emerald,
