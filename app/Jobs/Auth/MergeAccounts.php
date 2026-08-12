@@ -70,6 +70,7 @@ class MergeAccounts implements ShouldQueue
         $this->new->metadata->put('merged_id', $this->old->id);
         $this->new->metadata->put('merged_username', $this->old->username);
         $this->new->metadata->put('merged_email', $this->old->email);
+        $this->new->metadata->put('can_change_username', true);
         $this->new->email = str($this->new->email)->lower()->toString();
     }
 

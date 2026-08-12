@@ -280,6 +280,10 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
 
     public function canChangeUsername(): bool
     {
+        if ($this->metadata->get('can_change_username')) {
+            return true;
+        }
+
         // give you your first username change for free
         if ($this->usernames->count() === 1) {
             return true;

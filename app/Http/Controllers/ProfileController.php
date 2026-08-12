@@ -65,7 +65,12 @@ class ProfileController extends Controller
             $user->name = $valid['name'];
 
             // attempt to make or claim the new username
-            if ($usernameUpdate) {
+            if ($usernameUpdate && $user->canChangeUsername()) {
+                // remove the flag when editing.
+                if ($user->metadata->get('can_change_username', false)) {
+                    $user->metadata->put('can_change_username', false);
+                }
+
                 $user->username = $valid['username'];
 
                 if (!$user->usernames->contains($valid['username'])) {
