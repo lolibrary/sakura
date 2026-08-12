@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\Level;
 use App\Enums\SystemUser;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -52,27 +53,36 @@ class LoginController extends Controller
     {
         $credentials = $this->credentials($request);
 
-        if ($this->restricted($credentials)) {
-            return false; // reject logins for system users
+        if ($this->guard()->attempt($credentials, remember: true)) {
+            if ($this->restricted($this->guard()->user())) {
+                $this->guard()->logout();
+                return false;
+            }
+
+            return true;
         }
 
-        return $this->guard()->attempt($credentials, remember: true);
+        return false;
     }
 
-    protected function restricted(array $credentials): bool
-    {
-        return in_array($credentials['email'] ?? '', $this->getRestrictedEmails());
-    }
 
-    protected function getRestrictedEmails(): array
+    /**
+     * Prevent restricted users from logging in, even if the password is somehow known.
+     *
+     * - deactivated
+     * - banned
+     * - system
+     * - amy (owner)
+     *
+     * @param User $user
+     * @return bool
+     */
+    protected function restricted(User $user): bool
     {
-        return cache()->remember(
-            key: 'system.restricted.emails',
-            ttl: 1440,
-            callback: fn(): array => User::whereIn('username', SystemUser::cases())
-                ->select('email')
-                ->pluck('email')
-                ->all(),
+        return in_array(
+            $user->level,
+            [Level::Deactivated, Level::Banned, Level::System, Level::Amy],
+            strict: true,
         );
     }
 

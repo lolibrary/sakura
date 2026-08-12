@@ -11,6 +11,8 @@
 |
 */
 
+use App\Mail\AccountMerged;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\IdentityController;
 use App\Http\Controllers\DonationController;
@@ -82,3 +84,10 @@ Route::redirect('library/resources/colors', '/library/colors');
 Route::redirect('library/resources/features', '/library/features');
 Route::redirect('library/resources/attributes', '/library/attributes');
 Route::redirect('library/dashboard', '/library');
+
+
+Route::get('preview/{name}/{old}', function (string $name, string $old) {
+    $user = User::username($name)->first();
+
+    return new AccountMerged($old, $user);
+});

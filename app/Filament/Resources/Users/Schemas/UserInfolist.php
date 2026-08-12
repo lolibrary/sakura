@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Users\Schemas;
 
 use App\Models\User;
 use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\KeyValueEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -44,6 +45,11 @@ class UserInfolist
                         IconEntry::make('banned')->boolean()->inlineLabel(),
                         IconEntry::make('verified')->boolean()->inlineLabel(),
                     ]),
+
+                KeyValueEntry::make('metadata')
+                    ->columnSpanFull()
+                    ->visible(fn() => auth()->user()->developer()),
+
                 Section::make()
                     ->contained(false)
                     ->columnSpanFull()

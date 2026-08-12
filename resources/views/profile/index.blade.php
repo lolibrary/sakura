@@ -20,7 +20,14 @@
     </div>
     <div class="form-group">
         <label for="profile-username">{{ __('ui.auth.username') }}</label>
-        <input type="text" id="profile-username" class="form-control" value="{{ $user->username }}" name="username">
+        <input @disabled(! $user->canChangeUsername()) type="text" id="profile-username" autocomplete="off" autocorrect="off" class="form-control" value="{{ $user->username }}" name="username">
+        @if ($user->canChangeUsername())
+            <small id="usernameChangeHelp" class="form-text text-muted">{{ __('ui.auth.username_changes') }}</small>
+            <small id="usernameHelp" class="form-text text-muted">{{ __('ui.auth.username_guide') }}</small>
+        @else
+            <small id="usernameChangeHelp" class="form-text text-muted">{{ __('ui.auth.username_locked') }}</small>
+            <small id="usernameHelp" class="form-text text-muted">{{ __('ui.auth.username_last_changed', ['date' => $user->lastChangedUsername()->diffForHumans()]) }}</small>
+        @endif
     </div>
     <div class="form-group">
         <label for="profile-email">{{ __('ui.auth.email') }}</label>

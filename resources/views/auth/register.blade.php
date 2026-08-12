@@ -29,7 +29,7 @@
                             <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('ui.auth.username') }}</label>
 
                             <div class="col-md-6">
-                                <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
+                                <input id="username" type="text" autocomplete="off" autocorrect="off" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
 
                                 <small class="form-text text-muted">
                                     {{ __('ui.auth.username_guide')}}

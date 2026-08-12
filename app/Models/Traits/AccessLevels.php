@@ -107,6 +107,6 @@ trait AccessLevels
      */
     public function regular(): bool
     {
-        return $this->accessLevel() >= Level::Regular->value;
+        return $this->accessLevel() >= Level::Deactivated->value;
     }
 }

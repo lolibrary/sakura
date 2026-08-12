@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\DefaultRule;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Username;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -55,29 +58,12 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'encoding:utf-8', 'max:255'],
             'username' => [
                 'required',
-                Rule::string()
-                    ->min(3)
-                    ->max(40)
-                    ->alphaDash()
-                    ->lowercase()
-                    ->doesntStartWith('-', '_')
-                    ->doesntEndWith('-', '_'),
-                Rule::notIn([
-                    'admin',
-                    'administrator',
-                    'lolibrary',
-                    'official',
-                    'senior',
-                    'lolibrarian',
-                    'system',
-                    'user',
-                    'developer',
-                    'dev',
-                ]),
-                Rule::unique('users'),
+                DefaultRule::username(),
+                DefaultRule::restricted(),
+                Rule::unique('usernames'),
             ],
-            'email' => ['required', 'string', 'email', 'encoding:utf-8', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'encoding:utf-8', 'min:12', 'confirmed'],
+            'email' => ['required', DefaultRule::email(), 'unique:users'],
+            'password' => [DefaultRule::password(), 'encoding:utf-8', 'confirmed'],
         ]);
     }
 
@@ -101,12 +87,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => str($data['email'])->lower()->toString(),
-            'username' => $data['username'],
-            'password' => Hash::make($data['password']),
-        ]);
+        return DB::transaction(function () use ($data): User {
+            /** @var User $user */
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => str($data['email'])->lower()->toString(),
+                'username' => $data['username'],
+                'password' => Hash::make($data['password']),
+            ]);
+
+            $user->usernames()->create(['username' => $data['username']]);
+
+            return $user;
+        });
     }
 
     /**
