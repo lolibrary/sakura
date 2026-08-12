@@ -61,6 +61,7 @@ class UserResource extends Resource
         return [
             'entries' => ItemsRelationManager::make(),
             'usernames' => UsernamesRelationManager::make(),
+            'closet' => ItemsRelationManager::make()
         ];
     }
 
