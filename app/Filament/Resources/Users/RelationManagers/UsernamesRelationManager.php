@@ -93,7 +93,8 @@ class UsernamesRelationManager extends RelationManager
                     ->color('light')
                     ->visible(fn(Username $record) => $record->username !== $record->user->username)
                     ->action(fn (Username $record) => $record->user->update(['username' => $record->username])),
-                DeleteAction::make(),
+                DeleteAction::make()
+                    ->visible(false),
                 ForceDeleteAction::make(),
                 RestoreAction::make(),
             ])

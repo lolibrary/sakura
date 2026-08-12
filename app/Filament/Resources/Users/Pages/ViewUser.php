@@ -6,6 +6,7 @@ use App\Filament\Resources\Users\UserResource;
 use App\Jobs\RetractItem;
 use App\Models\User;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Support\Icons\Heroicon;
@@ -26,11 +27,19 @@ class ViewUser extends ViewRecord
                 ->authorize('verify')
                 ->action(fn(User $record) => $record->markEmailAsVerified()),
             Action::make('reset_password')
+                ->label(__('ui.auth.pw_reset'))
                 ->requiresConfirmation()
                 ->icon(Heroicon::OutlinedEnvelopeOpen)
                 ->color('light')
                 ->authorize('reset')
                 ->action(fn(User $record) => Password::broker()->sendResetLink(['id' => $record->id])),
+
+            ActionGroup::make([
+                Action::make('allow_username_change')
+                    ->tooltip('Flag this user as able to change username')
+                    ->icon(Heroicon::OutlinedFlag)
+                    ->action(fn (User $record) => $record->metadata->put('can_change_username', true) && $record->save()),
+            ])
         ];
     }
 
