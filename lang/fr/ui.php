@@ -43,7 +43,6 @@ return [
         'pw_reset' => 'Réinitialiser le mot de passe',
         'pw_reset_btn' => 'Envoyer le lien de réinitialisation du mot de passe',
         'pw_no_change' => "Laissez cet espace vide si vous ne souhaitez pas changer votre mot de passe.",
-        'username_txt' => 'Pour changer votre nom d\'utilisateur, <a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">cliquez ici</a>',
         'resend' => 'cliquez ici pour en envoyer un nouveau',
         'verify_success' => "Votre compte est désormais vérifié !",
         'verify_txt1' => "Vous devez vérifier votre adresse mail avant de procéder.",
