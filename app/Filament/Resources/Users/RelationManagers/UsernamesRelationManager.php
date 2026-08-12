@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\Users\RelationManagers;
 
 use App\Filament\Components\Table\DateColumn;
+use App\Helpers\DefaultRule;
 use App\Models\Username;
+use Filament\Actions\Action;
 use Filament\Actions\AssociateAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
@@ -21,18 +23,31 @@ use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
-use Filament\Tables\Columns\BooleanColumn;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Unique;
 
 class UsernamesRelationManager extends RelationManager
 {
     protected static string $relationship = 'usernames';
+
+    public function form(Schema $schema): Schema
+    {
+        return $schema->components([
+            TextInput::make('username')
+                ->required()
+                ->rules(DefaultRule::username())
+                ->autocomplete(false)
+                ->autocapitalize(false)
+                ->unique('usernames')
+        ]);
+    }
 
     public function infolist(Schema $schema): Schema
     {
@@ -60,10 +75,10 @@ class UsernamesRelationManager extends RelationManager
                     ->toggleable(false)
                     ->toggledHiddenByDefault(false)
                     ->sortable(),
-                IconColumn::make('deleted_at')
+                IconColumn::make('active')
                     ->boolean()
-                    ->label('Deleted')
-                    ->state(fn (Username $u) => $u->trashed())
+                    ->label('Active')
+                    ->state(fn(Username $u) => $u->username === $u->user->username)
             ])
             ->filters([
                 TrashedFilter::make()
@@ -71,25 +86,25 @@ class UsernamesRelationManager extends RelationManager
             ])
             ->headerActions([
                 CreateAction::make(),
-                AssociateAction::make(),
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DissociateAction::make(),
+                Action::make('assign')
+                    ->icon(Heroicon::OutlinedSquaresPlus)
+                    ->color('light')
+                    ->visible(fn(Username $record) => $record->username !== $record->user->username)
+                    ->action(fn (Username $record) => $record->user->update(['username' => $record->username])),
                 DeleteAction::make(),
                 ForceDeleteAction::make(),
                 RestoreAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DissociateBulkAction::make(),
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
             ])
-            ->modifyQueryUsing(fn (Builder $query) => $query
+            ->modifyQueryUsing(fn(Builder $query) => $query
                 ->withoutGlobalScopes([
                     SoftDeletingScope::class,
                 ]));

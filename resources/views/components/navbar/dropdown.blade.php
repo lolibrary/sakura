@@ -8,11 +8,11 @@
             <i class="fal fa-fw fa-user"></i> {{ __('Profile') }}
         </a>
 
-        <a class="dropdown-item" href="{{ route('wishlist.public', auth()->user()) }}">
+        <a class="dropdown-item" href="{{ route('wishlist.public', auth()->user()->username) }}">
             <i class="fal fa-fw fa-star"></i> {{ __('Wishlist') }}
         </a>
 
-        <a class="dropdown-item" href="{{ route('closet.public', auth()->user()) }}">
+        <a class="dropdown-item" href="{{ route('closet.public', auth()->user()->username) }}">
             <i class="fal fa-fw fa-tags"></i> {{ __('Closet') }}
         </a>
 
