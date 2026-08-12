@@ -36,7 +36,6 @@ return [
         'pw_reset' => '',
         'pw_reset_btn' => '',
         'pw_no_change' => "",
-        'username_txt' => '',
     ],
     'blog' => [
         'anon' => '',
