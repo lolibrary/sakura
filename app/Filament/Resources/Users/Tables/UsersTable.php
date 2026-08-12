@@ -20,9 +20,14 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->state(fn (User $record) => $record->display_name)
+                    ->visible(fn() => auth()->user()->admin())
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('username')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable()
@@ -42,7 +47,7 @@ class UsersTable
                     ->sortable()
                     ->toggleable(),
             ])
-            ->paginationPageOptions([10, 25, 50, 100])
+            ->paginationPageOptions([25, 50, 100, 200])
             ->filters([
                 EnumFilter::make('level', Level::cases()),
             ])
