@@ -1,7 +1,7 @@
 <x-mail::message>
 Hi {{ $new->display_name }},
 
-We've merged your accounts `{{ $old }}` and `{{ $new->metadata->get('previous_username') }}` as they were both using the same email address.
+We've merged your accounts `{{ $old }}` and `{{ $new->metadata->get('previous_username') ?? $new->username }}` as they were both using the same email address.
 
 Your closet and wishlist from both accounts have been combined, and your new username is `{{ $new->username }}`.
 

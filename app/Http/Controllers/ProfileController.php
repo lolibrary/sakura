@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DefaultRule;
 use Auth;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Illuminate\Auth\Events\Registered;
 
 class ProfileController extends Controller
 {
@@ -44,61 +46,60 @@ class ProfileController extends Controller
         $valid = $request->validate([
             'name' => 'required|string|max:255',
             'username' => [
+                Rule::excludeUnless(fn() => $user->canChangeUsername()),
                 'required',
-                Rule::string()
-                    ->min(3)
-                    ->max(40)
-                    ->alphaDash()
-                    ->lowercase()
-                    ->doesntStartWith('-', '_')
-                    ->doesntEndWith('-', '_'),
-                    Rule::notIn([
-                        'admin',
-                        'administrator',
-                        'lolibrary',
-                        'official',
-                        'senior',
-                        'lolibrarian',
-                        'system',
-                        'user',
-                        'developer',
-                        'dev',
-                    ]),
-                Rule::unique('usernames')->whereNotIn('username', $user->usernames->modelKeys()),
+                DefaultRule::username(),
+                DefaultRule::restricted(),
+                Rule::unique('usernames')
+                    ->whereNotIn('username', $user->usernames->modelKeys()),
             ],
-            'email' => ['required', 'string', 'max:255', 'email', Rule::unique('users')->ignore($user)],
-            'password' => 'nullable|string|confirmed|min:12',
+            'email' => ['required', DefaultRule::email(), Rule::unique('users')->ignore($user)],
+            'password' => ['nullable', DefaultRule::password(), 'confirmed'],
         ]);
 
-        $status = 'ui.auth.update';
+        $usernameUpdate = array_key_exists('username', $valid) && $user->username !== $valid['username'];
 
-        $user->name = $valid['name'];
+        $status = DB::transaction(function () use ($request, $valid, $user, $usernameUpdate) {
+            $status = 'ui.auth.update';
 
-        // attempt to make or claim the new username
-        if ($user->username !== $valid['username']) {
-            $user->username = $valid['username'];
+            $user->name = $valid['name'];
 
-            if (! $user->usernames->contains($valid['username'])) {
-                $user->usernames()->create(['username' => $valid['username']]);
+            // attempt to make or claim the new username
+            if ($usernameUpdate) {
+                $user->username = $valid['username'];
+
+                if (!$user->usernames->contains($valid['username'])) {
+                    $user->usernames()->create(['username' => $valid['username']]);
+                }
             }
-        }
 
-        if ($user->email !== $valid['email']) {
-            // If they've updated their email address, they need to re-verify it.
-            $user->email = $valid['email'];
-            $user->email_verified_at = NULL;
+            if ($user->email !== $valid['email']) {
+                // If they've updated their email address, they need to re-verify it.
+                $user->email = $valid['email'];
+                $user->email_verified_at = null;
+
+                $status = 'ui.auth.verify_update';
+            }
+
+            if ($valid['password']) {
+                $user->password = Hash::make($valid['password']);
+            }
+
+            $user->public_closet = $request->has('public_closet');
+            $user->public_wishlist = $request->has('public_wishlist');
+
+            $user->save();
+
+            return $status;
+        });
+
+        if ($status === 'ui.auth.verify_update') {
             event(new Registered($user));
-            $status = 'ui.auth.verify_update';
         }
 
-        if ($valid['password']) {
-            $user->password = Hash::make($valid['password']);
+        if ($usernameUpdate) {
+            $user->currentUsername()->touch(); // update timestamps on name change
         }
-
-        $user->public_closet = $request->has('public_closet');
-        $user->public_wishlist = $request->has('public_wishlist');
-
-        $user->save();
 
         return redirect('profile')->with('status', $status);
     }

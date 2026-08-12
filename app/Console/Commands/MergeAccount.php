@@ -2,12 +2,13 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\MergeAccounts;
+use App\Jobs\Auth\MergeAccounts;
 use App\Mail\AccountMerged;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+
 use function Laravel\Prompts\error;
 
 class MergeAccount extends Command

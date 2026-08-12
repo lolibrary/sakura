@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\DefaultRule;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Username;
@@ -57,29 +58,12 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'encoding:utf-8', 'max:255'],
             'username' => [
                 'required',
-                Rule::string()
-                    ->min(3)
-                    ->max(40)
-                    ->alphaDash()
-                    ->lowercase()
-                    ->doesntStartWith('-', '_')
-                    ->doesntEndWith('-', '_'),
-                Rule::notIn([
-                    'admin',
-                    'administrator',
-                    'lolibrary',
-                    'official',
-                    'senior',
-                    'lolibrarian',
-                    'system',
-                    'user',
-                    'developer',
-                    'dev',
-                ]),
+                DefaultRule::username(),
+                DefaultRule::restricted(),
                 Rule::unique('usernames'),
             ],
-            'email' => ['required', 'string', 'email', 'encoding:utf-8', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'encoding:utf-8', 'min:12', 'confirmed'],
+            'email' => ['required', DefaultRule::email(), 'unique:users'],
+            'password' => [DefaultRule::password(), 'encoding:utf-8', 'confirmed'],
         ]);
     }
 

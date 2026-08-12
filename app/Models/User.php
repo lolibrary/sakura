@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Passport\Contracts\OAuthenticatable;
@@ -275,5 +276,20 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
     public function currentUsername(): BelongsTo
     {
         return $this->belongsTo(Username::class, foreignKey: 'username');
+    }
+
+    public function canChangeUsername(): bool
+    {
+        // give you your first username change for free
+        if ($this->usernames->count() === 1) {
+            return true;
+        }
+
+        return $this->lastChangedUsername()->isBefore(now()->subMonths(3));
+    }
+
+    public function lastChangedUsername(): Carbon
+    {
+        return $this->currentUsername->updated_at;
     }
 }
