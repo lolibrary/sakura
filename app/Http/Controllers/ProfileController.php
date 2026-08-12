@@ -117,7 +117,7 @@ class ProfileController extends Controller
      */
     public function closet(Request $request)
     {
-        return redirect()->route('closet.public', auth()->user());
+        return redirect()->route('closet.public', auth()->user()->username);
     }
 
     /**
@@ -128,6 +128,6 @@ class ProfileController extends Controller
      */
     public function wishlist(Request $request)
     {
-        return redirect()->route('wishlist.public', auth()->user());
+        return redirect()->route('wishlist.public', auth()->user()->username);
     }
 }

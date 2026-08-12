@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Enums\Level;
+use App\Models\User;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -39,8 +41,12 @@ class UserForm
                     ->options(Level::options())
                     ->required()
                     ->default(Level::Junior),
+
                 Toggle::make('banned'),
 
+                KeyValue::make('metadata')
+                    ->columnSpanFull()
+                    ->visible(fn() => auth()->user()->developer()),
             ]);
     }
 }

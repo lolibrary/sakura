@@ -19,13 +19,13 @@
                         </a>
                     @endif
                     @can('wishlist', $user)
-                    <a href="{{ route('wishlist.public', $user) }}" class="list-group-item list-group-item-action @if (Route::is('wishlist.public')) active @endif">
+                    <a href="{{ route('wishlist.public', $user->username) }}" class="list-group-item list-group-item-action @if (Route::is('wishlist.public')) active @endif">
                         <x-heroicon-o-star style="width: 1.2rem; height: 1.2rem; padding-bottom: 0.2rem;" />
                         {{ __('ui.wishlist.title') }}
                     </a>
                     @endcan
                     @can('closet', $user)
-                    <a href="{{ route('closet.public', $user) }}" class="list-group-item list-group-item-action @if (Route::is('closet.public')) active @endif">
+                    <a href="{{ route('closet.public', $user->username) }}" class="list-group-item list-group-item-action @if (Route::is('closet.public')) active @endif">
                         <x-heroicon-o-shopping-bag style="width: 1.2rem; height: 1.2rem; padding-bottom: 0.2rem;" />
                         {{ __('ui.closet.title') }}
                     </a>

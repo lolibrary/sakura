@@ -250,7 +250,7 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
 
     public function getRouteKeyName(): string
     {
-        return 'username';
+        return 'id';
     }
 
     /**

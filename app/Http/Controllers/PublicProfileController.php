@@ -24,8 +24,10 @@ class PublicProfileController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function closet(Request $request, User $user)
+    public function closet(Request $request, string $username)
     {
+        $user = User::where('username', $username)->firstOrFail();
+
         if (! $user->public_closet) {
             if (! auth()->user()?->is($user)) {
                 abort(404);
@@ -44,8 +46,10 @@ class PublicProfileController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function wishlist(Request $request, User $user)
+    public function wishlist(Request $request, string $username)
     {
+        $user = User::where('username', $username)->firstOrFail();
+
         if (! $user->public_wishlist) {
             if (! auth()->user()?->is($user)) {
                 abort(404);
