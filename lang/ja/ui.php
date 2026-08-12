@@ -55,7 +55,6 @@ return [
         'verify_update' => '変更保存完了！メールアドレスが変わったので、新しいメールアドレスをご確証ください。変更済みのアドレスへと検証リンクが送信されました。',
         'verify_needed' => 'メール確証必須',
         'public_wishlist' => '希望リストを公開しますか？',
-        'username_txt' => 'ユーザー名変換には<a class="text-info" href="#" data-toggle="tooltip" title="現在はユーザー名変換が不可能でスごめんなさい！">こちらにクリック</a>',
         'check_email' => '続ける前に、検証リンクを含むメールをご確認ください。',
         'verify_resent' => '指摘されたメールアドレスへ新しい検証リンクを送信しました。',
     ],
