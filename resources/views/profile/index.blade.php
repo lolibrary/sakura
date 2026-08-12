@@ -20,7 +20,7 @@
     </div>
     <div class="form-group">
         <label for="profile-username">{{ __('ui.auth.username') }}</label>
-        <input type="text" id="profile-username" class="form-control" value="{{ $user->username }}" name="username">
+        <input type="text" id="profile-username" autocomplete="off" autocorrect="off" class="form-control" value="{{ $user->username }}" name="username">
     </div>
     <div class="form-group">
         <label for="profile-email">{{ __('ui.auth.email') }}</label>

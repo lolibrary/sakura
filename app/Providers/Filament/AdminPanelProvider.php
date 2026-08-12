@@ -13,8 +13,10 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Support\Assets\Css;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Size;
+use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Filament\View\PanelsRenderHook;
 use Filament\Widgets\AccountWidget;
@@ -39,6 +41,7 @@ class AdminPanelProvider extends PanelProvider
             ->darkModeBrandLogo(asset('images/logo_horizontal_white.png'))
             ->brandLogoHeight('1.3rem')
             ->colors([
+                'gray' => Color::Zinc,
                 'primary' => Color::Indigo,
                 'info' => Color::Olive,
                 'success' => Color::Emerald,

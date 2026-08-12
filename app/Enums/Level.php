@@ -20,7 +20,7 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
     case Senior = 100;
     case Lolibrarian = 50;
     case Junior = 10;
-    case Regular = 0;
+    case Deactivated = 0;
     case Banned = -1;
 
 
@@ -35,7 +35,7 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::Trusted => 'Senior (Trusted)',
             self::Lolibrarian => 'Lolibrarian',
             self::Junior => 'Junior Lolibrarian',
-            self::Regular => 'Regular',
+            self::Deactivated => 'Deactivated',
             self::Banned => 'Unknown',
         };
     }
@@ -50,7 +50,7 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::Senior,  => 'warning',
             self::Lolibrarian => 'fuschia',
             self::Junior => 'success',
-            self::Amy, self::Regular => 'primary',
+            self::Amy, self::Deactivated => 'primary',
             self::Banned => 'danger',
         };
     }
@@ -66,7 +66,7 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::Senior => Heroicon::OutlinedUserPlus,
             self::Lolibrarian => Heroicon::OutlinedDocumentCheck,
             self::Junior => Heroicon::OutlinedPencilSquare,
-            self::Regular => Heroicon::OutlinedUser,
+            self::Deactivated => Heroicon::OutlinedUserMinus,
             self::Banned => Heroicon::OutlinedXCircle,
         };
     }
@@ -82,7 +82,7 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::Senior => 'Senior Lolibrarian, in charge of data accuracy',
             self::Lolibrarian => 'Lolibrarian, a trusted contributor to the site',
             self::Junior => 'Junior Lolibrarian, a regular contributor',
-            self::Regular => 'Regular user of the site without contribution access',
+            self::Deactivated => 'This user has been deactivated',
             self::Banned => 'This user has been banned from contributing',
         };
     }
@@ -97,7 +97,7 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::Senior->value => 'Senior Lolibrarian',
             self::Lolibrarian->value => 'Lolibrarian',
             self::Junior->value => 'Junior Lolibrarian',
-            self::Regular->value => 'Regular',
+            self::Deactivated->value => 'Deactivated',
         ];
     }
 }

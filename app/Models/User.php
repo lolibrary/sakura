@@ -14,8 +14,10 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -31,6 +33,7 @@ use Laravel\Passport\Contracts\OAuthenticatable;
  * @property string $email          The user's email.
  * @property string $name           The user's name.
  * @property string $username       The user's login username.
+ * @property string $password       The user's password.
  * @property string $remember_token A strong random number that allows the user to use "remember me" sessions.
  *
  * @property Level  $level    The user's level (permissions).
@@ -40,11 +43,13 @@ use Laravel\Passport\Contracts\OAuthenticatable;
  * @property bool $public_closet
  * @property bool $public_wishlist
  *
- * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $items    The {@link \App\Item items} this user has submitted.
- * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $wishlist The {@link \App\Item items} this user has favourited.
- * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $closet   The {@link \App\Item items} this user owns.
+ * @property Item[]|\Illuminate\Database\Eloquent\Collection $items    The {@link Item items} this user has submitted.
+ * @property Item[]|\Illuminate\Database\Eloquent\Collection $wishlist The {@link Item items} this user has favourited.
+ * @property Item[]|\Illuminate\Database\Eloquent\Collection $closet   The {@link Item items} this user owns.
+ * @property Username[]|\Illuminate\Database\Eloquent\Collection $usernames  The usernames this user has.
  *
  * @property string $id
+ * @property \Illuminate\Support\Collection $metadata
  */
 class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable, FilamentUser
 {
@@ -87,6 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
         'email_verified_at' => 'datetime',
         'public_closet' => 'boolean',
         'public_wishlist' => 'boolean',
+        'metadata' => AsCollection::class,
     ];
 
     /**
@@ -259,5 +265,15 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
             ttl: 1440,
             callback: fn() => static::username($user->value)->firstOrFail(),
         );
+    }
+
+    public function usernames(): HasMany
+    {
+        return $this->hasMany(Username::class);
+    }
+
+    public function currentUsername(): BelongsTo
+    {
+        return $this->belongsTo(Username::class, foreignKey: 'username');
     }
 }

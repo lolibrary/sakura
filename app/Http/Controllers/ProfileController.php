@@ -36,12 +36,12 @@ class ProfileController extends Controller
      * Let users update their info.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request)
     {
         $user = Auth::user();
-        $validatedData = $request->validate([
+        $valid = $request->validate([
             'name' => 'required|string|max:255',
             'username' => [
                 'required',
@@ -64,7 +64,7 @@ class ProfileController extends Controller
                         'developer',
                         'dev',
                     ]),
-                Rule::unique('users')->ignore($user),
+                Rule::unique('usernames')->whereNotIn('username', $user->usernames->modelKeys()),
             ],
             'email' => ['required', 'string', 'max:255', 'email', Rule::unique('users')->ignore($user)],
             'password' => 'nullable|string|confirmed|min:12',
@@ -72,19 +72,27 @@ class ProfileController extends Controller
 
         $status = 'ui.auth.update';
 
-        $user->name = $validatedData['name'];
-        $user->username = $validatedData['username'];
+        $user->name = $valid['name'];
 
-        if ($user->email != $validatedData['email']) {
+        // attempt to make or claim the new username
+        if ($user->username !== $valid['username']) {
+            $user->username = $valid['username'];
+
+            if (! $user->usernames->contains($valid['username'])) {
+                $user->usernames()->create(['username' => $valid['username']]);
+            }
+        }
+
+        if ($user->email !== $valid['email']) {
             // If they've updated their email address, they need to re-verify it.
-            $user->email = $validatedData['email'];
+            $user->email = $valid['email'];
             $user->email_verified_at = NULL;
             event(new Registered($user));
             $status = 'ui.auth.verify_update';
         }
 
-        if ($validatedData['password']) {
-            $user->password = Hash::make($validatedData['password']);
+        if ($valid['password']) {
+            $user->password = Hash::make($valid['password']);
         }
 
         $user->public_closet = $request->has('public_closet');
