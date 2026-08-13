@@ -33,36 +33,42 @@ class ViewItem extends ViewRecord
                 ->icon(Heroicon::OutlinedPencilSquare),
 
             Action::make('ready_for_review')
+                ->label(trans('ui.actions.ready_for_review'))
                 ->icon(Heroicon::OutlinedClipboardDocumentCheck)
                 ->color('light')
                 ->authorize('readyForReview')
-                ->tooltip('Mark this entry as ready for senior volunteers to check over')
+                ->tooltip(trans('ui.actions.ready_for_review_help'))
                 ->action(fn(Item $record) => dispatch_sync(new ReadyForReview($record, auth()->user()))),
             Action::make('mark_as_draft')
+                ->label(trans('ui.actions.mark_as_draft'))
                 ->icon(Heroicon::OutlinedDocument)
                 ->color('gray')
                 ->authorize('markAsDraft')
-                ->tooltip('Mark this entry as no longer ready for review')
+                ->tooltip(trans('ui.actions.mark_as_draft_help'))
                 ->action(fn(Item $record) => dispatch_sync(new MarkAsDraft($record, auth()->user()))),
             Action::make('request_changes')
+                ->label(trans('ui.actions.request_changes'))
                 ->icon(Heroicon::OutlinedChatBubbleLeftEllipsis)
                 ->color('warning')
                 ->authorize('requestChanges')
-                ->requiresConfirmation(fn() => $this->record->status === Status::ChangesRequested)
+                ->tooltip(trans('ui.actions.request_changes_help'))
+                ->requiresConfirmation(fn() => $this->record->status === Status::Draft)
                 ->action(fn(Item $record) => dispatch_sync(new RequestChanges($record, auth()->user()))),
 
             Action::make('mark_as_active')
+                ->label(trans('ui.actions.mark_as_active'))
                 ->icon(Heroicon::OutlinedClock)
                 ->color('gray')
-                ->tooltip('Mark an inactive draft as active')
+                ->tooltip(trans('ui.actions.mark_as_active_help'))
                 ->authorize('markAsActive')
                 ->action(fn(Item $record) => dispatch_sync(new MarkAsActive($record, auth()->user())))
                 ->successRedirectUrl(fn(Item $record) => $record->view_url),
 
             ActionGroup::make([
                 ReplicateItemAction::make()
+                    ->label(trans('ui.actions.replicate'))
                     ->color('fuschia')
-                    ->tooltip('Copies an item, minus the images, with a new name')
+                    ->tooltip(trans('ui.actions.replicate'))
                     ->schema([
                         TextInput::make('english_name')
                             ->maxLength(255)
@@ -75,33 +81,34 @@ class ViewItem extends ViewRecord
                             ->unique(Item::class, 'slug'),
                     ]),
                 Action::make('retract')
+                    ->label(trans('ui.actions.retract'))
                     ->requiresConfirmation()
-                    ->modalHeading('Retract Item')
-                    ->modalDescription("This was previously called 'unpublish'.\n" .
-                        "This removes an entry from the main site's search, while keeping the direct link intact.\n" .
-                        "This is required as a first step in order to delete an entry.")
+                    ->modalHeading(trans('ui.actions.retract_heading'))
+                    ->modalDescription(trans('ui.actions.retract_description'))
                     ->icon(Heroicon::OutlinedArchiveBoxXMark)
                     ->color('danger')
                     ->authorize('retract')
-                    ->tooltip('Remove an entry from the main lolibrary.org site')
+                    ->tooltip(trans('ui.actions.retract_help'))
                     ->action(fn(Item $record) => dispatch_sync(new RetractItem($record, auth()->user()))),
                 Action::make('publish')
                     ->icon(Heroicon::OutlinedCheckBadge)
-                    ->label('Publish entry')
+                    ->label(trans('ui.actions.publish'))
+                    ->tooltip(trans('ui.actions.publish_help'))
                     ->color('success')
                     ->authorize('publish')
                     ->action(fn(Item $record) => dispatch_sync(new PublishItem($record, auth()->user()))),
                 Action::make('mark_as_duplicate')
+                    ->label(trans('ui.actions.mark_as_duplicate'))
                     ->icon(Heroicon::OutlinedDocumentDuplicate)
                     ->color('primary')
-                    ->tooltip('Mark an item as a duplicate of another')
+                    ->tooltip(trans('ui.actions.mark_as_duplicate_help'))
                     ->authorize('markAsDuplicate')
                     ->schema([
                         TextInput::make('id')
                             ->label(__('ID'))
                             ->uuid()
                             ->exists(Item::class, 'id')
-                            ->helperText("Enter the ID (copy from the page) of the entry to mark this as a duplicate of.")
+                            ->helperText(trans('ui.actions.mark_as_duplicate_id'))
                     ])
                     ->action(function (Item $record, array $data, Action $action): void {
                         /** @var $item Item */
@@ -119,15 +126,16 @@ class ViewItem extends ViewRecord
                     })
                     ->successRedirectUrl(fn(Item $record) => $record->view_url),
                 Action::make('change_slug')
+                    ->label(trans('ui.actions.change_slug'))
                     ->icon(Heroicon::OutlinedGlobeAlt)
                     ->color('gray')
-                    ->tooltip('Change the URL to this entry')
+                    ->tooltip(trans('ui.actions.change_slug_help'))
                     ->authorize('changeSlug')
                     ->schema([
                         TextInput::make('input')
                             ->maxLength(100)
                             ->label(__('Slug'))
-                            ->helperText("Enter a new slug for this entry.")
+                            ->helperText(trans('ui.actions.change_slug_new'))
                             ->live()
                             ->afterStateUpdated(function ($state, callable $set) {
                                 $set('slug', $this->record->brand->short_name . '-' . str($state)->slug());
@@ -144,7 +152,7 @@ class ViewItem extends ViewRecord
                             ->unique(Item::class, column: 'slug'),
 
                         TextInput::make('url')
-                            ->label(__('New URL'))
+                            ->label(trans('ui.actions.change_slug_url'))
                             ->disabled()
                             ->helperText("https://lolibrary.org/item/{slug}"),
 

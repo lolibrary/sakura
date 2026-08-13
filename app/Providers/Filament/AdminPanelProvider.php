@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Settings;
+use App\Filament\Providers\GravatarProvider;
 use CraftForge\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin;
 use Doriiaan\FilamentAstrotomic\FilamentAstrotomicPlugin;
 use Filament\Actions\Action;
@@ -50,6 +51,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('library')
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->brandLogo(asset('images/logo_horizontal.png'))
             ->darkModeBrandLogo(asset('images/logo_horizontal_white.png'))
@@ -67,6 +69,7 @@ class AdminPanelProvider extends PanelProvider
                 'cyan' => Color::Cyan,
                 'fuschia' => Color::Fuchsia,
             ])
+            ->defaultAvatarProvider(GravatarProvider::class)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([])
@@ -117,8 +120,8 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 FilamentLanguageSwitcherPlugin::make()
                     ->locales([
-                        'en', 'fr', 'it', 'no', 'nl', // our usual
-                        'de', 'ja', 'es', 'pt', // some more extras for the backend
+                        'en', 'fr', 'it', ['code' => 'nb_NO', 'name' => 'Norsk'], 'nl', // our usual
+                        'de', 'ja', 'es', 'pt', 'pt_BR', 'zh', // some more extras for the backend
                         ])
                     ->rememberLocale()
                     ->showFlags(false),

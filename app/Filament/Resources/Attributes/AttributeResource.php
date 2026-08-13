@@ -72,13 +72,13 @@ class AttributeResource extends Resource
         $query->whereTranslationLike('name', '%' . $search . '%');
     }
 
-//    public static function getGlobalSearchEloquentQuery(): Builder
-//    {
-//        return parent::getGlobalSearchEloquentQuery();
-//    }
-//
-//    public static function modifyGlobalSearchQuery(Builder $query, string $search): void
-//    {
-//
-//    }
+    public static function getModelLabel(): string
+    {
+        return trans('ui.item.attribute');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return trans('ui.attributes');
+    }
 }
