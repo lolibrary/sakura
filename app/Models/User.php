@@ -289,10 +289,14 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
             return true;
         }
 
+        if ($this->lastChangedUsername() === null) {
+            return true;
+        }
+
         return $this->lastChangedUsername()->isBefore(now()->subMonths(3));
     }
 
-    public function lastChangedUsername(): Carbon
+    public function lastChangedUsername(): ?Carbon
     {
         return $this->currentUsername->updated_at;
     }
