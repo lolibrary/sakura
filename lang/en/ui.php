@@ -165,5 +165,39 @@ return [
         'help' => 'Drafts, ready for review and pending entries',
     ],
 
+    'actions' => [
+        'ready_for_review' => 'Ready for review',
+        'ready_for_review_help' => 'Mark this entry as ready for senior volunteers to check over',
 
+        'mark_as_draft' => 'Mark as draft',
+        'mark_as_draft_help' => 'Mark this entry as no longer ready for review',
+
+        'request_changes' => 'Request changes',
+        'request_changes_help' => 'Request changes to this entry and notify the submitter',
+
+        'mark_as_active' => 'Mark as active',
+        'mark_as_active_help' => 'Mark an inactive draft as active',
+
+        'replicate' => 'Replicate',
+        'replicate_help' => 'Copies an item, with a new name',
+
+        'publish' => 'Publish entry',
+        'publish_help' => 'Push this entry live on lolibrary.org and in search',
+
+        'retract' => 'Retract',
+        'retract_help' => 'Remove an entry from the main lolibrary.org site',
+        'retract_heading' => 'Retract Item',
+        'retract_description' => "This was previously called 'unpublish'.<br>" .
+                        "This removes an entry from the main site's search, while keeping the direct link intact.<br>" .
+                        "This is required as a first step in order to delete a published entry.",
+
+        'mark_as_duplicate' => 'Mark as duplicate',
+        'mark_as_duplicate_help' => 'Mark an item as a duplicate of another',
+        'mark_as_duplicate_id' => 'Enter the ID (copy from the page) of the entry to mark this as a duplicate of.',
+
+        'change_slug' => 'Change slug',
+        'change_slug_help' => 'Change the URL to this entry',
+        'change_slug_new' => 'Enter a new slug for this entry.',
+        'change_slug_url' => 'New URL',
+    ],
 ];
