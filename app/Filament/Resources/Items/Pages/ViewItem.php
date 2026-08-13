@@ -36,7 +36,7 @@ class ViewItem extends ViewRecord
                 ->icon(Heroicon::OutlinedClipboardDocumentCheck)
                 ->color('light')
                 ->authorize('readyForReview')
-                ->tooltip('Flag this entry to senior volunteers to check over')
+                ->tooltip('Mark this entry as ready for senior volunteers to check over')
                 ->action(fn(Item $record) => dispatch_sync(new ReadyForReview($record, auth()->user()))),
             Action::make('mark_as_draft')
                 ->icon(Heroicon::OutlinedDocument)
