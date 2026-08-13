@@ -33,7 +33,6 @@ return [
         'pw_reset' => 'Resetta password',
         'pw_reset_btn' => 'Manda Link Per Resettare Password',
         'pw_no_change' => "Lascia vuoto questo campo se non vuoi cambiare la password.",
-        'username_txt' => 'Per cambiare il tuo nome utente, <a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">clicca qui</a>',
         'verify_update' => 'I cambiamenti sono stati salvati! Dato che la tua email è stata aggiornate, dovrai verificare la nuova email. Un nuovo link di verificazione è stato mandato alla tua nuova email.',
         'pw_guide' => 'La tua password deve avere almeno 12 caratteri.',
         'update' => 'I tuoi cambiamenti sono stati salvati!',
