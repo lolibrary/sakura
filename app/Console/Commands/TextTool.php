@@ -28,7 +28,14 @@ class TextTool extends Command
      *
      * @var array
      */
-    protected $tables = ['attribute', 'brand', 'category', 'color', 'feature', 'tag'];
+    protected array $tables = ['attribute', 'brand', 'category', 'color', 'feature', 'tag'];
+
+    /**
+     * A list of aliases for this command.
+     *
+     * @var string[]
+     */
+    protected $aliases = ['app:translations'];
 
     /**
      * Create a new command instance.

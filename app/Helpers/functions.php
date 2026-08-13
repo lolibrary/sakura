@@ -4,7 +4,6 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Feature;
-use App\Models\Image;
 use App\Models\Model;
 use App\Models\Tag;
 use App\Models\User;

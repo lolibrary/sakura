@@ -26,7 +26,9 @@
             <small id="usernameHelp" class="form-text text-muted">{{ __('ui.auth.username_guide') }}</small>
         @else
             <small id="usernameChangeHelp" class="form-text text-muted">{{ __('ui.auth.username_locked') }}</small>
-            <small id="usernameHelp" class="form-text text-muted">{{ __('ui.auth.username_last_changed', ['date' => $user->lastChangedUsername()->diffForHumans()]) }}</small>
+            @if ($user->lastChangedUsername())
+                <small id="usernameHelp" class="form-text text-muted">{{ __('ui.auth.username_last_changed', ['date' => $user->lastChangedUsername()->diffForHumans()]) }}</small>
+            @endif
         @endif
     </div>
     <div class="form-group">
