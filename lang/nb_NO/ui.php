@@ -8,6 +8,7 @@ return [
     'brands' => 'Merker',
     'back' => 'Tilbake til hjemmesiden',
     'profile' => 'Profil',
+    'attributes' => 'Attributer',
     'auth' => [
         'verify' => 'Bekreft din e-postadresse',
         'verify_resent' => 'En fersk bekreftelseslenke har blitt e-postet til deg.',

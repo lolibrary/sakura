@@ -117,8 +117,8 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 FilamentLanguageSwitcherPlugin::make()
                     ->locales([
-                        'en', 'fr', 'it', 'no', 'nl', // our usual
-                        'de', 'ja', 'es', 'pt', // some more extras for the backend
+                        'en', 'fr', 'it', ['code' => 'nb_NO', 'name' => 'Norsk'], 'nl', // our usual
+                        'de', 'ja', 'es', 'pt', 'pt_BR', 'zh', // some more extras for the backend
                         ])
                     ->rememberLocale()
                     ->showFlags(false),
