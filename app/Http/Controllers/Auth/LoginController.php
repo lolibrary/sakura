@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Enums\Level;
-use App\Enums\SystemUser;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class LoginController extends Controller
 {
@@ -89,7 +87,7 @@ class LoginController extends Controller
     /**
      * Validate the user login request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return void
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -104,5 +102,19 @@ class LoginController extends Controller
                 'required', 'string', 'encoding:utf-8',
             ],
         ]);
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        return [
+            $this->username() => $request->input($this->username()),
+            'password' => $request->input('password'),
+        ];
     }
 }
