@@ -12,7 +12,7 @@ final class Gravatar
 
     public static function encode(?string $email = null): ?string
     {
-        return md5(mb_strtolower(mb_trim($email)));
+        return hash('sha256', mb_strtolower(mb_trim($email)));
     }
 
     public static function url(string $email, int $size = 100): string
