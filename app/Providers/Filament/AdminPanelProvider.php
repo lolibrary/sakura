@@ -2,24 +2,18 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Settings;
 use App\Filament\Providers\GravatarProvider;
 use CraftForge\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin;
 use Doriiaan\FilamentAstrotomic\FilamentAstrotomicPlugin;
 use Filament\Actions\Action;
-use Filament\Enums\UserMenuPosition;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
-use Filament\Support\Assets\Css;
 use Filament\Support\Colors\Color;
-use Filament\Support\Enums\Size;
-use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
-use Filament\View\PanelsRenderHook;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -111,18 +105,13 @@ class AdminPanelProvider extends PanelProvider
                         ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
                         ->openUrlInNewTab(),
                 ],
-                [
-                    Action::make('settings')
-                        ->url(fn (): string => Settings::getUrl())
-                        ->icon('heroicon-o-cog-6-tooth'),
-                ],
             ])
             ->plugins([
                 FilamentLanguageSwitcherPlugin::make()
                     ->locales([
                         'en', 'fr', 'it', ['code' => 'nb_NO', 'name' => 'Norsk'], 'nl', // our usual
                         'de', 'ja', 'es', 'pt', 'pt_BR', 'zh', // some more extras for the backend
-                        ])
+                    ])
                     ->rememberLocale()
                     ->showFlags(false),
                 FilamentAstrotomicPlugin::make(),
