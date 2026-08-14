@@ -36,7 +36,6 @@ return [
         'pw_reset' => 'Wachtwoord opnieuw instellen',
         'pw_reset_btn' => 'Stuur een link voor het opnieuw instellen van mijn wachtwoord',
         'pw_no_change' => "Laat dit veld leeg als u uw wachtwoord niet wilt wijzigen.",
-        'username_txt' => '<a class="text-info" href="#" data-toggle="tooltip" title="Het wijzigen van de gebruikersnaam wordt momenteel niet ondersteund, sorry!">Klik hier</a> om uw gebruikersnaam te wijzigen.',
         'public_closet' => 'Kledingkast publiek maken?',
         'public_wishlist' => 'Verlanglijstje publiek maken?',
     ],

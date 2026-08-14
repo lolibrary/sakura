@@ -36,7 +36,6 @@ return [
         'pw_reset' => '비밀번호 재설정',
         'pw_reset_btn' => '비밀번호 재설정 링크 보내기',
         'pw_no_change' => "비밀번호를 변경하지 않으려면 이 항목을 비워두세요.",
-        'username_txt' => '',
         'public_closet' => '',
         'public_wishlist' => '',
     ],
