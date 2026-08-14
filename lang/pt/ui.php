@@ -36,7 +36,6 @@ return [
         'pw_reset' => 'Solicitar nova palavra-passe',
         'pw_reset_btn' => 'Enviar ligação para redefinir a palavra-passe',
         'pw_no_change' => "Deixe em branco se não quiser mudar a sua palavra-passe.",
-        'username_txt' => 'Para mudar o seu nome de utilizador, <a class="text-info" href="#" data-toggle="tooltip" title="Mudar o nome de utilizador não é possível neste momento, desculpa!">clique aqui</a>',
         'public_closet' => 'Fazer o guarda-roupa público?',
         'public_wishlist' => 'Fazer a sua lista de desejos pública?',
     ],
