@@ -36,7 +36,6 @@ return [
         'pw_reset' => 'Återställ lösenord',
         'pw_reset_btn' => 'Skicka länk till återställning av lösenord',
         'pw_no_change' => "Lämna detta tomt om du inte vill ändra ditt lösenord.",
-        'username_txt' => 'För att ändra ditt användarnamn, <a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">klicka här</a>',
         'public_closet' => 'Gör garderob publik?',
         'public_wishlist' => 'Gör önskelista publik?',
     ],
