@@ -53,7 +53,7 @@ class ItemForm
                         TextInput::make('product_number')
                             ->helperText('The original product number, if known.')
                             ->string()
-                            ->maxLength(100),
+                            ->maxLength(255),
 
                         YearSelect::make(),
 
