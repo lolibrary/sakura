@@ -47,7 +47,7 @@ class ItemsTable
                 DateColumn::make('created_at'),
                 DateColumn::make('updated_at'),
             ])
-            ->paginationPageOptions([10, 25, 50, 100])
+            ->paginationPageOptions([50, 100, 200])
             ->filters([
                 EnumFilter::make('status', [
                     Status::Duplicate,

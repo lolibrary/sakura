@@ -14,7 +14,7 @@ class LolibrarianStats extends StatsOverviewWidget
         return [
             Stat::make('Published entries', auth()->user()->publishedItems()),
             Stat::make('Drafts', auth()->user()->draftsWaiting()),
-            Stat::make('Pending items', auth()->user()->pendingItems()),
+            Stat::make('Pending Review', auth()->user()->pendingItems()),
             Stat::make('Changes Requested', auth()->user()->changesRequested()),
         ];
     }
