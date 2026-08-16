@@ -83,6 +83,7 @@ class MyQueue extends TableWidget
             ->emptyStateActions([
                 CreateAction::make()
                     ->url(fn(): string => route('filament.admin.resources.items.create')),
-            ]);
+            ])
+            ->paginationPageOptions([25, 50, 100]);
     }
 }

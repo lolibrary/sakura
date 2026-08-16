@@ -24,7 +24,7 @@ class AttributesTable
                 DateColumn::make('created_at'),
                 DateColumn::make('updated_at'),
             ])
-            ->paginationPageOptions([10, 25, 50, 100])
+            ->paginationPageOptions([50, 100])
             ->filters([
                 //
             ])
