@@ -4,6 +4,8 @@ namespace App\Filament\Resources\Items\Schemas;
 
 use App\Models\Attribute;
 use App\Models\Item;
+use App\Models\User;
+use Filament\Forms\Components\RichEditor\MentionProvider;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\KeyValueEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -200,7 +202,7 @@ class ItemInfolist
                     ->columnSpanFull()
                     ->schema([
                         TextEntry::make('notes')
-                            ->name('')
+                            ->hiddenLabel()
                             ->html()
                             ->placeholder('-')
                             ->columnSpanFull(),
@@ -210,7 +212,7 @@ class ItemInfolist
                     ->columnSpanFull()
                     ->schema([
                         TextEntry::make('internal_notes')
-                            ->name('')
+                            ->hiddenLabel()
                             ->html()
                             ->placeholder('-')
                             ->columnSpanFull(),
