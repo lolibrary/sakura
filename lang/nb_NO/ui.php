@@ -37,7 +37,6 @@ return [
         'pw_reset' => 'Tilbakestill passord',
         'pw_reset_btn' => 'Send lenke for tilbakestilling av passord',
         'pw_no_change' => "La stå tomt hvis du ikke vil endre passordet ditt.",
-        'username_txt' => '<a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">Klikk her</a> for å endre brukernavnet ditt.',
         'public_closet' => 'Gjør klesskap offentlig?',
         'verify_update' => 'Endringer lagret. Fordi du har oppdatert din e-postadresse må du bekrefte den. En bekreftelseslenke har blitt sendt til din nye adresse.',
         'update' => 'Endringer lagret.',

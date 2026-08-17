@@ -36,7 +36,6 @@ return [
         'pw_reset' => 'கடவுச்சொல்லை மீட்டமைக்கவும்',
         'pw_reset_btn' => 'கடவுச்சொல் மீட்டமை இணைப்பை அனுப்பவும்',
         'pw_no_change' => "உங்கள் கடவுச்சொல்லை மாற்ற விரும்பவில்லை என்றால் இந்த காலியாக விடவும்.",
-        'username_txt' => 'உங்கள் பயனர்பெயரை மாற்ற, <a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">இங்கே சொடுக்குக</a>',
         'public_closet' => 'மறைவை பகிரங்கப்படுத்தவா?',
         'public_wishlist' => 'விருப்பப்பட்டியலை பகிரங்கப்படுத்தவா?',
     ],
