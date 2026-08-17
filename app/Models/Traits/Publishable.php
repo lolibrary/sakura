@@ -27,14 +27,6 @@ trait Publishable
         static::creating(function (Item $model) {
             $model->submitter()->associate(auth()->user());
         });
-
-        static::saved(function (Item $model) {
-            // first up: fully load the item
-            $model->load(static::FULLY_LOAD);
-
-            // next: backup cache this on update
-            cache()->forever($model->getCacheKey(), $model);
-        });
     }
 
     /**

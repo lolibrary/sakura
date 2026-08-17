@@ -4,9 +4,14 @@ namespace App\Models;
 
 use App\Enums\Status;
 use App\Enums\SystemUser;
+use App\Helpers\RichContent;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
+use Filament\Forms\Components\RichEditor\MentionProvider;
+use Filament\Forms\Components\RichEditor\Models\Concerns\InteractsWithRichContent;
+use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
+use Filament\Forms\Components\RichEditor\Plugins\Contracts\RichContentPlugin;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Support\Facades\Log;
 use NumberFormatter;
@@ -34,9 +39,10 @@ use NumberFormatter;
  *
  * @property \Carbon\Carbon $published_at The date this item was published.
  */
-class Item extends Model
+class Item extends Model implements HasRichContent
 {
     use ItemRelations, Publishable, Sluggable;
+    use InteractsWithRichContent;
 
     /**
      * A list of supported currencies.
@@ -246,11 +252,6 @@ class Item extends Model
         return $closet;
     }
 
-    public function getCacheKey(): string
-    {
-        return "items.backup.{$this->getKey()}";
-    }
-
     public function anonymize(bool $force = false): bool
     {
         // guard against running this with a user present
@@ -286,5 +287,11 @@ class Item extends Model
         }
 
         return $item->url;
+    }
+
+    protected function setUpRichContent(): void
+    {
+        $this->registerRichContent('internal_notes')
+            ->mentions(RichContent::mentions());
     }
 }

@@ -8,12 +8,17 @@ use App\Filament\Components\FileUpload;
 use App\Filament\Components\MultiFileUpload;
 use App\Filament\Components\YearSelect;
 use App\Filament\Query\TranslatedRelation;
+use App\Helpers\RichContent;
 use App\Models\Item;
+use App\Models\User;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\RichEditor\MentionProvider;
+use Filament\Forms\Components\RichEditor\ToolbarButtonGroup;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\HtmlString;
 
 class ItemForm
 {
@@ -87,11 +92,16 @@ class ItemForm
                     ->label('Additional Images'),
 
                 RichEditor::make('notes')
+                    ->toolbarButtons(RichContent::toolbar())
                     ->columnSpanFull(),
 
                 RichEditor::make('internal_notes')
                     ->columnSpanFull()
-                    ->helperText("Please provide sources, and credit images that aren't yours!"),
+                    ->toolbarButtons(RichContent::toolbar())
+                    ->helperText(new HtmlString(
+                        "Please provide sources, and credit images that aren't yours!<br><br>" .
+                        'Use <strong>@mentions</strong> and a date for signing off comments.'
+                    )),
             ]);
     }
 }
