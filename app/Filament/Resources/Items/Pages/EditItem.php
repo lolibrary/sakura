@@ -9,6 +9,7 @@ use Filament\Resources\Pages\EditRecord;
 use App\Filament\Resources\Items\ItemResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
+use Relaticle\Comments\Filament\Actions\CommentsAction;
 
 class EditItem extends EditRecord
 {
@@ -19,6 +20,7 @@ class EditItem extends EditRecord
         return [
             ViewAction::make(),
             DeleteAction::make(),
+            CommentsAction::make(),
         ];
     }
 

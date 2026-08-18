@@ -16,6 +16,7 @@ use Filament\Support\Enums\FontFamily;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Storage;
+use Relaticle\Comments\Filament\Infolists\Components\CommentsEntry;
 
 class ItemInfolist
 {
@@ -248,7 +249,13 @@ class ItemInfolist
                             ->helperText("The time an entry was pushed live."),
                     ]),
 
-
+                Section::make('Comments')
+                    ->columnSpanFull()
+                    ->schema([
+                        CommentsEntry::make('comments')
+                            ->columnSpanFull()
+                            ->hiddenLabel(),
+                    ]),
             ]);
     }
 }

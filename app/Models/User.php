@@ -5,12 +5,15 @@ namespace App\Models;
 use App\Enums\Level;
 use App\Enums\Status;
 use App\Enums\SystemUser;
+use App\Helpers\Gravatar;
 use App\Models\Traits\AccessLevels;
 use App\Models\Traits\Closet;
 use App\Models\Traits\DateHandling;
 use App\Models\Traits\Wishlist;
 use App\Notifications\VerifyEmail;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
+use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
@@ -27,6 +30,9 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Passport\Contracts\OAuthenticatable;
+use Relaticle\Comments\Concerns\CanComment;
+use Relaticle\Comments\Concerns\HasComments;
+use Relaticle\Comments\Contracts\Commentator;
 
 /**
  * A user of this application.
@@ -52,9 +58,11 @@ use Laravel\Passport\Contracts\OAuthenticatable;
  * @property string $id
  * @property \Illuminate\Support\Collection $metadata
  */
-class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable, FilamentUser
+class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable, FilamentUser, Commentator, HasName, HasAvatar
 {
     use Notifiable, HasApiTokens, HasUuids, DateHandling, Wishlist, Closet, AccessLevels, VerifiesEmails;
+    use HasComments;
+    use CanComment;
 
     /**
      * Whether or not this model has an incrementing timestamp.
@@ -299,5 +307,15 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
     public function lastChangedUsername(): ?Carbon
     {
         return $this->currentUsername->updated_at;
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return Gravatar::url($this->email);
+    }
+
+    public function getFilamentName(): string
+    {
+        return $this->username;
     }
 }
