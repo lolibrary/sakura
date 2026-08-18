@@ -36,7 +36,6 @@ return [
         'pw_reset' => 'Solicitar nova senha',
         'pw_reset_btn' => 'Enviar link para redefinir senha',
         'pw_no_change' => "Deixe em branco se não quiser mudar sua senha.",
-        'username_txt' => 'Para mudar seu nome de usuário, <a class="text-info" href="#" data-toggle="tooltip" title="Mudar o nome de usuário não é possível neste momento, desculpa!">clique aqui</a>',
         'public_closet' => 'Tornar guarda-roupa público?',
         'public_wishlist' => 'Tornar sua lista de desejos pública?',
     ],
