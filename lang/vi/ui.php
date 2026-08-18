@@ -36,7 +36,6 @@ return [
         'pw_reset' => 'Đặt lại mật khẩu',
         'pw_reset_btn' => 'Gửi link đặt lại mật khẩu',
         'pw_no_change' => "Để mục này trống nếu như bạn không muốn đổi mật khẩu.",
-        'username_txt' => 'Để thay đổi tên tài khoản của bạn,<a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">hãy bấm vào đây</a>',
     ],
     'blog' => [
         'anon' => 'Ẩn danh',
