@@ -1,5 +1,9 @@
 @extends('layouts.app', ['title' => "{$item->english_name} by {$item->brand->name}"])
 
+@php
+use Filament\Forms\Components\RichEditor\RichContentRenderer;
+@endphp
+
 @section('content')
     <div class="container">
         <div class="row mb-3">
@@ -15,6 +19,20 @@
                      onerror="this.src = '{{ default_asset() }}'"
                      data-original-url="{{ $item->image ? cdn_link($item->image) : default_asset() }}"
                      class="rounded mw-100 d-block mx-auto">
+
+                <div class="row p-0 mx-0 my-3">
+                    <div class="col p-1 list-group text-center small">
+                        <div class="list-group-item">
+                            <x-heroicon-o-star style="width: 1.2rem; height: 1.2rem; padding-bottom: 0.2rem;" /> {{ $item->wishlist() }} {{ trans_choice('ui.wishlist.stargazers', $item->wishlist()) }}
+                        </div>
+                    </div>
+                    <div class="col p-1 list-group text-center small">
+                        <div class="list-group-item">
+                            <x-heroicon-o-shopping-bag style="width: 1.2rem; height: 1.2rem; padding-bottom: 0.2rem;" /> {{ $item->closet() }} {{ trans_choice('ui.closet.owners', $item->closet()) }}
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row p-0 mx-0 my-3">
                     <div class="col p-1 list-group text-center small">
                         @include('components.items.wishlist')
@@ -51,95 +69,88 @@
             <div class="col-sm p-2 px-4">
                 <h4 class="mt-2">{{ __('ui.item.info') }}</h4>
                 <div class="text-muted">
-                    <p class="m-0">
-                        @if ($item->year)
-                            @lang('ui.item.year', ['year' => $item->year])
-                        @else
-                            {{ __('ui.item.year_unknown') }}
-                        @endif
-                    </p>
-
-                    <p class="m-0">
-                        @if ($item->product_number)
-                            @lang('ui.item.prod_num', ['prod_num' => $item->product_number])
-                        @else
-                            {{ __('ui.item.prod_num_unknown') }}
-                        @endif
-                    </p>
-
-                    <p class="m-0">
-                        @if ($item->price)
-                            @lang('ui.item.price', ['price' => $item->price_formatted])
-                        @else
-                            {{ __('ui.item.price_unknown') }}
-                        @endif
-                    </p>
-
-                    <p class="m-0">
-                        @if ($item->submitter)
-                            @lang('ui.item.submitter', ['submitter' => $item->submitter->username])
-                        @else
-                            {{ __('ui.item.submitter_unknown') }}
-                        @endif
-                    </p>
-
-                    <p class="m-0">
+                    <table class="table table-sm attribute-table">
+                        <tbody>
+                        <tr>
+                            <td colspan="1" class="text-primary">Year released</td>
+                            <td colspan="2" class="attribute-value text-monospace">
+                                {{ $item->year ?? __('ui.item.year_unknown') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="text-primary">Product number</td>
+                            <td colspan="2" class="attribute-value text-monospace">
+                                {{ $item->product_number ?? __('ui.item.prod_num_unknown') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="text-primary">Price</td>
+                            <td colspan="2" class="attribute-value text-monospace">
+                                {{ $item->currency ? $item->price_formatted : __('ui.item.price_unknown') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="text-primary">Submitter</td>
+                            <td colspan="2" class="attribute-value text-monospace">
+                                {{ $item->submitter?->username ?? 'anonymous' }}
+                            </td>
+                        </tr>
                         @if ($item->published())
-                            {{ __('ui.item.published') }}
-                            <time datetime="{{ $item->published_at->toRfc3339String() }}"
-                                  class="text-regular">{{ $item->published_at->format('jS M Y, H:i') }} UTC
-                            </time>
+                            <tr>
+                                <td colspan="1" class="text-primary">{{ __('ui.item.published') }}</td>
+                                <td colspan="2" class="attribute-value text-monospace">
+                                    <time datetime="{{ $item->published_at->toRfc3339String() }}"
+                                          class="text-regular">{{ $item->published_at->format('jS M Y, H:i') }} UTC
+                                    </time>
+                                </td>
+                            </tr>
                         @else
-                            <span class="text-danger">{{ __('ui.item.draft') }}</span>
+                            <tr class="table-danger">
+                                <td colspan="3" class="text-center text-monospace">{{ __('ui.item.draft') }}</td>
+                            </tr>
                         @endif
-                    </p>
-                </div>
 
-                @foreach ($item->attributes()->orderByTranslation('name')->get() as $attribute)
-                    <h4 class="mt-4">{{ $attribute->name }}</h4>
-                    <p class="text-muted text-regular">{{ $attribute->pivot->value }}</p>
-                @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
                 @if ($item->notes)
                     <h4 class="mt-4">{{ __('ui.item.notes') }}</h4>
-                    <div class="text-muted text-regular">
-                        {!! purify($item->notes) !!}
+                    <div class="text-muted text-regular" style="max-height: 450px; overflow-y: scroll">
+                         {!! RichContentRenderer::make($item->notes)->toHtml() !!}
                     </div>
                 @endif
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-sm p-2 px-4">
                 <div class="row">
-                    <div class="col p-1 list-group text-center small">
-                        <div class="list-group-item">
-                            <x-heroicon-o-star style="width: 1.2rem; height: 1.2rem; padding-bottom: 0.2rem;" /> {{ $item->wishlist() }} {{ trans_choice('ui.wishlist.stargazers', $item->wishlist()) }}
+                    <div class="col-sm">
+                        <h4 class="mt-4">{{ __('ui.item.brand') }}</h4>
+                        <div class="row">
+                            <div class="list-group col p-1 text-center small">
+                                <a class="list-group-item" href="{{ $item->brand->url }}">
+                                    {{ $item->brand->name }}
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="col p-1 list-group text-center small">
-                        <div class="list-group-item">
-                            <x-heroicon-o-shopping-bag style="width: 1.2rem; height: 1.2rem; padding-bottom: 0.2rem;" /> {{ $item->closet() }} {{ trans_choice('ui.closet.owners', $item->closet()) }}
+
+                    <div class="col-sm">
+                        <h4 class="mt-4">{{ __('ui.item.category') }}</h4>
+                        <div class="row">
+                            @forelse ($item->categories()->orderByTranslation('name')->get() as $category)
+                                <div class="p-1 list-group text-center col small">
+                                    <a class="list-group-item" href="{{ $category->url }}">
+                                        {{ $category->name }}
+                                    </a>
+                                </div>
+                            @empty
+                                <p class="col text-muted">{{ __('ui.item.category_none') }}</p>
+                            @endforelse
                         </div>
                     </div>
-                </div>
-
-                <h4 class="mt-4">{{ __('ui.item.brand') }}</h4>
-                <div class="row">
-                    <div class="list-group col p-1 text-center small">
-                        <a class="list-group-item" href="{{ $item->brand->url }}">
-                            {{ $item->brand->name }}
-                        </a>
-                    </div>
-                </div>
-
-                <h4 class="mt-4">{{ __('ui.item.category') }}</h4>
-                <div class="row">
-                    @forelse ($item->categories()->orderByTranslation('name')->get() as $category)
-                        <div class="p-1 list-group text-center col small">
-                            <a class="list-group-item" href="{{ $category->url }}">
-                                {{ $category->name }}
-                            </a>
-                        </div>
-                    @empty
-                        <p class="col text-muted">{{ __('ui.item.category_none') }}</p>
-                    @endforelse
                 </div>
 
                 <h4 class="mt-4">{{ __('ui.item.features') }} <i
@@ -184,6 +195,22 @@
                 </div>
             </div>
         </div>
+
+        @if ($item->attributes)
+            <div class="row">
+                <h4 class="my-4 px-4">{{ __('ui.attributes') }}</h4>
+                <table class="table table-fixed attribute-table attribute-margin">
+                    <tbody>
+                    @foreach ($item->attributes()->orderByTranslation('name')->get() as $attribute)
+                        <tr>
+                            <td colspan="1" class="attribute-name">{{ $attribute->name }}</td>
+                            <td colspan="3" class="attribute-value">{{ $attribute->pivot->value }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
 
         <div class="row">
             <h4 class="my-4 px-4">{{ __('ui.item.images') }}</h4>

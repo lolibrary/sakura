@@ -92,7 +92,7 @@ class ItemForm
                     ->label('Additional Images'),
 
                 RichEditor::make('notes')
-                    ->toolbarButtons(RichContent::toolbar())
+                    ->toolbarButtons(RichContent::limited())
                     ->columnSpanFull(),
 
                 RichEditor::make('internal_notes')

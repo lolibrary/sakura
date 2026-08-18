@@ -21,6 +21,17 @@ class RichContent
         ];
     }
 
+    public static function limited(): array
+    {
+        return [
+            ['bold', 'italic', 'underline', 'strike', 'link'],
+            [ToolbarButtonGroup::make('Alignment', ['alignStart', 'alignCenter', 'alignEnd', 'alignJustify'])],
+            ['blockquote', 'bulletList', 'orderedList'],
+            ['undo', 'redo'],
+            [ToolbarButtonGroup::make('Extras', ['lead', 'small', 'horizontalRule', 'clearFormatting'])->icon(Heroicon::EllipsisHorizontal)],
+        ];
+    }
+
     public static function mentions(): array
     {
         return [

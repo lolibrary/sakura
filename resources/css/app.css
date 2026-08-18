@@ -1,0 +1,43 @@
+.attribute-name {
+    font-weight: bold;
+    text-align: end;
+    padding-inline-start: 3rem !important;
+}
+
+.attribute-value {
+    padding-inline-end: 3rem !important;
+    text-align: start;
+}
+
+.attribute-table {
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.attribute-table.table-sm td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.attribute-margin {
+    margin-left: .75rem;
+    margin-right: .75rem;
+}
+
+.table-fixed {
+    table-layout: fixed;
+}
+
+.attribute-table > tbody > tr:first-child .td {
+    border-top: 0;
+}
+
+.descriptor {
+    margin: 0;
+
+    > .text-regular {
+        color: #222288;
+    }
+}
