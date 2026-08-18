@@ -13,6 +13,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Platform;
 use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
@@ -22,6 +23,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Relaticle\Comments\CommentsPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -115,7 +117,14 @@ class AdminPanelProvider extends PanelProvider
                     ->rememberLocale()
                     ->showFlags(false),
                 FilamentAstrotomicPlugin::make(),
+                CommentsPlugin::make(),
             ])
-            ->globalSearchResourceOptIn();
+            ->globalSearchResourceOptIn()
+            ->globalSearchFieldKeyBindingSuffix()
+            ->globalSearchFieldSuffix(fn (): ?string => match (Platform::detect()) {
+                Platform::Windows, Platform::Linux => 'CTRL+K',
+                Platform::Mac => '⌘+K',
+                default => null,
+            });
     }
 }

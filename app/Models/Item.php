@@ -5,16 +5,17 @@ namespace App\Models;
 use App\Enums\Status;
 use App\Enums\SystemUser;
 use App\Helpers\RichContent;
+use Relaticle\Comments\Concerns\HasComments;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
-use Filament\Forms\Components\RichEditor\MentionProvider;
 use Filament\Forms\Components\RichEditor\Models\Concerns\InteractsWithRichContent;
 use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
-use Filament\Forms\Components\RichEditor\Plugins\Contracts\RichContentPlugin;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Support\Facades\Log;
 use NumberFormatter;
+use Relaticle\Comments\Contracts\Commentable;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * An Item of Apparel.
@@ -39,10 +40,13 @@ use NumberFormatter;
  *
  * @property \Carbon\Carbon $published_at The date this item was published.
  */
-class Item extends Model implements HasRichContent
+class Item extends Model implements HasRichContent, Commentable
 {
     use ItemRelations, Publishable, Sluggable;
     use InteractsWithRichContent;
+    use HasComments {
+        comments as private commentRelation;
+    }
 
     /**
      * A list of supported currencies.
@@ -293,5 +297,10 @@ class Item extends Model implements HasRichContent
     {
         $this->registerRichContent('internal_notes')
             ->mentions(RichContent::mentions());
+    }
+
+    public function comments(): MorphMany
+    {
+        return $this->commentRelation()->withTrashed();
     }
 }

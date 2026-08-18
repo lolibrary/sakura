@@ -35,6 +35,8 @@ class ItemResource extends Resource
 
     protected static bool $isGloballySearchable = true;
 
+    protected static ?bool $shouldSplitGlobalSearchTerms = false;
+
     public static function form(Schema $schema): Schema
     {
         return ItemForm::configure($schema);
@@ -79,14 +81,22 @@ class ItemResource extends Resource
 
     public static function getGlobalSearchEloquentQuery(): Builder
     {
-        return parent::getGlobalSearchEloquentQuery()->with('categories.translations');
+        return parent::getGlobalSearchEloquentQuery()
+            ->with(['categories.translations', 'submitter']);
     }
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
             'Original' => $record->foreign_name ?: 'N/A',
-            'Categories' => $record->categories->map(fn(Category $category) => $category->name)->join(', ')
+            'Categories' => $record->categories->map(fn(Category $category) => $category->name)->join(', '),
+            'Submitter' => $record->submitter->username,
+            'Status' => $record->status->getName(),
         ];
+    }
+
+    public static function getGlobalSearchResultUrl(Model $record): string
+    {
+        return static::getUrl('view', ['record' => $record]);
     }
 }
