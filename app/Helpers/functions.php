@@ -50,20 +50,6 @@ if (! function_exists('uuid4')) {
     }
 }
 
-if (! function_exists('uuid5')) {
-    /**
-     * Return a sha1-based uuid, version 5.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    function uuid5(string $name): string
-    {
-        return (string) Ramsey\Uuid\Uuid::uuid5(Model::NAMESPACE_UUID, $name);
-    }
-}
-
 if (! function_exists('userify')) {
     /**
      * Return a username suitable for storage or searching from a display name.
