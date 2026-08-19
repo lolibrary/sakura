@@ -5,14 +5,13 @@ namespace App\Jobs;
 use App\Enums\Status;
 use App\Enums\SystemUser;
 use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
-use App\Models\Item;
-use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
 class BacklogUpdate implements ShouldQueue
@@ -31,13 +30,12 @@ class BacklogUpdate implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function __invoke(): void
     {
         if (! app()->isProduction()) {
             Log::info('Not running BacklogUpdate: not running in production');
+
             return;
         }
 
@@ -62,11 +60,11 @@ class BacklogUpdate implements ShouldQueue
 
         EOD;
 
-        $client = new Client();
-        $res = $client->request('POST', $webhook, ["json" => ["content" => $msg]]);
+        $client = new Client;
+        $res = $client->request('POST', $webhook, ['json' => ['content' => $msg]]);
 
         if ($res->getStatusCode() >= 400) {
-            $this->fail(new \RuntimeException("Failed to message discord"));
+            $this->fail(new \RuntimeException('Failed to message discord'));
         }
     }
 }

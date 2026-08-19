@@ -1,4 +1,5 @@
 <?php
+
 return [
     'owner-height' => 'Altezza di Proprietaria/o',
     'rise' => '',

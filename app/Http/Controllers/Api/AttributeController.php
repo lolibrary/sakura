@@ -10,6 +10,7 @@ class AttributeController extends Controller
      * Return all categories, cached.
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function index()
@@ -20,7 +21,7 @@ class AttributeController extends Controller
     /**
      * Get a specific category.
      *
-     * @param \App\Attribute $attribute
+     * @param  \App\Attribute  $attribute
      * @return \App\Attribute
      */
     public function show(Attribute $attribute)

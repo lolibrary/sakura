@@ -40,7 +40,7 @@ class UserPublishedItems extends ChartWidget
                     'data' => $items->values()->map(fn (int $count) => $count)->all(),
                     'backgroundColor' => $colors->all(),
                 ],
-            ]
+            ],
         ];
     }
 

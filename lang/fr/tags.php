@@ -1,4 +1,5 @@
 <?php
+
 return [
     'little-chili-shop' => 'Marque Indépendante : Little Chili Shop',
     'cloud-chamber' => 'Marque Indépendante : Cloud Chamber',

@@ -5,44 +5,44 @@ namespace App\Models;
 use App\Enums\Status;
 use App\Enums\SystemUser;
 use App\Helpers\RichContent;
-use Illuminate\Database\Eloquent\Attributes\Appends;
-use Illuminate\Database\Eloquent\Attributes\Guarded;
-use Illuminate\Database\Eloquent\Attributes\Visible;
-use Relaticle\Comments\Concerns\HasComments;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
+use Carbon\Carbon;
 use Filament\Forms\Components\RichEditor\Models\Concerns\InteractsWithRichContent;
 use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
+use Illuminate\Database\Eloquent\Attributes\Appends;
+use Illuminate\Database\Eloquent\Attributes\Guarded;
+use Illuminate\Database\Eloquent\Attributes\Visible;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
+use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use NumberFormatter;
+use Relaticle\Comments\Concerns\HasComments;
 use Relaticle\Comments\Contracts\Commentable;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
 
 /**
  * An Item of Apparel.
  *
- * @property string $slug            The URL slug of an item.
- * @property string $english_name    The English Title of an Item.
- * @property string|null $foreign_name    The 'Japanese Title' of an Item.
- * @property int|null $year            The year an Item was released.
- * @property string|null $product_number  An Item's product number.
+ * @property string $slug The URL slug of an item.
+ * @property string $english_name The English Title of an Item.
+ * @property string|null $foreign_name The 'Japanese Title' of an Item.
+ * @property int|null $year The year an Item was released.
+ * @property string|null $product_number An Item's product number.
  * @property Status $status The status of an item (stored internally as an int).
- * @property string $price           The price of this item, in a given currency.
+ * @property string $price The price of this item, in a given currency.
  * @property float $price_formatted The price of this item, formatted to the rules of the given currency (e.g. /100 for gbp/usd)
- * @property string $currency        The currency of this item, as an ISO code.
- * @property array|string[] $images          The images attached to this item, as a flexible collection.
- * @property \Illuminate\Support\Collection $metadata Metadata attached to this item.
+ * @property string $currency The currency of this item, as an ISO code.
+ * @property array|string[] $images The images attached to this item, as a flexible collection.
+ * @property Collection $metadata Metadata attached to this item.
  * @property string|null $duplicate_url URL to the item this one is a duplicate of, if applicable.
- *
- * @property string $user_id  The ID of the {@link \App\Models\User user} who submitted this Item.
+ * @property string $user_id The ID of the {@link \App\Models\User user} who submitted this Item.
  * @property string $brand_id The ID of this Item's {@link \App\Models\Brand brand}.
  * @property string $submitter_id The ID of this Item's {@link \App\Models\User submitter}.
  * @property string $publisher_id The ID of this Item's {@link \App\Models\User publisher}.
- *
- * @property \Carbon\Carbon $published_at The date this item was published.
+ * @property Carbon $published_at The date this item was published.
  */
 #[Guarded('status', 'slug', 'created_at', 'updated_at', 'published_at')]
 #[Visible(
@@ -56,13 +56,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
     'edit_url', 'slug', 'url',
 )]
 #[Appends('price_details', 'url', 'edit_url', 'duplicate_url')]
-class Item extends Model implements HasRichContent, Commentable
+class Item extends Model implements Commentable, HasRichContent
 {
-    use ItemRelations, Publishable, Sluggable;
-    use InteractsWithRichContent;
     use HasComments {
         comments as private commentRelation;
     }
+    use InteractsWithRichContent;
+    use ItemRelations, Publishable, Sluggable;
 
     /**
      * A list of supported currencies.
@@ -152,16 +152,14 @@ class Item extends Model implements HasRichContent, Commentable
 
     /**
      * Get the formatted price for this item.
-     *
-     * @return string
      */
     public function getFullPrice(): string
     {
         if (in_array($this->currency, ['jpy', 'krw', 'cny'])) {
-            return (string)round($this->price ?? 0);
+            return (string) round($this->price ?? 0);
         }
 
-        return (string)round($this->price ?? 0, 2);
+        return (string) round($this->price ?? 0, 2);
     }
 
     public function priceFormatted(): AttributeCast
@@ -181,9 +179,9 @@ class Item extends Model implements HasRichContent, Commentable
 
     public function priceDetails(): AttributeCast
     {
-        return AttributeCast::get(fn() => [
+        return AttributeCast::get(fn () => [
             'currency' => $this->currency,
-            'price' => (int)$this->price,
+            'price' => (int) $this->price,
             'local_price' => $this->getFullPrice(),
             'formatted' => $this->price_formatted,
         ]);
@@ -193,20 +191,20 @@ class Item extends Model implements HasRichContent, Commentable
     {
         return cache()
             ->tags(['wishlist'])
-            ->rememberForever($this->getKey(), fn() => $this->stargazers()->count());
+            ->rememberForever($this->getKey(), fn () => $this->stargazers()->count());
     }
 
     public function closet(): int
     {
         return cache()
             ->tags(['closet'])
-            ->rememberForever($this->getKey(), fn() => $this->owners()->count());
+            ->rememberForever($this->getKey(), fn () => $this->owners()->count());
     }
 
     public function anonymize(bool $force = false): bool
     {
         // guard against running this with a user present
-        if ($this->submitter && !$force) {
+        if ($this->submitter && ! $force) {
             Log::alert('tried to anonymize an item with a valid submitter', [
                 'item_id' => $this->id,
                 'user_id' => $this->user_id,
@@ -219,6 +217,7 @@ class Item extends Model implements HasRichContent, Commentable
 
         if (is_null($user = User::system(SystemUser::Anonymous))) {
             Log::alert('anonymous system user not set, please run app:system anonymous');
+
             return false;
         }
 

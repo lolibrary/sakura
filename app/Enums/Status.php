@@ -3,14 +3,14 @@
 namespace App\Enums;
 
 use BackedEnum;
-use Filament\Support\Icons\Heroicon;
 use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasDescription;
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
-use Filament\Support\Contracts\HasDescription;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 
-enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
+enum Status: int implements HasColor, HasDescription, HasIcon, HasLabel
 {
     case Draft = 0;
     case Published = 1;
@@ -22,9 +22,9 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
     case Inactive = 7;
     case ShoeDraft = 10;
 
-    public function getLabel(): string| Htmlable | null
+    public function getLabel(): string|Htmlable|null
     {
-        return match($this) {
+        return match ($this) {
             self::Draft => 'draft',
             self::Published => 'published',
             self::ReadyForReview => 'ready-for-review',
@@ -39,7 +39,7 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
 
     public function getName(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Draft => 'Draft',
             self::Published => 'Published',
             self::ReadyForReview => 'Ready for Review',
@@ -52,9 +52,9 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
         };
     }
 
-    public function getColor(): string | array | null
+    public function getColor(): string|array|null
     {
-        return match($this) {
+        return match ($this) {
             self::Draft => 'info',
             self::Published => 'success',
             self::ReadyForReview => 'warning',
@@ -65,9 +65,9 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
         };
     }
 
-    public function getIcon(): string | BackedEnum | Htmlable | null
+    public function getIcon(): string|BackedEnum|Htmlable|null
     {
-        return match($this) {
+        return match ($this) {
             self::Draft => Heroicon::OutlinedDocumentText,
             self::Published => Heroicon::OutlinedCheckCircle,
             self::ReadyForReview => Heroicon::OutlinedQueueList,
@@ -80,8 +80,9 @@ enum Status: int implements HasLabel, HasColor, HasIcon, HasDescription
         };
     }
 
-    public function getDescription(): string | Htmlable | null {
-        return match($this) {
+    public function getDescription(): string|Htmlable|null
+    {
+        return match ($this) {
             self::Draft => 'This is a draft entry that has not been submitted for review yet',
             self::Published => 'This is a published entry, live on the website',
             self::ReadyForReview => 'This entry is ready for review',

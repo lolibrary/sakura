@@ -10,6 +10,7 @@ class CategoryController extends Controller
      * Return all categories, cached.
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function index()
@@ -20,7 +21,7 @@ class CategoryController extends Controller
     /**
      * Get a specific category.
      *
-     * @param \App\Category $category
+     * @param  \App\Category  $category
      * @return \App\Category
      */
     public function show(Category $category)

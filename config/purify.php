@@ -1,5 +1,7 @@
 <?php
 
+use Stevebauman\Purify\Cache\CacheDefinitionCache;
+
 return [
 
     /*
@@ -120,7 +122,7 @@ return [
         // use redis/valkey
         'serializer' => [
             'driver' => env('CACHE_DRIVER', 'file'),
-            'cache' => \Stevebauman\Purify\Cache\CacheDefinitionCache::class,
+            'cache' => CacheDefinitionCache::class,
         ],
 
     ],

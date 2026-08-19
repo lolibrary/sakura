@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Items;
 
 use App\Http\Controllers\Controller;
-use App\Models\Item;
 use App\Models\Tag;
+use Illuminate\Http\Response;
 
 class TagController extends Controller
 {
     /**
      * Show a tag.
      *
-     * @param \App\Models\Tag $tag
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Tag $tag)
     {
@@ -22,7 +21,7 @@ class TagController extends Controller
     /**
      * Redirect to the search page.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {

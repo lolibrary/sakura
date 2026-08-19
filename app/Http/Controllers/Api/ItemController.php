@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Item;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ItemController extends Controller
 {
     /**
      * Get all items in the database, paginated.
      *
-     * @return \App\Item[]|\Illuminate\Pagination\LengthAwarePaginator
+     * @return \App\Item[]|LengthAwarePaginator
      */
     public function index()
     {
@@ -20,7 +21,6 @@ class ItemController extends Controller
     /**
      * Show a specific item. Explicitly uses the UUID.
      *
-     * @param string $item
      * @return \App\Item
      */
     public function show(string $item)

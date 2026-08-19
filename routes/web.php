@@ -11,10 +11,8 @@
 |
 */
 
-use App\Mail\AccountMerged;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\IdentityController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Items\BrandController;
@@ -26,7 +24,8 @@ use App\Http\Controllers\Items\TagController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['verify' => true]);
 Route::get('/auth/check', [RegisterController::class, 'check'])->name('auth.check');

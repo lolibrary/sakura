@@ -25,7 +25,7 @@ class BrandInfolist
                             ->label('Current Image')
                             ->visibility('public')
                             ->checkFileExistence(false)
-                            ->alt(fn(Brand $brand) => "Brand image for $brand->name"),
+                            ->alt(fn (Brand $brand) => "Brand image for $brand->name"),
                     ]),
 
                 Section::make()

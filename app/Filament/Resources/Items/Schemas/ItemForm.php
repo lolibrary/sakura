@@ -10,10 +10,7 @@ use App\Filament\Components\YearSelect;
 use App\Filament\Query\TranslatedRelation;
 use App\Helpers\RichContent;
 use App\Models\Item;
-use App\Models\User;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\RichEditor\MentionProvider;
-use Filament\Forms\Components\RichEditor\ToolbarButtonGroup;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -29,7 +26,6 @@ class ItemForm
                 TextInput::make('english_name')
                     ->required()
                     ->helperText('The english name of this entry.'),
-
 
                 TextInput::make('foreign_name')
                     ->helperText('The original/native-language name of this entry.'),
@@ -67,7 +63,6 @@ class ItemForm
                             ->options(Item::CURRENCIES)
                             ->helperText('Unknown here hides the entire price.'),
 
-
                         TextInput::make('price')
                             ->numeric()
                             ->helperText('Item price - enter 0 if the item is free.'),
@@ -99,7 +94,7 @@ class ItemForm
                     ->columnSpanFull()
                     ->toolbarButtons(RichContent::toolbar())
                     ->helperText(new HtmlString(
-                        "Please provide sources, and credit images that aren't yours!<br><br>" .
+                        "Please provide sources, and credit images that aren't yours!<br><br>".
                         'Use <strong>@mentions</strong> and a date for signing off comments.'
                     )),
             ]);

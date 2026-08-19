@@ -8,8 +8,6 @@ use Filament\Actions\EditAction;
 
 class ViewBrand extends ViewRecord
 {
-
-
     protected static string $resource = BrandResource::class;
 
     protected function getHeaderActions(): array

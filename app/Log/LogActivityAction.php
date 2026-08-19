@@ -4,6 +4,7 @@ namespace App\Log;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Actions\LogActivityAction as LogAction;
+
 use function Illuminate\Events\queueable;
 
 class LogActivityAction extends LogAction

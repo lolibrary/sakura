@@ -6,6 +6,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Symfony\Component\HttpFoundation\Response;
 
 class Controller extends BaseController
 {
@@ -15,8 +16,8 @@ class Controller extends BaseController
      * Execute an action on the controller.
      *
      * @param  string  $method
-     * @param  array   $parameters
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  array  $parameters
+     * @return Response
      */
     public function callAction($method, $parameters)
     {

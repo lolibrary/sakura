@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 
 class DeleteAbandonedDrafts implements ShouldQueue
 {
-    use Queueable, Dispatchable;
+    use Dispatchable, Queueable;
 
     /**
      * Execute the job.

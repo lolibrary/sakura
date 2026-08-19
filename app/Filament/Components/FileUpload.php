@@ -17,7 +17,7 @@ class FileUpload
             ->openable()
             ->maxSize(1024 * 5)
             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
-            ->helperText("Acceptable upload types: JPEG, PNG, GIF, WEBP. 5MB limit.")
+            ->helperText('Acceptable upload types: JPEG, PNG, GIF, WEBP. 5MB limit.')
             ->preventFilePathTampering();
     }
 }

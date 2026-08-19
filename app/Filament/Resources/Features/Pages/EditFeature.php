@@ -10,6 +10,7 @@ use Filament\Actions\ViewAction;
 class EditFeature extends EditRecord
 {
     protected static string $resource = FeatureResource::class;
+
     protected static array $translatedFields = ['name'];
 
     protected function getHeaderActions(): array

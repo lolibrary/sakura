@@ -25,13 +25,13 @@ class RichContent
     {
         return [
             MentionProvider::make('@')
-                ->getSearchResultsUsing(fn(string $search): array => User::query()
+                ->getSearchResultsUsing(fn (string $search): array => User::query()
                     ->where('username', 'like', "$search%")
                     ->orderBy('username')
                     ->limit(10)
                     ->pluck('username', 'id')
                     ->all())
-                ->getLabelsUsing(fn(array $ids): array => User::query()
+                ->getLabelsUsing(fn (array $ids): array => User::query()
                     ->whereIn('id', $ids)
                     ->pluck('username', 'id')
                     ->all()),
@@ -40,7 +40,7 @@ class RichContent
 
     public static function format(): \Closure
     {
-        return fn(string $state): string => self::replaceTags($state);
+        return fn (string $state): string => self::replaceTags($state);
     }
 
     protected static function replaceTags(string $html): string

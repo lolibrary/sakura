@@ -6,7 +6,7 @@ use App\Enums\Level;
 use App\Models\User;
 
 /**
- * User Access Levels for {@see \App\Models\User}.
+ * User Access Levels for {@see User}.
  *
  * @property bool $banned
  * @property int $level
@@ -82,8 +82,6 @@ trait AccessLevels
      * Check if a user is able to process the moderation queue.
      *
      * Lolibrarians can also suggest edits to Items
-     *
-     * @return bool
      */
     public function lolibrarian(): bool
     {
@@ -92,8 +90,6 @@ trait AccessLevels
 
     /**
      * Check if a user is able to perform basic functions.
-     *
-     * @return bool
      */
     public function junior(): bool
     {
@@ -102,8 +98,6 @@ trait AccessLevels
 
     /**
      * Mostly redundant check that a user can access the site while logged in.
-     *
-     * @return bool
      */
     public function regular(): bool
     {

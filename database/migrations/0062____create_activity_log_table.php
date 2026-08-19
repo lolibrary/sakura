@@ -13,8 +13,8 @@ return new class extends Migration
             $table->string('log_name')->nullable()->index();
             $table->text('description');
 
-            $table->string("subject_type")->nullable();
-            $table->text("subject_id")->nullable();
+            $table->string('subject_type')->nullable();
+            $table->text('subject_id')->nullable();
             $table->index(['subject_type', 'subject_id'], 'subject');
 
             $table->string('event')->nullable()->index();

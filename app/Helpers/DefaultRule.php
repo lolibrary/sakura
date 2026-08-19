@@ -2,9 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Models\User;
 use Illuminate\Validation\Rule;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\Rules\Email;
 use Illuminate\Validation\Rules\NotIn;
 use Illuminate\Validation\Rules\Password;

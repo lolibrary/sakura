@@ -72,5 +72,4 @@ class UserPolicy extends Policy
     {
         return $user->admin();
     }
-
 }

@@ -2,13 +2,13 @@
 
 namespace App\Filament\Resources\Items\Pages;
 
+use App\Filament\Resources\Items\ItemResource;
 use App\Models\Item;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
-use Filament\Resources\Pages\EditRecord;
-use App\Filament\Resources\Items\ItemResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
+use Filament\Resources\Pages\EditRecord;
 use Relaticle\Comments\Filament\Actions\CommentsAction;
 
 class EditItem extends EditRecord
@@ -23,7 +23,6 @@ class EditItem extends EditRecord
             CommentsAction::make(),
         ];
     }
-
 
     /**
      * @return array<Action | ActionGroup>

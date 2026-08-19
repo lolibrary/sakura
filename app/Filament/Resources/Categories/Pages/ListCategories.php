@@ -8,8 +8,6 @@ use Filament\Actions\CreateAction;
 
 class ListCategories extends ListRecords
 {
-
-
     protected static string $resource = CategoryResource::class;
 
     protected function getHeaderActions(): array

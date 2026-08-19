@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ItemResource extends Resource
 {
-    use RestrictsFileUploadsToSchemaComponents, ResourceTranslatable;
+    use ResourceTranslatable, RestrictsFileUploadsToSchemaComponents;
 
     protected static ?string $model = Item::class;
 
@@ -89,7 +89,7 @@ class ItemResource extends Resource
     {
         return [
             'Original' => $record->foreign_name ?: 'N/A',
-            'Categories' => $record->categories->map(fn(Category $category) => $category->name)->join(', '),
+            'Categories' => $record->categories->map(fn (Category $category) => $category->name)->join(', '),
             'Submitter' => $record->submitter->username,
             'Status' => $record->status->getName(),
         ];

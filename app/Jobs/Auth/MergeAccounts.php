@@ -45,7 +45,7 @@ class MergeAccounts implements ShouldQueue
             $this->deactivateOldUser();
 
             // assign the old usernames to this user
-            $this->old->usernames()->each(fn(Username $username) => $username->user()->associate($this->new)->save());
+            $this->old->usernames()->each(fn (Username $username) => $username->user()->associate($this->new)->save());
 
             // save everything for now
             $this->old->save();
@@ -61,7 +61,7 @@ class MergeAccounts implements ShouldQueue
 
     protected function mergeNewUser(): void
     {
-        if ($this->old->hasVerifiedEmail() && !$this->new->hasVerifiedEmail()) {
+        if ($this->old->hasVerifiedEmail() && ! $this->new->hasVerifiedEmail()) {
             $this->new->email_verified_at = $this->old->email_verified_at;
         }
 
@@ -95,8 +95,6 @@ class MergeAccounts implements ShouldQueue
      * - where they do exist, force delete the uppercase version
      * - where both are mixed-case, attempt to save a lowercased name
      * - in any other event log + bail out.
-     *
-     * @return void
      */
     protected function deduplicateUsernames(): void
     {
@@ -106,8 +104,7 @@ class MergeAccounts implements ShouldQueue
         /** @var Username[]|\Illuminate\Database\Eloquent\Collection<Username> $usernames */
         $usernames = $this->new->usernames()
             ->get()
-            ->groupBy(fn(Username $u) => str($u->username)->lower()->toString());
-
+            ->groupBy(fn (Username $u) => str($u->username)->lower()->toString());
 
         $usernames->each(function (Collection $collection, string $username) {
             // only take action here if we have two usernames that match
@@ -136,6 +133,7 @@ class MergeAccounts implements ShouldQueue
     {
         if ($this->old->items->count() === 0) {
             $this->old->metadata->put('previous_items', []);
+
             return;
         }
 
@@ -165,6 +163,7 @@ class MergeAccounts implements ShouldQueue
         // no need to continue if old has anything in here.
         if ($this->old->closet->count() === 0) {
             $this->old->metadata->put('previous_closet', []);
+
             return;
         }
 
@@ -198,6 +197,7 @@ class MergeAccounts implements ShouldQueue
         // no need to continue if old has nothing in here.
         if ($this->old->wishlist->count() === 0) {
             $this->old->metadata->put('previous_wishlist', []);
+
             return;
         }
 

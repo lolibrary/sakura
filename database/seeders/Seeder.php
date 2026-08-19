@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Model;
 use Illuminate\Database\Seeder as LaravelSeeder;
 use Illuminate\Support\Str;
 
@@ -64,7 +65,7 @@ class Seeder extends LaravelSeeder
     /**
      * Get the model for this seeder.
      *
-     * @return \App\Model
+     * @return Model
      */
     protected function getModel()
     {

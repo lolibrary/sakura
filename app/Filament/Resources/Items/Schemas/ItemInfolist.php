@@ -4,8 +4,6 @@ namespace App\Filament\Resources\Items\Schemas;
 
 use App\Models\Attribute;
 use App\Models\Item;
-use App\Models\User;
-use Filament\Forms\Components\RichEditor\MentionProvider;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\KeyValueEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -42,7 +40,7 @@ class ItemInfolist
                             ->iconPosition(IconPosition::After),
                         TextEntry::make('url')
                             ->label('Preview Link')
-                            ->url(fn(Item $record) => $record->url, shouldOpenInNewTab: true)
+                            ->url(fn (Item $record) => $record->url, shouldOpenInNewTab: true)
                             ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
                             ->iconPosition(IconPosition::After),
                     ]),
@@ -79,9 +77,9 @@ class ItemInfolist
                                     ->label('Duplicate of')
                                     ->iconPosition(IconPosition::After)
                                     ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
-                                    ->state(fn(Item $record) => $record->duplicate_url)
-                                    ->url(fn(Item $record) => $record->duplicate_url)
-                                    ->visible(fn(Item $record) => $record->duplicate()),
+                                    ->state(fn (Item $record) => $record->duplicate_url)
+                                    ->url(fn (Item $record) => $record->duplicate_url)
+                                    ->visible(fn (Item $record) => $record->duplicate()),
                                 TextEntry::make('price_details.formatted')
                                     ->label('Price')
                                     ->placeholder('Unknown'),
@@ -108,7 +106,7 @@ class ItemInfolist
                                             ->icon(fn (?Item $record) => $record?->publisher?->level->getIcon())
                                             ->tooltip(fn (?Item $record) => $record?->publisher?->level->getDescription()),
                                     ]),
-                                ])->contained(false),
+                            ])->contained(false),
                     ]),
 
                 Section::make('Additional Images')
@@ -117,7 +115,7 @@ class ItemInfolist
                     ->schema(function (Item $record) {
                         return collect($record->images)
                             ->filter()
-                            ->map(fn(string $image) => ImageEntry::make('images')
+                            ->map(fn (string $image) => ImageEntry::make('images')
                                 ->checkFileExistence(false)
                                 ->name('')
                                 ->columnSpan(1)
@@ -127,7 +125,7 @@ class ItemInfolist
                                 ->columnSpanFull()
                                 ->url(Storage::cloud()->url($image)),
                             )->all();
-                    },),
+                    }, ),
 
                 Section::make()
                     ->columnSpanFull()
@@ -137,7 +135,7 @@ class ItemInfolist
                             Section::make('Categories')
                                 ->contained(false)
                                 ->columns(4)
-                                ->schema(fn() => [
+                                ->schema(fn () => [
                                     TextEntry::make('name')
                                         ->state($record->categories->map->name->all())
                                         ->badge()
@@ -146,7 +144,7 @@ class ItemInfolist
                             Section::make('Features')
                                 ->contained(false)
                                 ->columns(4)
-                                ->schema(fn() => [
+                                ->schema(fn () => [
                                     TextEntry::make('name')
                                         ->state($record->features->map->name->all())
                                         ->badge()
@@ -155,7 +153,7 @@ class ItemInfolist
                             Section::make('Tags')
                                 ->contained(false)
                                 ->columns(4)
-                                ->schema(fn() => [
+                                ->schema(fn () => [
                                     TextEntry::make('name')
                                         ->state($record->tags->map->name->all())
                                         ->badge()
@@ -164,7 +162,7 @@ class ItemInfolist
                             Section::make('Colorways')
                                 ->contained(false)
                                 ->columns(4)
-                                ->schema(fn() => [
+                                ->schema(fn () => [
                                     TextEntry::make('name')
                                         ->state($record->colors->map->name->all())
                                         ->badge()
@@ -191,10 +189,10 @@ class ItemInfolist
                                 ->valueLabel('Value')
                                 ->state(
                                     $record->attributes
-                                        ->mapWithKeys(fn(Attribute $attr) => [
+                                        ->mapWithKeys(fn (Attribute $attr) => [
                                             $attr->name => $attr->pivot->value,
                                         ])
-                                )
+                                ),
                         ];
 
                     }),
@@ -223,7 +221,7 @@ class ItemInfolist
                     ->columnSpanFull()
                     ->keyLabel('Key')
                     ->valueLabel('Value')
-                    ->visible(fn() => auth()->user()->developer()),
+                    ->visible(fn () => auth()->user()->developer()),
 
                 Section::make('Timestamps')
                     ->columnSpanFull()
@@ -234,19 +232,19 @@ class ItemInfolist
                             ->badge()
                             ->dateTime()
                             ->placeholder('-')
-                            ->helperText("When a draft was initially made."),
+                            ->helperText('When a draft was initially made.'),
                         TextEntry::make('updated_at')
                             ->label('Updated')
                             ->dateTime()
                             ->badge()
                             ->placeholder('-')
-                            ->helperText("When an entry was last edited."),
+                            ->helperText('When an entry was last edited.'),
                         TextEntry::make('published_at')
                             ->label('Published')
                             ->badge()
                             ->dateTime()
                             ->placeholder('Not Published')
-                            ->helperText("The time an entry was pushed live."),
+                            ->helperText('The time an entry was pushed live.'),
                     ]),
 
                 Section::make('Comments')

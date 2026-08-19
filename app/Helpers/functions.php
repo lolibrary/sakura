@@ -4,14 +4,16 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Feature;
-use App\Models\Model;
+use App\Models\Item;
 use App\Models\Tag;
 use App\Models\User;
 use GuzzleHttp\Psr7\Uri;
-use Illuminate\Filesystem\Filesystem;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 const ORDER = [
     'YEAR_NEWEST' => ['name' => 'Year (newest first)', 'key' => 'year_new'],
@@ -22,41 +24,32 @@ const ORDER = [
     'ALPHA_REVERSE' => ['name' => 'English Name (Z to A)', 'key' => 'alpha_reverse'],
 ];
 
-
 if (! function_exists('uuid')) {
     /**
      * Return a UUID without giving away our mac address.
      * Completely resistant to collisions.
-     *
-     * @return string
      */
     function uuid(): string
     {
         $node = dechex(random_int(0, 1 << 48) | 0x010000000000);
 
-        return (string) Ramsey\Uuid\Uuid::uuid1($node);
+        return (string) Uuid::uuid1($node);
     }
 }
 
 if (! function_exists('uuid4')) {
     /**
      * Return a random UUID, version 4.
-     *
-     * @return string
      */
     function uuid4(): string
     {
-        return (string) Ramsey\Uuid\Uuid::uuid4();
+        return (string) Uuid::uuid4();
     }
 }
 
 if (! function_exists('userify')) {
     /**
      * Return a username suitable for storage or searching from a display name.
-     *
-     * @param string $username
-     *
-     * @return string
      */
     function userify(string $username): string
     {
@@ -71,8 +64,8 @@ if (! function_exists('user')) {
     /**
      * Get a user by email, slug or uuid.
      *
-     * @param string $id
-     * @return \App\Models\User|null
+     * @param  string  $id
+     * @return User|null
      */
     function user($id)
     {
@@ -80,7 +73,7 @@ if (! function_exists('user')) {
             return User::where(DB::raw('lower(email)'), mb_strtolower($id))->first();
         }
 
-        if (Ramsey\Uuid\Uuid::isValid($id)) {
+        if (Uuid::isValid($id)) {
             return User::find($id);
         }
 
@@ -92,8 +85,7 @@ if (! function_exists('slack')) {
     /**
      * Send a slack message notification.
      *
-     * @param string $type
-     * @return \Illuminate\Notifications\AnonymousNotifiable
+     * @return AnonymousNotifiable
      */
     function slack(string $type = 'notifications')
     {
@@ -105,8 +97,6 @@ if (! function_exists('add_s3_bucket')) {
     /**
      * Add an S3 bucket to a URL.
      *
-     * @param string|null $url
-     * @param string|null $bucket
      * @return string|null
      */
     function add_s3_bucket(?string $url, ?string $bucket)
@@ -124,9 +114,6 @@ if (! function_exists('add_s3_bucket')) {
 if (! function_exists('search_route')) {
     /**
      * Get a search route for use with direct-linking.
-     *
-     * @param array $params
-     * @return string
      */
     function search_route(array $params): string
     {
@@ -147,8 +134,6 @@ if (! function_exists('search_route')) {
 if (! function_exists('default_asset')) {
     /**
      * Get the default asset, preferrably from the CDN.
-     *
-     * @return string
      */
     function default_asset(): string
     {
@@ -160,8 +145,7 @@ if (! function_exists('brand')) {
     /**
      * Get a brand while in a tinker session by UUID or username.
      *
-     * @param string $slug
-     * @return \App\Models\Brand
+     * @return Brand
      */
     function brand(string $slug)
     {
@@ -173,8 +157,7 @@ if (! function_exists('category')) {
     /**
      * Get a category while in a tinker session by UUID or username.
      *
-     * @param string $slug
-     * @return \App\Models\Category
+     * @return Category
      */
     function category(string $slug)
     {
@@ -186,8 +169,7 @@ if (! function_exists('tag')) {
     /**
      * Get a tag while in a tinker session by UUID or username.
      *
-     * @param string $slug
-     * @return \App\Models\Tag
+     * @return Tag
      */
     function tag(string $slug)
     {
@@ -199,8 +181,7 @@ if (! function_exists('feature')) {
     /**
      * Get a feature while in a tinker session by UUID or username.
      *
-     * @param string $slug
-     * @return \App\Models\Feature
+     * @return Feature
      */
     function feature(string $slug)
     {
@@ -212,8 +193,7 @@ if (! function_exists('color')) {
     /**
      * Get a color while in a tinker session by UUID or username.
      *
-     * @param string $slug
-     * @return \App\Models\Color
+     * @return Color
      */
     function color(string $slug)
     {
@@ -224,9 +204,6 @@ if (! function_exists('color')) {
 if (! function_exists('cdn_path')) {
     /**
      * Get the CDN path to an image.
-     *
-     * @param string $path
-     * @return string
      */
     function cdn_path(string $path): string
     {
@@ -237,9 +214,6 @@ if (! function_exists('cdn_path')) {
 if (! function_exists('cdn_link')) {
     /**
      * Gets a CDN path to a specific URL, not just an image.
-     *
-     * @param string $path
-     * @return string
      */
     function cdn_link(?string $path): string
     {
@@ -256,7 +230,8 @@ if (! function_exists('cdn_link')) {
 }
 
 if (! function_exists('cdn_thumbnail')) {
-    function cdn_thumbnail(?string $path, array $options = []): string {
+    function cdn_thumbnail(?string $path, array $options = []): string
+    {
         static $defaults = [
             'width' => '300',
             'height' => '300',
@@ -265,7 +240,7 @@ if (! function_exists('cdn_thumbnail')) {
 
         $query = $defaults + $options;
 
-        return cdn_link($path) . '?' . http_build_query($query);
+        return cdn_link($path).'?'.http_build_query($query);
     }
 }
 
@@ -273,7 +248,7 @@ if (! function_exists('purify')) {
     /**
      * Return text run through Purify
      *
-     * @param string $path
+     * @param  string  $path
      * @return string
      */
     function purify(string $input)
@@ -283,23 +258,25 @@ if (! function_exists('purify')) {
 }
 
 if (! function_exists('sorted')) {
-   /**
+    /**
      * Takes a list of items and returns them sorted in a particular order
      *
-     * @param \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[] $items
-     * @param string $order
-     * @param string $relationship
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
+     * @param  BelongsToMany|Item[]  $items
+     * @param  string  $order
+     * @param  string  $relationship
+     * @return BelongsToMany|Item[]
      */
     function sorted($order, $relationship = null)
     {
-        switch($order) {
+        switch ($order) {
             case ORDER['ADDED_OLDEST']['key']:
                 $table = $relationship ? "$relationship.created_at" : 'created_at';
+
                 return [$table, 'asc'];
                 break;
             case ORDER['ADDED_NEWEST']['key']:
                 $table = $relationship ? "$relationship.created_at" : 'created_at';
+
                 return [$table, 'desc'];
                 break;
             case ORDER['ALPHA']['key']:
@@ -316,26 +293,30 @@ if (! function_exists('sorted')) {
                 break;
             default:
                 $table = $relationship ? "$relationship.created_at" : 'created_at';
+
                 return [$table, 'desc'];
                 break;
-            }
+        }
     }
 
 }
 
 if (! function_exists('valid_sort')) {
     /**
-      * Takes a list of items and returns them sorted in a particular order
-      *
-      * @param \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[] $items
-      * @param string $order
-      * @param string $relationship
-      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
-      */
-     function valid_sort($order)
-     {
-        $order_opts = array_map(function($a){return $a['key'];}, ORDER);
-         return in_array($order, $order_opts);
-     }
+     * Takes a list of items and returns them sorted in a particular order
+     *
+     * @param  BelongsToMany|Item[]  $items
+     * @param  string  $order
+     * @param  string  $relationship
+     * @return BelongsToMany|Item[]
+     */
+    function valid_sort($order)
+    {
+        $order_opts = array_map(function ($a) {
+            return $a['key'];
+        }, ORDER);
 
- }
+        return in_array($order, $order_opts);
+    }
+
+}

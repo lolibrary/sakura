@@ -79,6 +79,6 @@ class TagResource extends Resource
 
     protected static function applyGlobalSearchAttributeConstraints(Builder $query, string $search): void
     {
-        $query->whereTranslationLike('name', '%' . $search . '%');
+        $query->whereTranslationLike('name', '%'.$search.'%');
     }
 }

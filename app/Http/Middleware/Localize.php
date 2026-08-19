@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class Localize
@@ -10,7 +11,7 @@ class Localize
     /**
      * Set locale for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return string
      */
     public function handle($request, Closure $next)
@@ -20,6 +21,7 @@ class Localize
         if ($lang && in_array($lang, config('translatable.locales'))) {
             App::setLocale($lang);
         }
+
         return $next($request);
     }
 }

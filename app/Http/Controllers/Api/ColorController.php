@@ -10,6 +10,7 @@ class ColorController extends Controller
      * Return all categories, cached.
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function index()
@@ -20,7 +21,7 @@ class ColorController extends Controller
     /**
      * Get a specific category.
      *
-     * @param \App\Color $color
+     * @param  \App\Color  $color
      * @return \App\Color
      */
     public function show(Color $color)

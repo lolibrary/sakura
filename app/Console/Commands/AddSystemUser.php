@@ -6,8 +6,8 @@ use App\Enums\Level;
 use App\Enums\SystemUser;
 use App\Models\User;
 use Illuminate\Console\Command;
-
 use Illuminate\Support\Str;
+
 use function Laravel\Prompts\error;
 use function Laravel\Prompts\info;
 use function Laravel\Prompts\table;
@@ -75,7 +75,7 @@ class AddSystemUser extends Command
 
         $user->save();
 
-        info(($this->option('edit') ? 'Edited user' : 'Created user') . ' ' . $options['username']);
+        info(($this->option('edit') ? 'Edited user' : 'Created user').' '.$options['username']);
 
         if (! $this->option('no-info')) {
             table(['key', 'value'], collect([
@@ -85,23 +85,24 @@ class AddSystemUser extends Command
                 'level' => $user->level->getLabel(),
                 'verified' => 'true',
             ])->map(
-                fn (string $value, string $key) =>
-                compact('key', 'value'))->all()
+                fn (string $value, string $key) => compact('key', 'value'))->all()
             );
         }
 
         return 0;
     }
 
-    protected function validate(): array | false
+    protected function validate(): array|false
     {
         if (is_null($username = SystemUser::tryFrom($this->argument('username')))) {
             error("{$this->argument('username')} is not a valid system user.");
+
             return false;
         }
 
         if (is_null($level = Level::tryFrom((int) $this->option('level')))) {
             error("{$this->option('level')} is not a valid level.");
+
             return false;
         }
 
@@ -109,7 +110,8 @@ class AddSystemUser extends Command
         $user = User::username($username->value)->first();
 
         if ($user !== null && ! $this->option('edit')) {
-            error("User already exists, please use --edit");
+            error('User already exists, please use --edit');
+
             return false;
         }
 
@@ -121,6 +123,7 @@ class AddSystemUser extends Command
 
                 if ($check !== null && $check->username !== $username->value) {
                     error("Cannot edit user - email already exists for user $user->username");
+
                     return false;
                 }
             }
@@ -128,11 +131,13 @@ class AddSystemUser extends Command
         } else {
             if (User::email($email)->exists()) {
                 error('A user already exists with that email');
+
                 return false;
             }
 
             if (User::username($username->value)->exists()) {
                 error('A user already exists with that username');
+
                 return false;
             }
         }

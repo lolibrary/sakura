@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Users\Pages;
 
 use App\Enums\Level;
 use App\Filament\Resources\Users\UserResource;
+use App\Models\User;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
@@ -32,9 +33,7 @@ class EditUser extends EditRecord
     }
 
     /**
-     * @param Model|\App\Models\User $record
-     * @param array $data
-     * @return Model
+     * @param  Model|User  $record
      */
     protected function handleRecordUpdate(Model $record, array $data): Model
     {

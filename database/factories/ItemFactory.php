@@ -3,9 +3,13 @@
 namespace Database\Factories;
 
 use App\Enums\Status;
+use App\Models\Attribute;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Color;
 use App\Models\Feature;
 use App\Models\Item;
+use App\Models\Tag;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -36,7 +40,7 @@ $factory->define(Color::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(\App\Models\Category::class, function (Faker $faker) {
+$factory->define(Category::class, function (Faker $faker) {
     return [
         'name' => $name = $faker->unique()->name,
         'slug' => Str::slug($name),
@@ -44,7 +48,7 @@ $factory->define(\App\Models\Category::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(\App\Models\Brand::class, function (Faker $faker) {
+$factory->define(Brand::class, function (Faker $faker) {
     return [
         'name' => $name = $faker->unique()->name('female'),
         'slug' => Str::slug($name),
@@ -53,14 +57,14 @@ $factory->define(\App\Models\Brand::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(\App\Models\Attribute::class, function (Faker $faker) {
+$factory->define(Attribute::class, function (Faker $faker) {
     return [
         'name' => $name = $faker->unique()->domainWord,
         'slug' => Str::slug($name),
     ];
 });
 
-$factory->define(\App\Models\Tag::class, function (Faker $faker) {
+$factory->define(Tag::class, function (Faker $faker) {
     return [
         'name' => $name = $faker->unique()->word,
         'slug' => Str::slug($name),

@@ -3,6 +3,7 @@
 namespace App\Models\Traits;
 
 use App\Models\Pivot;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 trait HasPivot
@@ -10,12 +11,9 @@ trait HasPivot
     /**
      * Create a new pivot model.
      *
-     * @param \Illuminate\Database\Eloquent\Model $parent
-     * @param array $attributes
-     * @param string $table
-     * @param bool $exists
-     *
-     * @param mixed $using
+     * @param  string  $table
+     * @param  bool  $exists
+     * @param  mixed  $using
      * @return Pivot|mixed
      */
     public function newPivot(Eloquent $parent, array $attributes, $table, $exists, $using = null)

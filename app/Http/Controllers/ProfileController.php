@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Helpers\DefaultRule;
 use Auth;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
@@ -25,7 +29,7 @@ class ProfileController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response|\Illuminate\View\View
+     * @return Response|View
      */
     public function profile()
     {
@@ -37,8 +41,7 @@ class ProfileController extends Controller
     /**
      * Let users update their info.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
     public function update(Request $request)
     {
@@ -46,7 +49,7 @@ class ProfileController extends Controller
         $valid = $request->validate([
             'name' => 'required|string|max:255',
             'username' => [
-                Rule::excludeUnless(fn() => $user->canChangeUsername()),
+                Rule::excludeUnless(fn () => $user->canChangeUsername()),
                 'required',
                 DefaultRule::username(),
                 DefaultRule::restricted(),
@@ -73,7 +76,7 @@ class ProfileController extends Controller
 
                 $user->username = $valid['username'];
 
-                if (!$user->usernames->contains($valid['username'])) {
+                if (! $user->usernames->contains($valid['username'])) {
                     $user->usernames()->create(['username' => $valid['username']]);
                 }
             }
@@ -112,8 +115,7 @@ class ProfileController extends Controller
     /**
      * Get a user's closet (owned items).
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @return Response|RedirectResponse
      */
     public function closet(Request $request)
     {
@@ -123,8 +125,7 @@ class ProfileController extends Controller
     /**
      * Get a user's wishlist (favourited items).
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @return Response|RedirectResponse
      */
     public function wishlist(Request $request)
     {

@@ -11,6 +11,7 @@ use App\Models\Color;
 use App\Models\Feature;
 use App\Models\Item;
 use App\Models\Tag;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -31,23 +32,24 @@ class SearchController extends Base
         Tag::class => 'tags',
     ];
 
-        /**
+    /**
      * Search for items.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\App\Item[]
+     * @param  Request  $request
+     * @return LengthAwarePaginator|\App\Item[]
      */
     public function search_index(SearchRequest $request)
     {
         $query = Item::query();
+
         return $this->search($request, $query);
     }
+
     /**
      * Search for items.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\App\Item[]
+     * @param  Request  $request
+     * @return LengthAwarePaginator|\App\Item[]
      */
     public function search(SearchRequest $request, Builder $query)
     {
@@ -55,13 +57,13 @@ class SearchController extends Base
         $this->years($request, $query);
 
         if (is_string($request->search) && strlen($request->search) > 0) {
-            $search = '%' . $request->search . '%';
+            $search = '%'.$request->search.'%';
 
             $query->where(function (Builder $query) use ($search) {
                 $query->where('english_name', 'ilike', $search);
                 $query->orWhere('foreign_name', 'ilike', $search);
                 $query->orWhere('product_number', 'ilike', $search);
-                $query->orWhereRaw('english_name %> ?',[$search]);
+                $query->orWhereRaw('english_name %> ?', [$search]);
                 $query->orWhereRaw('foreign_name %> ?', [$search]);
                 $query->orWhereRaw('product_number %> ?', [$search]);
             });
@@ -100,16 +102,17 @@ class SearchController extends Base
     {
         $all_params = $request->all();
 
-        $filtered = array_filter($all_params, function($value, $key) { return !(str_contains($key, '_matcher') && $value == 'OR'); }, ARRAY_FILTER_USE_BOTH);
+        $filtered = array_filter($all_params, function ($value, $key) {
+            return ! (str_contains($key, '_matcher') && $value == 'OR');
+        }, ARRAY_FILTER_USE_BOTH);
 
-        return  $filtered;
+        return $filtered;
     }
 
     /**
      * Filter relationships.
      *
-     * @param \App\Requests\SearchRequest|\Illuminate\Http\Request $request
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \App\Requests\SearchRequest|Request  $request
      * @return void
      */
     protected function filters(Request $request, Builder $query)
@@ -118,17 +121,17 @@ class SearchController extends Base
             [$singular, $plural] = [Str::singular($relation), Str::plural($relation)];
 
             $models = (array) $request->input($plural) ?? $request->input($singular);
-            $matcher = $request->input($plural . "_matcher") ?? "OR";
+            $matcher = $request->input($plural.'_matcher') ?? 'OR';
 
             if (count($models) > 0) {
-                if ($matcher == "AND") {
+                if ($matcher == 'AND') {
                     foreach ($models as $model) {
                         $query->whereHas($relation, function (Builder $query) use ($model) {
                             $query->where('slug', $model);
                         });
                     }
 
-                } elseif ($matcher == "NOT") {
+                } elseif ($matcher == 'NOT') {
 
                     $not_query = Item::query();
                     $not_query->whereHas($relation, function (Builder $not_query) use ($models) {
@@ -137,7 +140,7 @@ class SearchController extends Base
 
                     $query->whereNotIn('id', $not_query);
 
-                } elseif ($matcher == "OR") {
+                } elseif ($matcher == 'OR') {
                     $query->whereHas($relation, function (Builder $query) use ($models) {
                         $query->whereIn('slug', $models);
                     });
@@ -150,26 +153,25 @@ class SearchController extends Base
     /**
      * Filter on year.
      *
-     * @param \App\Requests\SearchRequest|\Illuminate\Http\Request $request
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \App\Requests\SearchRequest|Request  $request
      * @return void
      */
     protected function years(Request $request, Builder $query)
     {
         $start_year = $request->input('start_year');
         $end_year = $request->input('end_year');
-        $matcher = $request->input("year_matcher") ?? "OR";
+        $matcher = $request->input('year_matcher') ?? 'OR';
 
         if ($start_year && $end_year &&
-            !(($start_year == 1970 && $end_year == date('Y') + 3) ||
+            ! (($start_year == 1970 && $end_year == date('Y') + 3) ||
             ($end_year == 1970 && $start_year == date('Y') + 3))) {
-            if ($matcher == "OR") {
+            if ($matcher == 'OR') {
                 $query->whereBetween('year', [$start_year, $end_year]);
 
-            } elseif ($matcher == "NOT") {
+            } elseif ($matcher == 'NOT') {
                 $query->where(function ($query) use ($start_year, $end_year) {
                     $query->whereNotBetween('year', [$start_year, $end_year])
-                          ->orWhereNull('year');
+                        ->orWhereNull('year');
                 });
 
             }

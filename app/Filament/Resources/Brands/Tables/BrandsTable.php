@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\Brands\Tables;
 
 use App\Filament\Components\Table\DateColumn;
-use App\Filament\Components\Table\TranslatableTextColumn;
 use App\Filament\Components\Table\ImageColumn;
+use App\Filament\Components\Table\TranslatableTextColumn;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;

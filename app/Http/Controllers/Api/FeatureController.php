@@ -10,6 +10,7 @@ class FeatureController extends Controller
      * Return all categories, cached.
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function index()
@@ -20,7 +21,7 @@ class FeatureController extends Controller
     /**
      * Get a specific category.
      *
-     * @param \App\Feature $feature
+     * @param  \App\Feature  $feature
      * @return \App\Feature
      */
     public function show(Feature $feature)

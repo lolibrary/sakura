@@ -3,13 +3,14 @@
 namespace App\Models\Traits;
 
 use App\Models\Item;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 trait Wishlist
 {
     /**
      * The items a user has favourited/wishlisted.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Item[]
+     * @return BelongsToMany|\App\Item[]
      */
     public function wishlist()
     {
@@ -19,7 +20,6 @@ trait Wishlist
     /**
      * Update a user's wishlist and return if we added to the wishlist.
      *
-     * @param \App\Models\Item $item
      * @return bool
      */
     public function updateWishlist(Item $item)
@@ -32,7 +32,6 @@ trait Wishlist
     /**
      * Check if a user has wishlisted a specific item.
      *
-     * @param \App\Models\Item $item
      * @return bool
      */
     public function wants(Item $item)

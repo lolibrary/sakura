@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models\Traits;
+
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 
 trait Cacheable
@@ -8,7 +10,8 @@ trait Cacheable
     /**
      * Get all cached instances of this model.
      *
-     * @return \Illuminate\Database\Eloquent\Collection<static>
+     * @return Collection<static>
+     *
      * @throws \Exception
      */
     public static function cached()
@@ -35,6 +38,7 @@ trait Cacheable
      * Bust this model's cache.
      *
      * @return void
+     *
      * @throws \Exception
      */
     public static function bust()

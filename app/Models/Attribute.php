@@ -2,16 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Traits\Cacheable;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Visible;
+use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
-
 
 /**
  * An attribute.
@@ -19,7 +15,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
  * @property string $slug The URL route slug of this model.
  * @property string $name The name of this model.
  * @property string $value The value of this attribute's pivot.
- * @property \App\Models\Pivot $pivot A pivot object containing the value of this attribute.
+ * @property Pivot $pivot A pivot object containing the value of this attribute.
  */
 #[Fillable('name', 'slug')]
 #[Visible('name', 'slug', 'value')]
@@ -28,7 +24,7 @@ class Attribute extends Informational
 {
     public function value(): AttributeCast
     {
-        return AttributeCast::get(fn() => $this->pivot?->value);
+        return AttributeCast::get(fn () => $this->pivot?->value);
     }
 
     public function items(): BelongsToMany

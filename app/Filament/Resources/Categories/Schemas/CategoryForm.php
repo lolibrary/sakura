@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Categories\Schemas;
 
-use App\Filament\Components\TranslatableName;
 use App\Filament\Components\FileUpload;
+use App\Filament\Components\TranslatableName;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 

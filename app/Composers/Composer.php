@@ -2,9 +2,11 @@
 
 namespace App\Composers;
 
+use App\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\App;
 
 abstract class Composer
 {
@@ -18,7 +20,6 @@ abstract class Composer
     /**
      * Bind data into the view.
      *
-     * @param \Illuminate\View\View $view
      * @return void
      */
     public function compose(View $view)
@@ -54,7 +55,8 @@ abstract class Composer
     protected function key()
     {
         $locale = App::getLocale();
-        return 'composer:'.$locale .':'.$this->name();
+
+        return 'composer:'.$locale.':'.$this->name();
     }
 
     /**
@@ -70,7 +72,7 @@ abstract class Composer
     /**
      * Get models loaded from the database.
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\App\Model[]|\Illuminate\Database\Eloquent\Model[]
+     * @return Collection|Model[]|\Illuminate\Database\Eloquent\Model[]
      */
     abstract protected function load();
 }

@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+
 /**
  * @property string $linkable_type
  * @property string $linkable_id
  * @property string $slug
- * @property \App\Models\Model $linkable
+ * @property Model $linkable
  */
 class Link extends Model
 {
@@ -24,15 +26,14 @@ class Link extends Model
 
     // link types (can be added to in future)
     const ITEM = Item::class;
+
     const USER = User::class;
 
     /**
      * Get a link by slug.
      *
-     * @param string $slug
-     * @param string $type
      *
-     * @return \App\Models\Link
+     * @return Link
      */
     public static function get(string $slug, string $type = self::ITEM)
     {
@@ -42,7 +43,7 @@ class Link extends Model
     /**
      * Get the resource we're linking to.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo
      */
     public function linkable()
     {

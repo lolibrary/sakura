@@ -58,7 +58,6 @@ class ItemPolicy extends Policy
         return $user->senior();
     }
 
-
     public function delete(User $user, Item $item): bool
     {
         // you cannot delete a published item. it MUST be retracted first.

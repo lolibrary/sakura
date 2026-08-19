@@ -1,6 +1,5 @@
 <?php
 
-use App\Console\Commands\ItemCache;
 use App\Jobs\BacklogUpdate;
 use App\Jobs\DeleteAbandonedDrafts;
 use App\Jobs\MarkInactiveEntries;
@@ -17,7 +16,6 @@ use Illuminate\Support\Facades\Schedule;
 | simple approach to interacting with each command's IO methods.
 |
 */
-
 
 Schedule::call(new BacklogUpdate)
     ->dailyAt('13:00')
@@ -42,4 +40,3 @@ Schedule::call(new DeleteAbandonedDrafts)
     ->description('Delete any draft entries where a user has deleted their account')
     ->daily()
     ->onOneServer();
-

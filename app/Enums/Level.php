@@ -3,14 +3,14 @@
 namespace App\Enums;
 
 use BackedEnum;
-use Filament\Support\Icons\Heroicon;
 use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasDescription;
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
-use Filament\Support\Contracts\HasDescription;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 
-enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
+enum Level: int implements HasColor, HasDescription, HasIcon, HasLabel
 {
     case Amy = 3000;
     case System = 2000;
@@ -22,7 +22,6 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
     case Junior = 10;
     case Deactivated = 0;
     case Banned = -1;
-
 
     public function getLabel(): string|Htmlable|null
     {
@@ -47,7 +46,7 @@ enum Level: int implements HasLabel, HasColor, HasIcon, HasDescription
             self::Developer => 'gray',
             self::Admin => 'purple',
             self::Trusted => 'cyan',
-            self::Senior,  => 'warning',
+            self::Senior, => 'warning',
             self::Lolibrarian => 'fuschia',
             self::Junior => 'success',
             self::Amy, self::Deactivated => 'primary',

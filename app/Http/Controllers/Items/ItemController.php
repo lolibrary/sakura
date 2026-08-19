@@ -7,14 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class ItemController extends Controller
 {
     /**
      * Show an item.
      *
-     * @param \App\Models\Item $item
-     * @return RedirectResponse|\Illuminate\View\View
+     * @return RedirectResponse|View
      */
     public function show(Item $item)
     {
@@ -47,8 +47,7 @@ class ItemController extends Controller
     /**
      * Update a user's wishlist.
      *
-     * @param \App\Models\Item $item
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function wishlist(Item $item)
     {
@@ -63,8 +62,7 @@ class ItemController extends Controller
     /**
      * Update a user's closet.
      *
-     * @param \App\Models\Item $item
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function closet(Item $item)
     {

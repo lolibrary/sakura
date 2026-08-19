@@ -11,8 +11,9 @@ trait DateHandling
      * Return a timestamp as DateTime object, edited to always be in UTC.
      *
      * @param  mixed  $value
-     * @return \Illuminate\Support\Carbon
-     * @throws \InvalidArgumentException
+     * @return Carbon
+     *
+     * @throws InvalidArgumentException
      */
     protected function asDateTime($value)
     {

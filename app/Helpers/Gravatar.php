@@ -7,7 +7,9 @@ use Illuminate\Support\Arr;
 final class Gravatar
 {
     public const string BaseUrl = 'https://www.gravatar.com/avatar';
+
     public const string Default = 'mp';
+
     public const string Rating = 'g';
 
     public static function encode(?string $email = null): ?string

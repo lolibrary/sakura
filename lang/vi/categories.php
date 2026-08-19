@@ -1,4 +1,5 @@
 <?php
+
 return [
     'cape' => 'Cape',
     'publications' => 'Ấn phẩm được xuất bản',

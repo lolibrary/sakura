@@ -1,5 +1,24 @@
 <?php
 
+use App\Models\Attribute;
+use App\Models\AttributeItem;
+use App\Models\AttributeTranslation;
+use App\Models\Brand;
+use App\Models\BrandTranslation;
+use App\Models\Category;
+use App\Models\CategoryTranslation;
+use App\Models\Color;
+use App\Models\ColorTranslation;
+use App\Models\Feature;
+use App\Models\FeatureTranslation;
+use App\Models\Item;
+use App\Models\Pivot;
+use App\Models\Profile;
+use App\Models\Tag;
+use App\Models\TagTranslation;
+use App\Models\User;
+use App\Models\Username;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 return [
@@ -98,30 +117,30 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_cache'),
+    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache'),
 
     'serializable_classes' => [
-        App\Models\Attribute::class,
-        App\Models\AttributeTranslation::class,
-        App\Models\AttributeItem::class,
-        App\Models\Brand::class,
-        App\Models\BrandTranslation::class,
-        App\Models\Category::class,
-        App\Models\CategoryTranslation::class,
-        App\Models\Color::class,
-        App\Models\ColorTranslation::class,
-        App\Models\Feature::class,
-        App\Models\FeatureTranslation::class,
-        App\Models\Tag::class,
-        App\Models\TagTranslation::class,
-        App\Models\User::class,
-        App\Models\Username::class,
-        App\Models\Pivot::class,
-        App\Models\Profile::class,
-        App\Models\Item::class,
+        Attribute::class,
+        AttributeTranslation::class,
+        AttributeItem::class,
+        Brand::class,
+        BrandTranslation::class,
+        Category::class,
+        CategoryTranslation::class,
+        Color::class,
+        ColorTranslation::class,
+        Feature::class,
+        FeatureTranslation::class,
+        Tag::class,
+        TagTranslation::class,
+        User::class,
+        Username::class,
+        Pivot::class,
+        Profile::class,
+        Item::class,
 
         App\Models\Traits\Collection::class,
-        Illuminate\Support\Collection::class,
+        Collection::class,
         Illuminate\Database\Eloquent\Collection::class,
     ],
 ];

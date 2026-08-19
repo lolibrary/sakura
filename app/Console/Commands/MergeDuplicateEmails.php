@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+
 use function Laravel\Prompts\error;
 use function Laravel\Prompts\progress;
 
@@ -38,13 +39,14 @@ class MergeDuplicateEmails extends Command
 
         if (count($emails) === 0) {
             error('No duplicate emails found.');
+
             return;
         }
 
         progress(
             label: 'Merging user accounts...',
             steps: $emails,
-            callback: fn(string $email) => $this->call('app:merge-email', [
+            callback: fn (string $email) => $this->call('app:merge-email', [
                 'email' => $email,
             ]),
         );

@@ -27,7 +27,7 @@ trait HasAttachPolicies
         return $this->update($user, $item);
     }
 
-    public function attachAnyAttribute(User $user, Item $item):bool
+    public function attachAnyAttribute(User $user, Item $item): bool
     {
         return $this->update($user, $item);
     }

@@ -47,7 +47,6 @@ class EditRecord extends BaseEditRecord
         return $data;
     }
 
-
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         $record->update($this->mutateTranslatedFields($data));

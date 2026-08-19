@@ -9,7 +9,7 @@ class Years
     /**
      * Add data to the given view.
      *
-     * @param \Illuminate\View\View
+     * @param View
      * @return void
      */
     public function compose(View $view)

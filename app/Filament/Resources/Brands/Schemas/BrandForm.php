@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Brands\Schemas;
 use Doriiaan\FilamentAstrotomic\Schemas\Components\TranslatableTabs;
 use Doriiaan\FilamentAstrotomic\TranslatableTab;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -40,7 +39,7 @@ class BrandForm
                     ->openable()
                     ->maxSize(1024 * 3)
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg'])
-                    ->helperText("Acceptable upload types: JPEG, PNG, SVG, WEBP. 3MB limit.")
+                    ->helperText('Acceptable upload types: JPEG, PNG, SVG, WEBP. 3MB limit.')
                     ->preventFilePathTampering(),
             ]);
     }

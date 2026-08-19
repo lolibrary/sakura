@@ -1,4 +1,5 @@
 <?php
+
 return [
     'oxford' => 'Type: Chaussures de ville',
     'open-heel' => 'Escarpins',

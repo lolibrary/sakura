@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class PublicProfileController extends Controller
 {
@@ -17,12 +19,10 @@ class PublicProfileController extends Controller
         //
     }
 
-
     /**
      * Get a given user's closet (owned items).
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response|\Illuminate\View\View
+     * @return Response|View
      */
     public function closet(Request $request, string $username)
     {
@@ -36,15 +36,14 @@ class PublicProfileController extends Controller
 
         return view('profile.closet', [
             'user' => $user,
-            'items' => $user->closet($request->input('order'))->paginate(24)
+            'items' => $user->closet($request->input('order'))->paginate(24),
         ]);
     }
 
     /**
      * Get a given user's wishlist (favourited items).
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response|\Illuminate\View\View
+     * @return Response|View
      */
     public function wishlist(Request $request, string $username)
     {
@@ -58,7 +57,7 @@ class PublicProfileController extends Controller
 
         return view('profile.wishlist', [
             'user' => $user,
-            'items' => $user->wishlist($request->input('order'))->paginate(24)
+            'items' => $user->wishlist($request->input('order'))->paginate(24),
         ]);
     }
 }

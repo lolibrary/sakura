@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -44,7 +45,6 @@ class LoginController extends Controller
     /**
      * Attempt to log the user into the application.
      *
-     * @param \Illuminate\Http\Request $request
      * @return bool
      */
     protected function attemptLogin(Request $request)
@@ -54,6 +54,7 @@ class LoginController extends Controller
         if ($this->guard()->attempt($credentials, remember: true)) {
             if ($this->restricted($this->guard()->user())) {
                 $this->guard()->logout();
+
                 return false;
             }
 
@@ -63,7 +64,6 @@ class LoginController extends Controller
         return false;
     }
 
-
     /**
      * Prevent restricted users from logging in, even if the password is somehow known.
      *
@@ -71,9 +71,6 @@ class LoginController extends Controller
      * - banned
      * - system
      * - amy (owner)
-     *
-     * @param User $user
-     * @return bool
      */
     protected function restricted(User $user): bool
     {
@@ -87,10 +84,9 @@ class LoginController extends Controller
     /**
      * Validate the user login request.
      *
-     * @param \Illuminate\Http\Request $request
      * @return void
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     protected function validateLogin(Request $request)
     {
@@ -107,7 +103,6 @@ class LoginController extends Controller
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param \Illuminate\Http\Request $request
      * @return array
      */
     protected function credentials(Request $request)

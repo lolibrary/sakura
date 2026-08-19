@@ -11,7 +11,7 @@ class YearSelect
         return Select::make('year')
             ->placeholder('Unknown')
             ->options(
-                collect(range(1990, (int)date('Y') + 3))
+                collect(range(1990, (int) date('Y') + 3))
                     ->reverse()
                     ->mapWithKeys(fn (int $value) => [$value => $value])
                     ->all()
@@ -20,7 +20,7 @@ class YearSelect
                 'nullable',
                 'integer',
                 'min:1970',
-                'max:' . (int)date('Y') + 3,
+                'max:'.(int) date('Y') + 3,
             ])
             ->helperText('The year of release, if known.');
     }

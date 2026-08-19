@@ -35,7 +35,6 @@ trait HasStatus
     /**
      * Check if this model has a given status.
      *
-     * @param string $status
      * @return bool
      */
     public function hasStatus(string $status)
@@ -68,7 +67,6 @@ trait HasStatus
     /**
      * Set the raw status code directly.
      *
-     * @param int $status
      * @return void
      */
     public function setRawStatusCode(int $status)
@@ -79,9 +77,9 @@ trait HasStatus
     /**
      * Get a raw (int) status code.
      *
-     * @param string $status
      * @return int
-     * @throws \InvalidArgumentException
+     *
+     * @throws InvalidArgumentException
      */
     public function getRawStatus(string $status)
     {
@@ -95,7 +93,6 @@ trait HasStatus
     /**
      * Check if a given status exists on this model.
      *
-     * @param string $status
      * @return bool
      */
     public function statusExists(string $status)
@@ -108,7 +105,6 @@ trait HasStatus
     /**
      * Add a specific status to this model.
      *
-     * @param string $status
      * @return void
      */
     public function addStatus(string $status, bool $save = true)

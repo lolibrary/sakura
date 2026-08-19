@@ -10,7 +10,6 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class UsersTable
@@ -23,7 +22,7 @@ class UsersTable
                     ->searchable()
                     ->sortable()
                     ->state(fn (User $record) => $record->display_name)
-                    ->visible(fn() => auth()->user()->admin())
+                    ->visible(fn () => auth()->user()->admin())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('username')
                     ->searchable()
@@ -32,7 +31,7 @@ class UsersTable
                     ->label('Email address')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->visible(fn() => auth()->user()->admin()),
+                    ->visible(fn () => auth()->user()->admin()),
                 DateColumn::make('created_at'),
                 DateColumn::make('updated_at'),
                 TextColumn::make('level')

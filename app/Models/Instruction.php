@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 class Instruction extends Model
 {
-
     /**
      * The values we're allowed to fill here.
      *
@@ -18,7 +19,7 @@ class Instruction extends Model
     /**
      * Get the items that have this care instruction.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function items()
     {

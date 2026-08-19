@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DonateRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class DonationController extends Controller
 {
     /**
      * Redirect to PayPal.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function paypal()
     {
@@ -19,7 +20,7 @@ class DonationController extends Controller
     /**
      * Redirect to Patreon.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function patreon()
     {
@@ -29,7 +30,7 @@ class DonationController extends Controller
     /**
      * Get the base donation page.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function index()
     {
@@ -39,7 +40,7 @@ class DonationController extends Controller
     /**
      * Add a view to say thanks to users for donations.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function thanks()
     {

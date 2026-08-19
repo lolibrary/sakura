@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Traits\Collection;
 use App\Models\Traits\DateHandling;
 use App\Models\Traits\HasPivot;
 use Illuminate\Database\Eloquent\Attributes\DateFormat;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use Illuminate\Support\Str;
 
 /**
  * @property string $name The name of this model.

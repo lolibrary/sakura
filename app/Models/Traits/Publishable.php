@@ -13,6 +13,7 @@ use App\Events\ReadyForReview;
 use App\Models\Item;
 use App\Models\User;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 trait Publishable
@@ -152,8 +153,6 @@ trait Publishable
 
     /**
      * Return if this item is pending.
-     *
-     * @return bool
      */
     public function changesRequested(): bool
     {
@@ -162,8 +161,6 @@ trait Publishable
 
     /**
      * Return if this item is pending.
-     *
-     * @return bool
      */
     public function readyForReview(): bool
     {
@@ -172,8 +169,6 @@ trait Publishable
 
     /**
      * Return if an item is published or not.
-     *
-     * @return bool
      */
     public function published(): bool
     {
@@ -182,8 +177,6 @@ trait Publishable
 
     /**
      * Return if this item is a draft.
-     *
-     * @return bool
      */
     public function draft(): bool
     {
@@ -198,9 +191,7 @@ trait Publishable
     /**
      * Scope to drafts only.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param bool $draft
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     * @return Builder|\Illuminate\Database\Query\Builder
      */
     public function scopeDrafts(EloquentBuilder $builder, bool $draft = true)
     {

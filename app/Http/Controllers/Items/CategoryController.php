@@ -4,15 +4,14 @@ namespace App\Http\Controllers\Items;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Item;
+use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
     /**
      * Show a category.
      *
-     * @param \App\Models\Category $category
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Category $category)
     {
@@ -22,7 +21,7 @@ class CategoryController extends Controller
     /**
      * Redirect to the search page.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {

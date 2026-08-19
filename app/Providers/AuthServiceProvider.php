@@ -2,6 +2,22 @@
 
 namespace App\Providers;
 
+use App\Models\Attribute;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Color;
+use App\Models\Feature;
+use App\Models\Item;
+use App\Models\Tag;
+use App\Models\User;
+use App\Policies\AttributePolicy;
+use App\Policies\BrandPolicy;
+use App\Policies\CategoryPolicy;
+use App\Policies\ColorPolicy;
+use App\Policies\FeaturePolicy;
+use App\Policies\ItemPolicy;
+use App\Policies\TagPolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Laravel\Passport\Passport;
@@ -14,14 +30,14 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        \App\Models\Attribute::class => \App\Policies\AttributePolicy::class,
-        \App\Models\Brand::class => \App\Policies\BrandPolicy::class,
-        \App\Models\Category::class => \App\Policies\CategoryPolicy::class,
-        \App\Models\Color::class => \App\Policies\ColorPolicy::class,
-        \App\Models\Feature::class => \App\Policies\FeaturePolicy::class,
-        \App\Models\Item::class => \App\Policies\ItemPolicy::class,
-        \App\Models\User::class => \App\Policies\UserPolicy::class,
-        \App\Models\Tag::class => \App\Policies\TagPolicy::class,
+        Attribute::class => AttributePolicy::class,
+        Brand::class => BrandPolicy::class,
+        Category::class => CategoryPolicy::class,
+        Color::class => ColorPolicy::class,
+        Feature::class => FeaturePolicy::class,
+        Item::class => ItemPolicy::class,
+        User::class => UserPolicy::class,
+        Tag::class => TagPolicy::class,
     ];
 
     /**

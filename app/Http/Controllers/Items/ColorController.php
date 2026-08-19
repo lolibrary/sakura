@@ -4,15 +4,14 @@ namespace App\Http\Controllers\Items;
 
 use App\Http\Controllers\Controller;
 use App\Models\Color;
-use App\Models\Item;
+use Illuminate\Http\Response;
 
 class ColorController extends Controller
 {
     /**
      * Show a color.
      *
-     * @param \App\Models\Color $color
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Color $color)
     {
@@ -22,7 +21,7 @@ class ColorController extends Controller
     /**
      * Redirect to the search page.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {

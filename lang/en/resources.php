@@ -125,7 +125,7 @@ return [
         'actions' => [
             'reset-password' => 'Reset Password',
             'resend-verification' => 'Resend Verification',
-        ]
+        ],
     ],
 
     'comment' => [

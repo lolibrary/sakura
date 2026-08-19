@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Style;
+
 class StyleSeeder extends Seeder
 {
     /**
@@ -9,7 +11,7 @@ class StyleSeeder extends Seeder
      *
      * @var string
      */
-    protected static $model = \App\Models\Style::class;
+    protected static $model = Style::class;
 
     /**
      * A list of lolita styles to seed.

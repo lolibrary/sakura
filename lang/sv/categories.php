@@ -1,4 +1,5 @@
 <?php
+
 return [
     'cape' => 'Mantel',
     'publications' => 'Publikationer',

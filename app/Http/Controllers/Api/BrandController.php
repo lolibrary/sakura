@@ -10,6 +10,7 @@ class BrandController extends Controller
      * Return all brands, cached.
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function index()
@@ -20,7 +21,7 @@ class BrandController extends Controller
     /**
      * Get a specific category.
      *
-     * @param \App\Brand $brand
+     * @param  \App\Brand  $brand
      * @return \App\Brand
      */
     public function show(Brand $brand)

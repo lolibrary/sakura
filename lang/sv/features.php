@@ -1,4 +1,5 @@
 <?php
+
 return [
     'oxford' => 'Modell: Oxford',
     'open-heel' => 'Öppen häl',

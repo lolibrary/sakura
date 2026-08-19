@@ -8,8 +8,6 @@ use Filament\Actions\EditAction;
 
 class ViewCategory extends ViewRecord
 {
-
-
     protected static string $resource = CategoryResource::class;
 
     protected function getHeaderActions(): array

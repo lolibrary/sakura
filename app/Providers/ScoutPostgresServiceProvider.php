@@ -14,11 +14,11 @@ class ScoutPostgresServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            base_path(self::$vendor . '/config/scout-postgres.php') => config_path('scout-postgres.php'),
+            base_path(self::$vendor.'/config/scout-postgres.php') => config_path('scout-postgres.php'),
         ], 'scout-postgres-config');
 
         $this->publishesMigrations([
-            base_path(self::$vendor . '/database/migrations') => database_path('migrations'),
+            base_path(self::$vendor.'/database/migrations') => database_path('migrations'),
         ], 'scout-postgres-migrations');
 
         BlueprintMacros::register();
@@ -27,7 +27,7 @@ class ScoutPostgresServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            base_path(self::$vendor . '/config/scout-postgres.php'), 'scout-postgres',
+            base_path(self::$vendor.'/config/scout-postgres.php'), 'scout-postgres',
         );
 
         resolve(EngineManager::class)->extend('pgsql', fn () => app(PostgresEngine::class));

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 
 class PreserveAbandonedItems implements ShouldQueue
 {
-    use Queueable, Dispatchable;
+    use Dispatchable, Queueable;
 
     /**
      * Create a new job instance.

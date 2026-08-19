@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class IdentityController extends Controller
 {
@@ -16,5 +15,4 @@ class IdentityController extends Controller
     {
         return auth()->user();
     }
-
 }

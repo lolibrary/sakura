@@ -4,15 +4,14 @@ namespace App\Http\Controllers\Items;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Models\Item;
+use Illuminate\Http\Response;
 
 class BrandController extends Controller
 {
     /**
      * Show a brand.
      *
-     * @param \App\Models\Brand $brand
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Brand $brand)
     {
@@ -22,7 +21,7 @@ class BrandController extends Controller
     /**
      * Redirect to the search page.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
