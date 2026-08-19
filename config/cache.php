@@ -98,6 +98,30 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache'),
+    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_cache'),
 
+    'serializable_classes' => [
+        App\Models\Attribute::class,
+        App\Models\AttributeTranslation::class,
+        App\Models\AttributeItem::class,
+        App\Models\Brand::class,
+        App\Models\BrandTranslation::class,
+        App\Models\Category::class,
+        App\Models\CategoryTranslation::class,
+        App\Models\Color::class,
+        App\Models\ColorTranslation::class,
+        App\Models\Feature::class,
+        App\Models\FeatureTranslation::class,
+        App\Models\Tag::class,
+        App\Models\TagTranslation::class,
+        App\Models\User::class,
+        App\Models\Username::class,
+        App\Models\Pivot::class,
+        App\Models\Profile::class,
+        App\Models\Item::class,
+
+        App\Models\Traits\Collection::class,
+        Illuminate\Support\Collection::class,
+        Illuminate\Database\Eloquent\Collection::class,
+    ],
 ];

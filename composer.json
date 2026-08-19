@@ -5,7 +5,7 @@
     "keywords": ["framework", "laravel"],
     "license": "BSD-3-Clause",
     "require": {
-        "php": "^8.4",
+        "php": "^8.5",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-pdo": "*",
@@ -16,12 +16,12 @@
         "filament/filament": "^5.0",
         "jonaspauleta/scout-postgres": "^2.0",
         "laravel/fortify": "^1.36",
-        "laravel/framework": "^12.0",
+        "laravel/framework": "^13.0",
         "laravel/nightwatch": "^1.28",
-        "laravel/octane": "^2.18",
+        "laravel/octane": "^2.19",
         "laravel/passport": "^13.0",
         "laravel/scout": "^11.5",
-        "laravel/tinker": "^2.0",
+        "laravel/tinker": "^3.0",
         "laravel/ui": "^4.0",
         "league/flysystem": "^3.0",
         "league/flysystem-aws-s3-v3": "^3.0",
@@ -30,13 +30,12 @@
         "spatie/laravel-activitylog": "^5.0",
         "stevebauman/purify": "^6.0",
         "symfony/http-client": "^6.4",
-        "symfony/postmark-mailer": "^6.4",
-        "zohomail/laravel-zeptomail": "^1.0"
+        "symfony/postmark-mailer": "^6.4"
     },
     "require-dev": {
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^8.1",
-        "phpunit/phpunit": "^11.0",
+        "phpunit/phpunit": "^12.0",
         "spatie/laravel-ignition": "^2.0"
     },
     "config": {
@@ -45,16 +44,8 @@
         "sort-packages": true,
         "policy": {
             "advisories": {
-                "audit": "report",
-                "ignore-id": {
-                    "PKSA-3r5d-mb8f-1qw9": "unavoidable audit fail",
-                    "PKSA-mdq4-51ck-6kdq": "unavoidable audit fail",
-                    "PKSA-m5cs-t1y6-qpcs": "medium, no action yet"
-                }
+                "audit": "report"
             }
-        },
-        "audit": {
-            "block-insecure": false
         },
         "allow-plugins": {
             "php-http/discovery": true
