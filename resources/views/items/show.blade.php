@@ -68,52 +68,55 @@ use Filament\Forms\Components\RichEditor\RichContentRenderer;
 
             <div class="col-sm p-2 px-4">
                 <h4 class="mt-2">{{ __('ui.item.info') }}</h4>
-                <p class="m-0">
-                    @if ($item->year)
-                        @lang('ui.item.year', ['year' => $item->year])
-                    @else
-                        {{ __('ui.item.year_unknown') }}
-                    @endif
-                </p>
+                <div class="text-muted">
+                    <table class="table table-sm attribute-table">
+                        <tbody>
+                        <tr>
+                            <td colspan="1" class="text-primary">Year released</td>
+                            <td colspan="2" class="attribute-value text-monospace">
+                                {{ $item->year ?? __('ui.item.year_unknown') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="text-primary">Product number</td>
+                            <td colspan="2" class="attribute-value text-monospace">
+                                {{ $item->product_number ?? __('ui.item.prod_num_unknown') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="text-primary">Price</td>
+                            <td colspan="2" class="attribute-value text-monospace">
+                                {{ $item->currency ? $item->price_formatted : __('ui.item.price_unknown') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="text-primary">Submitter</td>
+                            <td colspan="2" class="attribute-value text-monospace">
+                                {{ $item->submitter?->username ?? 'anonymous' }}
+                            </td>
+                        </tr>
+                        @if ($item->published())
+                            <tr>
+                                <td colspan="1" class="text-primary">{{ __('ui.item.published') }}</td>
+                                <td colspan="2" class="attribute-value text-monospace">
+                                    <time datetime="{{ $item->published_at->toRfc3339String() }}"
+                                          class="text-regular">{{ $item->published_at->format('jS M Y, H:i') }} UTC
+                                    </time>
+                                </td>
+                            </tr>
+                        @else
+                            <tr class="table-danger">
+                                <td colspan="3" class="text-center text-monospace">{{ __('ui.item.draft') }}</td>
+                            </tr>
+                        @endif
 
-                <p class="m-0">
-                    @if ($item->product_number)
-                        @lang('ui.item.prod_num', ['prod_num' => $item->product_number])
-                    @else
-                        {{ __('ui.item.prod_num_unknown') }}
-                    @endif
-                </p>
-
-                <p class="m-0">
-                    @if ($item->price)
-                        @lang('ui.item.price', ['price' => $item->price_formatted])
-                    @else
-                        {{ __('ui.item.price_unknown') }}
-                    @endif
-                </p>
-
-                <p class="m-0">
-                    @if ($item->submitter)
-                        @lang('ui.item.submitter', ['submitter' => $item->submitter->username])
-                    @else
-                        {{ __('ui.item.submitter_unknown') }}
-                    @endif
-                </p>
-
-                <p class="m-0">
-                    @if ($item->published())
-                        {{ __('ui.item.published') }}
-                        <time datetime="{{ $item->published_at->toRfc3339String() }}"
-                              class="text-regular">{{ $item->published_at->format('jS M Y, H:i') }} UTC
-                        </time>
-                    @else
-                        <span class="text-danger">{{ __('ui.item.draft') }}</span>
-                   @endif
-                </p>
+                        </tbody>
+                    </table>
+                </div>
 
                 @if ($item->notes)
                     <h4 class="mt-4">{{ __('ui.item.notes') }}</h4>
-                    <div class="text-muted text-regular" style="max-height: 27rem; overflow-y: scroll">
+                    <div class="text-muted text-regular" style="max-height: 450px; overflow-y: scroll">
                          {!! RichContentRenderer::make($item->notes)->toHtml() !!}
                     </div>
                 @endif
