@@ -2,22 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
- */
+#[Fillable('username')]
 class Username extends Model
 {
     use HasUuids, SoftDeletes;
 
     protected $primaryKey = 'username';
-
-    protected $fillable = ['username'];
 
     public function user(): BelongsTo
     {

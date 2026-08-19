@@ -2,8 +2,6 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Pivot;
-use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Carbon;
 use InvalidArgumentException;
 
@@ -28,30 +26,12 @@ trait DateHandling
     }
 
     /**
-     * Create a new pivot model.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $parent
-     * @param array $attributes
-     * @param string $table
-     * @param bool $exists
-     *
-     * @param null $using
-     * @return \App\Models\Pivot
-     */
-    public function newPivot(Eloquent $parent, array $attributes, $table, $exists, $using = null)
-    {
-        return $using
-            ? $using::fromRawAttributes($parent, $attributes, $table, $exists)
-            : Pivot::fromAttributes($parent, $attributes, $table, $exists);
-    }
-
-    /**
      * Get the format for database stored dates.
      *
      * @return string
      */
     public function getDateFormat()
     {
-        return Carbon::RFC3339;
+        return \DateTimeInterface::RFC3339;
     }
 }

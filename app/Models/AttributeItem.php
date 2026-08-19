@@ -11,8 +11,6 @@ class AttributeItem extends Pivot
 {
     use LogsActivity;
 
-    public $incrementing = true;
-
     public function attribute(): BelongsTo
     {
         return $this->belongsTo(Attribute::class);

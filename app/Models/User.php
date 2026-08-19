@@ -16,6 +16,11 @@ use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\Appends;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
+use Illuminate\Database\Eloquent\Attributes\Visible;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
@@ -58,37 +63,15 @@ use Relaticle\Comments\Contracts\Commentator;
  * @property string $id
  * @property \Illuminate\Support\Collection $metadata
  */
+#[Fillable('name', 'username', 'email', 'password')]
+#[Visible('name', 'display_name', 'email', 'username', 'profile', 'created_at', 'level', 'banned')]
+#[Appends('display_name')]
+#[Hidden('password', 'remember_token')]
+#[RouteKey('id')]
 class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable, FilamentUser, Commentator, HasName, HasAvatar
 {
     use Notifiable, HasApiTokens, HasUuids, DateHandling, Wishlist, Closet, AccessLevels, VerifiesEmails;
-    use HasComments;
-    use CanComment;
-
-    /**
-     * Whether or not this model has an incrementing timestamp.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
-     * The "type" of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'username',
-        'email',
-        'password',
-    ];
+    use HasComments, CanComment;
 
     /**
      * Casts for attributes.
@@ -102,36 +85,6 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
         'public_closet' => 'boolean',
         'public_wishlist' => 'boolean',
         'metadata' => AsCollection::class,
-    ];
-
-    /**
-     * Visible attributes.
-     *
-     * @var array
-     */
-    protected $visible = [
-        'name',
-        'display_name',
-        'email',
-        'username',
-        'profile',
-        'created_at',
-        'level',
-        'banned',
-    ];
-
-    protected $appends = [
-        'display_name',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
     ];
 
     /**
@@ -254,11 +207,6 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
         }
 
         return false;
-    }
-
-    public function getRouteKeyName(): string
-    {
-        return 'id';
     }
 
     /**

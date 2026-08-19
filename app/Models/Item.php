@@ -5,6 +5,9 @@ namespace App\Models;
 use App\Enums\Status;
 use App\Enums\SystemUser;
 use App\Helpers\RichContent;
+use Illuminate\Database\Eloquent\Attributes\Appends;
+use Illuminate\Database\Eloquent\Attributes\Guarded;
+use Illuminate\Database\Eloquent\Attributes\Visible;
 use Relaticle\Comments\Concerns\HasComments;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
@@ -16,6 +19,7 @@ use Illuminate\Support\Facades\Log;
 use NumberFormatter;
 use Relaticle\Comments\Contracts\Commentable;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
 
 /**
  * An Item of Apparel.
@@ -40,6 +44,18 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  *
  * @property \Carbon\Carbon $published_at The date this item was published.
  */
+#[Guarded('status', 'slug', 'created_at', 'updated_at', 'published_at')]
+#[Visible(
+    'english_name', 'foreign_name', 'product_number',
+    'currency', 'price', 'price_details', 'year',
+    'notes', 'internal_notes',
+    'image', 'images',
+    'attributes', 'brand', 'categories', 'tags', 'colors', 'features',
+    'submitter', 'publisher',
+    'created_at', 'updated_at', 'published_at',
+    'edit_url', 'slug', 'url',
+)]
+#[Appends('price_details', 'url', 'edit_url', 'duplicate_url')]
 class Item extends Model implements HasRichContent, Commentable
 {
     use ItemRelations, Publishable, Sluggable;
@@ -51,9 +67,9 @@ class Item extends Model implements HasRichContent, Commentable
     /**
      * A list of supported currencies.
      *
-     * @var int
+     * @var array<string, string>
      */
-    public const CURRENCIES = [
+    public const array CURRENCIES = [
         'jpy' => 'Japanese Yen (¥)',
         'cny' => 'Chinese Yuan (RMB/¥)',
         'hkd' => 'Hong Kong Dollar (HK$)',
@@ -90,7 +106,7 @@ class Item extends Model implements HasRichContent, Commentable
      *
      * Use: `Item::with(Item::FULLY_LOAD)`
      */
-    public const FULLY_LOAD = [
+    public const array FULLY_LOAD = [
         'tags',
         'colors',
         'features',
@@ -106,24 +122,11 @@ class Item extends Model implements HasRichContent, Commentable
      *
      * Use: `Item::with(Item::PARTIAL_LOAD)`
      */
-    public const PARTIAL_LOAD = [
+    public const array PARTIAL_LOAD = [
         'submitter',
         'brand',
         'categories',
         'tags',
-    ];
-
-    /**
-     * Non-fillable attributes.
-     *
-     * @var array
-     */
-    protected $guarded = [
-        'status',
-        'slug',
-        'created_at',
-        'updated_at',
-        'published_at',
     ];
 
     /**
@@ -132,48 +135,6 @@ class Item extends Model implements HasRichContent, Commentable
      * @var array
      */
     protected $with = self::PARTIAL_LOAD;
-
-    /**
-     * Attributes to append.
-     *
-     * @var array
-     */
-    protected $appends = ['price_details', 'url', 'edit_url', 'duplicate_url'];
-
-    /**
-     * Visible attributes.
-     *
-     * @var array
-     */
-    protected $visible = [
-        'edit_url',
-        'slug',
-        'url',
-        'english_name',
-        'foreign_name',
-        'notes',
-        'internal_notes',
-        'price_details',
-        'price',
-        'currency',
-        'year',
-        'product_number',
-        'image',
-        'images',
-
-        'tags',
-        'colors',
-        'features',
-        'categories',
-        'brand',
-        'submitter',
-        'attributes',
-        'publisher',
-
-        'created_at',
-        'updated_at',
-        'published_at',
-    ];
 
     /**
      * An array of column cast values.
@@ -194,7 +155,7 @@ class Item extends Model implements HasRichContent, Commentable
      *
      * @return string
      */
-    public function getFullPrice()
+    public function getFullPrice(): string
     {
         if (in_array($this->currency, ['jpy', 'krw', 'cny'])) {
             return (string)round($this->price ?? 0);
@@ -203,57 +164,43 @@ class Item extends Model implements HasRichContent, Commentable
         return (string)round($this->price ?? 0, 2);
     }
 
-    /**
-     * Get formatted price for an item.
-     *
-     * @return string|null
-     */
-    public function getPriceFormattedAttribute(): ?string
+    public function priceFormatted(): AttributeCast
     {
-        $price = $this->getFullPrice();
+        return AttributeCast::get(function () {
+            $price = $this->getFullPrice();
 
-        $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+            $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
 
-        if ($this->currency === null) {
-            return null;
-        }
+            if ($this->currency === null) {
+                return null;
+            }
 
-        return $formatter->formatCurrency($price, $this->currency);
+            return $formatter->formatCurrency($price, $this->currency);
+        });
     }
 
-    /**
-     * Get a list of pricing details.
-     *
-     * @return array
-     */
-    public function getPriceDetailsAttribute()
+    public function priceDetails(): AttributeCast
     {
-        return [
+        return AttributeCast::get(fn() => [
             'currency' => $this->currency,
             'price' => (int)$this->price,
             'local_price' => $this->getFullPrice(),
             'formatted' => $this->price_formatted,
-        ];
+        ]);
     }
 
-    public function wishlist()
+    public function wishlist(): int
     {
-        $wishlist = cache()->tags(['wishlist'])->get($this->getKey());
-        if (!$wishlist) {
-            $wishlist = $this->stargazers()->count();
-            cache()->tags(['wishlist'])->forever($this->getKey(), $wishlist);
-        }
-        return $wishlist;
+        return cache()
+            ->tags(['wishlist'])
+            ->rememberForever($this->getKey(), fn() => $this->stargazers()->count());
     }
 
-    public function closet()
+    public function closet(): int
     {
-        $closet = cache()->tags(['closet'])->get($this->getKey());
-        if (!$closet) {
-            $closet = $this->owners()->count();
-            cache()->tags(['closet'])->forever($this->getKey(), $closet);
-        }
-        return $closet;
+        return cache()
+            ->tags(['closet'])
+            ->rememberForever($this->getKey(), fn() => $this->owners()->count());
     }
 
     public function anonymize(bool $force = false): bool
@@ -280,17 +227,19 @@ class Item extends Model implements HasRichContent, Commentable
         return $this->save();
     }
 
-    protected function getDuplicateUrlAttribute(): ?string
+    protected function duplicateUrl(): AttributeCast
     {
-        if (! $this->duplicate()) {
-            return null;
-        }
+        return AttributeCast::get(function () {
+            if (! $this->duplicate()) {
+                return null;
+            }
 
-        if (is_null($item = Item::find($this->metadata->get('duplicate_item_id')))) {
-            return null;
-        }
+            if (is_null($item = Item::find($this->metadata->get('duplicate_item_id')))) {
+                return null;
+            }
 
-        return $item->url;
+            return $item->url;
+        });
     }
 
     protected function setUpRichContent(): void
@@ -301,6 +250,8 @@ class Item extends Model implements HasRichContent, Commentable
 
     public function comments(): MorphMany
     {
+        /** @phpstan-ignore-next-line */
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->commentRelation()->withTrashed();
     }
 }
