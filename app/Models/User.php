@@ -3,18 +3,18 @@
 namespace App\Models;
 
 use App\Enums\Level;
-use App\Enums\Status;
-use App\Enums\SystemUser;
-use App\Helpers\Gravatar;
 use App\Models\Traits\AccessLevels;
 use App\Models\Traits\Closet;
 use App\Models\Traits\DateHandling;
+use App\Models\Traits\FilamentInfo;
+use App\Models\Traits\HasStats;
+use App\Models\Traits\HasSystemUsers;
+use App\Models\Traits\HasUsernames;
 use App\Models\Traits\Wishlist;
 use App\Notifications\VerifyEmail;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasName;
-use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -25,14 +25,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\Contracts\OAuthenticatable;
@@ -68,8 +65,10 @@ use Relaticle\Comments\Contracts\Commentator;
 #[RouteKey('id')]
 class User extends Authenticatable implements Commentator, FilamentUser, HasAvatar, HasName, MustVerifyEmail, OAuthenticatable
 {
-    use AccessLevels, Closet, DateHandling, HasApiTokens, HasUuids, Notifiable, VerifiesEmails, Wishlist;
+    use AccessLevels, DateHandling, FilamentInfo, Notifiable, VerifiesEmails;
     use CanComment, HasComments;
+    use Closet, Wishlist;
+    use HasApiTokens, HasStats, HasSystemUsers, HasUsernames, HasUuids;
 
     /**
      * Casts for attributes.
@@ -94,34 +93,6 @@ class User extends Authenticatable implements Commentator, FilamentUser, HasAvat
     }
 
     /**
-     * The items a user has favourited/wishlisted.
-     *
-     * @return BelongsToMany|Item[]
-     */
-    public function wishlist(?string $order = null)
-    {
-        if ($order === null) {
-            $order = 'added_new';
-        }
-
-        return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy(...(sorted($order, 'wishlist')));
-    }
-
-    /**
-     * The items a user owns.
-     *
-     * @return BelongsToMany|Item[]
-     */
-    public function closet(?string $order = null)
-    {
-        if ($order === null) {
-            $order = 'added_new';
-        }
-
-        return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy(...(sorted($order, 'closet')));
-    }
-
-    /**
      * Get a user's profile.
      */
     public function profile(): HasOne
@@ -135,14 +106,6 @@ class User extends Authenticatable implements Commentator, FilamentUser, HasAvat
     public function scopeEmail(Builder $query, string $email): Builder
     {
         return $query->where(DB::raw('lower(email)'), mb_strtolower($email));
-    }
-
-    /**
-     * Scope a query to username.
-     */
-    public function scopeUsername(Builder $query, string $username): Builder
-    {
-        return $query->where('username', $username);
     }
 
     /**
@@ -166,95 +129,8 @@ class User extends Authenticatable implements Commentator, FilamentUser, HasAvat
         );
     }
 
-    public function publishedItems(): int
-    {
-        return $this->items()->withoutEagerLoads()->where('status', Status::Published)->count();
-    }
-
-    public function changesRequested(): int
-    {
-        return $this->items()->withoutEagerLoads()->where('status', Status::ChangesRequested)->count();
-    }
-
-    public function draftsWaiting(): int
-    {
-        return $this->items()->withoutEagerLoads()->where('status', Status::Draft)->count();
-    }
-
-    public function pendingItems(): int
-    {
-        return $this->items()->withoutEagerLoads()->where('status', Status::ReadyForReview)->count();
-    }
-
     public function verified(): AttributeCast
     {
         return AttributeCast::get(fn () => $this->hasVerifiedEmail());
-    }
-
-    /**
-     * Set up access to the admin panel for Filament.
-     */
-    public function canAccessPanel(Panel $panel): bool
-    {
-        if ($panel->getId() === 'admin') {
-            return $this->junior() && $this->hasVerifiedEmail();
-        }
-
-        return false;
-    }
-
-    /**
-     * Get a system user, with caching.
-     */
-    public static function system(SystemUser $user): static
-    {
-        return cache()->remember(
-            key: 'system.user.'.$user->value,
-            ttl: 1440,
-            callback: fn () => static::username($user->value)->firstOrFail(),
-        );
-    }
-
-    public function usernames(): HasMany
-    {
-        return $this->hasMany(Username::class);
-    }
-
-    public function currentUsername(): BelongsTo
-    {
-        return $this->belongsTo(Username::class, foreignKey: 'username');
-    }
-
-    public function canChangeUsername(): bool
-    {
-        if ($this->metadata->get('can_change_username')) {
-            return true;
-        }
-
-        // give you your first username change for free
-        if ($this->usernames->count() === 1) {
-            return true;
-        }
-
-        if ($this->lastChangedUsername() === null) {
-            return true;
-        }
-
-        return $this->lastChangedUsername()->isBefore(now()->subMonths(3));
-    }
-
-    public function lastChangedUsername(): ?Carbon
-    {
-        return $this->currentUsername->updated_at;
-    }
-
-    public function getFilamentAvatarUrl(): ?string
-    {
-        return Gravatar::url($this->email);
-    }
-
-    public function getFilamentName(): string
-    {
-        return $this->username;
     }
 }

@@ -10,11 +10,13 @@ trait Wishlist
     /**
      * The items a user has favourited/wishlisted.
      *
-     * @return BelongsToMany|\App\Item[]
+     * @return BelongsToMany|Item[]
      */
-    public function wishlist()
+    public function wishlist(?string $order = null)
     {
-        return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('wishlist.created_at', 'desc');
+        return $this->belongsToMany(Item::class, 'wishlist')
+            ->withTimestamps()
+            ->orderBy(...(sorted($order ?? 'added_new', 'wishlist')));
     }
 
     /**

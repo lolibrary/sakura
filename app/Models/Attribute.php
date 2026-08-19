@@ -10,10 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * An attribute.
- *
- * @property string $slug The URL route slug of this model.
- * @property string $name The name of this model.
  * @property string $value The value of this attribute's pivot.
  * @property Pivot $pivot A pivot object containing the value of this attribute.
  */

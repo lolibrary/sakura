@@ -10,11 +10,13 @@ trait Closet
     /**
      * The items a user owns.
      *
-     * @return BelongsToMany|\App\Item[]
+     * @return BelongsToMany|Item[]
      */
-    public function closet()
+    public function closet(?string $order = null)
     {
-        return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy('closet.created_at', 'desc');
+        return $this->belongsToMany(Item::class, 'closet')
+            ->withTimestamps()
+            ->orderBy(...(sorted($order ?? 'added_new', 'closet')));
     }
 
     /**
