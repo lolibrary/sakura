@@ -4,6 +4,7 @@ namespace App\Filament\Components;
 
 use App\Filament\Query\TranslatedRelation;
 use App\Models\Attribute;
+use App\Models\Filters\VisibilityFilter;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;

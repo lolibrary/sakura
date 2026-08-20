@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
@@ -166,4 +167,12 @@ if (! function_exists('valid_sort')) {
         return in_array($order, $order_opts);
     }
 
+}
+
+if (! function_exists('model_visible')) {
+    function model_visible(Model $model): bool
+    {
+        $user = auth()->user();
+        
+    }
 }

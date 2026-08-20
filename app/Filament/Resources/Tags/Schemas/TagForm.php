@@ -2,9 +2,12 @@
 
 namespace App\Filament\Resources\Tags\Schemas;
 
+use App\Enums\Visibility;
 use Doriiaan\FilamentAstrotomic\Schemas\Components\TranslatableTabs;
 use Doriiaan\FilamentAstrotomic\TranslatableTab;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class TagForm
@@ -20,8 +23,14 @@ class TagForm
                             ->required($tab->isMainLocale())
                             ->maxLength(100),
                     ]),
-                TextInput::make('slug')
-                    ->required(),
+                Section::make()
+                    ->components([
+                        TextInput::make('slug')
+                            ->required(),
+                        Select::make('visibility')
+                            ->options(Visibility::options())
+                            ->required()
+                    ])
             ]);
     }
 }

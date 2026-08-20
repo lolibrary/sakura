@@ -16,7 +16,9 @@ trait Cacheable
     {
         return cache()->tags(['model'])->rememberForever(static::cacheKey(), function (): Collection {
             /** @var \Illuminate\Database\Eloquent\Builder $query */
-            $query = static::with('translations');
+            $query = static::query()
+                ->withoutGlobalScopes()
+                ->with('translations');
 
             if (new static instanceof Orderable) {
                 $query = $query->orderByDesc('order')->orderBy('created_at');

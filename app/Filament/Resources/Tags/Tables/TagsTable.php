@@ -19,6 +19,7 @@ class TagsTable
                 TextColumn::make('slug')
                     ->sortable()
                     ->searchable(),
+                TextColumn::make('visibility')->badge(),
                 DateColumn::make('created_at'),
                 DateColumn::make('updated_at'),
             ])

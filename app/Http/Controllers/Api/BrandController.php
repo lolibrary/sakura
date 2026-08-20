@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Brand;
+use App\Models\Filters\VisibilityFilter;
 use Illuminate\Database\Eloquent\Collection;
 
 class BrandController extends Controller
@@ -16,7 +17,7 @@ class BrandController extends Controller
      */
     public function index(): Collection
     {
-        return Brand::cached();
+        return Brand::cached()->filter(new VisibilityFilter);
     }
 
     public function show(Brand $brand): Brand

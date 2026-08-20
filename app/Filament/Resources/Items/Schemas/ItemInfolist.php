@@ -3,7 +3,11 @@
 namespace App\Filament\Resources\Items\Schemas;
 
 use App\Models\Attribute;
+use App\Models\Category;
+use App\Models\Color;
+use App\Models\Feature;
 use App\Models\Item;
+use App\Models\Tag;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\KeyValueEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -134,39 +138,42 @@ class ItemInfolist
                         return [
                             Section::make('Categories')
                                 ->contained(false)
-                                ->columns(4)
+                                ->columns(1)
                                 ->schema(fn () => [
-                                    TextEntry::make('name')
-                                        ->state($record->categories->map->name->all())
-                                        ->badge()
-                                        ->name(''),
+                                    TextEntry::make('categories')
+                                        ->hiddenLabel()
+                                        ->formatStateUsing(fn (Category $state) => $state->name)
+                                        ->badge(),
                                 ]),
                             Section::make('Features')
                                 ->contained(false)
-                                ->columns(4)
+                                ->columns(1)
                                 ->schema(fn () => [
-                                    TextEntry::make('name')
-                                        ->state($record->features->map->name->all())
-                                        ->badge()
-                                        ->name(''),
+                                    TextEntry::make('features')
+                                        ->hiddenLabel()
+                                        ->formatStateUsing(fn (Feature $state) => $state->name)
+                                        ->badge(),
                                 ]),
                             Section::make('Tags')
                                 ->contained(false)
-                                ->columns(4)
+                                ->columns(1)
                                 ->schema(fn () => [
-                                    TextEntry::make('name')
-                                        ->state($record->tags->map->name->all())
+                                    TextEntry::make('tags')
+                                        ->hiddenLabel()
+                                        ->formatStateUsing(fn (Tag $state) => $state->name)
                                         ->badge()
-                                        ->name(''),
+                                        ->color(fn (Tag $state) => $state->visibility->getColor())
+                                        ->tooltip(fn (Tag $state) => "$state->name: {$state->visibility->getLabel()}")
+                                        ->icon(fn (Tag $state) => $state->visibility->getIcon()),
                                 ]),
                             Section::make('Colorways')
                                 ->contained(false)
-                                ->columns(4)
+                                ->columns(1)
                                 ->schema(fn () => [
-                                    TextEntry::make('name')
-                                        ->state($record->colors->map->name->all())
-                                        ->badge()
-                                        ->name(''),
+                                    TextEntry::make('colors')
+                                        ->hiddenLabel()
+                                        ->formatStateUsing(fn (Color $state) => $state->name)
+                                        ->badge(),
                                 ]),
                         ];
                     }),

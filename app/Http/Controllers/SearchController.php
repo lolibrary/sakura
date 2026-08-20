@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Feature;
+use App\Models\Filters\VisibilityFilter;
 use App\Models\Item;
 use App\Models\Tag;
 use Illuminate\Support\Facades\App;
@@ -29,7 +30,7 @@ class SearchController extends Controller
         $search = new ApiSearchController;
         $items = $search->search($request, $query);
 
-        return view('components.search-results', ['items' => $items, 'max_year' => ((int) date('Y') + 3)]);
+        return view('components.search-results', ['items' => $items, 'max_year' => ((int)date('Y') + 3)]);
     }
 
     protected function filters(SearchRequest $request): string
@@ -37,12 +38,12 @@ class SearchController extends Controller
         // Closure so we don't have to edit this multiple places if things change
         $make_filters = function () {
             return view('components.filters', ['sections' => [
-                'categories' => Category::cached()->sortBy('name'),
-                'brands' => Brand::cached()->sortBy('name'),
-                'features' => Feature::cached()->sortBy('name'),
-                'colors' => Color::cached()->sortBy('name'),
-                'tags' => Tag::cached()->sortBy('name'), ],
-            ])->render();
+                'categories' => Category::cached()->filter(new VisibilityFilter)->sortBy('name'),
+                'brands' => Brand::cached()->filter(new VisibilityFilter)->sortBy('name'),
+                'features' => Feature::cached()->filter(new VisibilityFilter)->sortBy('name'),
+                'colors' => Color::cached()->filter(new VisibilityFilter)->sortBy('name'),
+                'tags' => Tag::cached()->filter(new VisibilityFilter)->sortBy('name'),
+            ]])->render();
         };
 
         // Check if there are any filters set. If not, we can use cached renders.
@@ -53,7 +54,7 @@ class SearchController extends Controller
         if ($count == 0 || ($count == 1 && array_key_exists('search', $params))) {
             $locale = App::getLocale();
             $filters = cache()->tags(['filters'])->get($locale);
-            if (! $filters) {
+            if (!$filters) {
                 $filters = $make_filters();
                 cache()->tags(['filters'])->forever($locale, $filters);
 
