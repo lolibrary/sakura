@@ -24,7 +24,7 @@ class ItemsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image')->toggleable(),
+                ImageColumn::make('image')->toggleable()->circular(),
                 TextColumn::make('english_name')
                     ->searchable()
                     ->sortable()
