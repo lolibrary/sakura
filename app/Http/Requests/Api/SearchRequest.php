@@ -25,28 +25,24 @@ class SearchRequest extends FormRequest
 {
     /**
      * Check if this request is authorized.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
      * Prepare the data for validation.
-     *
-     * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         if (! empty($this->year)) {
-            $years = array_map('intval', explode(',', $this->year));
+            $years = array_map('intval', explode(',', (string) $this->year));
             sort($years);
             $multiple = count($years) > 1;
             $this->merge([
                 'start_year' => $years[0],
-                'end_year' => ($multiple ? end($years) : date('Y') + 3),
+                'end_year' => ($multiple ? end($years) : (int) date('Y') + 3),
             ]);
         }
         if (empty($this->sort) || ! valid_sort($this->sort)) {
@@ -60,9 +56,9 @@ class SearchRequest extends FormRequest
     /**
      * Get a list of rules for this request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'search' => 'sometimes|nullable|string|encoding:utf-8|min:0,max:60',

@@ -11,27 +11,28 @@ use App\Models\Feature;
 use App\Models\Item;
 use App\Models\Tag;
 use Illuminate\Support\Facades\App;
+use Illuminate\View\View;
 
 class SearchController extends Controller
 {
     public function index(SearchRequest $request)
     {
         $items = $this->post($request);
-        $filters = $this->get_or_make_filters($request);
+        $filters = $this->filters($request);
 
         return view('search', ['filters' => $filters, 'items' => $items]);
     }
 
-    public function post(SearchRequest $request)
+    public function post(SearchRequest $request): View
     {
         $query = Item::query();
         $search = new ApiSearchController;
         $items = $search->search($request, $query);
 
-        return view('components.search-results', ['items' => $items, 'max_year' => (date('Y') + 3)]);
+        return view('components.search-results', ['items' => $items, 'max_year' => ((int) date('Y') + 3)]);
     }
 
-    public function get_or_make_filters(SearchRequest $request)
+    protected function filters(SearchRequest $request): string
     {
         // Closure so we don't have to edit this multiple places if things change
         $make_filters = function () {

@@ -32,7 +32,7 @@ Route::get('/auth/check', [RegisterController::class, 'check'])->name('auth.chec
 
 // Homepage
 Route::get('/', [HomeController::class, 'homepage'])->name('home');
-Route::get('/lang', [HomeController::class, 'set_lang'])->name('set_lang');
+Route::get('/lang', [HomeController::class, 'lang'])->name('lang.set');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::post('/search', [SearchController::class, 'post'])->name('search_post');
 

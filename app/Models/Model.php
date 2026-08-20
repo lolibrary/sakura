@@ -26,10 +26,6 @@ use Spatie\Activitylog\Support\LogOptions;
  * @property string $url
  * @property string $view_url
  * @property string $edit_url
- *
- * @method static static find(string $id)
- * @method static static findOrFail(string $id)
- * @method static static|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<static> where(string|array $column, string $operator = null, mixed $value = null)
  */
 #[Appends('url', 'edit_url', 'view_url')]
 #[RouteKey('slug')]

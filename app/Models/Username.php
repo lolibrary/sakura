@@ -15,6 +15,9 @@ class Username extends Model
 
     protected $primaryKey = 'username';
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

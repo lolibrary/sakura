@@ -2,6 +2,7 @@
 
 namespace App\Models\Traits;
 
+use App\Models\User;
 use App\Models\Username;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,11 +11,17 @@ use Illuminate\Support\Carbon;
 
 trait HasUsernames
 {
+    /**
+     * @return HasMany<Username, $this>
+     */
     public function usernames(): HasMany
     {
         return $this->hasMany(Username::class);
     }
 
+    /**
+     * @return BelongsTo<Username, $this>
+     */
     public function currentUsername(): BelongsTo
     {
         return $this->belongsTo(Username::class, foreignKey: 'username');
@@ -45,6 +52,8 @@ trait HasUsernames
 
     /**
      * Scope a query to username.
+     *
+     * @return Builder<User>
      */
     public function scopeUsername(Builder $query, string $username): Builder
     {

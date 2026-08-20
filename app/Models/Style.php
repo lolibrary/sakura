@@ -13,7 +13,7 @@ class Style extends Model
     /**
      * Fillable attributes.
      *
-     * @var array
+     * @var list<string>
      */
     protected $fillable = ['name', 'slug'];
 }

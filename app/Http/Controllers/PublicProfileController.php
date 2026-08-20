@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class PublicProfileController extends Controller
@@ -21,10 +20,8 @@ class PublicProfileController extends Controller
 
     /**
      * Get a given user's closet (owned items).
-     *
-     * @return Response|View
      */
-    public function closet(Request $request, string $username)
+    public function closet(Request $request, string $username): View
     {
         $user = User::where('username', $username)->firstOrFail();
 
@@ -42,10 +39,8 @@ class PublicProfileController extends Controller
 
     /**
      * Get a given user's wishlist (favourited items).
-     *
-     * @return Response|View
      */
-    public function wishlist(Request $request, string $username)
+    public function wishlist(Request $request, string $username): View
     {
         $user = User::where('username', $username)->firstOrFail();
 

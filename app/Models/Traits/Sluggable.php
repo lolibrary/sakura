@@ -10,10 +10,8 @@ trait Sluggable
 {
     /**
      * Boot this trait and register model listeners.
-     *
-     * @return void
      */
-    protected static function bootSluggable()
+    protected static function bootSluggable(): void
     {
         static::creating(function (Item $model) {
             if ($model->slug !== null) {
@@ -27,10 +25,8 @@ trait Sluggable
 
     /**
      * Get a slug for an item.
-     *
-     * @return string
      */
-    public static function createSlug(Item $item)
+    public static function createSlug(Item $item): string
     {
         $candidate = $item->brand->short_name.'-'.Str::slug($item->english_name);
 

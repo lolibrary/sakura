@@ -11,9 +11,9 @@ class CreateProfilesTable extends Migration
     /**
      * Profile fields to add.
      *
-     * @var array
+     * @var string[]
      */
-    protected $fields = [
+    protected array $fields = [
         'inspiration',
         'favourite_books',
         'occupation',
@@ -29,10 +29,8 @@ class CreateProfilesTable extends Migration
 
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->uuid('id')->primary();
@@ -58,10 +56,8 @@ class CreateProfilesTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('profiles');
 

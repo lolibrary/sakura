@@ -12,7 +12,7 @@ final class Gravatar
 
     public const string Rating = 'g';
 
-    public static function encode(?string $email = null): ?string
+    public static function encode(?string $email = null): string
     {
         return hash('sha256', mb_strtolower(mb_trim($email)));
     }
@@ -35,6 +35,9 @@ final class Gravatar
         return sprintf('<img src="%s" %s />', self::url($email, $size), self::attributes($attributes));
     }
 
+    /**
+     * @param  array<string, mixed>  $attributes
+     */
     public static function attributes(array $attributes): string
     {
         $parts = [];

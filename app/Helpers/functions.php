@@ -1,14 +1,5 @@
 <?php
 
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Color;
-use App\Models\Feature;
-use App\Models\Item;
-use App\Models\Tag;
-use App\Models\User;
-use GuzzleHttp\Psr7\Uri;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
@@ -47,40 +38,6 @@ if (! function_exists('uuid4')) {
     }
 }
 
-if (! function_exists('userify')) {
-    /**
-     * Return a username suitable for storage or searching from a display name.
-     */
-    function userify(string $username): string
-    {
-        $username = mb_strtolower($username);
-        $username = preg_replace('/(\s+|[-]+)/u', '', $username);
-
-        return $username;
-    }
-}
-
-if (! function_exists('user')) {
-    /**
-     * Get a user by email, slug or uuid.
-     *
-     * @param  string  $id
-     * @return User|null
-     */
-    function user($id)
-    {
-        if (validator(['id' => $id], ['id' => 'required|email'])->passes()) {
-            return User::where(DB::raw('lower(email)'), mb_strtolower($id))->first();
-        }
-
-        if (Uuid::isValid($id)) {
-            return User::find($id);
-        }
-
-        return User::where('username', $id)->first();
-    }
-}
-
 if (! function_exists('slack')) {
     /**
      * Send a slack message notification.
@@ -90,24 +47,6 @@ if (! function_exists('slack')) {
     function slack(string $type = 'notifications')
     {
         return Notification::route('slack', config("services.slack.$type"));
-    }
-}
-
-if (! function_exists('add_s3_bucket')) {
-    /**
-     * Add an S3 bucket to a URL.
-     *
-     * @return string|null
-     */
-    function add_s3_bucket(?string $url, ?string $bucket)
-    {
-        if ($bucket === null || $url === null) {
-            return null;
-        }
-
-        $uri = (new Uri($url));
-
-        return (string) $uri->withHost("$bucket.{$uri->getHost()}");
     }
 }
 
@@ -138,66 +77,6 @@ if (! function_exists('default_asset')) {
     function default_asset(): string
     {
         return Storage::url('assets/default.png');
-    }
-}
-
-if (! function_exists('brand')) {
-    /**
-     * Get a brand while in a tinker session by UUID or username.
-     *
-     * @return Brand
-     */
-    function brand(string $slug)
-    {
-        return Brand::where('slug', $slug)->orWhere('short_name', $slug)->first();
-    }
-}
-
-if (! function_exists('category')) {
-    /**
-     * Get a category while in a tinker session by UUID or username.
-     *
-     * @return Category
-     */
-    function category(string $slug)
-    {
-        return Category::where('slug', $slug)->first();
-    }
-}
-
-if (! function_exists('tag')) {
-    /**
-     * Get a tag while in a tinker session by UUID or username.
-     *
-     * @return Tag
-     */
-    function tag(string $slug)
-    {
-        return Tag::where('slug', $slug)->first();
-    }
-}
-
-if (! function_exists('feature')) {
-    /**
-     * Get a feature while in a tinker session by UUID or username.
-     *
-     * @return Feature
-     */
-    function feature(string $slug)
-    {
-        return Feature::where('slug', $slug)->first();
-    }
-}
-
-if (! function_exists('color')) {
-    /**
-     * Get a color while in a tinker session by UUID or username.
-     *
-     * @return Color
-     */
-    function color(string $slug)
-    {
-        return Color::where('slug', $slug)->first();
     }
 }
 
@@ -244,58 +123,31 @@ if (! function_exists('cdn_thumbnail')) {
     }
 }
 
-if (! function_exists('purify')) {
-    /**
-     * Return text run through Purify
-     *
-     * @param  string  $path
-     * @return string
-     */
-    function purify(string $input)
-    {
-        return Purify::clean($input);
-    }
-}
-
 if (! function_exists('sorted')) {
     /**
      * Takes a list of items and returns them sorted in a particular order
      *
-     * @param  BelongsToMany|Item[]  $items
-     * @param  string  $order
-     * @param  string  $relationship
-     * @return BelongsToMany|Item[]
+     * @return list<string>
      */
-    function sorted($order, $relationship = null)
+    function sorted(string $order, ?string $relationship = null): array
     {
         switch ($order) {
             case ORDER['ADDED_OLDEST']['key']:
                 $table = $relationship ? "$relationship.created_at" : 'created_at';
 
                 return [$table, 'asc'];
-                break;
-            case ORDER['ADDED_NEWEST']['key']:
-                $table = $relationship ? "$relationship.created_at" : 'created_at';
-
-                return [$table, 'desc'];
-                break;
             case ORDER['ALPHA']['key']:
                 return ['english_name', 'asc'];
-                break;
             case ORDER['ALPHA_REVERSE']['key']:
                 return ['english_name', 'desc'];
-                break;
             case ORDER['YEAR_OLDEST']['key']:
                 return ['year', 'asc'];
-                break;
             case ORDER['YEAR_NEWEST']['key']:
                 return ['year', 'desc'];
-                break;
             default:
                 $table = $relationship ? "$relationship.created_at" : 'created_at';
 
                 return [$table, 'desc'];
-                break;
         }
     }
 
@@ -303,14 +155,9 @@ if (! function_exists('sorted')) {
 
 if (! function_exists('valid_sort')) {
     /**
-     * Takes a list of items and returns them sorted in a particular order
-     *
-     * @param  BelongsToMany|Item[]  $items
-     * @param  string  $order
-     * @param  string  $relationship
-     * @return BelongsToMany|Item[]
+     * Checks if a key is a valid sort column.
      */
-    function valid_sort($order)
+    function valid_sort(string $order): bool
     {
         $order_opts = array_map(function ($a) {
             return $a['key'];

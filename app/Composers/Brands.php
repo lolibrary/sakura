@@ -9,7 +9,7 @@ class Brands extends Composer
     /**
      * {@inheritdoc}
      */
-    protected function load()
+    protected function load(): array
     {
         return Brand::select(['slug'])
             ->orderByTranslation('name')

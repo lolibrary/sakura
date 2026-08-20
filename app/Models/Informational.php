@@ -21,9 +21,12 @@ abstract class Informational extends Model implements TranslatableContract
     use Cacheable;
     use Translatable;
 
-    public $translatedAttributes = ['name'];
+    /**
+     * @var string[]
+     */
+    public array $translatedAttributes = ['name'];
 
-    public $useTranslationFallback = true;
+    public bool $useTranslationFallback = true;
 
     public function attributesToArray(): array
     {

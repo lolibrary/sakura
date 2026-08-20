@@ -6,8 +6,9 @@ use App\Enums\SystemUser;
 
 trait HasSystemUsers
 {
-    public static function system(SystemUser $user): static
+    public static function system(SystemUser $user): ?static
     {
+        // @phpstan-ignore return.type
         return cache()->remember(
             key: 'system.user.'.$user->value,
             ttl: 1440,

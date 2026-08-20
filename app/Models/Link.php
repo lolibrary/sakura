@@ -15,7 +15,7 @@ class Link extends Model
     /**
      * Fillable items.
      *
-     * @var array
+     * @var list<string>
      */
     protected $fillable = ['linkable_type', 'linkable_id', 'slug'];
 
@@ -25,17 +25,14 @@ class Link extends Model
     public $timestamps = false;
 
     // link types (can be added to in future)
-    const ITEM = Item::class;
+    const string ITEM = Item::class;
 
-    const USER = User::class;
+    const string USER = User::class;
 
     /**
      * Get a link by slug.
-     *
-     *
-     * @return Link
      */
-    public static function get(string $slug, string $type = self::ITEM)
+    public static function get(string $slug, string $type = self::ITEM): ?static
     {
         return static::where('linkable_type', '=', $type)->where('slug', '=', $slug)->firstOrFail();
     }
@@ -43,9 +40,9 @@ class Link extends Model
     /**
      * Get the resource we're linking to.
      *
-     * @return MorphTo
+     * @return MorphTo<Link, $this>
      */
-    public function linkable()
+    public function linkable(): MorphTo
     {
         return $this->morphTo();
     }

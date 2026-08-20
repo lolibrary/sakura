@@ -2,46 +2,39 @@
 
 namespace Database\Seeders;
 
-use App\Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder as LaravelSeeder;
 use Illuminate\Support\Str;
+use RuntimeException;
 
 class Seeder extends LaravelSeeder
 {
     /**
      * A model to use for seeding.
-     *
-     * @var string
      */
-    protected static $model = '';
+    protected static string $model = '';
 
     /**
      * The content we want to seed.
      *
-     * @var array
+     * @var array<string, string>|array<string>
      */
-    protected static $content = [];
+    protected static array $content = [];
 
     /**
      * A key used for the "value" or "name" column.
-     *
-     * @var string
      */
-    protected static $name = 'name';
+    protected static string $name = 'name';
 
     /**
      * The column used for the slug.
-     *
-     * @var string
      */
-    protected static $slug = 'slug';
+    protected static string $slug = 'slug';
 
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         foreach (static::$content as $slug => $value) {
             if (is_numeric($slug)) {
@@ -64,10 +57,8 @@ class Seeder extends LaravelSeeder
 
     /**
      * Get the model for this seeder.
-     *
-     * @return Model
      */
-    protected function getModel()
+    protected function getModel(): Model
     {
         $model = static::$model;
 
@@ -75,6 +66,7 @@ class Seeder extends LaravelSeeder
             throw new RuntimeException("Model {$model} not found.");
         }
 
+        /** @phpstan-ignore return.type */
         return new $model;
     }
 }

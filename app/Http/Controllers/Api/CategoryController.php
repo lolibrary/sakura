@@ -3,28 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Collection;
 
 class CategoryController extends Controller
 {
     /**
      * Return all categories, cached.
      *
-     * @return mixed
+     * @return Collection<Category>
      *
      * @throws \Exception
      */
-    public function index()
+    public function index(): Collection
     {
         return Category::cached();
     }
 
-    /**
-     * Get a specific category.
-     *
-     * @param  \App\Category  $category
-     * @return \App\Category
-     */
-    public function show(Category $category)
+    public function show(Category $category): Category
     {
         return $category;
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -12,22 +13,16 @@ class TagController extends Controller
     /**
      * Return all tags, cached.
      *
-     * @return mixed
+     * @return Collection<Tag>
      *
      * @throws \Exception
      */
-    public function index()
+    public function index(): Collection
     {
         return Tag::cached();
     }
 
-    /**
-     * Get a specific category.
-     *
-     * @param  \App\Tag  $tag
-     * @return \App\Tag
-     */
-    public function show(Tag $tag)
+    public function show(Tag $tag): Tag
     {
         return $tag;
     }
@@ -35,9 +30,9 @@ class TagController extends Controller
     /**
      * Search for a tag.
      *
-     * @return \App\Tag[]|LengthAwarePaginator
+     * @return LengthAwarePaginator<Tag>
      */
-    public function search(Request $request)
+    public function search(Request $request): LengthAwarePaginator
     {
         $this->validate($request, [
             'search' => 'required_without:q|string|min:1,max:30',

@@ -8,7 +8,6 @@ use App\Helpers\RichContent;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
-use Carbon\Carbon;
 use Filament\Forms\Components\RichEditor\Models\Concerns\InteractsWithRichContent;
 use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
 use Illuminate\Database\Eloquent\Attributes\Appends;
@@ -17,6 +16,7 @@ use Illuminate\Database\Eloquent\Attributes\Visible;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use NumberFormatter;
@@ -26,23 +26,23 @@ use Relaticle\Comments\Contracts\Commentable;
 /**
  * An Item of Apparel.
  *
- * @property string $slug The URL slug of an item.
+ * @property ?string $slug The URL slug of an item.
  * @property string $english_name The English Title of an Item.
- * @property string|null $foreign_name The 'Japanese Title' of an Item.
- * @property int|null $year The year an Item was released.
- * @property string|null $product_number An Item's product number.
+ * @property ?string $foreign_name The 'Japanese Title' of an Item.
+ * @property ?int $year The year an Item was released.
+ * @property ?string $product_number An Item's product number.
  * @property Status $status The status of an item (stored internally as an int).
- * @property string $price The price of this item, in a given currency.
+ * @property int|float|null $price The price of this item, in a given currency.
  * @property float $price_formatted The price of this item, formatted to the rules of the given currency (e.g. /100 for gbp/usd)
- * @property string $currency The currency of this item, as an ISO code.
- * @property array|string[] $images The images attached to this item, as a flexible collection.
- * @property Collection $metadata Metadata attached to this item.
- * @property string|null $duplicate_url URL to the item this one is a duplicate of, if applicable.
+ * @property ?string $currency The currency of this item, as an ISO code.
+ * @property array<string> $images The images attached to this item, as a flexible collection.
+ * @property Collection<string, mixed> $metadata Metadata attached to this item.
+ * @property ?string $duplicate_url URL to the item this one is a duplicate of, if applicable.
  * @property string $user_id The ID of the {@link \App\Models\User user} who submitted this Item.
  * @property string $brand_id The ID of this Item's {@link \App\Models\Brand brand}.
  * @property string $submitter_id The ID of this Item's {@link \App\Models\User submitter}.
- * @property string $publisher_id The ID of this Item's {@link \App\Models\User publisher}.
- * @property Carbon $published_at The date this item was published.
+ * @property ?string $publisher_id The ID of this Item's {@link \App\Models\User publisher}.
+ * @property ?Carbon $published_at The date this item was published.
  */
 #[Guarded('status', 'slug', 'created_at', 'updated_at', 'published_at')]
 #[Visible(
@@ -93,6 +93,9 @@ class Item extends Model implements Commentable, HasRichContent
         'inr' => 'Indian Rupees (₹)',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     public const array RGB_COLORS = [
         'draft' => 'rgb(186,225,255)',
         'published' => 'rgb(186,255,201)',
@@ -105,6 +108,8 @@ class Item extends Model implements Commentable, HasRichContent
      * A shortcut for fully eager loading an item.
      *
      * Use: `Item::with(Item::FULLY_LOAD)`
+     *
+     * @var list<string>
      */
     public const array FULLY_LOAD = [
         'tags',
@@ -121,6 +126,8 @@ class Item extends Model implements Commentable, HasRichContent
      * The attributes required to show a listing of items.
      *
      * Use: `Item::with(Item::PARTIAL_LOAD)`
+     *
+     * @var list<string>
      */
     public const array PARTIAL_LOAD = [
         'submitter',
@@ -132,14 +139,14 @@ class Item extends Model implements Commentable, HasRichContent
     /**
      * Eager loads.
      *
-     * @var array
+     * @var list<string>
      */
     protected $with = self::PARTIAL_LOAD;
 
     /**
      * An array of column cast values.
      *
-     * @var array
+     * @var array<string, string>
      */
     public $casts = [
         'images' => 'array',
@@ -162,6 +169,9 @@ class Item extends Model implements Commentable, HasRichContent
         return (string) round($this->price ?? 0, 2);
     }
 
+    /**
+     * @return AttributeCast<?string>
+     */
     public function priceFormatted(): AttributeCast
     {
         return AttributeCast::get(function () {
@@ -173,10 +183,13 @@ class Item extends Model implements Commentable, HasRichContent
                 return null;
             }
 
-            return $formatter->formatCurrency($price, $this->currency);
+            return $formatter->formatCurrency((float) $price, $this->currency);
         });
     }
 
+    /**
+     * @return AttributeCast<array{currency: string|null, price: int, local_price: string, formatted: float}, never>
+     */
     public function priceDetails(): AttributeCast
     {
         return AttributeCast::get(fn () => [
@@ -226,6 +239,9 @@ class Item extends Model implements Commentable, HasRichContent
         return $this->save();
     }
 
+    /**
+     * @return AttributeCast<?string>
+     */
     protected function duplicateUrl(): AttributeCast
     {
         return AttributeCast::get(function () {
@@ -247,9 +263,11 @@ class Item extends Model implements Commentable, HasRichContent
             ->mentions(RichContent::mentions());
     }
 
+    /**
+     * @return MorphMany<Comment>
+     */
     public function comments(): MorphMany
     {
-        /** @phpstan-ignore-next-line */
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->commentRelation()->withTrashed();
     }

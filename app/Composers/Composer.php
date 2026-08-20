@@ -2,8 +2,6 @@
 
 namespace App\Composers;
 
-use App\Model;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -13,16 +11,14 @@ abstract class Composer
     /**
      * How long this key should be cached for.
      *
-     * @var string
+     * @var int
      */
-    protected const DURATION = 1440;
+    protected const int DURATION = 1440;
 
     /**
      * Bind data into the view.
-     *
-     * @return void
      */
-    public function compose(View $view)
+    public function compose(View $view): void
     {
         $view->with($this->name(), $this->data());
     }
@@ -30,9 +26,9 @@ abstract class Composer
     /**
      * Get a list of models from this composer.
      *
-     * @return array
+     * @return array<string, string>
      */
-    protected function data()
+    protected function data(): array
     {
         $default = function () {
             return $this->load();
@@ -49,10 +45,8 @@ abstract class Composer
 
     /**
      * Get the cache key for this composer.
-     *
-     * @return string
      */
-    protected function key()
+    protected function key(): string
     {
         $locale = App::getLocale();
 
@@ -61,10 +55,8 @@ abstract class Composer
 
     /**
      * The name of this class.
-     *
-     * @return string
      */
-    protected function name()
+    protected function name(): string
     {
         return Str::snake(class_basename(static::class));
     }
@@ -72,7 +64,7 @@ abstract class Composer
     /**
      * Get models loaded from the database.
      *
-     * @return Collection|Model[]|\Illuminate\Database\Eloquent\Model[]
+     * @return array<string, string>
      */
-    abstract protected function load();
+    abstract protected function load(): array;
 }

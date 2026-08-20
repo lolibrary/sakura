@@ -7,7 +7,7 @@ class Profile extends Model
     /**
      * Fillable attributes.
      *
-     * @var array
+     * @var list<string>
      */
     protected $fillable = [
         'inspiration',
@@ -24,7 +24,7 @@ class Profile extends Model
     /**
      * Hidden attributes.
      *
-     * @var array
+     * @var list<string>
      */
     protected $hidden = [
         'id',
@@ -38,7 +38,7 @@ class Profile extends Model
     /**
      * Appended attributes.
      *
-     * @var array
+     * @var list<string>
      */
     protected $appends = [];
 }

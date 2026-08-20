@@ -56,7 +56,7 @@ use Relaticle\Comments\Contracts\Commentator;
  * @property Item[]|\Illuminate\Database\Eloquent\Collection $closet The {@link Item items} this user owns.
  * @property Username[]|\Illuminate\Database\Eloquent\Collection $usernames The usernames this user has.
  * @property string $id
- * @property Collection $metadata
+ * @property Collection<string, mixed> $metadata
  */
 #[Fillable('name', 'username', 'email', 'password')]
 #[Visible('name', 'display_name', 'email', 'username', 'profile', 'created_at', 'level', 'banned')]
@@ -73,7 +73,7 @@ class User extends Authenticatable implements Commentator, FilamentUser, HasAvat
     /**
      * Casts for attributes.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'banned' => 'boolean',
@@ -86,6 +86,8 @@ class User extends Authenticatable implements Commentator, FilamentUser, HasAvat
 
     /**
      * The items a user has submitted.
+     *
+     * @return HasMany<Item, $this>
      */
     public function items(): HasMany
     {
@@ -94,6 +96,8 @@ class User extends Authenticatable implements Commentator, FilamentUser, HasAvat
 
     /**
      * Get a user's profile.
+     *
+     * @return HasOne<Profile, $this>
      */
     public function profile(): HasOne
     {
@@ -102,6 +106,9 @@ class User extends Authenticatable implements Commentator, FilamentUser, HasAvat
 
     /**
      * Scope a query to email address.
+     *
+     * @param  Builder<static>  $query
+     * @return Builder<static>
      */
     public function scopeEmail(Builder $query, string $email): Builder
     {
@@ -116,11 +123,20 @@ class User extends Authenticatable implements Commentator, FilamentUser, HasAvat
         $this->notify(new VerifyEmail);
     }
 
+    /**
+     * @return AttributeCast<string, string>
+     */
     public function name(): AttributeCast
     {
-        return AttributeCast::make(get: fn () => $this->username, set: fn (string $value) => $this->attributes['name'] = $value);
+        return AttributeCast::make(
+            get: fn () => $this->username,
+            set: fn (string $value) => $this->attributes['name'] = $value
+        );
     }
 
+    /**
+     * @return AttributeCast<string, string>
+     */
     public function displayName(): AttributeCast
     {
         return AttributeCast::make(
@@ -129,6 +145,9 @@ class User extends Authenticatable implements Commentator, FilamentUser, HasAvat
         );
     }
 
+    /**
+     * @return AttributeCast<bool, never>
+     */
     public function verified(): AttributeCast
     {
         return AttributeCast::get(fn () => $this->hasVerifiedEmail());

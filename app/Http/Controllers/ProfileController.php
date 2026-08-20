@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\DefaultRule;
+use App\Models\User;
 use Auth;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -45,6 +46,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $valid = $request->validate([
             'name' => 'required|string|max:255',

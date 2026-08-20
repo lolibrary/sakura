@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * A feature of an Item (e.g. Back Shirring).
@@ -13,5 +14,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class Feature extends Informational
 {
-    //
+    public function items(): BelongsToMany
+    {
+        return $this->belongsToMany(Item::class);
+    }
 }

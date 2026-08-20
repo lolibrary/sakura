@@ -32,17 +32,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('activity_log');
     }
-
-    public function nullableTextMorphs($name, $indexName = null, $after = null)
-    {
-        $this->string("{$name}_type")
-            ->nullable()
-            ->after($after);
-
-        $this->text("{$name}_id")
-            ->nullable()
-            ->after(! is_null($after) ? "{$name}_type" : null);
-
-        $this->index(["{$name}_type", "{$name}_id"], $indexName);
-    }
 };

@@ -9,7 +9,7 @@ class Colors extends Composer
     /**
      * {@inheritdoc}
      */
-    protected function load()
+    protected function load(): array
     {
         return Color::select(['slug'])
             ->orderByTranslation('name')

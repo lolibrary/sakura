@@ -13,10 +13,8 @@ class ItemController extends Controller
 {
     /**
      * Show an item.
-     *
-     * @return RedirectResponse|View
      */
-    public function show(Item $item)
+    public function show(Item $item): RedirectResponse|View
     {
         if ($item->status === Status::Duplicate && $item->duplicate_url !== null) {
             // sanity check: make sure it was once published
@@ -46,10 +44,8 @@ class ItemController extends Controller
 
     /**
      * Update a user's wishlist.
-     *
-     * @return RedirectResponse
      */
-    public function wishlist(Item $item)
+    public function wishlist(Item $item): RedirectResponse
     {
         $user = auth()->user();
         $attached = $user->updateWishlist($item);
@@ -61,10 +57,8 @@ class ItemController extends Controller
 
     /**
      * Update a user's closet.
-     *
-     * @return RedirectResponse
      */
-    public function closet(Item $item)
+    public function closet(Item $item): RedirectResponse
     {
         $user = auth()->user();
         $attached = $user->updateCloset($item);

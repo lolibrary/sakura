@@ -8,24 +8,20 @@ class InstructionSeeder extends Seeder
 {
     /**
      * The model used for this seeder.
-     *
-     * @var string
      */
-    protected static $model = Instruction::class;
+    protected static string $model = Instruction::class;
 
     /**
      * The name/value column.
-     *
-     * @var string
      */
-    protected static $name = 'description';
+    protected static string $name = 'description';
 
     /**
      * A list of washing instructions, with slugs.
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected static $content = [
+    protected static array $content = [
         'dry-clean-any' => 'Dry clean. Use any dry cleaning agent.',
         'dry-clean-petroleum' => 'Dry clean. Use only a petroleum based agent.',
         'machine-wash-95' => 'Machine wash in water temperature of 95°C or less. No other restrictions.',

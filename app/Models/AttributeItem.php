@@ -21,7 +21,7 @@ class AttributeItem extends Pivot
         return $this->belongsTo(Item::class);
     }
 
-    public function beforeActivityLogged(Activity $activity, string $eventName)
+    public function beforeActivityLogged(Activity $activity, string $eventName): void
     {
         $activity->description = "ui.audit.events.$eventName";
         $activity->attribute_changes ??= collect();

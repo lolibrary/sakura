@@ -9,40 +9,32 @@ class DonationController extends Controller
 {
     /**
      * Redirect to PayPal.
-     *
-     * @return RedirectResponse
      */
-    public function paypal()
+    public function paypal(): RedirectResponse
     {
         return redirect(config('services.donation.paypal'));
     }
 
     /**
      * Redirect to Patreon.
-     *
-     * @return RedirectResponse
      */
-    public function patreon()
+    public function patreon(): RedirectResponse
     {
         return redirect(config('services.donation.patreon'));
     }
 
     /**
      * Get the base donation page.
-     *
-     * @return View
      */
-    public function index()
+    public function index(): View
     {
         return view('donations.donate');
     }
 
     /**
      * Add a view to say thanks to users for donations.
-     *
-     * @return View
      */
-    public function thanks()
+    public function thanks(): View
     {
         return view('donations.thanks');
     }

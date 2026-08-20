@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * @property Brand $brand
@@ -40,6 +41,8 @@ trait ItemRelations
 
     /**
      * The brand of this item.
+     *
+     * @return BelongsTo<Brand, $this>
      */
     public function brand(): BelongsTo
     {
@@ -48,6 +51,8 @@ trait ItemRelations
 
     /**
      * Get the user who submitted this item.
+     *
+     * @return BelongsTo<User, $this>
      */
     public function submitter(): BelongsTo
     {
@@ -56,6 +61,8 @@ trait ItemRelations
 
     /**
      * The tags for this item.
+     *
+     * @return BelongsToMany<Tag, Pivot, string>
      */
     public function tags(): BelongsToMany
     {
@@ -64,6 +71,8 @@ trait ItemRelations
 
     /**
      * The features of this Item.
+     *
+     * @return BelongsToMany<Feature>
      */
     public function features(): BelongsToMany
     {
@@ -72,6 +81,8 @@ trait ItemRelations
 
     /**
      * Get a list of the colors this item has.
+     *
+     * @return BelongsToMany<Color>
      */
     public function colors(): BelongsToMany
     {
@@ -80,6 +91,8 @@ trait ItemRelations
 
     /**
      * The users who have this item in their closet.
+     *
+     * @return BelongsToMany<User>
      */
     public function owners(): BelongsToMany
     {
@@ -88,6 +101,8 @@ trait ItemRelations
 
     /**
      * The users who have this item on their wish list.
+     *
+     * @return BelongsToMany<User>
      */
     public function stargazers(): BelongsToMany
     {
@@ -96,6 +111,8 @@ trait ItemRelations
 
     /**
      * Get the publisher of this item.
+     *
+     * @return BelongsTo<User, $this>
      */
     public function publisher(): BelongsTo
     {
@@ -104,6 +121,8 @@ trait ItemRelations
 
     /**
      * Categories (e.g. JSK, Blouse) this item belongs to.
+     *
+     * @return BelongsToMany<Category>
      */
     public function categories(): BelongsToMany
     {
@@ -112,6 +131,8 @@ trait ItemRelations
 
     /**
      * Get a list of attributes this item has, with values on pivots.
+     *
+     * @return BelongsToMany<Attribute, $this>
      */
     public function attributes(): BelongsToMany
     {
@@ -120,6 +141,8 @@ trait ItemRelations
 
     /**
      * Get a list of attributes this item has, with values on pivots.
+     *
+     * @return HasMany<AttributeItem, $this>
      */
     public function values(): HasMany
     {

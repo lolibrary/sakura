@@ -7,8 +7,8 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -16,9 +16,9 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return Response|View
+     * @throws \Exception
      */
-    public function homepage()
+    public function homepage(): View
     {
         $brands = Brand::cached();
         $categories = Category::cached();
@@ -37,7 +37,7 @@ class HomeController extends Controller
         return view('homepage', compact('brands', 'categories', 'recent'));
     }
 
-    public function set_lang(Request $request)
+    public function lang(Request $request): RedirectResponse
     {
         $lang = $request->query('lang');
         $request->session()->put('lang', $lang);

@@ -10,11 +10,8 @@ class Localize
 {
     /**
      * Set locale for the request.
-     *
-     * @param  Request  $request
-     * @return string
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         $lang = $request->session()->get('lang');
         // TODO: add logic for checking if they have a stored value for language once that's implemented

@@ -9,7 +9,7 @@ class Tags extends Composer
     /**
      * {@inheritdoc}
      */
-    protected function load()
+    protected function load(): array
     {
         return Tag::select(['slug'])
             ->orderByTranslation('name')

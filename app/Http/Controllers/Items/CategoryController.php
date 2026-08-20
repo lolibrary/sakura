@@ -4,26 +4,22 @@ namespace App\Http\Controllers\Items;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 
 class CategoryController extends Controller
 {
     /**
      * Show a category.
-     *
-     * @return Response
      */
-    public function show(Category $category)
+    public function show(Category $category): RedirectResponse
     {
         return redirect()->to(search_route(['categories' => [$category->slug]]));
     }
 
     /**
      * Redirect to the search page.
-     *
-     * @return Response
      */
-    public function index()
+    public function index(): RedirectResponse
     {
         return redirect()->route('search');
     }

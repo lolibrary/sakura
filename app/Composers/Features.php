@@ -9,7 +9,7 @@ class Features extends Composer
     /**
      * {@inheritdoc}
      */
-    protected function load()
+    protected function load(): array
     {
         return Feature::select(['slug'])
             ->orderByTranslation('name')

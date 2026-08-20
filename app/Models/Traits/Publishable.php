@@ -20,10 +20,8 @@ trait Publishable
 {
     /**
      * Boot this trait, registering model handlers.
-     *
-     * @return void
      */
-    protected static function bootPublishable()
+    protected static function bootPublishable(): void
     {
         static::creating(function (Item $model) {
             $model->submitter()->associate(auth()->user());

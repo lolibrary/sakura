@@ -11,7 +11,7 @@ class ItemController extends Controller
     /**
      * Get all items in the database, paginated.
      *
-     * @return \App\Item[]|LengthAwarePaginator
+     * @return LengthAwarePaginator<Item>
      */
     public function index()
     {
@@ -20,12 +20,10 @@ class ItemController extends Controller
 
     /**
      * Show a specific item. Explicitly uses the UUID.
-     *
-     * @return \App\Item
      */
-    public function show(string $item)
+    public function show(string $item): Item
     {
-        /** @var \App\Item $model */
+        /** @var Item $model */
         $model = Item::findOrFail($item);
 
         if ($model->draft()) {

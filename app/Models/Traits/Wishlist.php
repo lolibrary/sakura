@@ -10,7 +10,7 @@ trait Wishlist
     /**
      * The items a user has favourited/wishlisted.
      *
-     * @return BelongsToMany|Item[]
+     * @return BelongsToMany<Item>
      */
     public function wishlist(?string $order = null)
     {
@@ -21,10 +21,8 @@ trait Wishlist
 
     /**
      * Update a user's wishlist and return if we added to the wishlist.
-     *
-     * @return bool
      */
-    public function updateWishlist(Item $item)
+    public function updateWishlist(Item $item): bool
     {
         $result = $this->wishlist()->toggle($item);
 
@@ -33,10 +31,8 @@ trait Wishlist
 
     /**
      * Check if a user has wishlisted a specific item.
-     *
-     * @return bool
      */
-    public function wants(Item $item)
+    public function wants(Item $item): bool
     {
         return ! $this->wishlist()->where('item_id', $item->id)->exists();
     }

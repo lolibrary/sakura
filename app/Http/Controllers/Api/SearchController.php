@@ -22,9 +22,9 @@ class SearchController extends Base
     /**
      * An array of models that we allow searching on.
      *
-     * @var string[]
+     * @var array<class-string, string>
      */
-    protected const FILTERS = [
+    protected const array FILTERS = [
         Brand::class => 'brand',
         Category::class => 'categories',
         Color::class => 'colors',
@@ -35,10 +35,9 @@ class SearchController extends Base
     /**
      * Search for items.
      *
-     * @param  Request  $request
-     * @return LengthAwarePaginator|\App\Item[]
+     * @return LengthAwarePaginator<Item>
      */
-    public function search_index(SearchRequest $request)
+    public function index(SearchRequest $request): LengthAwarePaginator
     {
         $query = Item::query();
 
@@ -48,10 +47,10 @@ class SearchController extends Base
     /**
      * Search for items.
      *
-     * @param  Request  $request
-     * @return LengthAwarePaginator|\App\Item[]
+     * @param  Builder<Item>  $query
+     * @return LengthAwarePaginator<Item>
      */
-    public function search(SearchRequest $request, Builder $query)
+    public function search(SearchRequest $request, Builder $query): LengthAwarePaginator
     {
         $this->filters($request, $query);
         $this->years($request, $query);
@@ -73,7 +72,7 @@ class SearchController extends Base
 
         $query->where('status', Status::Published);
 
-        $params = $this->form_to_query($request);
+        $params = $this->formToQuery($request);
 
         $paginator = $query->paginate(24)->appends($params);
 
@@ -98,7 +97,10 @@ class SearchController extends Base
         return $paginator;
     }
 
-    protected function form_to_query(Request $request)
+    /**
+     * @return array<string, mixed>
+     */
+    protected function formToQuery(Request $request): array
     {
         $all_params = $request->all();
 
@@ -112,10 +114,9 @@ class SearchController extends Base
     /**
      * Filter relationships.
      *
-     * @param  \App\Requests\SearchRequest|Request  $request
-     * @return void
+     * @param  Builder<Item>  $query
      */
-    protected function filters(Request $request, Builder $query)
+    protected function filters(Request $request, Builder $query): void
     {
         foreach (static::FILTERS as $class => $relation) {
             [$singular, $plural] = [Str::singular($relation), Str::plural($relation)];
