@@ -89,7 +89,7 @@ return [
         'toolbar' => [
             ['bold', 'italic', 'underline', 'strike', 'link', 'superscript'],
             ['blockquote', 'bulletList', 'orderedList'],
-            ['table', 'horizontalRule', 'clearFormatting'],
+            ['horizontalRule', 'clearFormatting'],
         ],
     ],
 

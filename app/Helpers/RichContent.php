@@ -13,11 +13,10 @@ class RichContent
     {
         return [
             ['bold', 'italic', 'underline', 'strike', 'link'],
-            [ToolbarButtonGroup::make('Heading', ['h2', 'h3'])->icon('fi-o-heading')],
             [ToolbarButtonGroup::make('Alignment', ['alignStart', 'alignCenter', 'alignEnd', 'alignJustify'])],
             ['blockquote', 'bulletList', 'orderedList'],
             ['undo', 'redo'],
-            [ToolbarButtonGroup::make('Extras', ['table', 'lead', 'small', 'horizontalRule', 'clearFormatting'])->icon(Heroicon::EllipsisHorizontal)],
+            [ToolbarButtonGroup::make('Extras', ['lead', 'small', 'horizontalRule', 'clearFormatting'])->icon(Heroicon::EllipsisHorizontal)],
         ];
     }
 
