@@ -177,11 +177,13 @@ use Filament\Forms\Components\RichEditor\RichContentRenderer;
                 <h4 class="mt-4">{{ __('ui.item.tags') }}</h4>
                 <div class="row">
                     @forelse ($item->tags()->orderByTranslation('name')->get() as $tag)
-                        <div class="p-1 list-group text-center col-lg-4 col-6 small">
-                            <a class="list-group-item" href="{{ $tag->url }}">
-                                {{ $tag->name }}
-                            </a>
-                        </div>
+                        @if ($tag->isVisibleTo(auth()->user()))
+                            <div class="p-1 list-group text-center col-lg-4 col-6 small">
+                                <a class="list-group-item" href="{{ $tag->url }}">
+                                    {{ $tag->name }}
+                                </a>
+                            </div>
+                        @endif
                     @empty
                         <p class="col text-muted">{{ __('ui.item.tags_none') }}</p>
                     @endforelse
