@@ -1,0 +1,23 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+
+parameters:
+    treatPhpDocTypesAsCertain: false
+    paths:
+        - app/
+        - bootstrap/app.php
+        - database/
+        - routes/
+    level: 7
+    ignoreErrors:
+        - identifier: generics.notSubtype
+        - identifier: generics.lessTypes
+        - identifier: missingType.generics
+        - identifier: missingType.iterableValue
+        - identifier: property.nonObject
+        - identifier: property.notFound
+        - identifier: method.nonObject
+        - identifier: method.notFound
+        - path: 'app/Models'
+          identifier: return.type

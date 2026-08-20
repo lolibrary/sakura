@@ -10,6 +10,7 @@ use Filament\Actions\ViewAction;
 class EditTag extends EditRecord
 {
     protected static string $resource = TagResource::class;
+
     protected static array $translatedFields = ['name'];
 
     protected function getHeaderActions(): array

@@ -50,6 +50,6 @@ class LowercaseUsernames extends Command
                 'username' => DB::raw('lower(username)'),
             ]);
 
-        info("Done");
+        info('Done');
     }
 }

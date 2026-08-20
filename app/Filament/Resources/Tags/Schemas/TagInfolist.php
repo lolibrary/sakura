@@ -2,9 +2,6 @@
 
 namespace App\Filament\Resources\Tags\Schemas;
 
-use Doriiaan\FilamentAstrotomic\Schemas\Components\TranslatableTabs;
-use Doriiaan\FilamentAstrotomic\TranslatableTab;
-use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;

@@ -8,12 +8,9 @@ class Years
 {
     /**
      * Add data to the given view.
-     *
-     * @param \Illuminate\View\View
-     * @return void
      */
-    public function compose(View $view)
+    public function compose(View $view): void
     {
-        $view->with('years', array_reverse(range(1970, date('Y') + 1)));
+        $view->with('years', array_reverse(range(1970, (int) date('Y') + 1)));
     }
 }

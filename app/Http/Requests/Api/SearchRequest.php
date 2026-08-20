@@ -8,22 +8,16 @@ use Illuminate\Foundation\Http\FormRequest;
  * Class SearchRequest.
  *
  * @property string|null $search
- *
  * @property string|null $category
  * @property string[]|null $categories
- *
  * @property string|null $brand
  * @property string[]|null $brands
- *
  * @property string|null $color
  * @property string[]|null $colors
- *
  * @property string|null $feature
  * @property string[]|null $features
- *
  * @property string|null $tag
  * @property string[]|null $tags
- *
  * @property int|null $year
  * @property int[]|null $years
  */
@@ -31,45 +25,40 @@ class SearchRequest extends FormRequest
 {
     /**
      * Check if this request is authorized.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
      * Prepare the data for validation.
-     *
-     * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
-        if (!empty($this->year)) {
-            $years = array_map('intval', explode(",", $this->year));
+        if (! empty($this->year)) {
+            $years = array_map('intval', explode(',', (string) $this->year));
             sort($years);
             $multiple = count($years) > 1;
             $this->merge([
                 'start_year' => $years[0],
-                'end_year' => ($multiple ? end($years) : date('Y') + 3)
+                'end_year' => ($multiple ? end($years) : (int) date('Y') + 3),
             ]);
         }
-        if (empty($this->sort) || !valid_sort($this->sort)) {
+        if (empty($this->sort) || ! valid_sort($this->sort)) {
             $this->merge(['sort' => 'added_new']);
         }
-        if (!mb_detect_encoding($this->search, 'utf-8', true)) {
+        if (! mb_detect_encoding($this->search, 'utf-8', true)) {
             $this->merge(['search' => '']);
         }
     }
 
-
     /**
      * Get a list of rules for this request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'search' => 'sometimes|nullable|string|encoding:utf-8|min:0,max:60',
@@ -94,8 +83,8 @@ class SearchRequest extends FormRequest
             'tags' => 'sometimes|array',
             'tags.*' => 'required|string|ascii|exists:tags,slug',
 
-            'start_year' => 'sometimes|required|integer|min:1970|max:'.((int)date('Y') + 3),
-            'end_year' => 'sometimes|required|integer|min:1970|max:'.((int)date('Y') + 3),
+            'start_year' => 'sometimes|required|integer|min:1970|max:'.((int) date('Y') + 3),
+            'end_year' => 'sometimes|required|integer|min:1970|max:'.((int) date('Y') + 3),
             'sort' => 'sometimes|required|string',
         ];
     }

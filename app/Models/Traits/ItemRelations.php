@@ -10,21 +10,22 @@ use App\Models\Color;
 use App\Models\Feature;
 use App\Models\Tag;
 use App\Models\User;
-
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * @property Brand $brand
- * @property Attribute[]|\Illuminate\Database\Eloquent\Collection $attributes
- * @property Category[]|\Illuminate\Database\Eloquent\Collection $categories
- * @property Color[]|\Illuminate\Database\Eloquent\Collection $colors
- * @property Feature[]|\Illuminate\Database\Eloquent\Collection $features
- * @property Tag[]|\Illuminate\Database\Eloquent\Collection $tags
- * @property AttributeItem[]|\Illuminate\Database\Eloquent\Collection $values
- * @property User[]|\Illuminate\Database\Eloquent\Collection $owners
- * @property User[]|\Illuminate\Database\Eloquent\Collection $stargazers
+ * @property Attribute[]|Collection $attributes
+ * @property Category[]|Collection $categories
+ * @property Color[]|Collection $colors
+ * @property Feature[]|Collection $features
+ * @property Tag[]|Collection $tags
+ * @property AttributeItem[]|Collection $values
+ * @property User[]|Collection $owners
+ * @property User[]|Collection $stargazers
  * @property User|null $publisher
  * @property User $submitter
  */
@@ -32,8 +33,6 @@ trait ItemRelations
 {
     /**
      * Boot this trait and properly clean up afterwards.
-     *
-     * @return void
      */
     protected static function bootItemRelations(): void
     {
@@ -42,6 +41,8 @@ trait ItemRelations
 
     /**
      * The brand of this item.
+     *
+     * @return BelongsTo<Brand, $this>
      */
     public function brand(): BelongsTo
     {
@@ -50,6 +51,8 @@ trait ItemRelations
 
     /**
      * Get the user who submitted this item.
+     *
+     * @return BelongsTo<User, $this>
      */
     public function submitter(): BelongsTo
     {
@@ -58,6 +61,8 @@ trait ItemRelations
 
     /**
      * The tags for this item.
+     *
+     * @return BelongsToMany<Tag, Pivot, string>
      */
     public function tags(): BelongsToMany
     {
@@ -66,6 +71,8 @@ trait ItemRelations
 
     /**
      * The features of this Item.
+     *
+     * @return BelongsToMany<Feature>
      */
     public function features(): BelongsToMany
     {
@@ -74,6 +81,8 @@ trait ItemRelations
 
     /**
      * Get a list of the colors this item has.
+     *
+     * @return BelongsToMany<Color>
      */
     public function colors(): BelongsToMany
     {
@@ -82,6 +91,8 @@ trait ItemRelations
 
     /**
      * The users who have this item in their closet.
+     *
+     * @return BelongsToMany<User>
      */
     public function owners(): BelongsToMany
     {
@@ -90,6 +101,8 @@ trait ItemRelations
 
     /**
      * The users who have this item on their wish list.
+     *
+     * @return BelongsToMany<User>
      */
     public function stargazers(): BelongsToMany
     {
@@ -98,6 +111,8 @@ trait ItemRelations
 
     /**
      * Get the publisher of this item.
+     *
+     * @return BelongsTo<User, $this>
      */
     public function publisher(): BelongsTo
     {
@@ -106,6 +121,8 @@ trait ItemRelations
 
     /**
      * Categories (e.g. JSK, Blouse) this item belongs to.
+     *
+     * @return BelongsToMany<Category>
      */
     public function categories(): BelongsToMany
     {
@@ -115,7 +132,7 @@ trait ItemRelations
     /**
      * Get a list of attributes this item has, with values on pivots.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany<Attribute, $this>
      */
     public function attributes(): BelongsToMany
     {
@@ -124,6 +141,8 @@ trait ItemRelations
 
     /**
      * Get a list of attributes this item has, with values on pivots.
+     *
+     * @return HasMany<AttributeItem, $this>
      */
     public function values(): HasMany
     {

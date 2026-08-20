@@ -9,7 +9,7 @@ class Categories extends Composer
     /**
      * {@inheritdoc}
      */
-    protected function load()
+    protected function load(): array
     {
         return Category::select(['slug'])
             ->orderByTranslation('name')

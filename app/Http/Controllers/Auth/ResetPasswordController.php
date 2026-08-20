@@ -24,18 +24,15 @@ class ResetPasswordController extends Controller
 
     /**
      * Where to redirect users after resetting their password.
-     *
-     * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected string $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Get the password reset credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @return array<string, string>
      */
-    protected function credentials(Request $request)
+    protected function credentials(Request $request): array
     {
         $data = $request->only('password', 'password_confirmation', 'token');
 

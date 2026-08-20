@@ -38,22 +38,22 @@ class ViewItem extends ViewRecord
                 ->color('light')
                 ->authorize('readyForReview')
                 ->tooltip(trans('ui.actions.ready_for_review_help'))
-                ->action(fn(Item $record) => dispatch_sync(new ReadyForReview($record, auth()->user()))),
+                ->action(fn (Item $record) => dispatch_sync(new ReadyForReview($record, auth()->user()))),
             Action::make('mark_as_draft')
                 ->label(trans('ui.actions.mark_as_draft'))
                 ->icon(Heroicon::OutlinedDocument)
                 ->color('gray')
                 ->authorize('markAsDraft')
                 ->tooltip(trans('ui.actions.mark_as_draft_help'))
-                ->action(fn(Item $record) => dispatch_sync(new MarkAsDraft($record, auth()->user()))),
+                ->action(fn (Item $record) => dispatch_sync(new MarkAsDraft($record, auth()->user()))),
             Action::make('request_changes')
                 ->label(trans('ui.actions.request_changes'))
                 ->icon(Heroicon::OutlinedChatBubbleLeftEllipsis)
                 ->color('warning')
                 ->authorize('requestChanges')
                 ->tooltip(trans('ui.actions.request_changes_help'))
-                ->requiresConfirmation(fn() => $this->record->status === Status::Draft)
-                ->action(fn(Item $record) => dispatch_sync(new RequestChanges($record, auth()->user()))),
+                ->requiresConfirmation(fn () => $this->record->status === Status::Draft)
+                ->action(fn (Item $record) => dispatch_sync(new RequestChanges($record, auth()->user()))),
 
             Action::make('mark_as_active')
                 ->label(trans('ui.actions.mark_as_active'))
@@ -61,8 +61,8 @@ class ViewItem extends ViewRecord
                 ->color('gray')
                 ->tooltip(trans('ui.actions.mark_as_active_help'))
                 ->authorize('markAsActive')
-                ->action(fn(Item $record) => dispatch_sync(new MarkAsActive($record, auth()->user())))
-                ->successRedirectUrl(fn(Item $record) => $record->view_url),
+                ->action(fn (Item $record) => dispatch_sync(new MarkAsActive($record, auth()->user())))
+                ->successRedirectUrl(fn (Item $record) => $record->view_url),
 
             ActionGroup::make([
                 ReplicateItemAction::make()
@@ -74,7 +74,7 @@ class ViewItem extends ViewRecord
                             ->maxLength(255)
                             ->required()
                             ->live()
-                            ->afterStateUpdated(fn($state, callable $set) => $set('slug', $this->slugify($state))),
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', $this->slugify($state))),
                         TextInput::make('slug')
                             ->disabled()
                             ->required()
@@ -89,14 +89,14 @@ class ViewItem extends ViewRecord
                     ->color('danger')
                     ->authorize('retract')
                     ->tooltip(trans('ui.actions.retract_help'))
-                    ->action(fn(Item $record) => dispatch_sync(new RetractItem($record, auth()->user()))),
+                    ->action(fn (Item $record) => dispatch_sync(new RetractItem($record, auth()->user()))),
                 Action::make('publish')
                     ->icon(Heroicon::OutlinedCheckBadge)
                     ->label(trans('ui.actions.publish'))
                     ->tooltip(trans('ui.actions.publish_help'))
                     ->color('success')
                     ->authorize('publish')
-                    ->action(fn(Item $record) => dispatch_sync(new PublishItem($record, auth()->user()))),
+                    ->action(fn (Item $record) => dispatch_sync(new PublishItem($record, auth()->user()))),
                 Action::make('mark_as_duplicate')
                     ->label(trans('ui.actions.mark_as_duplicate'))
                     ->icon(Heroicon::OutlinedDocumentDuplicate)
@@ -108,7 +108,7 @@ class ViewItem extends ViewRecord
                             ->label(__('ID'))
                             ->uuid()
                             ->exists(Item::class, 'id')
-                            ->helperText(trans('ui.actions.mark_as_duplicate_id'))
+                            ->helperText(trans('ui.actions.mark_as_duplicate_id')),
                     ])
                     ->action(function (Item $record, array $data, Action $action): void {
                         /** @var $item Item */
@@ -124,7 +124,7 @@ class ViewItem extends ViewRecord
 
                         $action->success();
                     })
-                    ->successRedirectUrl(fn(Item $record) => $record->view_url),
+                    ->successRedirectUrl(fn (Item $record) => $record->view_url),
                 Action::make('change_slug')
                     ->label(trans('ui.actions.change_slug'))
                     ->icon(Heroicon::OutlinedGlobeAlt)
@@ -138,10 +138,10 @@ class ViewItem extends ViewRecord
                             ->helperText(trans('ui.actions.change_slug_new'))
                             ->live()
                             ->afterStateUpdated(function ($state, callable $set) {
-                                $set('slug', $this->record->brand->short_name . '-' . str($state)->slug());
+                                $set('slug', $this->record->brand->short_name.'-'.str($state)->slug());
                                 $set('url',
                                     route('items.show', [
-                                        'item' => $this->record->brand->short_name . '-' . str($state)->slug(),
+                                        'item' => $this->record->brand->short_name.'-'.str($state)->slug(),
                                     ])
                                 );
                             }),
@@ -154,13 +154,13 @@ class ViewItem extends ViewRecord
                         TextInput::make('url')
                             ->label(trans('ui.actions.change_slug_url'))
                             ->disabled()
-                            ->helperText("https://lolibrary.org/item/{slug}"),
+                            ->helperText('https://lolibrary.org/item/{slug}'),
 
                     ])
-                    ->action(fn(Item $record, array $data, $state) => dispatch_sync(
+                    ->action(fn (Item $record, array $data, $state) => dispatch_sync(
                         new ChangeEntrySlug($record, $this->slugify($data['input']), auth()->user()),
                     ))
-                    ->successRedirectUrl(fn(Item $record) => $record->view_url),
+                    ->successRedirectUrl(fn (Item $record) => $record->view_url),
                 DeleteAction::make(),
             ]),
         ];
@@ -168,6 +168,6 @@ class ViewItem extends ViewRecord
 
     protected function slugify(string $input): string
     {
-        return $this->record->brand->short_name . '-' . str($input)->slug();
+        return $this->record->brand->short_name.'-'.str($input)->slug();
     }
 }

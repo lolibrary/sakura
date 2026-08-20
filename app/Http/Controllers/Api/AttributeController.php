@@ -3,27 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 
 class AttributeController extends Controller
 {
     /**
-     * Return all categories, cached.
+     * Return all attributes, cached.
      *
-     * @return mixed
+     * @return Collection<Attribute>
+     *
      * @throws \Exception
      */
-    public function index()
+    public function index(): Collection
     {
         return Attribute::cached();
     }
 
-    /**
-     * Get a specific category.
-     *
-     * @param \App\Attribute $attribute
-     * @return \App\Attribute
-     */
-    public function show(Attribute $attribute)
+    public function show(Attribute $attribute): Attribute
     {
         return $attribute;
     }

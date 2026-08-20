@@ -1,4 +1,5 @@
 <?php
+
 return [
     'cape' => '披风',
     'publications' => '',

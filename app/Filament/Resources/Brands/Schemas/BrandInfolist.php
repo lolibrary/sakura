@@ -25,7 +25,7 @@ class BrandInfolist
                             ->label('Current Image')
                             ->visibility('public')
                             ->checkFileExistence(false)
-                            ->alt(fn(Brand $brand) => "Brand image for $brand->name"),
+                            ->alt(fn (Brand $brand) => "Brand image for $brand->name"),
                     ]),
 
                 Section::make()
@@ -45,15 +45,25 @@ class BrandInfolist
                     ])
                     ->contained(false),
 
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->badge()
-                    ->disabled(),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->badge()
-                    ->disabled()
-                    ->placeholder('-'),
+                Section::make()
+                    ->columnSpanFull()
+                    ->columns(3)
+                    ->contained(false)
+                    ->schema([
+                        TextEntry::make('created_at')
+                            ->dateTime()
+                            ->badge()
+                            ->disabled(),
+                        TextEntry::make('updated_at')
+                            ->dateTime()
+                            ->badge()
+                            ->disabled()
+                            ->placeholder('-'),
+                        TextEntry::make('order')
+                            ->label('Sort Order')
+                            ->numeric()
+                            ->badge(),
+                    ]),
             ]);
     }
 }

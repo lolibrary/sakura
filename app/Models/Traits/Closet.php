@@ -3,23 +3,25 @@
 namespace App\Models\Traits;
 
 use App\Models\Item;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 trait Closet
 {
     /**
      * The items a user owns.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Item[]
+     * @return BelongsToMany|Item[]
      */
-    public function closet()
+    public function closet(?string $order = null)
     {
-        return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy('closet.created_at', 'desc');
+        return $this->belongsToMany(Item::class, 'closet')
+            ->withTimestamps()
+            ->orderBy(...(sorted($order ?? 'added_new', 'closet')));
     }
 
     /**
      * Update a user's closet and return if we added to it.
      *
-     * @param \App\Models\Item $item
      * @return bool
      */
     public function updateCloset(Item $item)
@@ -32,7 +34,6 @@ trait Closet
     /**
      * Check if a user has a specific item in their closet.
      *
-     * @param \App\Models\Item $item
      * @return bool
      */
     public function owns(Item $item)

@@ -8,8 +8,6 @@ use Filament\Actions\EditAction;
 
 class ViewAttribute extends ViewRecord
 {
-
-
     protected static string $resource = AttributeResource::class;
 
     protected function getHeaderActions(): array

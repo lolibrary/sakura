@@ -3,20 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Status;
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Item;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response|\Illuminate\View\View
+     * @throws \Exception
      */
-    public function homepage()
+    public function homepage(): View
     {
         $brands = Brand::cached();
         $categories = Category::cached();
@@ -35,10 +37,11 @@ class HomeController extends Controller
         return view('homepage', compact('brands', 'categories', 'recent'));
     }
 
-    public function set_lang(Request $request)
+    public function lang(Request $request): RedirectResponse
     {
         $lang = $request->query('lang');
         $request->session()->put('lang', $lang);
+
         return back();
     }
 }

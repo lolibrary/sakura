@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Brand;
 use Illuminate\Console\Command;
+
 use function Laravel\Prompts\task;
 
 class DumpRelations extends Command
@@ -37,17 +37,17 @@ class DumpRelations extends Command
         ]);
 
         $translations = $tables->map(
-            fn(string $name): string => str($name)->singular() . '_translations'
+            fn (string $name): string => str($name)->singular().'_translations'
         );
 
         $tables->push(...$translations->all());
 
-        $command = 'pg_dump "' . $this->argument('dsn') .'" ' .
-            '--data-only -t ' . $tables->join(' -t ') . ' > ' . database_path('queries/relations.sql');
+        $command = 'pg_dump "'.$this->argument('dsn').'" '.
+            '--data-only -t '.$tables->join(' -t ').' > '.database_path('queries/relations.sql');
 
         task(
-            label: 'Running '. $command,
-            callback: fn() => exec($command),
+            label: 'Running '.$command,
+            callback: fn () => exec($command),
         );
 
     }

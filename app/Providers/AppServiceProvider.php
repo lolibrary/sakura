@@ -60,7 +60,7 @@ class AppServiceProvider extends ServiceProvider
         // if set, we log all activity without a user to the system user.
         Activity::defaultCauser(
             User::where('username', config('app.system.default-user'))->first(),
-            fn() => auth()->user(),
+            fn () => auth()->user(),
         );
     }
 }

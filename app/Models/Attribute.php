@@ -2,72 +2,25 @@
 
 namespace App\Models;
 
-use App\Models\Traits\Cacheable;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Attributes\Appends;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Visible;
+use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-
 /**
- * An attribute.
- *
- * @property string $slug The URL route slug of this model.
- * @property string $name The name of this model.
  * @property string $value The value of this attribute's pivot.
- * @property \App\Models\Pivot $pivot A pivot object containing the value of this attribute.
- * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $items
+ * @property Pivot $pivot A pivot object containing the value of this attribute.
  */
-class Attribute extends Model implements TranslatableContract
+#[Fillable('name', 'slug')]
+#[Visible('name', 'slug', 'value')]
+#[Appends('value')]
+class Attribute extends Informational
 {
-    use Cacheable;
-    use Translatable;
-
-    /**
-     * Translatable attributes.
-     *
-     * @var array
-     */
-    public $translatedAttributes = ['name'];
-    public $useTranslationFallback = true;
-
-    /**
-     * Fillable attributes.
-     *
-     * @var array
-     */
-    protected $fillable = ['name', 'slug'];
-
-    /**
-     * Visible attributes.
-     *
-     * @var array
-     */
-    protected $visible = [
-        'name',
-        'slug',
-        'value',
-    ];
-
-    /**
-     * Attributes to append to the array form.
-     *
-     * @var array
-     */
-    protected $appends = ['value'];
-
-    /**
-     * A getter for $model->value.
-     *
-     * @return string|null
-     */
-    public function getValueAttribute()
+    public function value(): AttributeCast
     {
-        if (! $this->pivot) {
-            return;
-        }
-
-        return $this->pivot->value;
+        return AttributeCast::get(fn () => $this->pivot?->value);
     }
 
     public function items(): BelongsToMany

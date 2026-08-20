@@ -1,4 +1,5 @@
 <?php
+
 return [
     'skip' => 'Passer au contenu',
     'login' => 'Se connecter',
@@ -26,7 +27,7 @@ return [
         'owner_title' => "Garde de robe de/d' :user",
     ],
     'auth' => [
-        'email_txt' => "Nous ne partagerons jamais votre adresse email.",
+        'email_txt' => 'Nous ne partagerons jamais votre adresse email.',
         'verify' => 'Vérifiez votre adresse mail',
         'verify_resent' => 'Un lien d\'authentification a été envoyé à votre adresse mail.',
         'check_email' => 'Avant de procéder, merci de vérifier la réception d\'un lien de vérification sur votre boîte mail.',
@@ -42,11 +43,11 @@ return [
         'forgot_pw' => 'Vous avez oublié votre mot de passe ?',
         'pw_reset' => 'Réinitialiser le mot de passe',
         'pw_reset_btn' => 'Envoyer le lien de réinitialisation du mot de passe',
-        'pw_no_change' => "Laissez cet espace vide si vous ne souhaitez pas changer votre mot de passe.",
+        'pw_no_change' => 'Laissez cet espace vide si vous ne souhaitez pas changer votre mot de passe.',
         'username_txt' => 'Pour changer votre nom d\'utilisateur, <a class="text-info" href="#" data-toggle="tooltip" title="Changing username is not currently supported, sorry!">cliquez ici</a>',
         'resend' => 'cliquez ici pour en envoyer un nouveau',
-        'verify_success' => "Votre compte est dès à présent vérifié !",
-        'verify_txt1' => "Vous devez vérifier votre adresse mail avant de procéder.",
+        'verify_success' => 'Votre compte est dès à présent vérifié !',
+        'verify_txt1' => 'Vous devez vérifier votre adresse mail avant de procéder.',
         'verify_txt2' => "Vous n'avez pas encore reçu d'email ? Cliquez sur ce bouton pour en renvoyer-un.",
         'verify_resend' => 'Renvoyer un email',
         'remember' => 'Se souvenir de moi',
@@ -59,14 +60,14 @@ return [
     ],
     'donate' => [
         'other' => 'Vous pouvez, par ailleurs faire des dons en utilisant le lien ci-dessous, où vous pouvez payer avec une carte bancaire, Paypal ou Apple Pay.',
-        'txt1' => "Lolibrary est entièrement fondé grâce aux dons des utilisateurs, et nous sommes éternellement reconnaissant.es du soutien que vous nous apportez !",
+        'txt1' => 'Lolibrary est entièrement fondé grâce aux dons des utilisateurs, et nous sommes éternellement reconnaissant.es du soutien que vous nous apportez !',
         'txt2' => "Nous sommes reconnus comme organisation à but non lucratif, et tout les fonds seront utilisés pour les coûts d'opération de Lolibrary ainsi que son développement futur. Si vous préférez nous<a href=\"https://patreon.com/lolibrary\" target=\"_blank\" rel=\"external\">soutenir sur Patreon</a>, vous pouvez également vous y rendre !",
         'thanks' => 'Merci pour votre don envers Lolibrary !',
-        'thanks_txt' => "Ce sont les gens comme vous qui nous permettent de continuer à offrir nos services. Merci !",
+        'thanks_txt' => 'Ce sont les gens comme vous qui nous permettent de continuer à offrir nos services. Merci !',
         'patreon' => 'Nous soutenir sur Patreon',
         'npo' => 'Lolibrary est une organisation reconnue à but non lucratif aux États-Unis, conformément à l\'article 501(c)(3) ; toutes les taxes sur nos dons sont deductibles et notre EIN est 81-2942481.',
         'recurring' => 'Faire des dons régulièrement ?',
-        'patreon_txt' => "Grâce à leurs donations mensuelles, nos donateurs via Patreon gagnent des goodies en plus !",
+        'patreon_txt' => 'Grâce à leurs donations mensuelles, nos donateurs via Patreon gagnent des goodies en plus !',
         'title' => 'Faire un don',
     ],
     'categories' => 'Catégories',
@@ -83,10 +84,10 @@ return [
     'error' => [
         '401' => "Désolé.e, cette page n'est pas accessible au public !",
         '500' => "Désolé.e, une erreur s'est produite en chargeant cette page.",
-        '500_txt' => "Nous avons enregistré cette erreur et nous la prendrons en compte !",
-        '503_txt' => "Nous serons de retour très vite !",
-        '503' => "Nous faisons un petit nettoyage de printemps.",
-        '404' => "Désolé.e, la page que vous recherchez est introuvable.",
+        '500_txt' => 'Nous avons enregistré cette erreur et nous la prendrons en compte !',
+        '503_txt' => 'Nous serons de retour très vite !',
+        '503' => 'Nous faisons un petit nettoyage de printemps.',
+        '404' => 'Désolé.e, la page que vous recherchez est introuvable.',
     ],
     'item' => [
         'category_none' => 'Aucune catégorie enregistrée !',

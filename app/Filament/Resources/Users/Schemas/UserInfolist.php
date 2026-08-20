@@ -48,7 +48,7 @@ class UserInfolist
 
                 KeyValueEntry::make('metadata')
                     ->columnSpanFull()
-                    ->visible(fn() => auth()->user()->developer()),
+                    ->visible(fn () => auth()->user()->developer()),
 
                 Section::make()
                     ->contained(false)
@@ -67,7 +67,7 @@ class UserInfolist
                             ->label('Email Verified')
                             ->dateTime()
                             ->placeholder('Not Verified'),
-                    ])
+                    ]),
             ]);
     }
 }

@@ -36,8 +36,6 @@ return [
     'string' => 'The :attribute must be a string.',
     'unique' => 'The :attribute has already been taken.',
 
-    
-
     // 'accepted' => 'The :attribute must be accepted.',
     // 'active_url' => 'The :attribute is not a valid URL.',
     // 'after' => 'The :attribute must be a date after :date.',

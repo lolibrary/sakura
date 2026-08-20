@@ -4,27 +4,22 @@ namespace App\Http\Controllers\Items;
 
 use App\Http\Controllers\Controller;
 use App\Models\Color;
-use App\Models\Item;
+use Illuminate\Http\RedirectResponse;
 
 class ColorController extends Controller
 {
     /**
      * Show a color.
-     *
-     * @param \App\Models\Color $color
-     * @return \Illuminate\Http\Response
      */
-    public function show(Color $color)
+    public function show(Color $color): RedirectResponse
     {
         return redirect()->to(search_route(['colors' => [$color->slug]]));
     }
 
     /**
      * Redirect to the search page.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): RedirectResponse
     {
         return redirect()->route('search');
     }

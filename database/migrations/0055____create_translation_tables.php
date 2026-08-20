@@ -10,7 +10,7 @@ const TABLES = [
     'category' => 'categories',
     'color' => 'colors',
     'feature' => 'features',
-    'tag' => 'tags'
+    'tag' => 'tags',
 ];
 
 class CreateTranslationTables extends Migration
@@ -29,9 +29,8 @@ class CreateTranslationTables extends Migration
          * - copy the English language names out of the existing model table
          * - drop the name column from the existing model table
          */
-
-         foreach(TABLES as $single => $plural) {
-            $creator = function($table) use ($single, $plural) {
+        foreach (TABLES as $single => $plural) {
+            $creator = function ($table) use ($single, $plural) {
                 $table->increments('id');
                 $table->uuid("{$single}_id");
                 $table->string('locale')->index();
@@ -42,10 +41,9 @@ class CreateTranslationTables extends Migration
                 $table->foreign("{$single}_id")->references('id')->on($plural)->onDelete('cascade');
             };
 
-            $migrator = function($table) use ($single, $plural) {
+            $migrator = function ($table) use ($single, $plural) {
                 DB::insert("insert into {$single}_translations ({$single}_id, name, locale) select id, name, 'en' from $plural");
             };
-
 
             Schema::create("{$single}_translations", $creator);
             Schema::table("{$single}_translations", $migrator);
@@ -64,12 +62,12 @@ class CreateTranslationTables extends Migration
      */
     public function down()
     {
-        foreach(TABLES as $single => $plural) {
+        foreach (TABLES as $single => $plural) {
             Schema::table($plural, function (Blueprint $table) {
                 $table->string('name');
             });
 
-            Schema::dropIfExists( "${single}_translations");
+            Schema::dropIfExists("${single}_translations");
         }
 
     }

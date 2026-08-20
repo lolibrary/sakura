@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class VerificationController extends Controller
@@ -23,10 +24,8 @@ class VerificationController extends Controller
 
     /**
      * Where to redirect users after verification.
-     *
-     * @var string
      */
-    protected $redirectTo = '/profile';
+    protected string $redirectTo = '/profile';
 
     /**
      * Create a new controller instance.
@@ -42,11 +41,8 @@ class VerificationController extends Controller
 
     /**
      * The user has been verified.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
      */
-    protected function verified(Request $request)
+    protected function verified(Request $request): RedirectResponse
     {
         return redirect($this->redirectPath())
             ->with('status', trans('ui.auth.verify_success'));

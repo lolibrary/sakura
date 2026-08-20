@@ -25,8 +25,8 @@ class AttributeSelect
                         modifyQueryUsing: TranslatedRelation::make('attribute'),
                     )
                     ->options(
-                        fn() => Attribute::cached()
-                            ->mapWithKeys(fn(Attribute $attr) => [$attr->id => $attr->name])
+                        fn () => Attribute::cached()
+                            ->mapWithKeys(fn (Attribute $attr) => [$attr->id => $attr->name])
                             ->sort()
                     )
                     ->searchable()

@@ -92,10 +92,10 @@ class AdminPanelProvider extends PanelProvider
             ->userMenuItems([
                 [
                     Action::make('level')
-                        ->badgeColor(fn() => auth()->user()->level->getColor())
-                        ->badge(fn() => auth()->user()->level->getLabel())
+                        ->badgeColor(fn () => auth()->user()->level->getColor())
+                        ->badge(fn () => auth()->user()->level->getLabel())
                         ->label('Level')
-                        ->badgeTooltip(fn() => auth()->user()->level->getDescription()),
+                        ->badgeTooltip(fn () => auth()->user()->level->getDescription()),
                 ],
                 [
                     Action::make('wiki')

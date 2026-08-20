@@ -59,7 +59,7 @@ class ItemsTable
                     Status::Retracted,
                 ]),
                 SelectFilter::make('published_by')
-                    ->query(fn(Builder $query, array $data) => match ($data['value']) {
+                    ->query(fn (Builder $query, array $data) => match ($data['value']) {
                         'me' => $query->where('publisher_id', auth()->id()),
                         'others' => $query->whereNot('publisher_id', auth()->id()),
                         default => $query,
@@ -76,7 +76,7 @@ class ItemsTable
                     ),
                 Filter::make('only_my_entries')
                     ->toggle()
-                    ->query(fn(Builder $query) => $query->where('user_id', auth()->id())),
+                    ->query(fn (Builder $query) => $query->where('user_id', auth()->id())),
             ])
             ->recordActions([
                 ViewAction::make(),

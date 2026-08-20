@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\App;
 
 class TextTool extends Command
 {
@@ -25,8 +24,6 @@ class TextTool extends Command
 
     /**
      * A list of all models we translate
-     *
-     * @var array
      */
     protected array $tables = ['attribute', 'brand', 'category', 'color', 'feature', 'tag'];
 
@@ -60,13 +57,13 @@ class TextTool extends Command
             $this->info("Dumping strings from DB. App default language is $defaultLocale");
             foreach ($this->tables as $table) {
                 $this->info("Dumping strings for {$table}_translations");
-                $values =  DB::table("{$table}_translations")->select("{$table}_id as table_id", 'name')->where('locale', $defaultLocale)->orderBy('table_id')->get()->mapWithKeys(function ($item) use ($table) {
+                $values = DB::table("{$table}_translations")->select("{$table}_id as table_id", 'name')->where('locale', $defaultLocale)->orderBy('table_id')->get()->mapWithKeys(function ($item) {
                     return [$item->table_id => $item->name];
                 })->all();
-                file_put_contents(app_path("lang/models/$table/$defaultLocale.json"), json_encode($values, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ));
+                file_put_contents(app_path("lang/models/$table/$defaultLocale.json"), json_encode($values, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
             }
         } else {
-            $this->info("Loading strings from files. App secondary languages are ". implode(", ", $locales));
+            $this->info('Loading strings from files. App secondary languages are '.implode(', ', $locales));
             foreach ($locales as $lang) {
                 $this->info("Loading  $lang strings");
                 foreach ($this->tables as $table) {
@@ -75,26 +72,25 @@ class TextTool extends Command
                         $data = file_get_contents(app_path("lang/models/$table/$lang.json"));
                         $values = json_decode($data, true);
 
-                        $mapper = function($key, $value) use ($table, $lang){
+                        $mapper = function ($key, $value) use ($table, $lang) {
                             return [
                                 "{$table}_id" => $key,
                                 'locale' => $lang,
-                                'name' => $value
+                                'name' => $value,
                             ];
                         };
 
                         $cleaned = array_filter($values);
                         $mapped = array_map($mapper, array_keys($cleaned), array_values($cleaned));
 
-                        #TODO - this should use upsert once we're on Laravel 8
+                        // TODO - this should use upsert once we're on Laravel 8
                         DB::table("{$table}_translations")->insertOrIgnore($mapped);
                     } catch (Exception $e) {
-                        $this->warn('Caught exception: ' .$e->getMessage());
+                        $this->warn('Caught exception: '.$e->getMessage());
                     }
                 }
             }
         }
 
     }
-
 }

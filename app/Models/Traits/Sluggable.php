@@ -10,10 +10,8 @@ trait Sluggable
 {
     /**
      * Boot this trait and register model listeners.
-     *
-     * @return void
      */
-    protected static function bootSluggable()
+    protected static function bootSluggable(): void
     {
         static::creating(function (Item $model) {
             if ($model->slug !== null) {
@@ -27,13 +25,10 @@ trait Sluggable
 
     /**
      * Get a slug for an item.
-     *
-     * @param \App\Models\Item $item
-     * @return string
      */
-    public static function createSlug(Item $item)
+    public static function createSlug(Item $item): string
     {
-        $candidate = $item->brand->short_name . '-' . Str::slug($item->english_name);
+        $candidate = $item->brand->short_name.'-'.Str::slug($item->english_name);
 
         if (! static::where('slug', $candidate)->exists()) {
             return $candidate;
@@ -43,10 +38,10 @@ trait Sluggable
 
         do {
             if ($attempts > 30) {
-                throw new \RuntimeException("Too many items have the slug prefix [{$candidate}]");
+                throw new RuntimeException("Too many items have the slug prefix [{$candidate}]");
             }
 
-            $try = $candidate . '-' . ++$attempts;
+            $try = $candidate.'-'.++$attempts;
         } while (static::where('slug', $try)->exists());
 
         return $try;

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers\DefaultRule;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Username;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -30,10 +30,8 @@ class RegisterController extends Controller
 
     /**
      * Where to redirect users after registration.
-     *
-     * @var string
      */
-    protected $redirectTo = '/profile';
+    protected string $redirectTo = '/profile';
 
     /**
      * Create a new controller instance.
@@ -48,11 +46,8 @@ class RegisterController extends Controller
 
     /**
      * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'encoding:utf-8', 'max:255'],
@@ -70,9 +65,7 @@ class RegisterController extends Controller
     /**
      * The user has been registered.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
+     * @return RedirectResponse
      */
     public function check(Request $request)
     {
@@ -81,11 +74,8 @@ class RegisterController extends Controller
 
     /**
      * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(array $data): User
     {
         return DB::transaction(function () use ($data): User {
             /** @var User $user */
@@ -105,9 +95,7 @@ class RegisterController extends Controller
     /**
      * The user has been registered.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
+     * @return RedirectResponse
      */
     protected function registered(Request $request, $user)
     {

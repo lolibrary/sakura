@@ -3,26 +3,26 @@
 namespace App\Models\Traits;
 
 use App\Models\Item;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 trait Wishlist
 {
     /**
      * The items a user has favourited/wishlisted.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Item[]
+     * @return BelongsToMany<Item>
      */
-    public function wishlist()
+    public function wishlist(?string $order = null)
     {
-        return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy('wishlist.created_at', 'desc');
+        return $this->belongsToMany(Item::class, 'wishlist')
+            ->withTimestamps()
+            ->orderBy(...(sorted($order ?? 'added_new', 'wishlist')));
     }
 
     /**
      * Update a user's wishlist and return if we added to the wishlist.
-     *
-     * @param \App\Models\Item $item
-     * @return bool
      */
-    public function updateWishlist(Item $item)
+    public function updateWishlist(Item $item): bool
     {
         $result = $this->wishlist()->toggle($item);
 
@@ -31,11 +31,8 @@ trait Wishlist
 
     /**
      * Check if a user has wishlisted a specific item.
-     *
-     * @param \App\Models\Item $item
-     * @return bool
      */
-    public function wants(Item $item)
+    public function wants(Item $item): bool
     {
         return ! $this->wishlist()->where('item_id', $item->id)->exists();
     }

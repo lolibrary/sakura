@@ -2,46 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DonateRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class DonationController extends Controller
 {
     /**
      * Redirect to PayPal.
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function paypal()
+    public function paypal(): RedirectResponse
     {
         return redirect(config('services.donation.paypal'));
     }
 
     /**
      * Redirect to Patreon.
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function patreon()
+    public function patreon(): RedirectResponse
     {
         return redirect(config('services.donation.patreon'));
     }
 
     /**
      * Get the base donation page.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
         return view('donations.donate');
     }
 
     /**
      * Add a view to say thanks to users for donations.
-     *
-     * @return \Illuminate\View\View
      */
-    public function thanks()
+    public function thanks(): View
     {
         return view('donations.thanks');
     }

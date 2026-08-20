@@ -4,27 +4,22 @@ namespace App\Http\Controllers\Items;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Models\Item;
+use Illuminate\Http\RedirectResponse;
 
 class BrandController extends Controller
 {
     /**
      * Show a brand.
-     *
-     * @param \App\Models\Brand $brand
-     * @return \Illuminate\Http\Response
      */
-    public function show(Brand $brand)
+    public function show(Brand $brand): RedirectResponse
     {
         return redirect()->to(search_route(['brands' => [$brand->slug]]));
     }
 
     /**
      * Redirect to the search page.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): RedirectResponse
     {
         return redirect()->route('search');
     }

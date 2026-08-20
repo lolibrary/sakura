@@ -10,8 +10,7 @@ class TranslatedRelation
 {
     public static function make(
         string $name, string $locale = 'en', ?string $table = null, string $column = 'id'
-    ): Closure
-    {
+    ): Closure {
         return function (Builder $query, ?string $search) use ($name, $locale, $table, $column): void {
             $trans = "{$name}_translations";
             $table ??= Str::plural($name);

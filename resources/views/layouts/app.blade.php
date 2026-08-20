@@ -18,7 +18,7 @@
 </head>
 <body>
     <a class="sr-only sr-only-focusable" href="#skip-navigation">{{ __('ui.skip') }}</a>
-    <div id="app" style="margin-top: 55px">
+    <div id="app" style="margin-top: 61px">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -48,7 +48,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @foreach(config('app.locales') as $key => $value)
                                 @if ($key !== 'en_US')
-                                <a class="dropdown-item" href="{{ route('set_lang', ['lang' => $key]) }}">{{ $value }}</a>
+                                <a class="dropdown-item" href="{{ route('lang.set', ['lang' => $key]) }}">{{ $value }}</a>
                                 @endif
                                 @endforeach
                             </div>

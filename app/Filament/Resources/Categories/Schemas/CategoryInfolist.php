@@ -3,8 +3,6 @@
 namespace App\Filament\Resources\Categories\Schemas;
 
 use App\Models\Category;
-use Doriiaan\FilamentAstrotomic\Schemas\Components\TranslatableTabs;
-use Doriiaan\FilamentAstrotomic\TranslatableTab;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -26,7 +24,7 @@ class CategoryInfolist
                             ->disk('s3public')
                             ->label('Current Image')
                             ->visibility('public')
-                            ->alt(fn(Category $category) => "Brand image for $category->name"),
+                            ->alt(fn (Category $category) => "Brand image for $category->name"),
                     ]),
 
                 Section::make()
@@ -41,17 +39,25 @@ class CategoryInfolist
                     ])
                     ->contained(false),
 
-                TextEntry::make('created_at')
-                    ->label('Created')
-                    ->dateTime()
-                    ->badge()
-                    ->disabled(),
-                TextEntry::make('updated_at')
-                    ->label('Updated')
-                    ->dateTime()
-                    ->badge()
-                    ->disabled()
-                    ->placeholder('-'),
+                Section::make()
+                    ->columnSpanFull()
+                    ->columns(3)
+                    ->contained(false)
+                    ->schema([
+                        TextEntry::make('created_at')
+                            ->dateTime()
+                            ->badge()
+                            ->disabled(),
+                        TextEntry::make('updated_at')
+                            ->dateTime()
+                            ->badge()
+                            ->disabled()
+                            ->placeholder('-'),
+                        TextEntry::make('order')
+                            ->label('Sort Order')
+                            ->numeric()
+                            ->badge(),
+                    ]),
             ]);
     }
 }

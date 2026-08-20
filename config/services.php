@@ -32,10 +32,10 @@ return [
 
     'discord' => [
         'webhooks' => [
-            'updates' => env("DISCORD_UPDATE_WEBHOOK"),
-            'missing-data' => env("DISCORD_MISSING_DATA_WEBHOOK"),
-            'publish' => env("DISCORD_PUBLISH_WEBHOOK"),
-            'draft' => env("DISCORD_DRAFT_WEBHOOK"),
+            'updates' => env('DISCORD_UPDATE_WEBHOOK'),
+            'missing-data' => env('DISCORD_MISSING_DATA_WEBHOOK'),
+            'publish' => env('DISCORD_PUBLISH_WEBHOOK'),
+            'draft' => env('DISCORD_DRAFT_WEBHOOK'),
         ],
     ],
 

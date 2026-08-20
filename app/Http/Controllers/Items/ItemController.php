@@ -7,16 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class ItemController extends Controller
 {
     /**
      * Show an item.
-     *
-     * @param \App\Models\Item $item
-     * @return RedirectResponse|\Illuminate\View\View
      */
-    public function show(Item $item)
+    public function show(Item $item): RedirectResponse|View
     {
         if ($item->status === Status::Duplicate && $item->duplicate_url !== null) {
             // sanity check: make sure it was once published
@@ -46,11 +44,8 @@ class ItemController extends Controller
 
     /**
      * Update a user's wishlist.
-     *
-     * @param \App\Models\Item $item
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function wishlist(Item $item)
+    public function wishlist(Item $item): RedirectResponse
     {
         $user = auth()->user();
         $attached = $user->updateWishlist($item);
@@ -62,11 +57,8 @@ class ItemController extends Controller
 
     /**
      * Update a user's closet.
-     *
-     * @param \App\Models\Item $item
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function closet(Item $item)
+    public function closet(Item $item): RedirectResponse
     {
         $user = auth()->user();
         $attached = $user->updateCloset($item);

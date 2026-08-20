@@ -5,55 +5,71 @@ namespace App\Models;
 use App\Enums\Status;
 use App\Enums\SystemUser;
 use App\Helpers\RichContent;
-use Relaticle\Comments\Concerns\HasComments;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
 use App\Models\Traits\Sluggable;
 use Filament\Forms\Components\RichEditor\Models\Concerns\InteractsWithRichContent;
 use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
+use Illuminate\Database\Eloquent\Attributes\Appends;
+use Illuminate\Database\Eloquent\Attributes\Guarded;
+use Illuminate\Database\Eloquent\Attributes\Visible;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
+use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use NumberFormatter;
+use Relaticle\Comments\Concerns\HasComments;
 use Relaticle\Comments\Contracts\Commentable;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * An Item of Apparel.
  *
- * @property string $slug            The URL slug of an item.
- * @property string $english_name    The English Title of an Item.
- * @property string|null $foreign_name    The 'Japanese Title' of an Item.
- * @property int|null $year            The year an Item was released.
- * @property string|null $product_number  An Item's product number.
+ * @property ?string $slug The URL slug of an item.
+ * @property string $english_name The English Title of an Item.
+ * @property ?string $foreign_name The 'Japanese Title' of an Item.
+ * @property ?int $year The year an Item was released.
+ * @property ?string $product_number An Item's product number.
  * @property Status $status The status of an item (stored internally as an int).
- * @property string $price           The price of this item, in a given currency.
+ * @property int|float|null $price The price of this item, in a given currency.
  * @property float $price_formatted The price of this item, formatted to the rules of the given currency (e.g. /100 for gbp/usd)
- * @property string $currency        The currency of this item, as an ISO code.
- * @property array|string[] $images          The images attached to this item, as a flexible collection.
- * @property \Illuminate\Support\Collection $metadata Metadata attached to this item.
- * @property string|null $duplicate_url URL to the item this one is a duplicate of, if applicable.
- *
- * @property string $user_id  The ID of the {@link \App\Models\User user} who submitted this Item.
+ * @property ?string $currency The currency of this item, as an ISO code.
+ * @property array<string> $images The images attached to this item, as a flexible collection.
+ * @property Collection<string, mixed> $metadata Metadata attached to this item.
+ * @property ?string $duplicate_url URL to the item this one is a duplicate of, if applicable.
+ * @property string $user_id The ID of the {@link \App\Models\User user} who submitted this Item.
  * @property string $brand_id The ID of this Item's {@link \App\Models\Brand brand}.
  * @property string $submitter_id The ID of this Item's {@link \App\Models\User submitter}.
- * @property string $publisher_id The ID of this Item's {@link \App\Models\User publisher}.
- *
- * @property \Carbon\Carbon $published_at The date this item was published.
+ * @property ?string $publisher_id The ID of this Item's {@link \App\Models\User publisher}.
+ * @property ?Carbon $published_at The date this item was published.
  */
-class Item extends Model implements HasRichContent, Commentable
+#[Guarded('status', 'slug', 'created_at', 'updated_at', 'published_at')]
+#[Visible(
+    'english_name', 'foreign_name', 'product_number',
+    'currency', 'price', 'price_details', 'year',
+    'notes', 'internal_notes',
+    'image', 'images',
+    'attributes', 'brand', 'categories', 'tags', 'colors', 'features',
+    'submitter', 'publisher',
+    'created_at', 'updated_at', 'published_at',
+    'edit_url', 'slug', 'url',
+)]
+#[Appends('price_details', 'url', 'edit_url', 'duplicate_url')]
+class Item extends Model implements Commentable, HasRichContent
 {
-    use ItemRelations, Publishable, Sluggable;
-    use InteractsWithRichContent;
     use HasComments {
         comments as private commentRelation;
     }
+    use InteractsWithRichContent;
+    use ItemRelations, Publishable, Sluggable;
 
     /**
      * A list of supported currencies.
      *
-     * @var int
+     * @var array<string, string>
      */
-    public const CURRENCIES = [
+    public const array CURRENCIES = [
         'jpy' => 'Japanese Yen (¥)',
         'cny' => 'Chinese Yuan (RMB/¥)',
         'hkd' => 'Hong Kong Dollar (HK$)',
@@ -77,6 +93,9 @@ class Item extends Model implements HasRichContent, Commentable
         'inr' => 'Indian Rupees (₹)',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     public const array RGB_COLORS = [
         'draft' => 'rgb(186,225,255)',
         'published' => 'rgb(186,255,201)',
@@ -89,8 +108,10 @@ class Item extends Model implements HasRichContent, Commentable
      * A shortcut for fully eager loading an item.
      *
      * Use: `Item::with(Item::FULLY_LOAD)`
+     *
+     * @var list<string>
      */
-    public const FULLY_LOAD = [
+    public const array FULLY_LOAD = [
         'tags',
         'colors',
         'features',
@@ -105,80 +126,27 @@ class Item extends Model implements HasRichContent, Commentable
      * The attributes required to show a listing of items.
      *
      * Use: `Item::with(Item::PARTIAL_LOAD)`
+     *
+     * @var list<string>
      */
-    public const PARTIAL_LOAD = [
+    public const array PARTIAL_LOAD = [
         'submitter',
         'brand',
         'categories',
         'tags',
-    ];
-
-    /**
-     * Non-fillable attributes.
-     *
-     * @var array
-     */
-    protected $guarded = [
-        'status',
-        'slug',
-        'created_at',
-        'updated_at',
-        'published_at',
     ];
 
     /**
      * Eager loads.
      *
-     * @var array
+     * @var list<string>
      */
     protected $with = self::PARTIAL_LOAD;
 
     /**
-     * Attributes to append.
-     *
-     * @var array
-     */
-    protected $appends = ['price_details', 'url', 'edit_url', 'duplicate_url'];
-
-    /**
-     * Visible attributes.
-     *
-     * @var array
-     */
-    protected $visible = [
-        'edit_url',
-        'slug',
-        'url',
-        'english_name',
-        'foreign_name',
-        'notes',
-        'internal_notes',
-        'price_details',
-        'price',
-        'currency',
-        'year',
-        'product_number',
-        'image',
-        'images',
-
-        'tags',
-        'colors',
-        'features',
-        'categories',
-        'brand',
-        'submitter',
-        'attributes',
-        'publisher',
-
-        'created_at',
-        'updated_at',
-        'published_at',
-    ];
-
-    /**
      * An array of column cast values.
      *
-     * @var array
+     * @var array<string, string>
      */
     public $casts = [
         'images' => 'array',
@@ -191,75 +159,65 @@ class Item extends Model implements HasRichContent, Commentable
 
     /**
      * Get the formatted price for this item.
-     *
-     * @return string
      */
-    public function getFullPrice()
+    public function getFullPrice(): string
     {
         if (in_array($this->currency, ['jpy', 'krw', 'cny'])) {
-            return (string)round($this->price ?? 0);
+            return (string) round($this->price ?? 0);
         }
 
-        return (string)round($this->price ?? 0, 2);
+        return (string) round($this->price ?? 0, 2);
     }
 
     /**
-     * Get formatted price for an item.
-     *
-     * @return string|null
+     * @return AttributeCast<?string>
      */
-    public function getPriceFormattedAttribute(): ?string
+    public function priceFormatted(): AttributeCast
     {
-        $price = $this->getFullPrice();
+        return AttributeCast::get(function () {
+            $price = $this->getFullPrice();
 
-        $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+            $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
 
-        if ($this->currency === null) {
-            return null;
-        }
+            if ($this->currency === null) {
+                return null;
+            }
 
-        return $formatter->formatCurrency($price, $this->currency);
+            return $formatter->formatCurrency((float) $price, $this->currency);
+        });
     }
 
     /**
-     * Get a list of pricing details.
-     *
-     * @return array
+     * @return AttributeCast<array{currency: string|null, price: int, local_price: string, formatted: float}, never>
      */
-    public function getPriceDetailsAttribute()
+    public function priceDetails(): AttributeCast
     {
-        return [
+        return AttributeCast::get(fn () => [
             'currency' => $this->currency,
-            'price' => (int)$this->price,
+            'price' => (int) $this->price,
             'local_price' => $this->getFullPrice(),
             'formatted' => $this->price_formatted,
-        ];
+        ]);
     }
 
-    public function wishlist()
+    public function wishlist(): int
     {
-        $wishlist = cache()->tags(['wishlist'])->get($this->getKey());
-        if (!$wishlist) {
-            $wishlist = $this->stargazers()->count();
-            cache()->tags(['wishlist'])->forever($this->getKey(), $wishlist);
-        }
-        return $wishlist;
+        return cache()
+            ->tags(['wishlist'])
+            ->rememberForever($this->getKey(), fn () => $this->stargazers()->count());
     }
 
-    public function closet()
+    public function closet(): int
     {
-        $closet = cache()->tags(['closet'])->get($this->getKey());
-        if (!$closet) {
-            $closet = $this->owners()->count();
-            cache()->tags(['closet'])->forever($this->getKey(), $closet);
-        }
-        return $closet;
+        return cache()
+            ->tags(['closet'])
+            ->rememberForever($this->getKey(), fn () => $this->owners()->count());
     }
 
     public function anonymize(bool $force = false): bool
     {
         // guard against running this with a user present
-        if ($this->submitter && !$force) {
+        if ($this->submitter && ! $force) {
             Log::alert('tried to anonymize an item with a valid submitter', [
                 'item_id' => $this->id,
                 'user_id' => $this->user_id,
@@ -272,6 +230,7 @@ class Item extends Model implements HasRichContent, Commentable
 
         if (is_null($user = User::system(SystemUser::Anonymous))) {
             Log::alert('anonymous system user not set, please run app:system anonymous');
+
             return false;
         }
 
@@ -280,17 +239,22 @@ class Item extends Model implements HasRichContent, Commentable
         return $this->save();
     }
 
-    protected function getDuplicateUrlAttribute(): ?string
+    /**
+     * @return AttributeCast<?string>
+     */
+    protected function duplicateUrl(): AttributeCast
     {
-        if (! $this->duplicate()) {
-            return null;
-        }
+        return AttributeCast::get(function () {
+            if (! $this->duplicate()) {
+                return null;
+            }
 
-        if (is_null($item = Item::find($this->metadata->get('duplicate_item_id')))) {
-            return null;
-        }
+            if (is_null($item = Item::find($this->metadata->get('duplicate_item_id')))) {
+                return null;
+            }
 
-        return $item->url;
+            return $item->url;
+        });
     }
 
     protected function setUpRichContent(): void
@@ -299,8 +263,12 @@ class Item extends Model implements HasRichContent, Commentable
             ->mentions(RichContent::mentions());
     }
 
+    /**
+     * @return MorphMany<Comment>
+     */
     public function comments(): MorphMany
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->commentRelation()->withTrashed();
     }
 }

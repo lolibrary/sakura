@@ -2,61 +2,104 @@
 
 namespace Database\Factories;
 
-use Faker\Generator as Faker;
+use App\Enums\Level;
+use App\Models\User;
+use App\Traits\FactoryMetadata;
+use Illuminate\Database\Eloquent\Factories\Attributes\UseModel;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-/* @var \Illuminate\Database\Eloquent\Factory $factory */
+/**
+ * @extends Factory<User>
+ */
+#[UseModel(User::class)]
+class UserFactory extends Factory
+{
+    use FactoryMetadata;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+    /**
+     * Cached password hash for performance.
+     *
+     * @var string|null
+     */
+    protected static ?string $password;
 
-$factory->define(\App\Models\User::class, function (Faker $faker) {
-    return [
-        'id' => uuid4(),
-        'name' => $faker->name,
-        'username' => $username = $faker->unique()->userName,
-        'email' => 'bikeshed+'.$username.'@lolibrary.org',
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-        'remember_token' => Str::random(10),
-        'email_verified_at' => now('UTC')->subHour(),
-        'banned' => false,
-        'level' => \App\Models\User::REGULAR,
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->name(),
+            'username' => fake()->unique()->userName(),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => static::$password ??= Hash::make('password1234'),
+            'remember_token' => Str::random(10),
+            'email_verified_at' => now(),
+            'level' => Level::Junior,
+            'metadata' => new Collection,
+            'banned' => false,
+            'anonymous' => false,
+        ];
+    }
 
-$factory->state(\App\Models\User::class, 'junior', [
-    'level' => \App\Models\User::JUNIOR_LOLIBRARIAN,
-]);
+    public function developer(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'level' => Level::Developer,
+        ]);
+    }
 
-$factory->state(\App\Models\User::class, 'lolibrarian', [
-    'level' => \App\Models\User::LOLIBRARIAN,
-]);
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'level' => Level::Admin,
+        ]);
+    }
 
-$factory->state(\App\Models\User::class, 'senior', [
-    'level' => \App\Models\User::SENIOR_LOLIBRARIAN,
-]);
+    public function trusted(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'level' => Level::Trusted,
+        ]);
+    }
 
-$factory->state(\App\Models\User::class, 'admin', [
-    'level' => \App\Models\User::ADMIN,
-]);
+    public function senior(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'level' => Level::Senior,
+        ]);
+    }
 
-$factory->state(\App\Models\User::class, 'developer', [
-    'level' => \App\Models\User::DEVELOPER,
-]);
+    public function lolibrarian(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'level' => Level::Lolibrarian,
+        ]);
+    }
 
-$factory->state(\App\Models\User::class, 'banned', [
-    'level' => \App\Models\User::BANNED,
-    'banned' => true,
-]);
+    public function unverified(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'email_verified_at' => null,
+        ]);
+    }
 
-$factory->state(\App\Models\User::class, 'unverified', [
-    'email_verified_at' => null,
-]);
+    public function banned(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'banned' => true,
+        ]);
+    }
+
+    public function anonymous(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'anonymous' => true,
+        ]);
+    }
+}

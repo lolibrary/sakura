@@ -1,4 +1,5 @@
 <?php
+
 return [
     'owner-height' => 'Taille (hauteur) d\'un.e propriétaire',
     'rise' => 'Entrejambe',

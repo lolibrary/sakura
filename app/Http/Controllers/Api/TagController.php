@@ -4,28 +4,25 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class TagController extends Controller
 {
     /**
      * Return all tags, cached.
      *
-     * @return mixed
+     * @return Collection<Tag>
+     *
      * @throws \Exception
      */
-    public function index()
+    public function index(): Collection
     {
         return Tag::cached();
     }
 
-    /**
-     * Get a specific category.
-     *
-     * @param \App\Tag $tag
-     * @return \App\Tag
-     */
-    public function show(Tag $tag)
+    public function show(Tag $tag): Tag
     {
         return $tag;
     }
@@ -33,10 +30,9 @@ class TagController extends Controller
     /**
      * Search for a tag.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \App\Tag[]|\Illuminate\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator<Tag>
      */
-    public function search(Request $request)
+    public function search(Request $request): LengthAwarePaginator
     {
         $this->validate($request, [
             'search' => 'required_without:q|string|min:1,max:30',
@@ -45,7 +41,7 @@ class TagController extends Controller
 
         $search = $request->input('search') ?? $request->input('q');
 
-        return Tag::orderBy('created_at')->where(function (Builder $query) use ($request, $search) {
+        return Tag::orderBy('created_at')->where(function (Builder $query) use ($search) {
             $query->where('slug', 'ilike', "%{$search}%")
                 ->orWhere('name', 'ilike', "%{$search}%");
         })->paginate(100);

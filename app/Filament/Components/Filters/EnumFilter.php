@@ -11,13 +11,11 @@ class EnumFilter
     /**
      * Pass a list of backed enums to this for a proper select.
      *
-     * @param string $name
-     * @param array|BackedEnum[]|HasLabel[] $filters
-     * @return SelectFilter
+     * @param  array|BackedEnum[]|HasLabel[]  $filters
      */
     public static function make(string $name, array $filters): SelectFilter
     {
-        $enums = collect($filters)->mapWithKeys(fn (BackedEnum | HasLabel $e) => [
+        $enums = collect($filters)->mapWithKeys(fn (BackedEnum|HasLabel $e) => [
             $e->value => method_exists($e, 'getName') ? $e->getName() : $e->getLabel(),
         ]);
 

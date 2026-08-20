@@ -3,27 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Brand;
+use Illuminate\Database\Eloquent\Collection;
 
 class BrandController extends Controller
 {
     /**
      * Return all brands, cached.
      *
-     * @return mixed
+     * @return Collection<Brand>
+     *
      * @throws \Exception
      */
-    public function index()
+    public function index(): Collection
     {
         return Brand::cached();
     }
 
-    /**
-     * Get a specific category.
-     *
-     * @param \App\Brand $brand
-     * @return \App\Brand
-     */
-    public function show(Brand $brand)
+    public function show(Brand $brand): Brand
     {
         return $brand;
     }

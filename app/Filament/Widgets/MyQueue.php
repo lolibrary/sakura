@@ -18,13 +18,14 @@ use Illuminate\Support\Str;
 class MyQueue extends TableWidget
 {
     protected static ?int $sort = 5;
+
     protected int|string|array $columnSpan = 'full';
 
     public function table(Table $table): Table
     {
         return $table
             ->heading(trans('resources.queue.title'))
-            ->query(fn(): Builder => auth()->user()
+            ->query(fn (): Builder => auth()->user()
                 ->items()
                 ->whereNotIn('status', [Status::Published, Status::Duplicate])
                 ->getQuery()
@@ -38,7 +39,7 @@ class MyQueue extends TableWidget
                     ->toggleable()
                     ->visibleFrom('sm'),
                 TextColumn::make('english_name')
-                    ->formatStateUsing(fn(Item $record) => Str::limit($record->english_name, 40))
+                    ->formatStateUsing(fn (Item $record) => Str::limit($record->english_name, 40))
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('created_at')
@@ -68,21 +69,21 @@ class MyQueue extends TableWidget
             ->headerActions([
                 CreateAction::make()
                     ->label('New Entry')
-                    ->url(fn(): string => route('filament.admin.resources.items.create')),
+                    ->url(fn (): string => route('filament.admin.resources.items.create')),
             ])
             ->recordActions([
                 ViewAction::make()
-                    ->url(fn(Item $record): string => route('filament.admin.resources.items.view', $record)),
+                    ->url(fn (Item $record): string => route('filament.admin.resources.items.view', $record)),
                 EditAction::make()
-                    ->url(fn(Item $record): string => route('filament.admin.resources.items.edit', $record)),
+                    ->url(fn (Item $record): string => route('filament.admin.resources.items.edit', $record)),
             ])
             ->toolbarActions([
 
             ])
-            //->emptyStateHeading('No items right now!')
+            // ->emptyStateHeading('No items right now!')
             ->emptyStateActions([
                 CreateAction::make()
-                    ->url(fn(): string => route('filament.admin.resources.items.create')),
+                    ->url(fn (): string => route('filament.admin.resources.items.create')),
             ])
             ->paginationPageOptions([25, 50, 100]);
     }

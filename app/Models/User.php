@@ -3,33 +3,37 @@
 namespace App\Models;
 
 use App\Enums\Level;
-use App\Enums\Status;
-use App\Enums\SystemUser;
-use App\Helpers\Gravatar;
 use App\Models\Traits\AccessLevels;
 use App\Models\Traits\Closet;
 use App\Models\Traits\DateHandling;
+use App\Models\Traits\FilamentInfo;
+use App\Models\Traits\HasStats;
+use App\Models\Traits\HasSystemUsers;
+use App\Models\Traits\HasUsernames;
 use App\Models\Traits\Wishlist;
 use App\Notifications\VerifyEmail;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasName;
-use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\Appends;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
+use Illuminate\Database\Eloquent\Attributes\Visible;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Laravel\Passport\HasApiTokens;
 use Laravel\Passport\Contracts\OAuthenticatable;
+use Laravel\Passport\HasApiTokens;
 use Relaticle\Comments\Concerns\CanComment;
 use Relaticle\Comments\Concerns\HasComments;
 use Relaticle\Comments\Contracts\Commentator;
@@ -37,63 +41,39 @@ use Relaticle\Comments\Contracts\Commentator;
 /**
  * A user of this application.
  *
- * @property string $email          The user's email.
- * @property string $name           The user's name.
- * @property string $username       The user's login username.
- * @property string $password       The user's password.
+ * @property string $email The user's email.
+ * @property string $name The user's name.
+ * @property string $username The user's login username.
+ * @property string $password The user's password.
  * @property string $remember_token A strong random number that allows the user to use "remember me" sessions.
- *
- * @property Level  $level    The user's level (permissions).
- * @property bool $banned   If the user is banned or not.
+ * @property Level $level The user's level (permissions).
+ * @property bool $banned If the user is banned or not.
  * @property bool $verified Whether or not the user's email has been verified.
- *
  * @property bool $public_closet
  * @property bool $public_wishlist
- *
- * @property Item[]|\Illuminate\Database\Eloquent\Collection $items    The {@link Item items} this user has submitted.
+ * @property Item[]|\Illuminate\Database\Eloquent\Collection $items The {@link Item items} this user has submitted.
  * @property Item[]|\Illuminate\Database\Eloquent\Collection $wishlist The {@link Item items} this user has favourited.
- * @property Item[]|\Illuminate\Database\Eloquent\Collection $closet   The {@link Item items} this user owns.
- * @property Username[]|\Illuminate\Database\Eloquent\Collection $usernames  The usernames this user has.
- *
+ * @property Item[]|\Illuminate\Database\Eloquent\Collection $closet The {@link Item items} this user owns.
+ * @property Username[]|\Illuminate\Database\Eloquent\Collection $usernames The usernames this user has.
  * @property string $id
- * @property \Illuminate\Support\Collection $metadata
+ * @property Collection<string, mixed> $metadata
  */
-class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable, FilamentUser, Commentator, HasName, HasAvatar
+#[Fillable('name', 'username', 'email', 'password')]
+#[Visible('name', 'display_name', 'email', 'username', 'profile', 'created_at', 'level', 'banned')]
+#[Appends('display_name')]
+#[Hidden('password', 'remember_token')]
+#[RouteKey('id')]
+class User extends Authenticatable implements Commentator, FilamentUser, HasAvatar, HasName, MustVerifyEmail, OAuthenticatable
 {
-    use Notifiable, HasApiTokens, HasUuids, DateHandling, Wishlist, Closet, AccessLevels, VerifiesEmails;
-    use HasComments;
-    use CanComment;
-
-    /**
-     * Whether or not this model has an incrementing timestamp.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
-     * The "type" of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'username',
-        'email',
-        'password',
-    ];
+    use AccessLevels, DateHandling, FilamentInfo, Notifiable, VerifiesEmails;
+    use CanComment, HasComments;
+    use Closet, Wishlist;
+    use HasApiTokens, HasStats, HasSystemUsers, HasUsernames, HasUuids;
 
     /**
      * Casts for attributes.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'banned' => 'boolean',
@@ -105,37 +85,9 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
     ];
 
     /**
-     * Visible attributes.
-     *
-     * @var array
-     */
-    protected $visible = [
-        'name',
-        'display_name',
-        'email',
-        'username',
-        'profile',
-        'created_at',
-        'level',
-        'banned',
-    ];
-
-    protected $appends = [
-        'display_name',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
      * The items a user has submitted.
+     *
+     * @return HasMany<Item, $this>
      */
     public function items(): HasMany
     {
@@ -143,37 +95,9 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
     }
 
     /**
-     * The items a user has favourited/wishlisted.
-     *
-     * @param string $order
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
-     */
-    public function wishlist(?string $order = null)
-    {
-        if ($order === null) {
-            $order = 'added_new';
-        }
-
-        return $this->belongsToMany(Item::class, 'wishlist')->withTimestamps()->orderBy(...(sorted($order, 'wishlist')));
-    }
-
-    /**
-     * The items a user owns.
-     *
-     * @param string $order
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Item[]
-     */
-    public function closet(?string $order = null)
-    {
-        if ($order === null) {
-            $order = 'added_new';
-        }
-
-        return $this->belongsToMany(Item::class, 'closet')->withTimestamps()->orderBy(...(sorted($order, 'closet')));
-    }
-
-    /**
      * Get a user's profile.
+     *
+     * @return HasOne<Profile, $this>
      */
     public function profile(): HasOne
     {
@@ -182,6 +106,9 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
 
     /**
      * Scope a query to email address.
+     *
+     * @param  Builder<static>  $query
+     * @return Builder<static>
      */
     public function scopeEmail(Builder $query, string $email): Builder
     {
@@ -189,28 +116,27 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
     }
 
     /**
-     * Scope a query to username.
-     */
-    public function scopeUsername(Builder $query, string $username): Builder
-    {
-        return $query->where('username', $username);
-    }
-
-    /**
      * Send the email verification notification, but queued.
-     *
-     * @return void
      */
     public function sendEmailVerificationNotification(): void
     {
         $this->notify(new VerifyEmail);
     }
 
+    /**
+     * @return AttributeCast<string, string>
+     */
     public function name(): AttributeCast
     {
-        return AttributeCast::make(get: fn () => $this->username, set: fn(string $value) => $this->attributes['name'] = $value);
+        return AttributeCast::make(
+            get: fn () => $this->username,
+            set: fn (string $value) => $this->attributes['name'] = $value
+        );
     }
 
+    /**
+     * @return AttributeCast<string, string>
+     */
     public function displayName(): AttributeCast
     {
         return AttributeCast::make(
@@ -219,103 +145,11 @@ class User extends Authenticatable implements MustVerifyEmail, OAuthenticatable,
         );
     }
 
-    public function publishedItems(): int
-    {
-        return $this->items()->withoutEagerLoads()->where('status', Status::Published)->count();
-    }
-
-    public function changesRequested(): int
-    {
-        return $this->items()->withoutEagerLoads()->where('status', Status::ChangesRequested)->count();
-    }
-
-    public function draftsWaiting(): int
-    {
-        return $this->items()->withoutEagerLoads()->where('status', Status::Draft)->count();
-    }
-
-    public function pendingItems(): int
-    {
-        return $this->items()->withoutEagerLoads()->where('status', Status::ReadyForReview)->count();
-    }
-
+    /**
+     * @return AttributeCast<bool, never>
+     */
     public function verified(): AttributeCast
     {
-        return AttributeCast::get(fn() => $this->hasVerifiedEmail());
-    }
-
-    /**
-     * Set up access to the admin panel for Filament.
-     */
-    public function canAccessPanel(Panel $panel): bool
-    {
-        if ($panel->getId() === 'admin') {
-            return $this->junior() && $this->hasVerifiedEmail();
-        }
-
-        return false;
-    }
-
-    public function getRouteKeyName(): string
-    {
-        return 'id';
-    }
-
-    /**
-     * Get a system user, with caching.
-     *
-     * @param SystemUser $user
-     * @return static
-     */
-    public static function system(SystemUser $user): static
-    {
-        return cache()->remember(
-            key: 'system.user.' . $user->value,
-            ttl: 1440,
-            callback: fn() => static::username($user->value)->firstOrFail(),
-        );
-    }
-
-    public function usernames(): HasMany
-    {
-        return $this->hasMany(Username::class);
-    }
-
-    public function currentUsername(): BelongsTo
-    {
-        return $this->belongsTo(Username::class, foreignKey: 'username');
-    }
-
-    public function canChangeUsername(): bool
-    {
-        if ($this->metadata->get('can_change_username')) {
-            return true;
-        }
-
-        // give you your first username change for free
-        if ($this->usernames->count() === 1) {
-            return true;
-        }
-
-        if ($this->lastChangedUsername() === null) {
-            return true;
-        }
-
-        return $this->lastChangedUsername()->isBefore(now()->subMonths(3));
-    }
-
-    public function lastChangedUsername(): ?Carbon
-    {
-        return $this->currentUsername->updated_at;
-    }
-
-    public function getFilamentAvatarUrl(): ?string
-    {
-        return Gravatar::url($this->email);
-    }
-
-    public function getFilamentName(): string
-    {
-        return $this->username;
+        return AttributeCast::get(fn () => $this->hasVerifiedEmail());
     }
 }

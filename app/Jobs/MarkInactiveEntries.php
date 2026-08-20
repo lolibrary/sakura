@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Queue\Queueable;
-use RuntimeException;
 
 class MarkInactiveEntries implements ShouldQueue
 {

@@ -6,19 +6,14 @@ use App\Filament\Components\Table\DateColumn;
 use App\Helpers\DefaultRule;
 use App\Models\Username;
 use Filament\Actions\Action;
-use Filament\Actions\AssociateAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\DissociateAction;
-use Filament\Actions\DissociateBulkAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\ViewAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -30,8 +25,6 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Unique;
 
 class UsernamesRelationManager extends RelationManager
 {
@@ -45,7 +38,7 @@ class UsernamesRelationManager extends RelationManager
                 ->rules(DefaultRule::username())
                 ->autocomplete(false)
                 ->autocapitalize(false)
-                ->unique('usernames')
+                ->unique('usernames'),
         ]);
     }
 
@@ -78,7 +71,7 @@ class UsernamesRelationManager extends RelationManager
                 IconColumn::make('active')
                     ->boolean()
                     ->label('Active')
-                    ->state(fn(Username $u) => $u->username === $u->user->username)
+                    ->state(fn (Username $u) => $u->username === $u->user->username),
             ])
             ->filters([
                 TrashedFilter::make()
@@ -91,7 +84,7 @@ class UsernamesRelationManager extends RelationManager
                 Action::make('assign')
                     ->icon(Heroicon::OutlinedSquaresPlus)
                     ->color('light')
-                    ->visible(fn(Username $record) => $record->username !== $record->user->username)
+                    ->visible(fn (Username $record) => $record->username !== $record->user->username)
                     ->action(fn (Username $record) => $record->user->update(['username' => $record->username])),
                 DeleteAction::make()
                     ->visible(false),
@@ -105,7 +98,7 @@ class UsernamesRelationManager extends RelationManager
                     RestoreBulkAction::make(),
                 ]),
             ])
-            ->modifyQueryUsing(fn(Builder $query) => $query
+            ->modifyQueryUsing(fn (Builder $query) => $query
                 ->withoutGlobalScopes([
                     SoftDeletingScope::class,
                 ]));

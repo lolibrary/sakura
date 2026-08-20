@@ -7,7 +7,5 @@ use App\Filament\Resources\Colors\ColorResource;
 
 class CreateColor extends CreateRecord
 {
-
-
     protected static string $resource = ColorResource::class;
 }

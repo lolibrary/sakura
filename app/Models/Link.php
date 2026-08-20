@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+
 /**
  * @property string $linkable_type
  * @property string $linkable_id
  * @property string $slug
- * @property \App\Models\Model $linkable
+ * @property Model $linkable
  */
 class Link extends Model
 {
     /**
      * Fillable items.
      *
-     * @var array
+     * @var list<string>
      */
     protected $fillable = ['linkable_type', 'linkable_id', 'slug'];
 
@@ -23,18 +25,14 @@ class Link extends Model
     public $timestamps = false;
 
     // link types (can be added to in future)
-    const ITEM = Item::class;
-    const USER = User::class;
+    const string ITEM = Item::class;
+
+    const string USER = User::class;
 
     /**
      * Get a link by slug.
-     *
-     * @param string $slug
-     * @param string $type
-     *
-     * @return \App\Models\Link
      */
-    public static function get(string $slug, string $type = self::ITEM)
+    public static function get(string $slug, string $type = self::ITEM): ?static
     {
         return static::where('linkable_type', '=', $type)->where('slug', '=', $slug)->firstOrFail();
     }
@@ -42,9 +40,9 @@ class Link extends Model
     /**
      * Get the resource we're linking to.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo<Link, $this>
      */
-    public function linkable()
+    public function linkable(): MorphTo
     {
         return $this->morphTo();
     }

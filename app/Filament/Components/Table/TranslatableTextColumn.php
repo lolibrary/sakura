@@ -12,10 +12,10 @@ class TranslatableTextColumn
             ->label('Name')
             ->limitList(1)
             ->sortable(
-                query: fn($query, string $direction) => $query->orderByTranslation($name, $direction)
+                query: fn ($query, string $direction) => $query->orderByTranslation($name, $direction)
             )
             ->searchable(
-                query: fn($query, string $search) => $query->whereTranslationLike($name, '%' . $search . '%')
+                query: fn ($query, string $search) => $query->whereTranslationLike($name, '%'.$search.'%')
             );
     }
 }

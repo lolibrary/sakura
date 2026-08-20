@@ -3,27 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Color;
+use Illuminate\Database\Eloquent\Collection;
 
 class ColorController extends Controller
 {
     /**
-     * Return all categories, cached.
+     * Return all colors, cached.
      *
-     * @return mixed
+     * @return Collection<Color>
+     *
      * @throws \Exception
      */
-    public function index()
+    public function index(): Collection
     {
         return Color::cached();
     }
 
-    /**
-     * Get a specific category.
-     *
-     * @param \App\Color $color
-     * @return \App\Color
-     */
-    public function show(Color $color)
+    public function show(Color $color): Color
     {
         return $color;
     }

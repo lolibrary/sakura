@@ -9,7 +9,7 @@ class Dashboard extends \Filament\Pages\Dashboard
 {
     use RestrictsFileUploadsToSchemaComponents;
 
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         return '';
     }

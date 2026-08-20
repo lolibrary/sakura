@@ -5,7 +5,6 @@ namespace App\Filament\Components\Actions;
 use App\Models\Attribute;
 use App\Models\Item;
 use Filament\Actions\ReplicateAction;
-use Filament\Forms\Components\TextInput;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\DB;
 
@@ -38,7 +37,7 @@ class ReplicateItemAction
                     $replica->tags()->sync($record->tags);
                     $replica->attributes()->sync(
                         $record->attributes
-                            ->mapWithKeys(fn(Attribute $attr) => [
+                            ->mapWithKeys(fn (Attribute $attr) => [
                                 $attr->id => [
                                     'value' => $attr->value,
                                 ],
@@ -46,8 +45,7 @@ class ReplicateItemAction
                     );
                 });
 
-
             })
-            ->successRedirectUrl(fn(Item $replica) => $replica->view_url);
+            ->successRedirectUrl(fn (Item $replica) => $replica->view_url);
     }
 }

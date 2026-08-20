@@ -2,55 +2,25 @@
 
 namespace App\Models;
 
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
-use App\Models\Traits\Cacheable;
+use App\Contracts\Orderable;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Visible;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * A type of item, e.g. JSK.
- *
- * @property string $slug The URL slug of this type.
- * @property string $name The friendly name of this type.
- * @property \App\Models\Item[]|\Illuminate\Database\Eloquent\Collection $items
+ * @property string $image
+ * @property int $order
  */
-class Category extends Model implements TranslatableContract
+#[Fillable('name', 'slug', 'image', 'order')]
+#[Visible('name', 'slug', 'url', 'image', 'order')]
+class Category extends Informational implements Orderable
 {
-    use Cacheable;
-    use Translatable;
-
     /**
-     * Translatable attributes.
-     *
-     * @var array
+     * @var array<string, string>
      */
-    public $translatedAttributes = ['name'];
-    public $useTranslationFallback = true;
+    protected $casts = ['order' => 'integer'];
 
-    /**
-     * Fillable attributes.
-     *
-     * @var array
-     */
-    protected $fillable = ['name', 'slug'];
-
-    /**
-     * Visible attributes.
-     *
-     * @var array
-     */
-    protected $visible = [
-        'name',
-        'slug',
-        'url',
-        'image',
-    ];
-
-    /**
-     * Get the items that belong to a category.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
-     */
-    public function items()
+    public function items(): BelongsToMany
     {
         return $this->belongsToMany(Item::class);
     }

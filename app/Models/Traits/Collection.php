@@ -9,9 +9,9 @@ class Collection extends BaseCollection
     /**
      * Convert this collection into an array for multi-select boxes.
      *
-     * @return array
+     * @return array<string, string>
      */
-    public function toSelectArray(string $key = 'slug', string $value = 'name')
+    public function toSelectArray(string $key = 'slug', string $value = 'name'): array
     {
         return $this->mapWithKeys(function ($item) use ($key, $value) {
             return [$item->{$key} => $item->{$value}];

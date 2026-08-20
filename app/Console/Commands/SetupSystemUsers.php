@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Enums\Level;
 use App\Enums\SystemUser;
 use Illuminate\Console\Command;
+
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\warning;
 
@@ -29,7 +30,7 @@ class SetupSystemUsers extends Command
      */
     public function handle()
     {
-        if (app()->isProduction() && !$this->option('force')) {
+        if (app()->isProduction() && ! $this->option('force')) {
             warning('Application in production');
 
             confirm('Are you sure you want to do this? (use --force in prod)', required: true);

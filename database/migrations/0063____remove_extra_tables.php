@@ -36,7 +36,7 @@ return new class extends Migration
         }
 
         // we use redis in prod
-       DB::table('sessions')->truncate();
-       DB::table('jobs')->truncate();
+        DB::table('sessions')->truncate();
+        DB::table('jobs')->truncate();
     }
 };

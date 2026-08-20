@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Items\Pages;
 
-use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Resources\Items\ItemResource;
+use Filament\Resources\Pages\CreateRecord;
 
 class CreateItem extends CreateRecord
 {

@@ -23,11 +23,11 @@ return [
         'check_email' => 'Before proceeding, please check your email for a verification link.',
         'not_recieved' => 'If you did not receive the email',
         'resend' => 'click here to request another',
-        'verify_success' => "Your account is now verified!",
-        'verify_done' => "You can close this browser tab or go to the homepage.",
+        'verify_success' => 'Your account is now verified!',
+        'verify_done' => 'You can close this browser tab or go to the homepage.',
         'verify_needed' => 'Verification Needed',
         'verify_txt1' => "You'll need to verify your email before you proceed.",
-        'verify_txt2' => "Not got an email yet? Click the button below to resend it.",
+        'verify_txt2' => 'Not got an email yet? Click the button below to resend it.',
         'verify_resend' => 'Resend Email',
         'verify_update' => 'Changes have been saved! Because you updated your email, you will need to verify the new email. A fresh verification link has been sent to your new email address.',
 
@@ -70,16 +70,16 @@ return [
         'thanks' => 'Thank you for donating to Lolibrary!',
         'thanks_txt' => "It's folks like you who enable us to keep offering the service we do. Thank you!",
         'recurring' => 'Donate regularly?',
-        'patreon_txt' => "Patrons on patreon can get extra goodies for donating monthly!",
+        'patreon_txt' => 'Patrons on patreon can get extra goodies for donating monthly!',
     ],
 
     'error' => [
-        '401' => "Sorry, this page is off-limits!",
-        '404' => "Sorry, the page you are looking for could not be found.",
-        '500' => "Sorry, something on our end broke while loading this page.",
+        '401' => 'Sorry, this page is off-limits!',
+        '404' => 'Sorry, the page you are looking for could not be found.',
+        '500' => 'Sorry, something on our end broke while loading this page.',
         '500_txt' => "We've logged the error and will be looking into it!",
-        '503' => "We are doing a little spring cleaning.",
-        '503_txt' => "Be right back!",
+        '503' => 'We are doing a little spring cleaning.',
+        '503_txt' => 'Be right back!',
     ],
 
     'wishlist' => [
@@ -123,7 +123,7 @@ return [
         'match_all' => 'All',
         'match_none' => 'None',
         'error' => 'Something went wrong, please try again later!',
-        'placeholder' => 'Type to search or filter'
+        'placeholder' => 'Type to search or filter',
     ],
 
     'item' => [
@@ -187,9 +187,9 @@ return [
         'retract' => 'Retract',
         'retract_help' => 'Remove an entry from the main lolibrary.org site',
         'retract_heading' => 'Retract Item',
-        'retract_description' => "This was previously called 'unpublish'.<br>" .
-                        "This removes an entry from the main site's search, while keeping the direct link intact.<br>" .
-                        "This is required as a first step in order to delete a published entry.",
+        'retract_description' => "This was previously called 'unpublish'.\n\n".
+                        "This removes an entry from the main site's search, while keeping the direct link intact.\n\n".
+                        'This is required as a first step in order to delete a published entry.',
 
         'mark_as_duplicate' => 'Mark as duplicate',
         'mark_as_duplicate_help' => 'Mark an item as a duplicate of another',

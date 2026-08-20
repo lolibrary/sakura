@@ -24,10 +24,9 @@ class ForgotPasswordController extends Controller
     /**
      * Get the needed authentication credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @return array<string, string>
      */
-    protected function credentials(Request $request)
+    protected function credentials(Request $request): array
     {
         return [
             'email' => str($request->input('email'))->lower()->toString(),

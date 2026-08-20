@@ -2,12 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Helpers\RichContent;
 use App\Models\Comment;
 use App\Models\User;
 use App\Policies\CommentPolicy;
-use Filament\Forms\Components\RichEditor\ToolbarButtonGroup;
-use Filament\Support\Icons\Heroicon;
 use Relaticle\Comments\FeatureSystem\FeatureConfigurator;
 use Relaticle\Comments\Mentions\DefaultMentionResolver;
 
@@ -92,7 +89,7 @@ return [
         'toolbar' => [
             ['bold', 'italic', 'underline', 'strike', 'link', 'superscript'],
             ['blockquote', 'bulletList', 'orderedList'],
-            ['table', 'horizontalRule', 'clearFormatting'],
+            ['horizontalRule', 'clearFormatting'],
         ],
     ],
 
