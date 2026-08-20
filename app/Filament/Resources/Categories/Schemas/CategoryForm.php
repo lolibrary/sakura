@@ -18,13 +18,16 @@ class CategoryForm
                 Section::make()
                     ->schema([
                         TextInput::make('slug')
+                            ->hint('alpha-dash')
                             ->maxLength(255)
                             ->string()
                             ->alphaDash()
                             ->doesntEndWith('-')
                             ->doesntStartWith('-')
-                            ->required(),
+                            ->required()
+                            ->helperText('URL slug for this category, categories/{slug}.'),
                         TextInput::make('order')
+                            ->label('Sort order')
                             ->numeric()
                             ->minValue(-2000)
                             ->maxValue(2000)
