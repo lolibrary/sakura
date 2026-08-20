@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Contracts\VisibleTo;
+use App\Models\Filters\VisibilityFilter;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -19,11 +21,15 @@ class TagController extends Controller
      */
     public function index(): Collection
     {
-        return Tag::cached();
+        return Tag::cached()->filter(new VisibilityFilter);
     }
 
     public function show(Tag $tag): Tag
     {
+        if (! $tag->isVisibleTo(auth()->user())) {
+            abort(404);
+        }
+
         return $tag;
     }
 

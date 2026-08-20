@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Color;
+use App\Models\Filters\VisibilityFilter;
 use Illuminate\Database\Eloquent\Collection;
 
 class ColorController extends Controller
@@ -16,7 +17,7 @@ class ColorController extends Controller
      */
     public function index(): Collection
     {
-        return Color::cached();
+        return Color::cached()->filter(new VisibilityFilter);
     }
 
     public function show(Color $color): Color

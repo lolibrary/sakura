@@ -19,24 +19,38 @@ class TagInfolist
                     ->columnSpanFull()
                     ->columns(2)
                     ->schema([
-                        TextEntry::make('name')
-                            ->label('Localized Name'),
-                        TextEntry::make('slug')
-                            ->copyable()
-                            ->fontFamily(FontFamily::Mono)
-                            ->icon(Heroicon::OutlinedDocumentDuplicate)
-                            ->iconPosition(IconPosition::After),
-                        TextEntry::make('created_at')
-                            ->label('Created')
-                            ->dateTime()
-                            ->badge()
-                            ->disabled(),
-                        TextEntry::make('updated_at')
-                            ->label('Updated')
-                            ->dateTime()
-                            ->badge()
-                            ->disabled()
-                            ->placeholder('-'),
+                        Section::make()
+                            ->columnSpanFull()
+                            ->columns(3)
+                            ->schema([
+                                TextEntry::make('name')
+                                    ->label('Localized Name'),
+                                TextEntry::make('slug')
+                                    ->copyable()
+                                    ->fontFamily(FontFamily::Mono)
+                                    ->icon(Heroicon::OutlinedDocumentDuplicate)
+                                    ->iconPosition(IconPosition::After),
+                                TextEntry::make('visibility')
+                                    ->badge()
+                                    ->fontFamily(FontFamily::Mono),
+                            ]),
+                        Section::make()
+                            ->columnSpanFull()
+                            ->columns(2)
+                            ->contained(false)
+                            ->schema([
+                                TextEntry::make('created_at')
+                                    ->label('Created')
+                                    ->dateTime()
+                                    ->badge()
+                                    ->disabled(),
+                                TextEntry::make('updated_at')
+                                    ->label('Updated')
+                                    ->dateTime()
+                                    ->badge()
+                                    ->disabled()
+                                    ->placeholder('-'),
+                            ])
                     ])
                     ->contained(false),
             ]);
