@@ -28,7 +28,12 @@
 
         <div style="height: {{ ($type ?? null) === 'small' ? '7rem' : '14rem' }}" class="text-center">
             <a href="{{ $item->url }}">
-                <img src="{{ $item->image ? cdn_thumbnail($item->image) : default_asset() }}" class="mw-100 mh-100 rounded"
+                <img
+                    src="{{ $item->image ? cdn_thumbnail($item->image) : default_asset() }}"
+                    class="mw-100 mh-100 rounded"
+                    @if ($lazy ?? false)
+                        loading="lazy"
+                    @endif
                     onerror="if (this.src !== '{{ default_asset() }}') this.src = '{{ default_asset() }}'"
                 alt="">
             </a>
@@ -37,7 +42,7 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item py-1 px-3">
             <div class="d-flex small">
-                <p class="p-0 m-0 text-center flex-fill" style="white-space: nowrap; overflow-x: ellipsis;">
+                <p class="p-0 m-0 text-center flex-fill" style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis">
                     <a href="{{ $item->brand->url }}" title="{{ $item->brand->name }}">
                         {{$item->brand->name}}
                         {{-- deliberately chose 21 as the cutoff since lots of brand names fit on word boundaries. --}}
