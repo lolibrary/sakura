@@ -1,5 +1,9 @@
 @extends('layouts.app', ['title' => "{$item->english_name} by {$item->brand->name}"])
 
+@php
+use Filament\Forms\Components\RichEditor\RichContentRenderer;
+@endphp
+
 @section('content')
     <div class="container">
         <div class="row mb-3">
@@ -103,7 +107,7 @@
                 @if ($item->notes)
                     <h4 class="mt-4">{{ __('ui.item.notes') }}</h4>
                     <div class="text-muted text-regular">
-                        {!! purify($item->notes) !!}
+                        {!! RichContentRenderer::make($item->notes)->toHtml() !!}
                     </div>
                 @endif
 
