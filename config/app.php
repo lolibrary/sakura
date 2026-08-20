@@ -63,7 +63,6 @@ use Illuminate\Support\Str;
 use Illuminate\Translation\TranslationServiceProvider;
 use Illuminate\Validation\ValidationServiceProvider;
 use Illuminate\View\ViewServiceProvider;
-use Stevebauman\Purify\PurifyServiceProvider;
 
 return [
 
@@ -253,7 +252,6 @@ return [
         RouteServiceProvider::class,
         FastlyServiceProvider::class,
         ScoutPostgresServiceProvider::class,
-        PurifyServiceProvider::class,
 
     ],
 
