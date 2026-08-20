@@ -187,8 +187,8 @@ return [
         'retract' => 'Retract',
         'retract_help' => 'Remove an entry from the main lolibrary.org site',
         'retract_heading' => 'Retract Item',
-        'retract_description' => "This was previously called 'unpublish'.<br>".
-                        "This removes an entry from the main site's search, while keeping the direct link intact.<br>".
+        'retract_description' => "This was previously called 'unpublish'.\n\n".
+                        "This removes an entry from the main site's search, while keeping the direct link intact.\n\n".
                         'This is required as a first step in order to delete a published entry.',
 
         'mark_as_duplicate' => 'Mark as duplicate',
