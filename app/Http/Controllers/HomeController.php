@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\Status;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Filters\VisibilityFilter;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
@@ -20,8 +21,9 @@ class HomeController extends Controller
      */
     public function homepage(): View
     {
-        $brands = Brand::cached();
-        $categories = Category::cached();
+        $brands = Brand::cached()->filter(new VisibilityFilter);
+        $categories = Category::cached()->filter(new VisibilityFilter);
+
         $recent = cache()->remember('homepage.recent', 120, function () {
             return Item::with(Item::PARTIAL_LOAD)
                 ->where('status', Status::Published)

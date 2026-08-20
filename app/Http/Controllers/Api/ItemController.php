@@ -15,7 +15,10 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return Item::drafts(false)->orderBy('published_at', 'desc')->paginate(24);
+        return Item::query()
+            ->with(Item::FULLY_LOAD)
+            ->orderBy('published_at', 'desc')
+            ->paginate(24);
     }
 
     /**
