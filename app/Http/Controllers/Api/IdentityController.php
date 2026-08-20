@@ -9,7 +9,7 @@ class IdentityController extends Controller
     /**
      * Return identity information about a user.
      */
-    public function show(): User
+    public function show(): ?User
     {
         return auth()->user();
     }
