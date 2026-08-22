@@ -104,7 +104,7 @@ use Filament\Forms\Components\RichEditor\RichContentRenderer;
                     <p class="text-muted text-regular">{{ $attribute->pivot->value }}</p>
                 @endforeach
 
-                @if ($item->notes)
+                @if (mb_trim($item->notes ?? '') !== '')
                     <h4 class="mt-4">{{ __('ui.item.notes') }}</h4>
                     <div class="text-muted text-regular">
                         {!! RichContentRenderer::make($item->notes)->toHtml() !!}
