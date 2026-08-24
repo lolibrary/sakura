@@ -18,6 +18,7 @@ class AttributeSelect
             ->columnSpanFull()
             ->columns(2)
             ->relationship('values')
+            ->defaultItems(0)
             ->schema([
                 Select::make('attribute_id')
                     ->relationship(
@@ -41,6 +42,6 @@ class AttributeSelect
             ])
             ->addActionLabel('Add Attribute')
             ->reorderableWithButtons()
-            ->helperText('Attributes are not required and can be deleted, but are recommended!');
+            ->helperText('Attributes are not required, but are recommended!');
     }
 }
