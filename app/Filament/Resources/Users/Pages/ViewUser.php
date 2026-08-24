@@ -6,6 +6,7 @@ use App\Filament\Resources\Users\UserResource;
 use App\Models\User;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Support\Icons\Heroicon;
@@ -38,6 +39,7 @@ class ViewUser extends ViewRecord
                     ->tooltip('Flag this user as able to change username')
                     ->icon(Heroicon::OutlinedFlag)
                     ->action(fn (User $record) => $record->metadata->put('can_change_username', true) && $record->save()),
+                DeleteAction::make(),
             ]),
         ];
     }
