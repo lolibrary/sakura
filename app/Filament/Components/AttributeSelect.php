@@ -8,6 +8,7 @@ use App\Models\Filters\VisibilityFilter;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Illuminate\Database\Eloquent\Collection;
 
 class AttributeSelect
 {
@@ -38,6 +39,7 @@ class AttributeSelect
                     ->live()
                     ->disableOptionsWhenSelectedInSiblingRepeaterItems(),
                 TextInput::make('value')
+                    ->maxLength(255)
                     ->required(),
             ])
             ->addActionLabel('Add Attribute')

@@ -9,8 +9,10 @@ class Dashboard extends \Filament\Pages\Dashboard
 {
     use RestrictsFileUploadsToSchemaComponents;
 
+    protected static bool $shouldRegisterNavigation = true;
+
     public function getTitle(): string|Htmlable
     {
-        return '';
+        return 'Dashboard';
     }
 }

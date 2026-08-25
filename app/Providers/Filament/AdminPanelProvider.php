@@ -52,7 +52,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->brandLogo(asset('images/logo_horizontal.png'))
             ->darkModeBrandLogo(asset('images/logo_horizontal_white.png'))
-            ->brandLogoHeight('1.3rem')
+            ->brandLogoHeight('1.2rem')
             ->colors([
                 'gray' => static::Zinc,
                 'primary' => Color::Indigo,
@@ -105,8 +105,7 @@ class AdminPanelProvider extends PanelProvider
                         ->openUrlInNewTab(),
                     Action::make('Back to Site')
                         ->url('/')
-                        ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
-                        ->openUrlInNewTab(),
+                        ->icon(Heroicon::OutlinedArrowTopRightOnSquare),
                 ],
             ])
             ->plugins([
@@ -121,6 +120,7 @@ class AdminPanelProvider extends PanelProvider
                 CommentsPlugin::make(),
             ])
             ->globalSearchResourceOptIn()
+            ->globalSearchKeyBindings(['mod+k'])
             ->globalSearchFieldKeyBindingSuffix()
             ->globalSearchFieldSuffix(fn (): ?string => match (Platform::detect()) {
                 Platform::Windows, Platform::Linux => 'CTRL+K',
