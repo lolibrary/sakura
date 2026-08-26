@@ -1,3 +1,7 @@
+@php
+    use Filament\Support\Enums\Size;
+@endphp
+
 <div class="flex gap-3 mb-8" wire:key="comment-item-{{ $comment->id }}">
     {{-- Avatar --}}
     <div class="shrink-0">
@@ -21,8 +25,14 @@
         @else
             {{-- Header: name + timestamp --}}
             <div class="flex items-center gap-2">
-                <span class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                <span class="text-sm font-medium text-gray-900 dark:text-gray-100 inline-flex gap-1">
                     {{ $comment->commenter?->getCommentDisplayName() ?? __('comments::comments.unknown_user') }}
+                    <x-filament::icon-button
+                        :icon="$comment->commenter?->level->getIcon()"
+                        :tooltip="$comment->commenter?->level->getDescription()"
+                        :color="$comment->commenter?->level->getColor()"
+                        :size="Size::Small"
+                    />
                 </span>
                 <span class="text-xs text-gray-500 dark:text-gray-400"
                       title="{{ $comment->created_at->format('M j, Y g:i A') }}">
