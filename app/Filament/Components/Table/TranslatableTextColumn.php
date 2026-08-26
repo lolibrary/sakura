@@ -15,7 +15,10 @@ class TranslatableTextColumn
                 query: fn ($query, string $direction) => $query->orderByTranslation($name, $direction)
             )
             ->searchable(
-                query: fn ($query, string $search) => $query->whereTranslationLike($name, '%'.$search.'%')
+                query: fn ($query, string $search) => $query->whereTranslation(
+                    $name, '%'.$search.'%',
+                    operator: 'ILIKE',
+                )
             );
     }
 }
