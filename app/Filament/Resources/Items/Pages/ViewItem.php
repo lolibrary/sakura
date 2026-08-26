@@ -166,8 +166,12 @@ class ViewItem extends ViewRecord
         ];
     }
 
-    protected function slugify(string $input): string
+    protected function slugify(?string $input): string
     {
+        if ($input === null) {
+            return '';
+        }
+
         return $this->record->brand->short_name.'-'.str($input)->slug();
     }
 }
