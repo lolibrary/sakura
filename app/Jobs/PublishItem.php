@@ -39,23 +39,9 @@ class PublishItem
             return false;
         }
 
-        // next up, send a notification:
-        Notification::make()
-            ->title('Entry published!')
-            ->body("Entry {$this->item->english_name} was published to the site.")
-            ->icon('heroicon-o-document-text')
-            ->iconColor('success')
-            ->actions([
-                Action::make('view')
-                    ->button()
-                    ->url($this->item->url, shouldOpenInNewTab: true),
-            ])
-            ->sendToDatabase($this->actor);
-
         // if the publisher and the submitter are not the same person, send a
         // message to the submitter letting them know their entry is now live
         if ($this->item->submitter->isNot($this->actor)) {
-            // next up, send a notification:
             Notification::make()
                 ->title('Your entry was published!')
                 ->body("Your submission {$this->item->english_name} was published to the site.")
