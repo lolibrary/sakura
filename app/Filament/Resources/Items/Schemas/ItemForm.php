@@ -83,6 +83,7 @@ class ItemForm
                 FileUpload::make('image')->label('Main Image'),
 
                 MultiFileUpload::make('images')
+                    ->fetchFileInformation(false)
                     ->columnSpanFull()
                     ->label('Additional Images'),
 
