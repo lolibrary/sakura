@@ -154,8 +154,13 @@ class ItemPolicy extends Policy
 
     public function requestChanges(User $user, Item $item): bool
     {
+        // edge case: allow this as a way out of the "duplicate" status.
+        // note that we may have the permanent redirect to worry about.
+        if ($item->status === Status::Duplicate && $user->trusted()) {
+            return true;
+        }
+
         // you can request changes from "ready for review" or "retracted"
-        // on retracted:
         if (! in_array($item->status, [Status::ReadyForReview, Status::Retracted], strict: true)) {
             return false;
         }
