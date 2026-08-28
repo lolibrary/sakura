@@ -152,7 +152,7 @@ class Item extends Model implements Commentable, HasRichContent
         'images' => 'array',
         'additional_images' => 'json',
         'published_at' => 'datetime',
-        'price' => 'integer',
+        'price' => 'decimal',
         'status' => Status::class,
         'metadata' => AsCollection::class,
     ];

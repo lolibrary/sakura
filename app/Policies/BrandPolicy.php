@@ -17,12 +17,12 @@ class BrandPolicy extends Policy
 
     public function create(User $user): bool
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
     public function update(User $user, Brand $brand): bool
     {
-        return $user->admin();
+        return $user->trusted();
     }
 
     public function delete(User $user, Brand $brand): bool
@@ -31,6 +31,6 @@ class BrandPolicy extends Policy
             return false;
         }
 
-        return $user->admin();
+        return $user->trusted();
     }
 }

@@ -72,7 +72,10 @@ class ItemForm
                     ->columns(2)
                     ->columnSpanFull()
                     ->schema([
-                        CheckboxList::make('categories')->required()->minItems(1),
+                        CheckboxList::make('categories')
+                            ->required()
+                            ->minItems(1)
+                            ->hint('at least one'),
                         CheckboxList::make('features'),
                         CheckboxList::make('tags'),
                         CheckboxList::make('colors'),
