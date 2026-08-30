@@ -24,8 +24,8 @@ class HomeController extends Controller
         $brands = Brand::cached()->filter(new VisibilityFilter);
         $categories = Category::cached()->filter(new VisibilityFilter);
 
-        $recent = cache()->remember('homepage.recent', 120, function () {
-            return Item::with(Item::PARTIAL_LOAD)
+        $recent = cache()->remember('homepage:recent', 120, function () {
+            return Item::with(['submitter', 'publisher', 'categories.translations', 'brand.translations'])
                 ->where('status', Status::Published)
                 ->orderBy('published_at', 'desc')
                 ->whereNotNull('image')

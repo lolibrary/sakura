@@ -112,13 +112,13 @@ class Item extends Model implements Commentable, HasRichContent
      * @var list<string>
      */
     public const array FULLY_LOAD = [
-        'tags',
-        'colors',
-        'features',
-        'categories',
-        'brand',
+        'tags.translations',
+        'colors.translations',
+        'features.translations',
+        'categories.translations',
+        'brand.translations',
         'submitter',
-        'attributes',
+        'attributes.translations',
         'publisher',
     ];
 
