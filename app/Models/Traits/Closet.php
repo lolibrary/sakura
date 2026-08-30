@@ -24,9 +24,11 @@ trait Closet
      *
      * @return bool
      */
-    public function updateCloset(Item $item)
+    public function updateCloset(Item $item): bool
     {
         $result = $this->closet()->toggle($item);
+
+        cache()->tags(['closet', 'user'])->forget("$this->id:$item->id");
 
         return count($result['attached']) > 0;
     }
@@ -36,8 +38,15 @@ trait Closet
      *
      * @return bool
      */
-    public function owns(Item $item)
+    public function owns(Item $item): bool
     {
-        return $this->closet()->where('item_id', $item->id)->exists();
+        return
+            cache()
+                ->tags(['closet', 'user'])
+                ->remember(
+                    "$this->id:$item->id",
+                    3600,
+                    fn() => $this->closet()->where('item_id', $item->id)->exists(),
+                );
     }
 }

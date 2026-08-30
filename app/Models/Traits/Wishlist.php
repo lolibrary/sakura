@@ -26,6 +26,8 @@ trait Wishlist
     {
         $result = $this->wishlist()->toggle($item);
 
+        cache()->tags(['wishlist', 'user'])->forget("$this->id:$item->id");
+
         return count($result['attached']) > 0;
     }
 
@@ -34,6 +36,12 @@ trait Wishlist
      */
     public function wants(Item $item): bool
     {
-        return ! $this->wishlist()->where('item_id', $item->id)->exists();
+        return cache()
+            ->tags(['wishlist', 'user'])
+            ->remember(
+                "$this->id:$item->id",
+                3600,
+                fn() => ! $this->wishlist()->where('item_id', $item->id)->exists(),
+            );
     }
 }
