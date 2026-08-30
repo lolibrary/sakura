@@ -14,18 +14,20 @@ trait Cacheable
      */
     public static function cached(): Collection
     {
-        return cache()->tags(['model'])->rememberForever(static::cacheKey(), function (): Collection {
-            /** @var \Illuminate\Database\Eloquent\Builder $query */
-            $query = static::query()
-                ->withoutGlobalScopes()
-                ->with('translations');
+        return cache()
+            ->tags(static::cacheTags())
+            ->rememberForever(static::cacheKey(), function (): Collection {
+                /** @var \Illuminate\Database\Eloquent\Builder $query */
+                $query = static::query()
+                    ->withoutGlobalScopes()
+                    ->with('translations');
 
-            if (new static instanceof Orderable) {
-                $query = $query->orderByDesc('order')->orderBy('created_at');
-            }
+                if (new static instanceof Orderable) {
+                    $query = $query->orderByDesc('order')->orderBy('created_at');
+                }
 
-            return $query->get();
-        });
+                return $query->get();
+            });
     }
 
     /**
@@ -38,6 +40,11 @@ trait Cacheable
         return str(static::class)->classBasename()->lower()->plural()->toString();
     }
 
+    public static function cacheTags(): array
+    {
+        return ['model'];
+    }
+
     /**
      * Bust this model's cache.
      *
@@ -45,7 +52,7 @@ trait Cacheable
      */
     public static function bust(): void
     {
-        cache()->tags(['model'])->forget(static::cacheKey());
+        cache()->tags(static::cacheTags())->forget(static::cacheKey());
     }
 
     /**

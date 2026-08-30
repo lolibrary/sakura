@@ -26,6 +26,8 @@ abstract class Informational extends Model implements TranslatableContract
      */
     public array $translatedAttributes = ['name'];
 
+    public string $sortByTranslation = 'name';
+
     public bool $useTranslationFallback = true;
 
     public function attributesToArray(): array
