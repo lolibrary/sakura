@@ -44,7 +44,7 @@
             <div class="d-flex small">
                 <p class="p-0 m-0 text-center flex-fill" style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis">
                     <a href="{{ $item->brand->url }}" title="{{ $item->brand->name }}">
-                        {{$item->brand->name}}
+                        {{ translated($item->brand) }}
                         {{-- deliberately chose 21 as the cutoff since lots of brand names fit on word boundaries. --}}
                     </a>
                 </p>
@@ -53,7 +53,7 @@
                 <p class="p-0 m-0 text-center small flex-fill" style="white-space: nowrap; overflow-x: hidden">
                 @foreach($item->categories as $category)
                     <a href="{{ $category->url }}" class="category">
-                        {{ $category->name }}
+                        {{ translated($category) }}
                     </a>
                  @endforeach
                 </p>

@@ -39,7 +39,8 @@ class SearchController extends Base
      */
     public function index(SearchRequest $request): LengthAwarePaginator
     {
-        $query = Item::query();
+        $query = Item::query()
+            ->with(['categories.translations', 'brand.translations', 'submitter']);
 
         return $this->search($request, $query);
     }
@@ -78,19 +79,8 @@ class SearchController extends Base
 
         $paginator->each(function (Item $item) {
             if ($item->image !== null) {
-                $item->makeVisible('image');
                 $item->image = Storage::cloud()->url($item->image);
                 $item->makeVisible('image');
-            }
-
-            if ($item->brand !== null) {
-                $item->brand->image = Storage::cloud()->url($item->brand->image);
-                $item->brand->makeVisible('image');
-            }
-
-            if ($item->category !== null) {
-                $item->category->image = Storage::cloud()->url($item->category->image);
-                $item->category->makeVisible('image');
             }
         });
 

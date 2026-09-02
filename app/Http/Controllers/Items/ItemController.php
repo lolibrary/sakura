@@ -12,9 +12,48 @@ use Illuminate\View\View;
 class ItemController extends Controller
 {
     /**
+     * @var string[]
+     */
+    protected const array Relations = [
+        'attributes.translations',
+        'brand.translations',
+        'categories.translations',
+        'colors.translations',
+        'features.translations',
+        'tags.translations',
+        'publisher',
+        'submitter',
+    ];
+
+    /**
      * Show an item.
      */
-    public function show(Item $item): RedirectResponse|View
+    public function show(string $slug): RedirectResponse|View
+    {
+        $item = $this->getCachedItem($slug);
+
+        if (! is_null($response = $this->checkForDuplicates($item))) {
+            return $response;
+        }
+
+        if ($item->status !== Status::Published && auth()->guest()) {
+            abort(404);
+        }
+
+        return view('items.show', compact('item'));
+    }
+
+    protected function getCachedItem(string $slug): Item
+    {
+        /** @var Item $item */
+        return cache()->tags(['item', 'slug'])->remember(
+            "item:$slug",
+            300,
+            fn() => Item::with(static::Relations)->where('slug', $slug)->firstOrFail(),
+        );
+    }
+
+    protected function checkForDuplicates(Item $item): ?RedirectResponse
     {
         if ($item->status === Status::Duplicate && $item->duplicate_url !== null) {
             // sanity check: make sure it was once published
@@ -25,13 +64,7 @@ class ItemController extends Controller
             return redirect($item->duplicate_url, status: 308); // permanent redirect.
         }
 
-        if ($item->status !== Status::Published && auth()->guest()) {
-            abort(404);
-        }
-
-        $item->load(Item::FULLY_LOAD);
-
-        return view('items.show', compact('item'));
+        return null;
     }
 
     /**

@@ -99,7 +99,7 @@ use Filament\Forms\Components\RichEditor\RichContentRenderer;
                     </p>
                 </div>
 
-                @foreach ($item->attributes()->orderByTranslation('name')->get() as $attribute)
+                @foreach ($item->attributes->sorted() as $attribute)
                     <h4 class="mt-4">{{ $attribute->name }}</h4>
                     <p class="text-muted text-regular">{{ $attribute->pivot->value }}</p>
                 @endforeach
@@ -135,7 +135,7 @@ use Filament\Forms\Components\RichEditor\RichContentRenderer;
 
                 <h4 class="mt-4">{{ __('ui.item.category') }}</h4>
                 <div class="row">
-                    @forelse ($item->categories()->orderByTranslation('name')->get() as $category)
+                    @forelse ($item->categories->sorted() as $category)
                         <div class="p-1 list-group text-center col small">
                             <a class="list-group-item" href="{{ $category->url }}">
                                 {{ $category->name }}
@@ -150,7 +150,7 @@ use Filament\Forms\Components\RichEditor\RichContentRenderer;
                         title="{{ __('ui.item.features_help') }}"
                         data-toggle="tooltip" class="fal fa-question-circle"></i></h4>
                 <div class="row">
-                    @forelse ($item->features()->orderByTranslation('name')->get() as $feature)
+                    @forelse ($item->features->sorted() as $feature)
                         <div class="p-1 list-group text-center col-lg-4 col-6 small">
                             <a class="list-group-item" href="{{ $feature->url }}">
                                 {{ $feature->name }}
@@ -163,7 +163,7 @@ use Filament\Forms\Components\RichEditor\RichContentRenderer;
 
                 <h4 class="mt-4">{{ __('ui.item.colors') }}</h4>
                 <div class="row">
-                    @forelse ($item->colors()->orderByTranslation('name')->get() as $color)
+                    @forelse ($item->colors->sorted() as $color)
                         <div class="p-1 list-group text-center col-lg-4 col-6 small">
                             <a class="list-group-item" href="{{ $color->url }}">
                                 {{ $color->name }}
@@ -176,7 +176,7 @@ use Filament\Forms\Components\RichEditor\RichContentRenderer;
 
                 <h4 class="mt-4">{{ __('ui.item.tags') }}</h4>
                 <div class="row">
-                    @forelse ($item->tags()->orderByTranslation('name')->get() as $tag)
+                    @forelse ($item->tags->sorted() as $tag)
                         @if ($tag->isVisibleTo(auth()->user()))
                             <div class="p-1 list-group text-center col-lg-4 col-6 small">
                                 <a class="list-group-item" href="{{ $tag->url }}">

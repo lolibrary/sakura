@@ -9,6 +9,7 @@ use App\Jobs\ChangeEntrySlug;
 use App\Jobs\MarkAsActive;
 use App\Jobs\MarkAsDraft;
 use App\Jobs\MarkAsDuplicate;
+use App\Jobs\MarkAsInactive;
 use App\Jobs\PublishItem;
 use App\Jobs\ReadyForReview;
 use App\Jobs\RequestChanges;
@@ -160,6 +161,14 @@ class ViewItem extends ViewRecord
                     ->action(fn (Item $record, array $data, $state) => dispatch_sync(
                         new ChangeEntrySlug($record, $this->slugify($data['input']), auth()->user()),
                     ))
+                    ->successRedirectUrl(fn (Item $record) => $record->view_url),
+                Action::make('mark_as_inactive')
+                    ->label(trans('ui.actions.mark_as_inactive'))
+                    ->icon(Heroicon::OutlinedClock)
+                    ->color('gray')
+                    ->tooltip(trans('ui.actions.mark_as_inactive_help'))
+                    ->authorize('markAsInactive')
+                    ->action(fn (Item $record) => dispatch_sync(new MarkAsInactive($record, auth()->user())))
                     ->successRedirectUrl(fn (Item $record) => $record->view_url),
                 DeleteAction::make(),
             ]),

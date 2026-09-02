@@ -209,6 +209,15 @@ class ItemPolicy extends Policy
         return $user->senior();
     }
 
+    public function markAsInactive(User $user, Item $item): bool
+    {
+        if ($item->status !== Status::Draft) {
+            return false;
+        }
+
+        return $user->is($item->submitter);
+    }
+
     /**
      * Check if a user is allowed to view and write comments on an item.
      *

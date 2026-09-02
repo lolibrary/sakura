@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Categories\Schemas;
 
-use App\Filament\Components\FileUpload;
 use App\Filament\Components\TranslatableName;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -36,7 +36,16 @@ class CategoryForm
                             ->helperText('Higher values show first on the homepage.')
                     ]),
                 FileUpload::make('image')
-                    ->directory('categories'),
+                    ->label('Category Image')
+                    ->disk('s3public')
+                    ->visibility('public')
+                    ->directory('categories')
+                    ->previewable()
+                    ->openable()
+                    ->maxSize(1024 * 3)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg'])
+                    ->helperText('Acceptable upload types: JPEG, PNG, SVG, WEBP. 3MB limit.')
+                    ->preventFilePathTampering(),
             ]);
     }
 }

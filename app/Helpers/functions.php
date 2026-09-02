@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Informational;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Notification;
@@ -169,10 +170,9 @@ if (! function_exists('valid_sort')) {
 
 }
 
-if (! function_exists('model_visible')) {
-    function model_visible(Model $model): bool
+if (! function_exists('translated')) {
+    function translated(Informational $model, ?string $locale = null, ?string $name = null): ?string
     {
-        $user = auth()->user();
-        
+        return app('translations.helper')->get($model, $locale, $name);
     }
 }
