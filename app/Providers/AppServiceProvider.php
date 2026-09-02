@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Composers;
+use App\Helpers\TranslationHelper;
 use App\Models\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
@@ -20,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        app()->singleton('translations.helper', fn() => new TranslationHelper(app('cache')->memo()));
     }
 
     /**
