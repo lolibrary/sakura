@@ -9,6 +9,7 @@ use App\Events\ItemRetracted;
 use App\Events\MarkedAsActive;
 use App\Events\MarkedAsDraft;
 use App\Events\MarkedAsDuplicate;
+use App\Events\MarkedAsInactive;
 use App\Events\ReadyForReview;
 use App\Models\Item;
 use App\Models\User;
@@ -130,6 +131,20 @@ trait Publishable
         $result = $this->save();
 
         event(new MarkedAsActive($this));
+
+        return $result;
+    }
+
+    public function markAsInactive(): bool
+    {
+        $this->metadata->put('previous_status', $this->status->value);
+        $this->metadata->put('marked_as_inactive_by', auth()->id());
+        $this->metadata->put('marked_as_inactive_at', now()->format(DateTimeInterface::RFC3339));
+        $this->status = Status::Inactive;
+
+        $result = $this->save();
+
+        event(new MarkedAsInactive($this));
 
         return $result;
     }

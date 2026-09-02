@@ -199,5 +199,8 @@ return [
         'change_slug_help' => 'Change the URL to this entry',
         'change_slug_new' => 'Enter a new slug for this entry.',
         'change_slug_url' => 'New URL',
+
+        'mark_as_inactive' => 'Mark as inactive',
+        'mark_as_inactive_help' => 'Mark this draft as "inactive", hiding it by default.',
     ],
 ];
