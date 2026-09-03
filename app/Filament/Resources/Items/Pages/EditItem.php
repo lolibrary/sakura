@@ -41,7 +41,8 @@ class EditItem extends EditRecord
     protected function getFormActions(): array
     {
         return [
-            $this->getSaveFormAction(),
+            $this->getSaveFormAction()
+                ->after(static fn (Item $record) => cache()->tags(['item', 'slug'])->forget("item:$record->slug")),
             $this->getCancelFormAction(),
             Action::make('view')
                 ->label('Back to Entry')
