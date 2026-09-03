@@ -22,7 +22,6 @@ class YearSelect
                 'integer',
                 'min:1970',
                 'max:'.(int) date('Y') + 3,
-            ])
-            ->helperText('"Released" means the year the item is made available for purchase, even if the delivery date is in a different year.');
+            ]);
     }
 }

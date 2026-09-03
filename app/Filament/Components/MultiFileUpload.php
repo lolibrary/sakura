@@ -9,6 +9,9 @@ class MultiFileUpload
     public static function make(?string $name = null): FileUploadComponent
     {
         return FileUpload::make($name)
+            ->previewable()
+            ->imageEditor()
+            ->imageEditorMode(1)
             ->multiple()
             ->reorderable()
             ->appendFiles()

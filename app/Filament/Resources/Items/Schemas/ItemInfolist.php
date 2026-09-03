@@ -44,7 +44,7 @@ class ItemInfolist
                             ->iconPosition(IconPosition::After),
                         TextEntry::make('url')
                             ->label('Preview Link')
-                            ->url(fn (Item $record) => $record->url, shouldOpenInNewTab: true)
+                            ->url(static fn (Item $record) => $record->url, shouldOpenInNewTab: true)
                             ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
                             ->iconPosition(IconPosition::After),
                     ]),
@@ -60,6 +60,7 @@ class ItemInfolist
                             ->imageWidth(250)
                             ->imageHeight(320)
                             ->defaultImageUrl(cdn_link('images/default.png'))
+                            ->openUrlInNewTab()
                             ->checkFileExistence(false),
 
                         Section::make()
@@ -81,9 +82,9 @@ class ItemInfolist
                                     ->label('Duplicate of')
                                     ->iconPosition(IconPosition::After)
                                     ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
-                                    ->state(fn (Item $record) => $record->duplicate_url)
-                                    ->url(fn (Item $record) => $record->duplicate_url)
-                                    ->visible(fn (Item $record) => $record->duplicate()),
+                                    ->state(static fn (Item $record) => $record->duplicate_url)
+                                    ->url(static fn (Item $record) => $record->duplicate_url)
+                                    ->visible(static fn (Item $record) => $record->duplicate()),
                                 TextEntry::make('price_details.formatted')
                                     ->label('Price')
                                     ->placeholder('Unknown'),
@@ -99,16 +100,16 @@ class ItemInfolist
                                         TextEntry::make('submitter.username')
                                             ->name('submitter')
                                             ->badge()
-                                            ->color(fn (Item $record) => $record->submitter?->level->getColor())
-                                            ->icon(fn (Item $record) => $record->submitter?->level->getIcon())
-                                            ->tooltip(fn (Item $record) => $record->submitter?->level->getDescription()),
+                                            ->color(static fn (Item $record) => $record->submitter?->level->getColor())
+                                            ->icon(static fn (Item $record) => $record->submitter?->level->getIcon())
+                                            ->tooltip(static fn (Item $record) => $record->submitter?->level->getDescription()),
                                         TextEntry::make('publisher.username')
                                             ->name('publisher')
                                             ->placeholder('No Publisher')
                                             ->badge()
-                                            ->color(fn (?Item $record) => $record?->publisher?->level->getColor())
-                                            ->icon(fn (?Item $record) => $record?->publisher?->level->getIcon())
-                                            ->tooltip(fn (?Item $record) => $record?->publisher?->level->getDescription()),
+                                            ->color(static fn (?Item $record) => $record?->publisher?->level->getColor())
+                                            ->icon(static fn (?Item $record) => $record?->publisher?->level->getIcon())
+                                            ->tooltip(static fn (?Item $record) => $record?->publisher?->level->getDescription()),
                                     ]),
                             ])->contained(false),
                     ]),
@@ -119,7 +120,7 @@ class ItemInfolist
                     ->schema(function (Item $record) {
                         return collect($record->images)
                             ->filter()
-                            ->map(fn (string $image) => ImageEntry::make('images')
+                            ->map(static fn (string $image) => ImageEntry::make('images')
                                 ->checkFileExistence(false)
                                 ->name('')
                                 ->columnSpan(1)
@@ -127,6 +128,7 @@ class ItemInfolist
                                 ->disk('s3public')
                                 ->visibility('public')
                                 ->columnSpanFull()
+                                ->shouldOpenUrlInNewTab()
                                 ->url(Storage::cloud()->url($image)),
                             )->all();
                     }, ),
@@ -142,7 +144,7 @@ class ItemInfolist
                                 ->schema(fn () => [
                                     TextEntry::make('categories')
                                         ->hiddenLabel()
-                                        ->formatStateUsing(fn (Category $state) => $state->name)
+                                        ->formatStateUsing(static fn (Category $state) => $state->name)
                                         ->badge(),
                                 ]),
                             Section::make('Features')
@@ -151,7 +153,7 @@ class ItemInfolist
                                 ->schema(fn () => [
                                     TextEntry::make('features')
                                         ->hiddenLabel()
-                                        ->formatStateUsing(fn (Feature $state) => $state->name)
+                                        ->formatStateUsing(static fn (Feature $state) => $state->name)
                                         ->badge(),
                                 ]),
                             Section::make('Tags')
@@ -162,14 +164,14 @@ class ItemInfolist
                                         ->hiddenLabel()
                                         ->formatStateUsing(fn (Tag $state) => $state->name)
                                         ->badge()
-                                        ->color(fn (Tag $state) => $state->visibility->getColor())
-                                        ->tooltip(fn (Tag $state) => "$state->name: {$state->visibility->getLabel()}")
-                                        ->icon(fn (Tag $state) => $state->visibility->getIcon()),
+                                        ->color(static fn (Tag $state) => $state->visibility->getColor())
+                                        ->tooltip(static fn (Tag $state) => "$state->name: {$state->visibility->getLabel()}")
+                                        ->icon(static fn (Tag $state) => $state->visibility->getIcon()),
                                 ]),
                             Section::make('Colorways')
                                 ->contained(false)
                                 ->columns(1)
-                                ->schema(fn () => [
+                                ->schema(static fn () => [
                                     TextEntry::make('colors')
                                         ->hiddenLabel()
                                         ->formatStateUsing(fn (Color $state) => $state->name)
@@ -228,7 +230,7 @@ class ItemInfolist
                     ->columnSpanFull()
                     ->keyLabel('Key')
                     ->valueLabel('Value')
-                    ->visible(fn () => auth()->user()->developer()),
+                    ->visible(static fn () => auth()->user()->developer()),
 
                 Section::make('Timestamps')
                     ->columnSpanFull()

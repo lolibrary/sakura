@@ -10,8 +10,10 @@ use App\Filament\Components\YearSelect;
 use App\Filament\Query\TranslatedRelation;
 use App\Helpers\Currency;
 use App\Helpers\RichContent;
+use App\Models\Attribute;
 use App\Models\Item;
 use Filament\Actions\Action;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -29,16 +31,20 @@ class ItemForm
             ->components([
                 TextInput::make('english_name')
                     ->required()
-                    ->helperText('The english name of this entry.')
-                    ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                    ->hintIconTooltip('If the original entry\'s name is not in english, this must be a translation. This may be revised when reviewing your entry.')
+                    ->hintIcon(
+                        icon: static fn () => setting('tooltip.english_name') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                        tooltip: static fn () => setting('tooltip.english_name'),
+                    )
+                    ->helperText(static fn () => setting('helptext.english_name'))
                 ,
 
                 TextInput::make('foreign_name')
                     ->label('Original name')
-                    ->helperText('The original/native-language name of this entry, if not english.')
-                    ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                    ->hintIconTooltip('This should be the original name as it appears on a brand listing, e.g. Midnight Dollワンピース. Also known as "Foreign name".')
+                    ->hintIcon(
+                        icon: static fn () => setting('tooltip.original_name') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                        tooltip: static fn () => setting('tooltip.original_name'),
+                    )
+                    ->helperText(static fn () => setting('helptext.original_name'))
                 ,
 
                 Select::make('brand_id')
@@ -49,16 +55,22 @@ class ItemForm
                         titleAttribute: 'name',
                         modifyQueryUsing: TranslatedRelation::make('brand'),
                     )
-                    ->helperText('The brand of this entry, e.g. Angelic Pretty.')
-                    ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                    ->hintIconTooltip('If this is an Indie Brand, use the most appropriate brand (Western/Chinese/Korean Indie, etc) and add their tag below.'),
+                    ->hintIcon(
+                        icon: static fn () => setting('tooltip.brand') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                        tooltip: static fn () => setting('tooltip.brand'),
+                    )
+                    ->helperText(static fn () => setting('helptext.brand')),
 
                 TextInput::make('slug')
                     ->readOnly()
                     ->disabled()
                     ->copyable()
-                    ->helperText('The url to this entry, items/{slug}. Editable by admins.')
-                    ->placeholder('Generated on save'),
+                    ->placeholder('Generated on save')
+                    ->hintIcon(
+                        icon: static fn () => setting('tooltip.slug') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                        tooltip: static fn () => setting('tooltip.slug'),
+                    )
+                    ->helperText(static fn () => setting('helptext.slug')),
 
                 Section::make('Metadata')
                     ->icon(Heroicon::OutlinedDocumentMagnifyingGlass)
@@ -68,30 +80,39 @@ class ItemForm
                     ->schema([
                         TextInput::make('product_number')
                             ->hint('required if exists')
-                            ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                            ->hintIconTooltip('If you are unsure of how to find a product number on certain brands, ask in #junior-help on Discord')
-                            ->helperText('The original product number or code, if known.')
+                            ->hintIcon(
+                                icon: static fn () => setting('tooltip.product_number') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                                tooltip: static fn () => setting('tooltip.product_number'),
+                            )
+                            ->helperText(static fn () => setting('helptext.product_number'))
                             ->string()
                             ->maxLength(255),
 
                         YearSelect::make()
                             ->hint('required if known')
-                            ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                            ->hintIconTooltip('If there is an expected ship date provided for a preorder that will have a significant wait time, you can put it in the Notes field.'),
+                            ->hintIcon(
+                                icon: static fn () => setting('tooltip.year') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                                tooltip: static fn () => setting('tooltip.year'),
+                            )
+                            ->helperText(static fn () => setting('helptext.year')),
 
                         Select::make('currency')
                             ->placeholder('Unknown')
                             ->searchable()
                             ->options(Currency::options())
-                            ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                            ->hintIconTooltip("It's very rare to not have a price on a newer release, but for historical data not including one is okay.")
-                            ->helperText('Unknown here hides the entire price from the entry page.'),
+                            ->hintIcon(
+                                icon: static fn () => setting('tooltip.currency') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                                tooltip: static fn () => setting('tooltip.currency'),
+                            )
+                            ->helperText(static fn () => setting('helptext.currency')),
 
                         TextInput::make('price')
                             ->numeric()
-                            ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                            ->hintIconTooltip('If an item is genuinely free, enter a price of 0 with an appropriate currency.')
-                            ->helperText('Item price; only shown if currency is present.'),
+                            ->hintIcon(
+                                icon: static fn () => setting('tooltip.price') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                                tooltip: static fn () => setting('tooltip.price'),
+                            )
+                            ->helperText(static fn () => setting('helptext.price')),
                     ]),
 
                 Section::make()
@@ -100,43 +121,67 @@ class ItemForm
                     ->schema([
                         CheckboxList::make('categories')
                             ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                            ->hintIconTooltip('If you are unsure of what item categories should contain which items, please take a look at the wiki. We categorize strapless dresses and dresses with straps as JSKs, and any other dress cuts as OPs for ease of searchability.')
+                            ->hintIconTooltip('')
                             ->required()
                             ->minItems(1)
-                            ->hint('at least one'),
+                            ->hint('at least one')
+                            ->hintIcon(
+                                icon: static fn () => setting('tooltip.categories') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                                tooltip: static fn () => setting('tooltip.categories'),
+                            )
+                            ->helperText(static fn () => setting('helptext.categories')),
                         CheckboxList::make('features')
-                            ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                            ->hintIconTooltip('Features are exclusively about physical characteristics of the item. Please do not guess!'),
+                            ->hintIcon(
+                                icon: static fn () => setting('tooltip.features') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                                tooltip: static fn () => setting('tooltip.features'),
+                            )
+                            ->helperText(static fn () => setting('helptext.features')),
                         CheckboxList::make('tags')
-                            ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                            ->hintIconTooltip('Tags are any other information about the item or entry.'),
+                            ->hintIcon(
+                                icon: static fn () => setting('tooltip.tags') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                                tooltip: static fn () => setting('tooltip.tags'),
+                            )
+                            ->helperText(static fn () => setting('helptext.tags')),
                         CheckboxList::make('colors')
-                            ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                            ->hintIconTooltip('Pick the option that best matches the item and the official colorways.'),
+                            ->hintIcon(
+                                icon: static fn () => setting('tooltip.colors') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                                tooltip: static fn () => setting('tooltip.colors'),
+                            )
+                            ->helperText(static fn () => setting('helptext.colors')),
                     ]),
 
                 AttributeSelect::make(),
 
                 FileUpload::make('image')
+                    ->hintIcon(
+                        icon: static fn () => setting('tooltip.image') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                        tooltip: static fn () => setting('tooltip.image') ?? null,
+                    )
                     ->label('Main Image')
                     ->fetchFileInformation(false),
 
                 MultiFileUpload::make('images')
+                    ->hintIcon(
+                        icon: static fn () => setting('tooltip.images') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                        tooltip: static fn () => setting('tooltip.images') ?? null,
+                    )
                     ->fetchFileInformation(false)
                     ->columnSpanFull()
                     ->label('Additional Images'),
 
                 RichEditor::make('notes')
-                    ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                    ->hintIconTooltip('These are generally the actual brand listing comments from a brand\'s own website. Notes are any other important information shown on the website, e.g. names of colorways.')
+                    ->hintIcon(
+                        icon: static fn () => setting('tooltip.notes') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                        tooltip: static fn () => setting('tooltip.notes') ?? null,
+                    )
                     ->toolbarButtons(RichContent::toolbar())
                     ->columnSpanFull()
-                    ->helperText('This is the notes that appear alongside an item on the site.'),
+                    ->helperText(setting('helptext.notes')),
 
                 RichEditor::make('internal_notes')
                     ->columnSpanFull()
                     ->toolbarButtons(RichContent::toolbar())
-                    ->helperText('Please provide sources, and image credits here, as well as any other information that may be helpful.'),
+                    ->helperText(setting('helptext.internal_notes')),
             ]);
     }
 }

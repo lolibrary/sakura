@@ -8,6 +8,7 @@ use App\Models\Filters\VisibilityFilter;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Collection;
 
 class AttributeSelect
@@ -44,6 +45,10 @@ class AttributeSelect
             ])
             ->addActionLabel('Add Attribute')
             ->reorderableWithButtons()
-            ->helperText('Attributes are not required, but are recommended!');
+            ->hintIcon(
+                icon: static fn () => setting('tooltip.attributes') ? Heroicon::OutlinedQuestionMarkCircle : null,
+                tooltip: static fn () => setting('tooltip.attributes'),
+            )
+            ->helperText(static fn () => setting('helptext.attributes'));
     }
 }
