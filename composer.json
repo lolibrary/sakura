@@ -9,6 +9,7 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-pdo": "*",
+        "alcohol/iso4217": "^4.3",
         "astrotomic/laravel-translatable": "^11.17",
         "craft-forge/filament-language-switcher": "^1.2",
         "doriiaan/filament-astrotomic": "^1.2",

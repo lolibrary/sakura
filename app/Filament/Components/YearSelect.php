@@ -9,6 +9,7 @@ class YearSelect
     public static function make(string $name = 'year'): Select
     {
         return Select::make('year')
+            ->label('Year released')
             ->placeholder('Unknown')
             ->options(
                 collect(range(1990, (int) date('Y') + 3))
@@ -22,6 +23,6 @@ class YearSelect
                 'min:1970',
                 'max:'.(int) date('Y') + 3,
             ])
-            ->helperText('The year of release, if known.');
+            ->helperText('"Released" means the year the item is made available for purchase, even if the delivery date is in a different year.');
     }
 }

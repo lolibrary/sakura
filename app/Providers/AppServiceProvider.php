@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Alcohol\ISO4217;
 use App\Composers;
+use App\Helpers\Currency;
 use App\Helpers\TranslationHelper;
 use App\Models\User;
 use Illuminate\Pagination\Paginator;
@@ -19,9 +21,11 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        app()->singleton('translations.helper', fn() => new TranslationHelper(app('cache')->memo()));
+        app()->singleton('translations.helper', static fn() => new TranslationHelper(app('cache')->memo()));
+        app()->singleton('iso4217', static fn() => new ISO4217);
+        app()->alias('iso4217', ISO4217::class);
     }
 
     /**
@@ -29,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Fortify::ignoreRoutes();
         Paginator::useBootstrap();
@@ -42,27 +46,20 @@ class AppServiceProvider extends ServiceProvider
         View::composer('components.years', Composers\Years::class);
 
         // Custom 'if' template variables for various roles
-        Blade::if('junior', function () {
-            return auth()->check() && auth()->user()->junior();
-        });
-        Blade::if('lolibrarian', function () {
-            return auth()->check() && auth()->user()->lolibrarian();
-        });
-        Blade::if('senior', function () {
-            return auth()->check() && auth()->user()->senior();
-        });
-        Blade::if('admin', function () {
-            return auth()->check() && auth()->user()->admin();
-        });
-        Blade::if('dev', function () {
-            return auth()->check() && auth()->user()->developer();
-        });
+        Blade::if('junior', static fn() => auth()->user()?->junior());
+        Blade::if('lolibrarian', static fn() => auth()->user()?->lolibrarian());
+        Blade::if('senior', static fn() => auth()->user()?->senior());
+        Blade::if('trusted', static fn() => auth()->user()?->trusted());
+        Blade::if('admin', static fn() => auth()->user()?->admin());
+        Blade::if('dev', static fn() => auth()->user()?->developer());
 
         // if set, we log all activity without a user to the system user.
         $default = cache()->rememberForever('user:default:system',
-            fn() => User::where('username', config('app.system.default-user'))->first(),
+            static fn() => User::where('username', config('app.system.default-user'))->first(),
         );
 
-        Activity::defaultCauser($default, fn () => auth()->user());
+        Activity::defaultCauser($default, static fn () => auth()->user());
+
+        Currency::setInstance(app('iso4217'));
     }
 }

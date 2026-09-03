@@ -4,8 +4,70 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ebe8e72f726a8a22f458ba9705181ebd",
+    "content-hash": "e0367804fa28cc747bccdd83a136da2c",
     "packages": [
+        {
+            "name": "alcohol/iso4217",
+            "version": "4.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alcohol/iso4217.git",
+                "reference": "9ea65a1ce6979f2b973948982cba7e3c5f0edea3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alcohol/iso4217/zipball/9ea65a1ce6979f2b973948982cba7e3c5f0edea3",
+                "reference": "9ea65a1ce6979f2b973948982cba7e3c5f0edea3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5.28 || ^10.5.58 || ^11.5.43 || ^12.4.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Alcohol\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Bast",
+                    "email": "rob.bast@gmail.com"
+                }
+            ],
+            "description": "ISO 4217 PHP Library",
+            "homepage": "http://alcohol.github.io/iso4217/",
+            "keywords": [
+                "4217",
+                "ISO 4217",
+                "currencies",
+                "iso",
+                "library"
+            ],
+            "support": {
+                "issues": "https://github.com/alcohol/iso4217/issues",
+                "source": "https://github.com/alcohol/iso4217"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/alcohol",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-01-02T09:46:17+00:00"
+        },
         {
             "name": "anourvalar/eloquent-serialize",
             "version": "1.3.11",

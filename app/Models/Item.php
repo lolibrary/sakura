@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Status;
 use App\Enums\SystemUser;
+use App\Helpers\Currency;
 use App\Helpers\RichContent;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
@@ -65,35 +66,6 @@ class Item extends Model implements Commentable, HasRichContent
     use ItemRelations, Publishable, Sluggable;
 
     /**
-     * A list of supported currencies.
-     *
-     * @var array<string, string>
-     */
-    public const array CURRENCIES = [
-        'jpy' => 'Japanese Yen (¥)',
-        'cny' => 'Chinese Yuan (RMB/¥)',
-        'hkd' => 'Hong Kong Dollar (HK$)',
-        'krw' => 'South Korean Won (₩)',
-        'eur' => 'Euro (€)',
-        'usd' => 'US Dollars ($)',
-        'gbp' => 'Pound Sterling (£)',
-        'cad' => 'Canadian Dollar (CA$)',
-        'aud' => 'Australian Dollar (AU$)',
-        'mxn' => 'Mexican Pesos ($)',
-        'chf' => 'Swiss Francs (CHF)',
-        'rub' => 'Russian Rubles (₽)',
-        'brl' => 'Brazilian Real (R$)',
-        'vnd' => 'Vietnamese đồng (₫)',
-        'nzd' => 'New Zealand Dollar ($)',
-        'nok' => 'Norwegian Krone (kr)',
-        'sek' => 'Swedish Krona (kr)',
-        'dkk' => 'Danish Krone (kr)',
-        'isk' => 'Icelandic Króne (kr)',
-        'sgd' => 'Singapore Dollar ($)',
-        'inr' => 'Indian Rupees (₹)',
-    ];
-
-    /**
      * @var array<string, string>
      */
     public const array RGB_COLORS = [
@@ -105,43 +77,16 @@ class Item extends Model implements Commentable, HasRichContent
     ];
 
     /**
-     * A shortcut for fully eager loading an item.
-     *
-     * Use: `Item::with(Item::FULLY_LOAD)`
-     *
-     * @var list<string>
-     */
-    public const array FULLY_LOAD = [
-        'tags.translations',
-        'colors.translations',
-        'features.translations',
-        'categories.translations',
-        'brand.translations',
-        'submitter',
-        'attributes.translations',
-        'publisher',
-    ];
-
-    /**
-     * The attributes required to show a listing of items.
-     *
-     * Use: `Item::with(Item::PARTIAL_LOAD)`
-     *
-     * @var list<string>
-     */
-    public const array PARTIAL_LOAD = [
-        'submitter',
-        'brand',
-        'categories',
-        'tags',
-    ];
-
-    /**
      * Eager loads.
      *
      * @var list<string>
      */
-    protected $with = self::PARTIAL_LOAD;
+    protected $with = [
+        'submitter',
+        'publisher',
+        'brand',
+        'categories',
+    ];
 
     /**
      * An array of column cast values.
@@ -152,7 +97,6 @@ class Item extends Model implements Commentable, HasRichContent
         'images' => 'array',
         'additional_images' => 'json',
         'published_at' => 'datetime',
-        'price' => 'integer',
         'status' => Status::class,
         'metadata' => AsCollection::class,
     ];
@@ -160,7 +104,7 @@ class Item extends Model implements Commentable, HasRichContent
     /**
      * Get the formatted price for this item.
      */
-    public function getFullPrice(): string
+    public function getFullPrice(): ?string
     {
         if (in_array($this->currency, ['jpy', 'krw', 'cny'])) {
             return (string) round($this->price ?? 0);
@@ -174,17 +118,15 @@ class Item extends Model implements Commentable, HasRichContent
      */
     public function priceFormatted(): AttributeCast
     {
-        return AttributeCast::get(function () {
-            $price = $this->getFullPrice();
+        return AttributeCast::get(fn () => Currency::format(strtoupper($this->currency), $this->price));
+    }
 
-            $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
-
-            if ($this->currency === null) {
-                return null;
-            }
-
-            return $formatter->formatCurrency((float) $price, $this->currency);
-        });
+    public function currency(): AttributeCast
+    {
+        return AttributeCast::make(
+            get: static fn (string $value): string => strtoupper($value),
+            set: static fn (string $value): string => strtoupper($value),
+        );
     }
 
     /**
@@ -194,7 +136,7 @@ class Item extends Model implements Commentable, HasRichContent
     {
         return AttributeCast::get(fn () => [
             'currency' => $this->currency,
-            'price' => (int) $this->price,
+            'price' => (float) $this->price,
             'local_price' => $this->getFullPrice(),
             'formatted' => $this->price_formatted,
         ]);

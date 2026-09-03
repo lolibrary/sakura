@@ -19,3 +19,4 @@ yarn-error.log
 fortawesome*
 .DS_Store
 *.iml
+/storage/debugbar
