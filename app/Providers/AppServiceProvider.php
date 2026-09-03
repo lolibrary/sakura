@@ -5,6 +5,7 @@ namespace App\Providers;
 use Alcohol\ISO4217;
 use App\Composers;
 use App\Helpers\Currency;
+use App\Helpers\Settings;
 use App\Helpers\TranslationHelper;
 use App\Models\User;
 use Illuminate\Pagination\Paginator;
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton('translations.helper', static fn() => new TranslationHelper(app('cache')->memo()));
         app()->singleton('iso4217', static fn() => new ISO4217);
         app()->alias('iso4217', ISO4217::class);
+        app()->singleton('settings', static fn() => new Settings(app('cache.store')));
     }
 
     /**

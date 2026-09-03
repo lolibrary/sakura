@@ -176,3 +176,10 @@ if (! function_exists('translated')) {
         return app('translations.helper')->get($model, $locale, $name);
     }
 }
+
+if (! function_exists('setting')) {
+    function setting(string $key, mixed $default = null): mixed
+    {
+        return app('settings')->get($key, $default);
+    }
+}

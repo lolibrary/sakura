@@ -14,6 +14,7 @@ use App\Models\FeatureTranslation;
 use App\Models\Item;
 use App\Models\Pivot;
 use App\Models\Profile;
+use App\Models\SiteSetting;
 use App\Models\Tag;
 use App\Models\TagTranslation;
 use App\Models\User;
@@ -138,6 +139,7 @@ return [
         Pivot::class,
         Profile::class,
         Item::class,
+        SiteSetting::class,
 
         App\Models\Traits\Collection::class,
         Collection::class,
