@@ -43,7 +43,7 @@ class CategoryForm
                     ->previewable()
                     ->openable()
                     ->maxSize(1024 * 3)
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg'])
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
                     ->helperText('Acceptable upload types: JPEG, PNG, SVG, WEBP. 3MB limit.')
                     ->preventFilePathTampering(),
             ]);
