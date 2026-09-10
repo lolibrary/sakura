@@ -9,6 +9,7 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-pdo": "*",
+        "alcohol/iso4217": "^4.3",
         "astrotomic/laravel-translatable": "^11.17",
         "craft-forge/filament-language-switcher": "^1.2",
         "doriiaan/filament-astrotomic": "^1.2",
@@ -33,6 +34,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "*",
+        "fruitcake/laravel-debugbar": "^4.4",
         "larastan/larastan": "^3.10",
         "laravel/pint": "^1.30",
         "mockery/mockery": "^1.0",

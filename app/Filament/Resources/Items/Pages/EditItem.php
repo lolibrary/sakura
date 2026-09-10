@@ -9,6 +9,7 @@ use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Support\Icons\Heroicon;
 use Relaticle\Comments\Filament\Actions\CommentsAction;
 
 class EditItem extends EditRecord
@@ -19,8 +20,18 @@ class EditItem extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make(),
             CommentsAction::make(),
+
+            ActionGroup::make([
+                Action::make('wiki')
+                    ->color('gray')
+                    ->icon(Heroicon::OutlinedQuestionMarkCircle)
+                    ->label('Wiki: Entry Help')
+                    ->tooltip('A comprehensive guide on how to add an entry to Lolibrary, on our wiki.')
+                    ->url('https://wiki.lolibrary.org/index.php?title=Lolibrary_Entries:_Creating_an_Item')
+                    ->openUrlInNewTab(),
+                DeleteAction::make(),
+            ])
         ];
     }
 
@@ -30,7 +41,8 @@ class EditItem extends EditRecord
     protected function getFormActions(): array
     {
         return [
-            $this->getSaveFormAction(),
+            $this->getSaveFormAction()
+                ->after(static fn (Item $record) => cache()->tags(['item', 'slug'])->forget("item:$record->slug")),
             $this->getCancelFormAction(),
             Action::make('view')
                 ->label('Back to Entry')

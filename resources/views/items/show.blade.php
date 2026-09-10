@@ -72,8 +72,8 @@ use Filament\Forms\Components\RichEditor\RichContentRenderer;
                     </p>
 
                     <p class="m-0">
-                        @if ($item->price)
-                            @lang('ui.item.price', ['price' => $item->price_formatted])
+                        @if ($item->currency)
+                            <span title="{{ App\Facades\Currency::option($item->currency) }}">@lang('ui.item.price', ['price' => $item->price_formatted])</span>
                         @else
                             {{ __('ui.item.price_unknown') }}
                         @endif
