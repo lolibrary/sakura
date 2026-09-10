@@ -8,7 +8,7 @@ use App\Filament\Components\FileUpload;
 use App\Filament\Components\MultiFileUpload;
 use App\Filament\Components\YearSelect;
 use App\Filament\Query\TranslatedRelation;
-use App\Helpers\Currency;
+use App\Facades\Currency;
 use App\Helpers\RichContent;
 use App\Models\Item;
 use Filament\Actions\Action;

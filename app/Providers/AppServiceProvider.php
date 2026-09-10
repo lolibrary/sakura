@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton('translations.helper', static fn() => new TranslationHelper(app('cache')->memo()));
         app()->singleton('iso4217', static fn() => new ISO4217);
         app()->alias('iso4217', ISO4217::class);
+        app()->singleton('currency', static fn() => new Currency(app('iso4217')));
     }
 
     /**
@@ -59,7 +60,5 @@ class AppServiceProvider extends ServiceProvider
         );
 
         Activity::defaultCauser($default, static fn () => auth()->user());
-
-        Currency::setInstance(app('iso4217'));
     }
 }

@@ -9,8 +9,7 @@ use NumberFormatter;
 
 class Currency
 {
-    protected static ISO4217 $instance;
-    protected static ?array $computed = null;
+    protected ?array $computed = null;
 
     protected const array Preferred = [
         'JPY' => 'Japanese Yen (JPY) - ¥',
@@ -36,19 +35,35 @@ class Currency
         'INR' => 'Indian Rupees (INR) - ₹',
     ];
 
-    public static function setInstance(ISO4217 $instance): void
-    {
-        static::$instance = $instance;
-    }
+    /**
+     * These are currencies that should always have the currency code appended for clarity.
+     */
+    protected const array Trailer = [
+        'JPY',
+        'USD',
+        'SGD',
+    ];
 
-    public static function options(): array
+    /**
+     * All scandinavian `kr` (krone, etc) currencies should differentiate.
+     */
+    protected const array Overrides = [
+        'ISK',
+        'NOK',
+        'SEK',
+        'DKK',
+    ];
+
+    public function __construct(protected ISO4217 $instance) {}
+
+    public function options(): array
     {
-        if (static::$computed !== null) {
-            return static::$computed;
+        if ($this->computed !== null) {
+            return $this->computed;
         }
 
 
-        $filtered = collect(static::$instance->getAll())
+        $filtered = collect($this->instance->getAll())
             ->mapWithKeys(static function (array $data): array {
                 $key = $data['alpha3'];
 
@@ -69,10 +84,10 @@ class Currency
                 ];
             });
 
-        return static::$computed = collect(self::Preferred)->merge($filtered)->all();
+        return $this->computed = collect(self::Preferred)->merge($filtered)->all();
     }
 
-    public static function format(?string $currency, ?string $price, ?string $locale = null): string
+    public function format(?string $currency, ?string $price, ?string $locale = null): string
     {
         if ($currency === null || $price === null) {
             return '';
@@ -80,8 +95,40 @@ class Currency
 
         $locale ??= app()->getLocale();
         $formatter = NumberFormatter::create($locale, style: NumberFormatter::CURRENCY);
+        $price = (float)$price;
 
-        return $formatter->formatCurrency((float)$price, $currency);
+        // remove any fractional part if we're not actually a fraction.
+        if (fmod($price, 1) === 0.0) {
+            $formatter->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
+        }
+
+        // remove all grouping (thousands, etc)
+        $formatter->setAttribute(NumberFormatter::GROUPING_USED, 0);
+
+        $formatted = str($formatter->formatCurrency($price, $currency));
+
+        if ($this->hasOverride($currency)) {
+            $formatted = $formatted->replace(
+                search: $formatter->getSymbol(NumberFormatter::CURRENCY_SYMBOL),
+                replace: $currency,
+            );
+        }
+
+        if ($this->hasTrailer($currency) && ! $formatted->contains($currency)) {
+            $formatted = $formatted->append(" $currency");
+        }
+
+        return $formatted->toString();
+    }
+
+    public function hasOverride(string $currency): bool
+    {
+        return in_array($currency, haystack: static::Overrides, strict: true);
+    }
+
+    public function hasTrailer(string $currency): bool
+    {
+        return in_array($currency, haystack: static::Trailer, strict: true);
     }
 
     /**
@@ -91,14 +138,14 @@ class Currency
      * @param string|null $price
      * @return string|null
      */
-    public static function save(?string $currency, ?string $price): ?string
+    public function save(?string $currency, ?string $price): ?string
     {
         if ($currency === null || $price === null) {
             return null;
         }
 
         try {
-            $info = static::$instance->getByAlpha3($currency);
+            $info = $this->instance->getByAlpha3($currency);
 
             return BigNumber::of($price)->toScale($info['exp'], roundingMode: RoundingMode::Floor)->toString();
         } finally {
@@ -106,16 +153,21 @@ class Currency
         }
     }
 
-    public static function info(?string $currency): ?array
+    public function info(?string $currency): ?array
     {
         if ($currency === null) {
             return null;
         }
 
         try {
-            return static::$instance->getByAlpha3($currency);
+            return $this->instance->getByAlpha3($currency);
         } finally {
             return null;
         }
+    }
+
+    public function option(string $currency): ?string
+    {
+        return $this->options()[$currency] ?? null;
     }
 }

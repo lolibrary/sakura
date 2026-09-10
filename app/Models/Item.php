@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Enums\Status;
 use App\Enums\SystemUser;
-use App\Helpers\Currency;
+use App\Facades\Currency;
 use App\Helpers\RichContent;
 use App\Models\Traits\ItemRelations;
 use App\Models\Traits\Publishable;
