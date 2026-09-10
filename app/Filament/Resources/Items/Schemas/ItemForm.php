@@ -100,7 +100,7 @@ class ItemForm
                     ->schema([
                         CheckboxList::make('categories')
                             ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                            ->hintIconTooltip('If you are unsure of what item categories should contain which items, please take a look at the wiki. We categorize strapless dresses and dresses with straps as JSKs, and any other dress cuts as OPs for ease of searchability.')
+                            ->hintIconTooltip('If you are unsure of what item categories should contain which items, please take a look at the wiki.')
                             ->required()
                             ->minItems(1)
                             ->hint('at least one'),
@@ -109,10 +109,10 @@ class ItemForm
                             ->hintIconTooltip('Features are exclusively about physical characteristics of the item. Please do not guess!'),
                         CheckboxList::make('tags')
                             ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                            ->hintIconTooltip('Tags are any other information about the item or entry.'),
+                            ->hintIconTooltip('Tags are any other information about the item or entry. Guidance is on the wiki.'),
                         CheckboxList::make('colors')
                             ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                            ->hintIconTooltip('Pick the option that best matches the item and the official colorways.'),
+                            ->hintIconTooltip('Pick the option that best matches the item and the official colorways. If in doubt, check the wiki!'),
                     ]),
 
                 AttributeSelect::make(),
