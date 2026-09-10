@@ -124,8 +124,8 @@ class Item extends Model implements Commentable, HasRichContent
     public function currency(): AttributeCast
     {
         return AttributeCast::make(
-            get: static fn (string $value): string => strtoupper($value),
-            set: static fn (string $value): string => strtoupper($value),
+            get: static fn (?string $value): ?string => $value ? strtoupper($value) : null,
+            set: static fn (?string $value): ?string => $value ? strtoupper($value) : null,
         );
     }
 
