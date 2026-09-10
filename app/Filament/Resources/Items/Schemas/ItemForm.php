@@ -117,9 +117,7 @@ class ItemForm
 
                 AttributeSelect::make(),
 
-                FileUpload::make('image')
-                    ->label('Main Image')
-                    ->fetchFileInformation(false),
+                FileUpload::make('image')->label('Main Image'),
 
                 MultiFileUpload::make('images')
                     ->fetchFileInformation(false)
@@ -128,7 +126,7 @@ class ItemForm
 
                 RichEditor::make('notes')
                     ->hintIcon(Heroicon::OutlinedQuestionMarkCircle)
-                    ->hintIconTooltip('These are generally the actual brand listing comments from a brand\'s own website. Notes are any other important information shown on the website, e.g. names of colorways.')
+                    ->hintIconTooltip('These are generally the actual brand listing comments from a brand\'s own website.')
                     ->toolbarButtons(RichContent::toolbar())
                     ->columnSpanFull()
                     ->helperText('This is the notes that appear alongside an item on the site.'),
