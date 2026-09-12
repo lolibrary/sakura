@@ -26,10 +26,11 @@
         "laravel/ui": "^4.0",
         "league/flysystem": "^3.0",
         "league/flysystem-aws-s3-v3": "^3.0",
+        "lolibrary/zeptomail-mailer": "^2.0.1",
         "relaticle/comments": "^1.1",
         "sentry/sentry-laravel": "^4.0",
         "spatie/laravel-activitylog": "^5.0",
-        "symfony/http-client": "^6.4",
+        "symfony/http-client": "^7.0",
         "symfony/postmark-mailer": "^6.4"
     },
     "require-dev": {
