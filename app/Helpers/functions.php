@@ -88,7 +88,8 @@ if (! function_exists('cdn_path')) {
      */
     function cdn_path(string $path): string
     {
-        return config('cdn.image.url').'/'.config('cdn.image.folder').'/'.$path;
+        return rtrim(config('services.cdn.url'), '/') .
+            '/' . ltrim($path, '/');
     }
 }
 
@@ -106,7 +107,7 @@ if (! function_exists('cdn_link')) {
             return $path;
         }
 
-        return config('cdn.image.url').'/'.$path;
+        return config('services.cdn.url').'/'.$path;
     }
 }
 

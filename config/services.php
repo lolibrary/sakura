@@ -37,6 +37,11 @@ return [
             'publish' => env('DISCORD_PUBLISH_WEBHOOK'),
             'draft' => env('DISCORD_DRAFT_WEBHOOK'),
         ],
+
+        'invite-link' => env('DISCORD_INVITE_LINK'),
+
+        'client' => env('DISCORD_CLIENT_ID'),
+        'secret' => env('DISCORD_CLIENT_SECRET'),
     ],
 
     'heartbeat' => [
@@ -45,6 +50,11 @@ return [
 
     'fastly' => [
         'api-key' => env('FASTLY_API_KEY'),
+    ],
+
+    'cdn' => [
+        'folder' => env('AWS_CDN_FOLDER'),
+        'url' => env('AWS_CDN_URL', 'https://lolibrary.test'),
     ],
 
 ];

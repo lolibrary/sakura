@@ -29,7 +29,7 @@
 
             <x-filament::link
                 color="gray"
-                href="{{ config('app.discord.invite-link') }}"
+                href="{{ config('services.discord.invite-link') }}"
                 rel="noopener noreferrer"
                 target="_blank"
             >

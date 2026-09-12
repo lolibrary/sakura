@@ -16,7 +16,7 @@ Lolibrary Admins
 
 <x-mail::subcopy>
 If you have any questions, please message us via `admin@lolibrary.org` or in the `#feedback` channel on the <a
-        href="{{ config('app.discord.invite-link') }}">Lolibrary Discord</a>.
+        href="{{ config('services.discord.invite-link') }}">Lolibrary Discord</a>.
 
 We've tried to take the latest account that was in use when deciding which account to merge, but your other username is now free if you'd like to change it back.
 </x-mail::subcopy>
