@@ -11,6 +11,7 @@ use App\Models\Traits\HasStats;
 use App\Models\Traits\HasSystemUsers;
 use App\Models\Traits\HasUsernames;
 use App\Models\Traits\Wishlist;
+use App\Notifications\Auth\ResetPasswordNotification;
 use App\Notifications\VerifyEmail;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
@@ -151,5 +152,16 @@ class User extends Authenticatable implements Commentator, FilamentUser, HasAvat
     public function verified(): AttributeCast
     {
         return AttributeCast::get(fn () => $this->hasVerifiedEmail());
+    }
+
+    /**
+     * Send a password reset notification via the queue.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification(#[\SensitiveParameter] $token): void
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 }
