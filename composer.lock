@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09c419fdf523bc776109e9e6412eb9ab",
+    "content-hash": "bb196227886a1325b660a2339cd52881",
     "packages": [
         {
             "name": "alcohol/iso4217",
@@ -2719,98 +2719,6 @@
                 "source": "https://github.com/Jean85/pretty-package-versions/tree/2.1.1"
             },
             "time": "2025-03-19T14:43:43+00:00"
-        },
-        {
-            "name": "jonaspauleta/scout-postgres",
-            "version": "v2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jonaspauleta/scout-postgres.git",
-                "reference": "21feab496ce2e2939f3670e3642a3c78f97397aa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jonaspauleta/scout-postgres/zipball/21feab496ce2e2939f3670e3642a3c78f97397aa",
-                "reference": "21feab496ce2e2939f3670e3642a3c78f97397aa",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pdo": "*",
-                "ext-pdo_pgsql": "*",
-                "illuminate/contracts": "^12.0 || ^13.0",
-                "illuminate/database": "^12.0 || ^13.0",
-                "illuminate/support": "^12.0 || ^13.0",
-                "laravel/scout": "^11.0",
-                "php": "^8.3",
-                "spatie/laravel-package-tools": "^1.16"
-            },
-            "require-dev": {
-                "driftingly/rector-laravel": "^2.2",
-                "larastan/larastan": "^3.0",
-                "laravel/pint": "^1.25",
-                "orchestra/testbench": "^10.0 || ^11.0",
-                "pestphp/pest": "^4.0",
-                "pestphp/pest-plugin-laravel": "^4.0",
-                "phpstan/phpstan-deprecation-rules": "^2.0",
-                "phpstan/phpstan-phpunit": "^2.0",
-                "rector/rector": "^2.2"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "ScoutPostgres\\ScoutPostgresServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "ScoutPostgres\\": "src/",
-                    "ScoutPostgres\\Database\\Factories\\": "database/factories/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "João Paulo Santos",
-                    "email": "jpaulo4799santos@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Native Postgres full-text search + pg_trgm engine for Laravel Scout.",
-            "homepage": "https://github.com/jonaspauleta/scout-postgres",
-            "keywords": [
-                "fts",
-                "full-text-search",
-                "fuzzy-search",
-                "laravel",
-                "laravel-cloud",
-                "laravel-scout",
-                "neon",
-                "pg_trgm",
-                "postgres",
-                "postgresql",
-                "scout",
-                "scout-driver",
-                "scout-engine",
-                "search",
-                "trigram"
-            ],
-            "support": {
-                "docs": "https://github.com/jonaspauleta/scout-postgres#readme",
-                "issues": "https://github.com/jonaspauleta/scout-postgres/issues",
-                "source": "https://github.com/jonaspauleta/scout-postgres"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/jonaspauleta",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-07-09T22:23:14+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
