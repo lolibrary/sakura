@@ -30,17 +30,7 @@ abstract class Composer
      */
     protected function data(): array
     {
-        $default = function () {
-            return $this->load();
-        };
-
-        try {
-            return cache()->remember($this->key(), static::DURATION, $default);
-        } catch (Throwable $e) {
-            sentry($e);
-
-            return $default();
-        }
+        return cache()->remember($this->key(), static::DURATION, fn() => $this->load());
     }
 
     /**
