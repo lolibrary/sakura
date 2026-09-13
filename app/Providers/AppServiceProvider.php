@@ -40,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('iso4217', static fn() => new ISO4217);
         $this->app->alias('iso4217', ISO4217::class);
         $this->app->singleton('currency', static fn() => new Currency(app('iso4217')));
+        $this->app->singleton('logins', static fn() => app()->make(Logins::class));
 
         $this->app->booting(static function () {
             Cache::extend('redis.scoped', function (Application $app, array $config) {

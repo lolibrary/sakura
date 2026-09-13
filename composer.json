@@ -15,6 +15,7 @@
         "doriiaan/filament-astrotomic": "^1.2",
         "fastly/fastly": "^14.0",
         "filament/filament": "^5.0",
+        "geoip2/geoip2": "^3.4",
         "laravel/framework": "^13.0",
         "laravel/nightwatch": "^1.28",
         "laravel/octane": "^2.19",
@@ -25,11 +26,13 @@
         "league/flysystem": "^3.0",
         "league/flysystem-aws-s3-v3": "^3.0",
         "lolibrary/zeptomail-mailer": "^2.0.1",
+        "pataar/browser-detect": "^5.4",
         "relaticle/comments": "^1.1",
         "sentry/sentry-laravel": "^4.0",
         "spatie/laravel-activitylog": "^5.0",
         "symfony/http-client": "^7.0",
-        "symfony/postmark-mailer": "^6.4"
+        "symfony/postmark-mailer": "^6.4",
+        "torann/geoip": "^3.0"
     },
     "require-dev": {
         "fakerphp/faker": "*",
