@@ -11,11 +11,13 @@
 |
 */
 
+use App\Http\Middleware\Localize;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Sentry\Laravel\Integration;
+use Symfony\Component\HttpFoundation\Request as Header;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -25,7 +27,27 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->appendToGroup('web', [
+            Localize::class,
+        ]);
+
+        $middleware->redirectTo(
+            guests: '/',
+            users: '/library',
+        );
+
+        $middleware->trimStrings();
+
+        $middleware->trustProxies(
+            headers: Header::HEADER_X_FORWARDED_FOR |
+                Header::HEADER_X_FORWARDED_HOST |
+                Header::HEADER_X_FORWARDED_PORT |
+                Header::HEADER_X_FORWARDED_PROTO |
+                Header::HEADER_X_FORWARDED_AWS_ELB
+        );
+
+        $middleware->encryptCookies();
+        $middleware->throttleWithRedis();
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         Integration::handles($exceptions);
