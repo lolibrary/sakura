@@ -91,7 +91,7 @@ return [
         ],
 
         'redis' => [
-            'driver' => 'redis',
+            'driver' => 'redis.scoped',
             'connection' => 'cache',
         ],
 
