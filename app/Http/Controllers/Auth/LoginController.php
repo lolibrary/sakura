@@ -46,17 +46,11 @@ class LoginController extends Controller
     {
         $credentials = $this->credentials($request);
 
-        if ($this->guard()->attempt($credentials, remember: true)) {
-            if ($this->restricted($this->guard()->user())) {
-                $this->guard()->logout();
-
-                return false;
-            }
-
-            return true;
+        if (! $this->guard()->attempt($credentials, remember: true)) {
+            return false;
         }
 
-        return false;
+        return ! $this->restricted();
     }
 
     /**
@@ -67,13 +61,21 @@ class LoginController extends Controller
      * - system
      * - amy (owner)
      */
-    protected function restricted(User $user): bool
+    protected function restricted(): bool
     {
-        return in_array(
-            $user->level,
-            [Level::Deactivated, Level::Banned, Level::System, Level::Amy],
+        $user = $this->guard()->user();
+
+        $restricted = in_array(
+            needle: $user->level,
+            haystack: [Level::Deactivated, Level::Banned, Level::System, Level::Amy],
             strict: true,
         );
+
+        if ($restricted) {
+            $this->guard()->logout();
+        }
+
+        return $restricted;
     }
 
     /**
