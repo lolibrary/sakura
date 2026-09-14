@@ -8,11 +8,11 @@ class YearSelect
 {
     public static function make(string $name = 'year'): Select
     {
-        return Select::make('year')
+        return Select::make($name)
             ->label('Year released')
             ->placeholder('Unknown')
             ->options(
-                collect(range(1990, (int) date('Y') + 3))
+                collect(range(1970, (int) date('Y') + 3))
                     ->reverse()
                     ->mapWithKeys(fn (int $value) => [$value => $value])
                     ->all()
